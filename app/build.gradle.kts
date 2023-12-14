@@ -80,4 +80,7 @@ dependencies {
     //Room
     implementation("androidx.room:room-ktx:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
+
+    //gms
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Community App</string>
+<!--    <string name="web_client_id">354098387712-v832raivte99bjj0oiupavfgamo3vipi.apps.googleusercontent.com</string>-->
+    <string name="web_client_id">748985961633-1uvkptrttuk990q91rs0n5053oof1t9h.apps.googleusercontent.com
+</string>
+
 </resources>
