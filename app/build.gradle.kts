@@ -52,6 +52,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation("androidx.annotation:annotation:1.7.0")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -76,6 +77,7 @@ dependencies {
 
     //DataStore
     implementation ("androidx.preference:preference-ktx:1.1.1")
+    implementation( "androidx.datastore:datastore-preferences:1.0.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:3.14.2")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
