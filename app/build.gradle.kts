@@ -49,10 +49,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-firestore:24.10.0")
     implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation("androidx.annotation:annotation:1.7.0")
-    implementation("com.google.firebase:firebase-storage:20.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -76,7 +76,6 @@ dependencies {
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
 
     //DataStore
-    implementation ("androidx.preference:preference-ktx:1.1.1")
     implementation( "androidx.datastore:datastore-preferences:1.0.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:3.14.2")
@@ -85,4 +84,7 @@ dependencies {
     //Room
     implementation("androidx.room:room-ktx:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
+
+    implementation ("androidx.browser:browser:1.3.0")
+    implementation ("com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta04")
 }

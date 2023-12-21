@@ -1,4 +1,6 @@
 package com.example.communityapp.utils
 
-class Constants {
+object Constants {
+    var token = ""
+    var verID = ""
 }
