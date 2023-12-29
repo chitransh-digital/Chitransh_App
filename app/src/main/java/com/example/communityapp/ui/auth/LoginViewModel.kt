@@ -22,8 +22,8 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
 
 
     val TAG = "Login View Model"
-    val verification = MutableLiveData<Resource<String>>()
-    private val verificationStatus: MutableLiveData<Resource<String>>
+    private val verification = MutableLiveData<Resource<String>>()
+    val verificationStatus: MutableLiveData<Resource<String>>
         get() = verification
     fun OnVerificationCodeSent(phoneNumber:String, activity: Activity){
 
@@ -32,7 +32,6 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                verification.value = Resource.success(credential.toString())
                 Log.d(TAG, "onVerificationCompleted:$credential")
                 signInWithPhoneAuthCredential(credential,activity)
             }

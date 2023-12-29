@@ -27,6 +27,8 @@ class Login_activity : AppCompatActivity() {
 
         viewModel =ViewModelProvider(this)[LoginViewModel::class.java]
 
+        setObservables()
+
         binding.button.setOnClickListener {
             val ph = "+91" + binding.editTextPhone.text.toString()
             if(ph.isEmpty()){
@@ -49,7 +51,7 @@ class Login_activity : AppCompatActivity() {
     }
 
     fun setObservables(){
-        viewModel.verification.observe(this, Observer {resouce->
+        viewModel.verificationStatus.observe(this, Observer {resouce->
             when(resouce.status){
                 Resource.Status.SUCCESS->{
                     Log.e("url",resouce.status.toString())
