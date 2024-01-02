@@ -15,10 +15,10 @@
         android:theme="@style/Theme.CommunityApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.jobs.JobsActivity"
+            android:name=".ui.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.Login_activity"
+            android:name=".ui.family.FamilyActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.jobs.JobsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.Login_activity"
+            android:exported="false"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="false"></activity>

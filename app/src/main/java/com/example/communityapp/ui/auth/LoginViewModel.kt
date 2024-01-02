@@ -22,8 +22,8 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
 
 
     val TAG = "Login View Model"
-    val verification = MutableLiveData<Resource<String>>()
-    private val verificationStatus: MutableLiveData<Resource<String>>
+    private val verification = MutableLiveData<Resource<Pair<Int,String>>>()
+    val verificationStatus: MutableLiveData<Resource<Pair<Int,String>>>
         get() = verification
     fun OnVerificationCodeSent(phoneNumber:String, activity: Activity){
 
@@ -32,39 +32,21 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                // This callback will be invoked in two situations:
-                // 1 - Instant verification. In some cases the phone number can be instantly
-                //     verified without needing to send or enter a verification code.
-                // 2 - Auto-retrieval. On some devices Google Play services can automatically
-                //     detect the incoming verification SMS and perform verification without
-                //     user action.
-                verification.value = Resource.success(credential.toString())
                 Log.d(TAG, "onVerificationCompleted:$credential")
                 signInWithPhoneAuthCredential(credential,activity)
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                // This callback is invoked in an invalid request for verification is made,
-                // for instance if the the phone number format is not valid.
                 Log.w(TAG, "onVerificationFailed", e)
-
-                if (e is Exception) {
-                    verification.value = Resource.error(e)
-                }
-
-                // Show a message and update the UI
+                verification.value = Resource.error(e)
             }
 
             override fun onCodeSent(
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken,
             ) {
-                // The SMS verification code has been sent to the provided phone number, we
-                // now need to ask the user to enter the code and then construct a credential
-                // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:$verificationId")
-
-                // Save verification ID and resending token so we can use them later
+                verification.value = Resource.success(Pair(1,verificationId))
                 Constants.verID = verificationId
                 Constants.token = token.toString()
             }
@@ -82,21 +64,17 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
 
     }
 
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential, activity: Activity) {
+    fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential, activity: Activity) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-
                     val user = task.result?.user
+                    verificationStatus.value = Resource.success(Pair(2,user.toString()))
                 } else {
-                    // Sign in failed, display a message and update the UI
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
                     }
-                    // Update UI
                 }
             }
     }
