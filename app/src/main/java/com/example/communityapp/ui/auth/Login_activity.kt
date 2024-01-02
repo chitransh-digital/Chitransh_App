@@ -1,5 +1,6 @@
 package com.example.communityapp.ui.auth
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
 import com.example.communityapp.databinding.ActivityLoginBinding
+import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.auth.PhoneAuthProvider
@@ -50,15 +52,19 @@ class Login_activity : AppCompatActivity() {
 
     }
 
-    fun setObservables(){
-        viewModel.verificationStatus.observe(this, Observer {resouce->
-            when(resouce.status){
+    private fun setObservables(){
+        viewModel.verificationStatus.observe(this, Observer {resource->
+            when(resource.status){
                 Resource.Status.SUCCESS->{
-                    Log.e("url",resouce.status.toString())
-                    codesent(resouce.data!!)
+                    Log.e("url",resource.status.toString())
+                    if (resource.data?.first == 1){
+                        codesent(resource.data.second)
+                    }else{
+                        startActivity(Intent(this,FamilyActivity::class.java))
+                    }
                 }
                 Resource.Status.ERROR->{
-                    Log.e("url",resouce.status.toString())
+                    Log.e("url",resource.status.toString())
                 }
                 Resource.Status.LOADING->{
                     Log.e("url","loading")

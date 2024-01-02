@@ -9,11 +9,8 @@ import com.example.communityapp.data.models.Comment
 import com.example.communityapp.data.models.Job
 import com.example.communityapp.data.repository.JobsRepo
 import com.example.communityapp.utils.Resource
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel

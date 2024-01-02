@@ -22,8 +22,8 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
 
 
     val TAG = "Login View Model"
-    private val verification = MutableLiveData<Resource<String>>()
-    val verificationStatus: MutableLiveData<Resource<String>>
+    private val verification = MutableLiveData<Resource<Pair<Int,String>>>()
+    val verificationStatus: MutableLiveData<Resource<Pair<Int,String>>>
         get() = verification
     fun OnVerificationCodeSent(phoneNumber:String, activity: Activity){
 
@@ -38,10 +38,7 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
 
             override fun onVerificationFailed(e: FirebaseException) {
                 Log.w(TAG, "onVerificationFailed", e)
-
-                if (e is Exception) {
-                    verification.value = Resource.error(e)
-                }
+                verification.value = Resource.error(e)
             }
 
             override fun onCodeSent(
@@ -49,7 +46,7 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
                 token: PhoneAuthProvider.ForceResendingToken,
             ) {
                 Log.d(TAG, "onCodeSent:$verificationId")
-                verification.value = Resource.success(verificationId)
+                verification.value = Resource.success(Pair(1,verificationId))
                 Constants.verID = verificationId
                 Constants.token = token.toString()
             }
@@ -72,8 +69,8 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
-
                     val user = task.result?.user
+                    verificationStatus.value = Resource.success(Pair(2,user.toString()))
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
