@@ -4,6 +4,6 @@ import java.time.LocalDateTime
 
 data class Comment(
     val name: String,
-    val time: LocalDateTime,
+    val time: String,
     val value: String
 )

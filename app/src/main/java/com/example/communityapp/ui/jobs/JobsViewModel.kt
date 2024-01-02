@@ -1,6 +1,9 @@
 package com.example.communityapp.ui.jobs
 
+import android.os.Build
 import android.util.Log
+import android.util.Log.e
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +26,7 @@ class JobsViewModel @Inject constructor(private  val jobsRepo: JobsRepo): ViewMo
 
     fun addJob(job: Job) {
         _jobAddedResult.value = Resource.loading()
+        e("JobsViewModel", "addJob")
         viewModelScope.launch {
             try {
                 jobsRepo.addJob(job)
@@ -91,6 +95,7 @@ class JobsViewModel @Inject constructor(private  val jobsRepo: JobsRepo): ViewMo
     val commentsResult: LiveData<Resource<List<Comment>>>
         get() = _commentsResult
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getAllComments(jobId: String) {
         _commentsResult.value = Resource.loading()
         viewModelScope.launch {
