@@ -7,4 +7,5 @@ object Constants {
     const val MEMBER = "MEMBER"
     const val USERS = "USERS"
     const val FAMILYID = "FAMILYID"
+    const val BUSINESS = "BUSINESS"
 }
