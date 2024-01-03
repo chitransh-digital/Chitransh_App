@@ -15,15 +15,8 @@
         android:theme="@style/Theme.CommunityApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.DashboardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.family.FamilyActivity"
+            android:name=".ui.Business.BusinessActivity"
             android:exported="true">
-        </activity>
-        <activity
-            android:name=".ui.jobs.JobsActivity"
-            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,11 +24,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.auth.Login_activity"
+            android:name=".ui.Dashboard.DashboardActivity"
+            android:exported="false">
+
+        </activity>
+        <activity
+            android:name=".ui.family.FamilyActivity"
             android:exported="false"></activity>
         <activity
+            android:name=".ui.jobs.JobsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.Login_activity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
