@@ -16,8 +16,9 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.feed.FeedsActivity"
-            android:exported="true" >
-
+            android:exported="false" ></activity>
+            android:name=".ui.Business.BusinessActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity
+
             android:name=".ui.DashboardActivity"
             android:exported="false" />
         <activity
