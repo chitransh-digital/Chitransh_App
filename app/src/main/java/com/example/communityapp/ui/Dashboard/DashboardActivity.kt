@@ -1,4 +1,4 @@
-package com.example.communityapp.ui
+package com.example.communityapp.ui.Dashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,8 +6,6 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
-import com.example.communityapp.ui.family.FamilyViewModel
-import com.example.communityapp.ui.jobs.DashboardViewModel
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
