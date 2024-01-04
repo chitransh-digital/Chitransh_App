@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.viewpager2.widget.ViewPager2
 import com.example.communityapp.R
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.ActivityFeedsBinding
@@ -27,6 +28,8 @@ class FeedsActivity : AppCompatActivity() {
     private val selectedImagePaths = mutableListOf<String>()
     private lateinit var binding : ActivityFeedsBinding
     private var lastNews: NewsFeed? = null
+    private  var feedsList:MutableList<NewsFeed> = mutableListOf()
+    private lateinit var newsAdapter: FeedsAdapter
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -43,11 +46,11 @@ class FeedsActivity : AppCompatActivity() {
                         e("selectedImagePath", selectedImagePaths.toString())
                         feedsViewModel.addFeed(
                             NewsFeed(
-                                "author1",
+                                "author3",
                                 "fSDsfSfsdfgdf",
                                 emptyList(),
                                 "timestamp",
-                                "title1",
+                                "title3",
                                 true
                             ),
                             selectedImagePaths
@@ -61,12 +64,13 @@ class FeedsActivity : AppCompatActivity() {
         binding = ActivityFeedsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnFeeds.setOnClickListener {
-            openFilePicker()
-        }
+//        binding.btnFeeds.setOnClickListener {
+//            openFilePicker()
+//        }
 
-        ///getFeedsbyPaging
+        //getFeedsbyPaging
         if(lastNews == null){
+            showAdapter(feedsList)
             feedsViewModel.getFeedsByPaging()
         }else{
             feedsViewModel.getFeedsByPaging(lastNews)
@@ -123,7 +127,18 @@ class FeedsActivity : AppCompatActivity() {
                     // Handle success state
                     Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
                     e("feeds", resource.data.toString())
-                    lastNews=resource.data?.last()
+
+                    if(resource.data?.isNotEmpty() == true) {
+                        lastNews = resource?.data.last()
+                    }
+                    resource.data?.forEach{
+                        feedsList.add(it)
+                    }
+//                    if(lastNews==null) {
+//                        showAdapter(feedsList)
+//                    }
+
+                    newsAdapter.notifyDataSetChanged()
                 }
                 Resource.Status.ERROR -> {
                     // Handle error state
@@ -141,4 +156,23 @@ class FeedsActivity : AppCompatActivity() {
         })
 
     }
+
+    fun showAdapter(feedsList:List<NewsFeed>){
+        val viewPager: ViewPager2 = findViewById(R.id.viewPager)
+         newsAdapter = FeedsAdapter(feedsList, this)
+        viewPager.adapter = newsAdapter
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                // Check if the last item is reached
+                if (position == feedsList.size - 1) {
+                    // Call  method to fetch more feeds
+                    if(lastNews!=null)feedsViewModel.getFeedsByPaging(lastNews)
+                }
+            }
+        })
+    }
+
 }

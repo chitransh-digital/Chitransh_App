@@ -87,4 +87,10 @@ dependencies {
 
     implementation ("androidx.browser:browser:1.3.0")
     implementation ("com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta04")
+
+    //viewPage2
+    implementation ("androidx.viewpager2:viewpager2:1.1.0-alpha01")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }

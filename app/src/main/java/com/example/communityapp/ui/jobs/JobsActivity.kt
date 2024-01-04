@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
+import androidx.viewpager2.widget.ViewPager2
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Comment
 import com.example.communityapp.data.models.Job
+import com.example.communityapp.data.models.NewsFeed
+import com.example.communityapp.ui.feed.FeedsAdapter
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
