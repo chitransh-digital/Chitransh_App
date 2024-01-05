@@ -4,10 +4,13 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Comment
@@ -29,7 +32,7 @@ class JobsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jobs)
 
-//        jobsViewModel.getAllJobs()
+        jobsViewModel.getAllJobs()
 
 //        jobsViewModel.deleteJob("b")
 
@@ -48,7 +51,7 @@ class JobsActivity : AppCompatActivity() {
 //        jobsViewModel.getAllComments("QqDncH9qQNzPTv9RVY0m")
 
 //        jobsViewModel.addJob(
-//            Job("b","87886785","afa","FSDASDA", listOf("a","b","c"),765)
+//            Job("b","87886785","afa","FSDASDA", listOf("a","b","c"),765,"jabalpur")
 //        )
 
         setObservables()
@@ -63,6 +66,9 @@ class JobsActivity : AppCompatActivity() {
                     // Handle success state
                     val jobs = resource.data
                     Log.e("All jobs", "$jobs")
+                    if (jobs != null) {
+                        setupRecyclerView(jobs)
+                    }
                     // Update UI or perform any actions with the list of jobs
                 }
                 Resource.Status.ERROR -> {
@@ -147,5 +153,12 @@ class JobsActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private fun setupRecyclerView(jobs: List<Pair<Job,String>>){
+        val jobsAdapter = JobsAdapter(jobs, this@JobsActivity)
+        val rv = findViewById<RecyclerView>(R.id.rv_jobs)
+        rv.adapter = jobsAdapter
+        rv.layoutManager = LinearLayoutManager(this)
     }
 }
