@@ -87,4 +87,6 @@ dependencies {
 
     implementation ("androidx.browser:browser:1.3.0")
     implementation ("com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta04")
+
+
 }
