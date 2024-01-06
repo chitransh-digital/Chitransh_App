@@ -23,7 +23,7 @@
         android:id="@+id/progressBar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:backgroundTint="#C95EFC"
+        android:backgroundTint="@color/primary"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.743"
         android:layout_margin="24dp"
-        android:backgroundTint="#C95EFC"
+        android:backgroundTint="@color/primary"
         android:visibility="gone"/>
 
     <Button
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.743"
         android:layout_margin="24dp"
-        android:backgroundTint="#C95EFC"
+        android:backgroundTint="@color/primary"
         android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

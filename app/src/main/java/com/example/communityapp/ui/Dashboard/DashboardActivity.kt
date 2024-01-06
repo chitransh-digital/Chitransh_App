@@ -11,6 +11,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.communityapp.R
+import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.utils.Resource
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DashboardViewModel
-    var bottomNavigationView: BottomNavigationView? = null
+
     private lateinit var binding : ActivityDashboardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class DashboardActivity : AppCompatActivity() {
 
         setObservables()
         setUpNavigation()
-//        viewModel.getMember("6378228784")
+        viewModel.getMember("7737751653")
     }
 
     private fun setUpNavigation() {
@@ -58,4 +59,5 @@ class DashboardActivity : AppCompatActivity() {
             }
         })
     }
+
 }

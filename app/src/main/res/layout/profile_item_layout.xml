@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#E3A8FF"
+    android:backgroundTint="@color/profile_item_color"
     android:layout_margin="16dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="16dp">
@@ -68,6 +68,7 @@
             app:layout_constraintHorizontal_bias="0.86"
             app:layout_constraintStart_toEndOf="@id/profile_name"
             app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
             app:layout_constraintWidth_percent="0.1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -56,7 +56,7 @@
         android:id="@+id/editname"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:backgroundTint="#C95EFC"
+        android:backgroundTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
@@ -86,7 +86,7 @@
         android:id="@+id/contactname"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:backgroundTint="#C95EFC"
+        android:backgroundTint="@color/primary"
         android:text="+91"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,9 +115,10 @@
         app:layout_constraintWidth_percent="0.9" />
 
     <EditText
+        android:id="@+id/address"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:backgroundTint="#C95EFC"
+        android:backgroundTint="@color/primary"
         android:inputType="text|textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,9 +146,10 @@
         app:layout_constraintWidth_percent="0.9" />
 
     <EditText
+        android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:backgroundTint="#C95EFC"
+        android:backgroundTint="@color/primary"
         android:inputType="text|textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -158,10 +160,11 @@
         app:layout_constraintWidth_percent="0.9" />
 
     <Button
+        android:id="@+id/Submit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autoSizeTextType="uniform"
-        android:text="Description"
+        android:text="Submit"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
