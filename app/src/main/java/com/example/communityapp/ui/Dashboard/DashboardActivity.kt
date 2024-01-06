@@ -34,8 +34,14 @@ class DashboardActivity : AppCompatActivity() {
 
         setObservables()
         setUpNavigation()
-        FirebaseAuth.getInstance().uid?.let { viewModel.getMember(it) }
-        viewModel.getMember("7737751653")
+
+        val id = FirebaseAuth.getInstance().currentUser?.phoneNumber
+
+        Log.d("Dashboard phone no",id.toString())
+
+        if (id != null) {
+            viewModel.getMember(id)
+        }
     }
 
     private fun setUpNavigation() {
@@ -50,8 +56,6 @@ class DashboardActivity : AppCompatActivity() {
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     var user_data = resources.data!!
-                    //save this in data store
-
                     Log.e("D Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {

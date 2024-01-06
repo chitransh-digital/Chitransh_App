@@ -22,7 +22,6 @@ class FamilyActivity : AppCompatActivity() {
     private lateinit var viewModel: FamilyViewModel
     private lateinit var binding: ActivityFamilyBinding
     private lateinit var family_id : String
-    private lateinit var uuid : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFamilyBinding.inflate(layoutInflater)
@@ -33,6 +32,10 @@ class FamilyActivity : AppCompatActivity() {
         setObservables()
 
         getArguements()
+
+        val no = FirebaseAuth.getInstance().currentUser?.phoneNumber
+
+        Log.d("Dashboard phoe no",no.toString())
 
         binding.memberSubmit.setOnClickListener {
             checkDetails()
@@ -70,7 +73,6 @@ class FamilyActivity : AppCompatActivity() {
         val data = Member(
             familyID = binding.IDinput.text.toString(),
             name = binding.nameinput.text.toString(),
-            uuid = uuid,
             DOB = binding.DOBinput.text.toString(),
             contact = binding.contactinput.text.toString(),
             age = binding.ageinput.text.toString().toInt(),
@@ -78,14 +80,14 @@ class FamilyActivity : AppCompatActivity() {
             address = binding.Addinput.text.toString(),
             karyakarni = binding.Karyainput.text.toString()
         )
-
         viewModel.addMember(member = data)
     }
 
     private fun getArguements(){
         family_id = intent.getStringExtra(Constants.FAMILYID).toString()
-        uuid = FirebaseAuth.getInstance().uid.toString()
+        binding.IDinput.setText(family_id)
     }
+
 
     private fun setObservables(){
         viewModel.user.observe(this, Observer {resources ->

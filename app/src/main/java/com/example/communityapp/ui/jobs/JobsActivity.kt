@@ -16,6 +16,8 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Comment
 import com.example.communityapp.data.models.Job
 import com.example.communityapp.data.models.NewsFeed
+import com.example.communityapp.databinding.ActivityJobPostingBinding
+import com.example.communityapp.databinding.ActivityJobsBinding
 import com.example.communityapp.ui.feed.FeedsAdapter
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +29,12 @@ import java.time.format.DateTimeFormatter
 class JobsActivity : AppCompatActivity() {
 
     private val jobsViewModel: JobsViewModel by viewModels()
+    private lateinit var binding : ActivityJobsBinding
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_jobs)
+        binding = ActivityJobsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         jobsViewModel.getAllJobs()
 
@@ -156,9 +160,9 @@ class JobsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(jobs: List<Pair<Job,String>>){
+        Log.d("Recycler view Job",jobs.toString())
         val jobsAdapter = JobsAdapter(jobs, this@JobsActivity)
-        val rv = findViewById<RecyclerView>(R.id.rv_jobs)
-        rv.adapter = jobsAdapter
-        rv.layoutManager = LinearLayoutManager(this)
+        binding.rvJobs.adapter = jobsAdapter
+        binding.rvJobs.layoutManager = LinearLayoutManager(this)
     }
 }

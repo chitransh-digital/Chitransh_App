@@ -19,6 +19,5 @@ object Constants {
     const val GENDER = "gender"
     const val KARYAKARNI = "karyakarni"
     const val familyYID = "familyID"
-    const val UUID = "uuid"
     const val DOB = "DOB"
 }

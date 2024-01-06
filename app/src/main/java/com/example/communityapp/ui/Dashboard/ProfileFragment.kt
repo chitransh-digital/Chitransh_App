@@ -15,6 +15,7 @@ import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.FragmentProfileBinding
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,8 +54,9 @@ class ProfileFragment : Fragment() {
 
     private fun setUpRecyclerView(data : List<Member>){
         val list : ArrayList<Member> = ArrayList()
+        val id = FirebaseAuth.getInstance().currentUser?.phoneNumber
         for(ip in data){
-            if(ip.contact == "7737751653"){
+            if(ip.contact == id){
                 binding.UserDetails.profileName.text = ip.name
                 binding.UserDetails.profileContact.text = ip.contact
             }else{

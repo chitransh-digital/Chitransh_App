@@ -35,7 +35,7 @@ class BusinessActivity : AppCompatActivity() {
     }
 
     private fun getArguments(){
-        id = intent.getStringExtra(Constants.UUID).toString()
+        id = intent.getStringExtra(Constants.CONTACT).toString()
     }
 
     private fun setObservables() {

@@ -18,6 +18,7 @@ import com.example.communityapp.ui.jobPosting.JobPostingActivity
 import com.example.communityapp.ui.jobs.JobsActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
@@ -35,7 +36,7 @@ class HomeFragment : Fragment() {
 
         binding.card3.setOnClickListener {
             val intent = Intent(requireContext(),BusinessActivity::class.java)
-            intent.putExtra(Constants.UUID,user_data.uuid)
+            intent.putExtra(Constants.CONTACT,user_data.contact)
             startActivity(intent)
         }
 
@@ -78,7 +79,8 @@ class HomeFragment : Fragment() {
 
     private fun updateUI(data : List<Member>){
         for(ip in data){
-            if (ip.contact == "7737751653"){
+            val id = FirebaseAuth.getInstance().currentUser?.phoneNumber
+            if (ip.contact == id){
                 user_data = ip
                 binding.topGreeting.text = "Namaskar ${ip.name} Ji"
                 break

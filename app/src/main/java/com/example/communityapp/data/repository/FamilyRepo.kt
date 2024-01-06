@@ -23,11 +23,11 @@ class FamilyRepo @Inject constructor(private val db : FirebaseFirestore) {
             var ch = "OK"
             try {
                 val familyCollection = db.collection(Constants.FAMILY).document(member.familyID).collection(Constants.MEMBER)
-                    .document(member.uuid)
-                val userCollection = db.collection(Constants.USERS).document(member.uuid)
+                    .document(member.contact)
+                val userCollection = db.collection(Constants.USERS).document(member.contact)
 
                 db.runBatch { batch ->
-                    batch.set(userCollection, User(member.uuid,member.familyID))
+                    batch.set(userCollection, User(member.familyID,member.contact))
                     batch.set(familyCollection,member)
                 }.addOnCompleteListener {
                     ch = "OK"
