@@ -6,7 +6,6 @@
         android:name=".chitranshApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,12 +14,14 @@
         android:theme="@style/Theme.CommunityApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.feed.FeedsActivity"
-            android:exported="false" >
-        </activity>
+            android:name=".ui.jobPosting.JobPostingActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.Business.BusinessActivity"
-            android:exported="false">
+            android:exported="false"></activity>
+=======
+            android:name=".ui.feed.FeedsActivity"
+            android:exported="false" >
         </activity>
         <activity
             android:name=".ui.Dashboard.DashboardActivity"
@@ -30,18 +31,17 @@
             android:exported="true"></activity>
         <activity
             android:name=".ui.jobs.JobsActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".ui.auth.Login_activity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

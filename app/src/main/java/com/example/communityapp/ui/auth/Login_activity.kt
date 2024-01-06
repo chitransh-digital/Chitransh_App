@@ -3,6 +3,7 @@ package com.example.communityapp.ui.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -10,9 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
 import com.example.communityapp.databinding.ActivityLoginBinding
+import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,6 +33,20 @@ class Login_activity : AppCompatActivity() {
         viewModel =ViewModelProvider(this)[LoginViewModel::class.java]
 
         setObservables()
+
+        Handler().postDelayed({
+
+            var currentUserID = FirebaseAuth.getInstance().currentUser
+
+            if (currentUserID != null){
+                startActivity(Intent(this,DashboardActivity::class.java))
+                finish()
+            }else{
+                binding.button.visibility = View.VISIBLE
+                binding.editTextPhone.visibility = View.VISIBLE
+            }
+            finish()
+        },2000)
 
         binding.button.setOnClickListener {
             val ph = "+91" + binding.editTextPhone.text.toString()
@@ -60,7 +77,8 @@ class Login_activity : AppCompatActivity() {
                     if (resource.data?.first == 1){
                         codesent(resource.data.second)
                     }else{
-                        startActivity(Intent(this,FamilyActivity::class.java))
+                        startActivity(Intent(this,DashboardActivity::class.java))
+                        finish()
                     }
                 }
                 Resource.Status.ERROR->{
@@ -83,8 +101,7 @@ class Login_activity : AppCompatActivity() {
 
     private fun codesent(data: String) {
         verificationID = data
-        binding.text.text = "Please enter the OTP"
-        binding.editTextPhone.text.clear()
+        binding.editTextPhone.hint = "Please enter the OTP"
         binding.button.visibility = View.GONE
         binding.buttonotp.visibility = View.VISIBLE
     }

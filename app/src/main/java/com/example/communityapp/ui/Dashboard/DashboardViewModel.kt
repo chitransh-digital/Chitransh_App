@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.repository.DashboardRepo
 import com.example.communityapp.utils.Resource
+import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,9 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(private var dashboardRepo: DashboardRepo) : ViewModel() {
 
-    private val _user_data = MutableLiveData<Resource<Member>>()
+    private val _user_data = MutableLiveData<Resource<List<Member>>>()
 
-    val user_data : LiveData<Resource<Member>>
+    val user_data : LiveData<Resource<List<Member>>>
         get() = _user_data
 
     fun getMember(contact : String){

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.family.FamilyActivity">
+    tools:context=".ui.jobPosting.JobPostingActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,12 +30,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:autoSizeTextType="uniform"
-            android:text="Registration"
+            android:text="Job Posting"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.612"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +70,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/FamilyID"
+            android:id="@+id/contact"
             android:layout_width="0dp"
             app:layout_constraintWidth_percent="0.9"
             android:layout_height="wrap_content"
@@ -80,75 +80,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name"
             app:layout_constraintVertical_bias="0.034">
-
-            <TextView
-                android:id="@+id/IDtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FamilyID"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/IDinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Family ID"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/DOB"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/FamilyID"
-            app:layout_constraintVertical_bias="0.052"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/DOBtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Birth"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/DOBinput"
-                    android:layout_width="0dp"
-                    android:layout_weight="8"
-                    android:layout_height="wrap_content"
-                    android:hint="Date Of Birth"/>
-                <ImageView
-                    android:id="@+id/dateSelector"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/date"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/contact"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/DOB"
-            app:layout_constraintVertical_bias="0.055"
-            app:layout_constraintWidth_percent="0.9">
 
             <TextView
                 android:id="@+id/contacttext"
@@ -163,131 +94,132 @@
                 android:id="@+id/contactinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+91" />
+                android:text="+91"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/age"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/gender"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.093"
-            app:layout_constraintWidth_percent="0.28">
-
-            <TextView
-                android:id="@+id/agetext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Age"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/ageinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Age" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/gender"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/age"
-            app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.094"
-            app:layout_constraintWidth_percent="0.55">
-
-            <TextView
-                android:id="@+id/gendertext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gender"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/genderinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Gender" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/Add"
+            android:id="@+id/job_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gender"
+            app:layout_constraintTop_toBottomOf="@id/contact"
+            app:layout_constraintVertical_bias="0.052"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/job_titletext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Job Title"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/job_titleinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Job title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/salary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/job_title"
+            app:layout_constraintVertical_bias="0.055"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/salarytext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Salary"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/salaryinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Salary" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/req"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/salary"
             app:layout_constraintVertical_bias="0.162"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
-                android:id="@+id/Addtext"
+                android:id="@+id/reqtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address"
+                android:text="Requirements"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/Addinput"
+                android:id="@+id/reqinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Address" />
+                android:hint="Requirements for Job" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/Karya"
+            android:id="@+id/Desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Add"
+            app:layout_constraintTop_toBottomOf="@id/req"
             app:layout_constraintVertical_bias="0.24"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
-                android:id="@+id/Karyatext"
+                android:id="@+id/Desctext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Karyakarni"
+                android:text="Description"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/Karyainput"
+                android:id="@+id/Descinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Karyakarni" />
+                android:inputType="textMultiLine"
+                android:hint="Description of Job" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/member_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submir"
+            android:text="Submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.467"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintTop_toBottomOf="@id/Desc"
             android:layout_marginTop="16dp"
             app:layout_constraintVertical_bias="0.25" />
 
