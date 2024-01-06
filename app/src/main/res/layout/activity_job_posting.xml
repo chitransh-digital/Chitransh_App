@@ -153,6 +153,33 @@
                 android:hint="Salary" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/salary"
+            app:layout_constraintVertical_bias="0.097"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/locationtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="location"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/locationinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location of Job" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/req"
@@ -162,7 +189,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/salary"
+            app:layout_constraintTop_toBottomOf="@id/location"
             app:layout_constraintVertical_bias="0.162"
             app:layout_constraintWidth_percent="0.9">
 
@@ -212,6 +239,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/Job_Submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit"
