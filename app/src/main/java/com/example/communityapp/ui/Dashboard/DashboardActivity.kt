@@ -15,6 +15,7 @@ import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.utils.Resource
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,6 +34,7 @@ class DashboardActivity : AppCompatActivity() {
 
         setObservables()
         setUpNavigation()
+        FirebaseAuth.getInstance().uid?.let { viewModel.getMember(it) }
         viewModel.getMember("7737751653")
     }
 
@@ -47,6 +49,9 @@ class DashboardActivity : AppCompatActivity() {
         viewModel.user_data.observe(this, Observer {resources ->
             when(resources.status){
                 Resource.Status.SUCCESS -> {
+                    var user_data = resources.data!!
+                    //save this in data store
+
                     Log.e("D Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {

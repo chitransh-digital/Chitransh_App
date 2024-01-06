@@ -28,7 +28,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.family.FamilyActivity"
-            android:exported="true"></activity>
+            android:exported="false">
+        </activity>
         <activity
             android:name=".ui.jobs.JobsActivity"
             android:exported="false">

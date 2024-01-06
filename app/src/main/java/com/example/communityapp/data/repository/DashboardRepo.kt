@@ -17,9 +17,9 @@ import kotlin.coroutines.suspendCoroutine
 
 class DashboardRepo @Inject constructor(private val db: FirebaseFirestore) {
 
-    suspend fun findMember(contact: String): List<Member> {
+    suspend fun findMember(uuid: String): List<Member> {
         return suspendCoroutine { continuation ->
-            db.collection(Constants.USERS).document(contact).get().addOnSuccessListener {
+            db.collection(Constants.USERS).document(uuid).get().addOnSuccessListener {
                 db.collection(Constants.FAMILY).document(it.get("familyID").toString())
                     .collection(Constants.MEMBER).get().addOnSuccessListener { document ->
                         val list: ArrayList<Member> = ArrayList()

@@ -14,6 +14,8 @@ import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.FragmentHomeBinding
 import com.example.communityapp.ui.Business.BusinessActivity
 import com.example.communityapp.ui.family.FamilyActivity
+import com.example.communityapp.ui.jobPosting.JobPostingActivity
+import com.example.communityapp.ui.jobs.JobsActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 
@@ -43,6 +45,16 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.card2.setOnClickListener {
+            val intent = Intent(requireContext(),JobPostingActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.card4.setOnClickListener {
+            val intent = Intent(requireContext(),JobsActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
@@ -50,7 +62,7 @@ class HomeFragment : Fragment() {
         viewModel.user_data.observe(viewLifecycleOwner, Observer {resources ->
             when(resources.status){
                 Resource.Status.SUCCESS -> {
-                    Log.e("Profile Success",resources.data.toString())
+                    Log.e("home Success",resources.data.toString())
                     updateUI(resources.data!!)
                 }
                 Resource.Status.LOADING -> {

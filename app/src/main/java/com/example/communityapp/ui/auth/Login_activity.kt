@@ -42,10 +42,11 @@ class Login_activity : AppCompatActivity() {
                 startActivity(Intent(this,DashboardActivity::class.java))
                 finish()
             }else{
+                binding.progressBar.visibility = View.GONE
                 binding.button.visibility = View.VISIBLE
                 binding.editTextPhone.visibility = View.VISIBLE
             }
-            finish()
+//            finish()
         },2000)
 
         binding.button.setOnClickListener {

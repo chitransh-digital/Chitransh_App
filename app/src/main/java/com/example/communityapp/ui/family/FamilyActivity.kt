@@ -68,7 +68,7 @@ class FamilyActivity : AppCompatActivity() {
 
     private fun submitRegistration() {
         val data = Member(
-            familyID = family_id,
+            familyID = binding.IDinput.text.toString(),
             name = binding.nameinput.text.toString(),
             uuid = uuid,
             DOB = binding.DOBinput.text.toString(),
@@ -92,6 +92,15 @@ class FamilyActivity : AppCompatActivity() {
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     Log.e("Success",resources.data.toString())
+                    //clear all fields
+                    binding.nameinput.text.clear()
+                    binding.contactinput.text.clear()
+                    binding.Addinput.text.clear()
+                    binding.Karyainput.text.clear()
+                    binding.DOBinput.text.clear()
+                    binding.ageinput.text.clear()
+                    binding.genderinput.text.clear()
+                    Toast.makeText(this, "Member Added Successfully", Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING -> {
                     Log.e("Loading",resources.data.toString())
