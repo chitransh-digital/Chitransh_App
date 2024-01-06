@@ -8,5 +8,6 @@ data class Job(
     val jobDescription: String,
     val jobTitle: String,
     val requirements: List<String>,
-    val salary: Int
+    val salary: Int,
+    val location: String
 ):Serializable
