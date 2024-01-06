@@ -39,8 +39,8 @@ class JobsViewModel @Inject constructor(private  val jobsRepo: JobsRepo): ViewMo
     }
 
 
-    private val _jobResult = MutableLiveData<Resource<List<Job>>>()
-    val jobResult: LiveData<Resource<List<Job>>>
+    private val _jobResult = MutableLiveData<Resource<List<Pair<Job,String>>>>()
+    val jobResult: LiveData<Resource<List<Pair<Job,String>>>>
         get() = _jobResult
 
     // Function to fetch all jobs

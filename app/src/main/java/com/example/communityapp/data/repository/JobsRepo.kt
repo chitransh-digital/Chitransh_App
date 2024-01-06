@@ -37,14 +37,15 @@ class JobsRepo @Inject constructor(private val db: FirebaseFirestore) {
     }
 
     //get all the jobs
-    suspend fun getAllJobs(): List<Job> {
+    suspend fun getAllJobs(): List<Pair<Job,String>> {
         return suspendCoroutine { continuation ->
             db.collection("JOBS")
                 .get()
                 .addOnSuccessListener { result ->
-                    val jobsList = mutableListOf<Job>()
+                    val jobsList = mutableListOf<Pair<Job,String>>()
 //                    e("JobsRepo", "getAllJobs: ${result.documents}")
                     for (document in result) {
+                        val id=document.id
                         // Map Firestore document to your Job class
                         e("JobsRepo", "docList: ${document}")
                         val name = document.data.get("businessName").toString()
@@ -53,8 +54,9 @@ class JobsRepo @Inject constructor(private val db: FirebaseFirestore) {
                         val jobTitle = document.data.get("jobTitle").toString()
                         val requirements = document.data.get("requirements") as List<String>
                         val salary = document.data.get("salary").toString().toInt()
-                        val job = Job(name, contact, jobDescription, jobTitle, requirements, salary)
-                        jobsList.add(job)
+                        val location = document.data.get("location").toString()
+                        val job = Job(name, contact, jobDescription, jobTitle, requirements, salary,location)
+                        jobsList.add(Pair(job,id))
 
 //                        e("JobsRepo", "job: ${job}")
                     }
