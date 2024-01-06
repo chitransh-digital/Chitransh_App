@@ -19,7 +19,7 @@
         <activity
             android:name=".ui.Business.BusinessActivity"
             android:exported="false"></activity>
-=======
+        <activity
             android:name=".ui.feed.FeedsActivity"
             android:exported="false" >
         </activity>
