@@ -16,46 +16,56 @@
         <LinearLayout
             android:layout_width="match_parent"
         android:layout_height="match_parent"
+            android:weightSum="1"
         android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="0dp"
             android:scaleType="fitXY"
+                android:layout_weight="0.4"
             android:src="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/headline"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:includeFontPadding="true"
                 android:text="Headline"
+                android:layout_weight="0.05"
                 android:textSize="16sp" />
+            <ScrollView
+                android:layout_weight="0.5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
 
-            <TextView
-                android:id="@+id/desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:includeFontPadding="true"
-                android:maxLines="4"
-                android:text="@string/lorem_ipsum"
-                android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:includeFontPadding="true"
+                    android:text="@string/lorem_ipsum"
+                    android:textSize="16sp" />
+
+            </ScrollView>
+
 
             <TextView
                 android:id="@+id/timestamp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:padding="2dp"
+                android:layout_weight="0.05"
                 android:text="updated 2 hours ago"
                 android:textSize="10sp" />
 
