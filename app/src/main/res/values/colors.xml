@@ -5,4 +5,6 @@
     <color name="primary">#C95EFC</color>
     <color name="profile_item_color">#EBDB84</color>
     <color name="theme_purple">#C95EFC</color>
+    <color name="theme_yellow">#FCE45E</color>
+    <color name="theme_brown">#620402</color>
 </resources>
