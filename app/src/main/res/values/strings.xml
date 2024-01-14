@@ -52,5 +52,11 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="active_jobs">Active JOBS</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="submit_otp">Submit</string>
+    <string name="login_phone">Enter your Phone No</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_language">Choose Language/भाषा चुनें</string>
+    <string name="Screen_proceed">Proceed with Phone Number</string>
+    <string name="welcome_text">Welcome to \n<font color='#620402'>Chitransh Digital</font></string>D
 </resources>
