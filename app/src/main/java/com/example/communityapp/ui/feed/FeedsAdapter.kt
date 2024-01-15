@@ -19,6 +19,7 @@ class FeedsAdapter(private val newsItems: List<NewsFeed>,private val context: Co
         val descriptionTextView: TextView = itemView.findViewById(R.id.desc)
         val dateTextView: TextView = itemView.findViewById(R.id.timestamp)
         val imageView:ImageView = itemView.findViewById(R.id.imageView)
+        val authorTextView:TextView = itemView.findViewById(R.id.author)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
@@ -31,6 +32,7 @@ class FeedsAdapter(private val newsItems: List<NewsFeed>,private val context: Co
         holder.headlineTextView.text = currentItem.title
         holder.descriptionTextView.text = currentItem.body
         holder.dateTextView.text = currentItem.timestamp
+        holder.authorTextView.text = currentItem.author
 
         Glide.with(context).load(currentItem.images[0]).into(holder.imageView)
     }

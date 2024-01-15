@@ -51,7 +51,8 @@ class FeedsActivity : AppCompatActivity() {
                                 emptyList(),
                                 "timestamp",
                                 "title3",
-                                true
+                                true,
+                                "jabalpur"
                             ),
                             selectedImagePaths
                         )

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class News : Fragment() {
     private var lastNews: NewsFeed? = null
     private  var feedsList:MutableList<NewsFeed> = mutableListOf()
     private lateinit var newsAdapter: FeedsAdapter
+    private var position: Int = -1  // Default value or a value that indicates it's not set
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -52,7 +54,8 @@ class News : Fragment() {
                                 emptyList(),
                                 "timestamp",
                                 "title3",
-                                true
+                                true,
+                                "location"
                             ),
                             selectedImagePaths
                         )
@@ -71,11 +74,31 @@ class News : Fragment() {
 //        }
 
         //getFeedsbyPaging
-        if(lastNews == null){
-            showAdapter(feedsList)
-            feedsViewModel.getFeedsByPaging()
+//        if(lastNews == null){
+//            showAdapter(feedsList)
+//            feedsViewModel.getFeedsByPaging()
+//        }else{
+//            feedsViewModel.getFeedsByPaging(lastNews)
+//        }
+
+
+
+        if(arguments!=null){
+            arguments?.let {
+                e("h","hihihi")
+                position = it.getInt("position", -1)
+                val args = it.getParcelableArrayList<NewsFeed>("newsFeedList") ?: mutableListOf()
+                lastNews = args.last()
+                feedsList = args.toMutableList()
+                showAdapter(feedsList)
+            }
         }else{
-            feedsViewModel.getFeedsByPaging(lastNews)
+            if(lastNews == null){
+                showAdapter(feedsList)
+                feedsViewModel.getFeedsByPaging()
+            }else{
+                feedsViewModel.getFeedsByPaging(lastNews)
+            }
         }
 
 
@@ -166,6 +189,7 @@ class News : Fragment() {
         val viewPager: ViewPager2 = binding.viewPager
         newsAdapter = FeedsAdapter(feedsList, requireContext())
         viewPager.adapter = newsAdapter
+        viewPager.setCurrentItem(position, false)
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
