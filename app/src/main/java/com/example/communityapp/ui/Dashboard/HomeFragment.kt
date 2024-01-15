@@ -11,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.FragmentHomeBinding
+import com.example.communityapp.databinding.FragmentHomeNewBinding
 import com.example.communityapp.ui.Business.BusinessActivity
 import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.ui.jobPosting.JobPostingActivity
@@ -20,16 +22,16 @@ import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(){
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentHomeNewBinding
     private lateinit var viewModel: DashboardViewModel
     private lateinit var user_data : Member
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentHomeNewBinding.inflate(layoutInflater)
 
         viewModel = ViewModelProvider(requireActivity())[DashboardViewModel::class.java]
         setObservables()
@@ -75,6 +77,29 @@ class HomeFragment : Fragment() {
                 else -> {}
             }
         })
+
+        viewModel.feeds.observe(viewLifecycleOwner, Observer {resources ->
+            when(resources.status){
+                Resource.Status.SUCCESS -> {
+                    Log.e("news load Success",resources.data.toString())
+                    try {
+                        setupRv(resources.data!!)
+                        val newsBylocation = resources.data.filter { it.location in user_data.address }
+                        setupRvbyLocation(newsBylocation)
+                    }
+                    catch (e : Exception){
+                        Log.e("news load error",e.toString())
+                    }
+                }
+                Resource.Status.LOADING -> {
+                    Log.e(" Profile Loading",resources.data.toString())
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("Profile Error",resources.apiError.toString())
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun updateUI(data : List<Member>){
@@ -82,11 +107,62 @@ class HomeFragment : Fragment() {
             val id = FirebaseAuth.getInstance().currentUser?.phoneNumber
             if (ip.contact == id){
                 user_data = ip
-                binding.topGreeting.text = "Namaskar ${ip.name} Ji"
+                viewModel.getFeedsByPaging()
+//                binding.topGreeting.text = "Namaskar ${ip.name} Ji"
                 break
             }
         }
 
     }
+
+    private fun setupRv(newsList: List<NewsFeed>){
+        val adapter = SmallNewsAdapter(requireContext(),newsList){ position, newsList ->
+            // Handle the item click, and pass the newsList to another fragment
+
+            val bundle = Bundle().apply {
+                putInt("position", position)
+                putParcelableArrayList("newsFeedList", ArrayList(newsList))
+            }
+
+            val anotherFragment = News()
+            anotherFragment.arguments = bundle
+
+            // Replace the current fragment with AnotherFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.Frag, anotherFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.rvRecentNews.adapter = adapter
+
+        binding.rvRecentNews.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(),
+            androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,false)
+    }
+    private fun setupRvbyLocation(newsBylocation: List<NewsFeed>) {
+
+        val adapter = SmallNewsAdapter(requireContext(),newsBylocation){ position, newsList ->
+            // Handle the item click, and pass the newsList to another fragment
+
+            val bundle = Bundle().apply {
+                putInt("position", position)
+                putParcelableArrayList("newsFeedList", ArrayList(newsList))
+            }
+
+            val anotherFragment = News()
+            anotherFragment.arguments = bundle
+
+            // Replace the current fragment with AnotherFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.Frag, anotherFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.rvLocalNews.adapter = adapter
+
+        binding.rvLocalNews.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(),
+            androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,false)
+    }
+
 
 }

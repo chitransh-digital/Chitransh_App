@@ -2,6 +2,7 @@ package com.example.communityapp.ui.jobs
 
 import android.os.Build
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.util.Log.e
 import androidx.fragment.app.Fragment
@@ -10,20 +11,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Comment
+import com.example.communityapp.data.models.Job
 import com.example.communityapp.utils.Resource
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class BottomSheetFragment(private var jobId:String) : BottomSheetDialogFragment() {
+class BottomSheetFragment(private var jobId:Pair<Job,String>) : BottomSheetDialogFragment() {
     private val jobsViewModel: JobsViewModel by activityViewModels()
     private var comments:MutableList<Comment> = mutableListOf()
     private lateinit var commentsAdapter: CommentsAdapter
@@ -35,7 +39,7 @@ class BottomSheetFragment(private var jobId:String) : BottomSheetDialogFragment(
         setObservables()
 
     try {
-        jobsViewModel.getAllComments(jobId)
+        jobsViewModel.getAllComments(jobId.second)
     }
     catch (e:Exception) {
         e("error", "$e")
@@ -50,6 +54,12 @@ class BottomSheetFragment(private var jobId:String) : BottomSheetDialogFragment(
 
         val rootView = inflater.inflate(R.layout.fragment_bottom_sheet, container, false)
 
+        rootView.findViewById<TextView>(R.id.tvMore).movementMethod = ScrollingMovementMethod()
+
+        rootView.findViewById<TextView>(R.id.tvMore).text = jobId.first.jobDescription
+        rootView.findViewById<TextView>(R.id.tv_expandedJobTitle).text = jobId.first.jobTitle
+        rootView.findViewById<TextView>(R.id.jobExpandedLocation).text = jobId.first.location
+
         rootView.findViewById<ImageView>(R.id.submitComment)?.setOnClickListener {
             e("comment", "clicked")
             if (rootView.findViewById<EditText>(R.id.commentInput)?.text?.isNotEmpty() == true) {
@@ -62,7 +72,7 @@ class BottomSheetFragment(private var jobId:String) : BottomSheetDialogFragment(
                 lastCommentAdded = Comment("a", formattedDateTime, rootView.findViewById<EditText>(R.id.commentInput)?.text.toString())
 
                 jobsViewModel.addComment(
-                    jobId,
+                    jobId.second,
                     lastCommentAdded!!
                 )
                 rootView.findViewById<EditText>(R.id.commentInput)?.text?.clear()
@@ -133,6 +143,8 @@ class BottomSheetFragment(private var jobId:String) : BottomSheetDialogFragment(
     private fun setupRv(){
         //setup recycler view
         val rv= view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.commentRecyclerView)
+
+        view?.let { ViewCompat.setNestedScrollingEnabled(it, true) };
 
          commentsAdapter = CommentsAdapter(comments)
         rv?.adapter = commentsAdapter

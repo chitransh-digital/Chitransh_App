@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.data.repository.DashboardRepo
 import com.example.communityapp.utils.Resource
 import com.google.firebase.firestore.DocumentSnapshot
@@ -33,5 +34,24 @@ class DashboardViewModel @Inject constructor(private var dashboardRepo: Dashboar
             }
         }
     }
+
+
+    //getFeedsByPaging
+    private val _feeds = MutableLiveData<Resource<List<NewsFeed>>>()
+    val feeds: LiveData<Resource<List<NewsFeed>>>
+        get() = _feeds
+
+    fun getFeedsByPaging(lastFeed: NewsFeed? = null) {
+        _feeds.value = Resource.loading()
+        viewModelScope.launch {
+            try {
+                val feeds = dashboardRepo.getFeeds(lastFeed)
+                _feeds.postValue(Resource.success(feeds))
+            } catch (e: Exception) {
+                _feeds.postValue(Resource.error(e))
+            }
+        }
+    }
+
 
 }

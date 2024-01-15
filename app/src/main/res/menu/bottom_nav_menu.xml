@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/account_circle"
-        android:title="Profile"/>
+<!--    <item-->
+<!--        android:id="@+id/navigation_profile"-->
+<!--        android:icon="@drawable/account_circle"-->
+<!--        android:title="Profile"/>-->
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home"
-        android:title="Home"/>
+        android:title="Home" />
     <item
         android:id="@+id/navigation_news"
         android:icon="@drawable/newspaper"
-        android:title="News"/>
+        android:title="News" />
 
 </menu>

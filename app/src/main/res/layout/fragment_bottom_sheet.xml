@@ -6,12 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".ui.jobs.BottomSheetFragment">
 
+    <LinearLayout
+        android:id="@+id/detailedJobLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_expandedJobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="Job Position"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:maxLength="100"
+            android:maxLines="2"
+            android:textColor="@color/theme_brown"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginTop="8dp"
+            >
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@drawable/baseline_location_city_24"
+                android:textColor="@color/theme_brown"
+                />
+            <TextView
+                android:id="@+id/jobExpandedLocation"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:text="Job Location"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:text="₹"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/theme_brown"
+                />
+            <TextView
+                android:id="@+id/jobExpandedSalary"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:text="30000-500000"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@drawable/baseline_school_24"
+                android:textColor="@color/theme_brown"
+                />
+            <TextView
+                android:id="@+id/jobExpandedRequirements"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:text="Job Requirements"
+                android:maxLines="1"
+                android:maxLength="20"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_jobExpandedDescriptionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Description"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/tvMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="200dp"
+                android:text="@string/lorem_ipsum"
+                android:scrollbars="vertical" />
+
+        </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/btn_jobApply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apply"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/theme_brown"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comments"
+            />
+
+
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentRecyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_below="@id/detailedJobLayout"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="true"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         tools:listitem="@layout/comment_item" />
@@ -30,7 +166,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Write a comment..."
+            android:hint="@string/write_a_comment"
             android:background="#F3F3F3"/>
 
         <ImageView

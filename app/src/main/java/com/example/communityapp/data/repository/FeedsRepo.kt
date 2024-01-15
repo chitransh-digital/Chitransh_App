@@ -91,6 +91,7 @@ class FeedsRepo @Inject constructor(private val db: FirebaseFirestore, private v
                         val timestamp = document.data?.get("timestamp")
                         val title = document.data?.get("title")
                         val visible= document.data?.get("visible")
+                        val location= document.data?.get("location")
 
                         val feed = NewsFeed(
                             author = author as String,
@@ -98,7 +99,8 @@ class FeedsRepo @Inject constructor(private val db: FirebaseFirestore, private v
                             images = images,
                             timestamp = timestamp as String,
                             title = title as String,
-                            visible = visible as Boolean
+                            visible = visible as Boolean,
+                            location = location as String
                         )
                         feed?.let {
                             feeds.add(it)
