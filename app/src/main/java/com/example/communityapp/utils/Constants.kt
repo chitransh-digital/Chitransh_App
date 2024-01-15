@@ -20,4 +20,7 @@ object Constants {
     const val KARYAKARNI = "karyakarni"
     const val familyYID = "familyID"
     const val DOB = "DOB"
+
+    //For data transfer b/w intents
+    const val USER_DATA = "user_data"
 }

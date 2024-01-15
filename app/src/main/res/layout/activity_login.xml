@@ -10,6 +10,7 @@
         android:id="@+id/logo_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:transitionName="@string/transition_name"
         android:src="@drawable/chitranshlogo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,55 +25,147 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/primary"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.612" />
 
+    <TextView
+        android:id="@+id/pre_login_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_text"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/pre_login_lang_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/choose_language"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button_proceed_phno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/theme_brown"
+        android:text="@string/Screen_proceed"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.745" />
+
+    <Button
+        android:id="@+id/button_Hindi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/theme_brown"
+        android:text="हिंदी"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_English"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.679" />
+
+    <Button
+        android:id="@+id/button_English"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/theme_brown"
+        android:text="English"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_Hindi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.679"/>
+
+    <TextView
+        android:id="@+id/login_otp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/login_phone"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image"
+        app:layout_constraintVertical_bias="0.05" />
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextPhone"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
         android:hint="Phone No"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.624"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@id/login_otp_text"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.8" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+        android:id="@+id/buttonPhoneNo"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Send"
+        android:backgroundTint="@color/theme_brown"
+        android:text="@string/get_otp"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.743"
-        android:layout_margin="24dp"
-        android:backgroundTint="@color/primary"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@id/editTextPhone"
+        app:layout_constraintVertical_bias="0.189"
+        app:layout_constraintWidth_percent="0.5" />
 
     <Button
-        android:id="@+id/buttonotp"
-        android:layout_width="match_parent"
+        android:id="@+id/buttonOTP"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Verify"
+        android:backgroundTint="@color/theme_brown"
+        android:text="@string/submit_otp"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.743"
-        android:layout_margin="24dp"
-        android:backgroundTint="@color/primary"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@id/editTextPhone"
+        app:layout_constraintVertical_bias="0.189"
+        app:layout_constraintWidth_percent="0.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
