@@ -1,5 +1,8 @@
 package com.example.communityapp.ui.auth
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +22,7 @@ import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
+import com.example.communityapp.utils.moveAndResizeView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +34,7 @@ class Login_activity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
     private lateinit var verificationID: String
     private var contentPointer = 1
+    private var shortAnimationDuration = 500
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -56,19 +61,17 @@ class Login_activity : AppCompatActivity() {
         contentPointer = 1
         showContent(contentPointer)
 
-        Handler().postDelayed({
+        var currentUserID = FirebaseAuth.getInstance().currentUser
 
-            var currentUserID = FirebaseAuth.getInstance().currentUser
+        if (currentUserID != null) {
+            startActivity(Intent(this, DashboardActivity::class.java))
+            finish()
+        } else {
+            moveAndResizeView(binding.logoImage, -200f, (binding.logoImage.height / 1.2).toInt())
+            contentPointer++
+            showContent(contentPointer)
+        }
 
-            if (currentUserID != null) {
-                startActivity(Intent(this, DashboardActivity::class.java))
-                finish()
-            } else {
-                contentPointer++
-                showContent(contentPointer)
-            }
-//            finish()
-        }, 2000)
 
         binding.buttonEnglish.setOnClickListener {
             contentPointer++
@@ -100,8 +103,8 @@ class Login_activity : AppCompatActivity() {
             if (otp.isEmpty()) {
                 Toast.makeText(this, "Please enter otp", Toast.LENGTH_SHORT).show()
             } else {
-                val credential = PhoneAuthProvider.getCredential(verificationID, otp)
-                viewModel.signInWithPhoneAuthCredential(credential, this)
+//                val credential = PhoneAuthProvider.getCredential(verificationID, otp)
+//                viewModel.signInWithPhoneAuthCredential(credential, this)
             }
         }
 
@@ -148,82 +151,129 @@ class Login_activity : AppCompatActivity() {
     private fun showContent(pointer: Int) {
         when (pointer) {
             1 -> {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.preLoginTextView.visibility = View.GONE
-                binding.buttonProceedPhno.visibility = View.GONE
-                binding.preLoginLangSelect.visibility = View.GONE
-                binding.preLoginLangSelect.visibility = View.GONE
-                binding.buttonHindi.visibility = View.GONE
-                binding.buttonEnglish.visibility = View.GONE
-                binding.loginOtpText.visibility = View.GONE
-                binding.editTextPhone.visibility = View.GONE
-                binding.buttonPhoneNo.visibility = View.GONE
-                binding.buttonOTP.visibility = View.GONE
+                crossFade(
+                    listOf(binding.progressBar),
+                    listOf(
+                        binding.preLoginTextView,
+                        binding.buttonProceedPhno,
+                        binding.preLoginLangSelect,
+                        binding.buttonHindi,
+                        binding.buttonEnglish,
+                        binding.loginOtpText,
+                        binding.editTextPhone,
+                        binding.buttonPhoneNo,
+                        binding.buttonOTP
+                    )
+                )
             }
 
             2 -> {
-                binding.progressBar.visibility = View.GONE
-                binding.preLoginTextView.visibility = View.GONE
-                binding.buttonProceedPhno.visibility = View.GONE
-                binding.preLoginLangSelect.visibility = View.VISIBLE
-                binding.buttonHindi.visibility = View.VISIBLE
-                binding.buttonEnglish.visibility = View.VISIBLE
-                binding.loginOtpText.visibility = View.GONE
-                binding.editTextPhone.visibility = View.GONE
-                binding.buttonPhoneNo.visibility = View.GONE
-                binding.buttonOTP.visibility = View.GONE
+                crossFade(
+                    listOf(binding.preLoginLangSelect, binding.buttonHindi, binding.buttonEnglish),
+                    listOf(
+                        binding.progressBar,
+                        binding.preLoginTextView,
+                        binding.buttonProceedPhno,
+                        binding.loginOtpText,
+                        binding.editTextPhone,
+                        binding.buttonPhoneNo,
+                        binding.buttonOTP
+                    )
+                )
             }
 
             3 -> {
-                binding.progressBar.visibility = View.GONE
-                binding.preLoginTextView.visibility = View.VISIBLE
-                binding.buttonProceedPhno.visibility = View.VISIBLE
-                binding.preLoginLangSelect.visibility = View.GONE
-                binding.buttonHindi.visibility = View.GONE
-                binding.buttonEnglish.visibility = View.GONE
-                binding.loginOtpText.visibility = View.GONE
-                binding.editTextPhone.visibility = View.GONE
-                binding.buttonPhoneNo.visibility = View.GONE
-                binding.buttonOTP.visibility = View.GONE
+                crossFade(
+                    listOf(binding.preLoginTextView, binding.buttonProceedPhno),
+                    listOf(
+                        binding.progressBar,
+                        binding.preLoginLangSelect,
+                        binding.buttonHindi,
+                        binding.buttonEnglish,
+                        binding.loginOtpText,
+                        binding.editTextPhone,
+                        binding.buttonPhoneNo,
+                        binding.buttonOTP
+                    )
+                )
             }
 
             4 -> {
-                binding.progressBar.visibility = View.GONE
-                binding.preLoginTextView.visibility = View.GONE
-                binding.buttonProceedPhno.visibility = View.GONE
-                binding.preLoginLangSelect.visibility = View.GONE
-                binding.buttonHindi.visibility = View.GONE
-                binding.buttonEnglish.visibility = View.GONE
-                binding.loginOtpText.visibility = View.VISIBLE
-                binding.editTextPhone.visibility = View.VISIBLE
-                binding.buttonPhoneNo.visibility = View.VISIBLE
-                binding.buttonOTP.visibility = View.GONE
+                binding.loginOtpText.text = getString(R.string.enter_phno)
+                binding.editTextPhone.hint = getString(R.string.enter_phno)
+                crossFade(
+                    listOf(binding.loginOtpText, binding.editTextPhone, binding.buttonPhoneNo),
+                    listOf(
+                        binding.progressBar,
+                        binding.preLoginTextView,
+                        binding.buttonProceedPhno,
+                        binding.preLoginLangSelect,
+                        binding.buttonHindi,
+                        binding.buttonEnglish,
+                        binding.buttonOTP
+                    )
+                )
             }
 
             5 -> {
-                binding.progressBar.visibility = View.GONE
-                binding.preLoginTextView.visibility = View.GONE
-                binding.buttonProceedPhno.visibility = View.GONE
-                binding.preLoginLangSelect.visibility = View.GONE
-                binding.buttonHindi.visibility = View.GONE
-                binding.buttonEnglish.visibility = View.GONE
-                binding.loginOtpText.visibility = View.VISIBLE
-                binding.editTextPhone.visibility = View.VISIBLE
-                binding.buttonPhoneNo.visibility = View.GONE
-                binding.buttonOTP.visibility = View.VISIBLE
+                binding.loginOtpText.text = getString(R.string.enter_otp)
+                binding.editTextPhone.hint = getString(R.string.enter_otp)
+                crossFade(
+                    listOf(binding.loginOtpText, binding.editTextPhone, binding.buttonOTP),
+                    listOf(
+                        binding.progressBar,
+                        binding.preLoginTextView,
+                        binding.buttonProceedPhno,
+                        binding.preLoginLangSelect,
+                        binding.buttonHindi,
+                        binding.buttonEnglish,
+                        binding.buttonPhoneNo
+                    )
+                )
             }
         }
     }
 
+
     override fun onBackPressed() {
         contentPointer--
-        when(contentPointer){
-            0,1->{
+        when (contentPointer) {
+            0, 1 -> {
                 super.onBackPressed()
             }
-            else->{
+
+            else -> {
                 showContent(contentPointer)
             }
+        }
+    }
+
+    private fun crossFade(visible: List<View>, invisible: List<View>) {
+
+        for (view in visible) {
+            view.apply {
+                // Set the content view to 0% opacity but visible, so that it is
+                // visible but fully transparent during the animation.
+                alpha = 0f
+                visibility = View.VISIBLE
+                // Animate the content view to 100% opacity and clear any animation
+                // listener set on the view.
+                animate()
+                    .alpha(1f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+        }
+
+        for (view in invisible) {
+            view.animate()
+                .alpha(0f)
+                .setDuration(shortAnimationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        binding.progressBar.visibility = View.GONE
+                    }
+                })
         }
     }
 }
