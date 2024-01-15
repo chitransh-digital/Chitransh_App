@@ -35,145 +35,147 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autoSizeTextType="uniform"
-        android:text="Business Name"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top"
-        app:layout_constraintVertical_bias="0.075"
-        app:layout_constraintWidth_percent="0.9" />
+        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintWidth_percent="0.9">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editname"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@drawable/edittest_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top"
-        app:layout_constraintVertical_bias="0.121"
-        app:layout_constraintWidth_percent="0.9" />
+        <TextView
+            android:id="@+id/nametext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
+        <EditText
+            android:id="@+id/nameinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittest_background"
+            android:hint="Your Name"
+            android:padding="10dp"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/contact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autoSizeTextType="uniform"
-        android:text="Contact"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editname"
-        app:layout_constraintVertical_bias="0.043"
-        app:layout_constraintWidth_percent="0.9" />
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintVertical_bias="0.055"
+        app:layout_constraintWidth_percent="0.9">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/contactname"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@drawable/edittest_background"
-        android:text="+91"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editname"
-        app:layout_constraintVertical_bias="0.098"
-        app:layout_constraintWidth_percent="0.9" />
+        <TextView
+            android:id="@+id/contacttext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/add"
+        <EditText
+            android:id="@+id/contactinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittest_background"
+            android:padding="10dp"
+            android:text="+91" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:autoSizeTextType="uniform"
-        android:text="Address"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contactname"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintWidth_percent="0.9" />
+        app:layout_constraintTop_toBottomOf="@id/contact"
+        app:layout_constraintVertical_bias="0.116"
+        app:layout_constraintWidth_percent="0.9">
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:background="@drawable/edittest_background"
-        android:inputType="text|textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactname"
-        app:layout_constraintVertical_bias="0.163"
-        app:layout_constraintWidth_percent="0.9" />
+        <TextView
+            android:id="@+id/Addtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
+        <EditText
+            android:id="@+id/Addinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittest_background"
+            android:hint="Address"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autoSizeTextType="uniform"
-        android:text="Description"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add"
-        app:layout_constraintVertical_bias="0.323"
-        app:layout_constraintWidth_percent="0.9" />
+        app:layout_constraintTop_toBottomOf="@id/Add"
+        app:layout_constraintVertical_bias="0.162"
+        app:layout_constraintWidth_percent="0.9">
 
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:background="@drawable/edittest_background"
-        android:inputType="text|textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactname"
-        app:layout_constraintVertical_bias="0.575"
-        app:layout_constraintWidth_percent="0.9" />
+        <TextView
+            android:id="@+id/desctext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/descinput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:inputType="text|textMultiLine"
+            android:background="@drawable/edittest_background"
+            android:hint="Description"
+            android:padding="10dp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/Submit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autoSizeTextType="uniform"
-        android:text="Submit"
+        android:text="@string/Submit"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:backgroundTint="@color/theme_brown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/desc"
         app:layout_constraintVertical_bias="0.726"
-        app:layout_constraintWidth_percent="0.7" />
+        app:layout_constraintWidth_percent="0.4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
