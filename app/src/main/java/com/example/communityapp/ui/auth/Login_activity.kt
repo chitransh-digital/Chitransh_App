@@ -3,6 +3,7 @@ package com.example.communityapp.ui.auth
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -17,8 +18,11 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
+import com.example.communityapp.data.models.FamilyData
+import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityLoginBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
+import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
@@ -62,15 +66,17 @@ class Login_activity : AppCompatActivity() {
         showContent(contentPointer)
 
         var currentUserID = FirebaseAuth.getInstance().currentUser
-
-        if (currentUserID != null) {
-            startActivity(Intent(this, DashboardActivity::class.java))
-            finish()
-        } else {
-            moveAndResizeView(binding.logoImage, -200f, (binding.logoImage.height / 1.2).toInt())
-            contentPointer++
-            showContent(contentPointer)
-        }
+        val PhNO = FirebaseAuth.getInstance().currentUser?.phoneNumber
+        Handler().postDelayed({
+            if (currentUserID != null && PhNO != null) {
+                viewModel.getMember(PhNO)
+                finish()
+            } else {
+                moveAndResizeView(binding.logoImage, -200f, (binding.logoImage.height / 1.2).toInt())
+                contentPointer++
+                showContent(contentPointer)
+            }
+        },2000)
 
 
         binding.buttonEnglish.setOnClickListener {
@@ -103,6 +109,7 @@ class Login_activity : AppCompatActivity() {
             if (otp.isEmpty()) {
                 Toast.makeText(this, "Please enter otp", Toast.LENGTH_SHORT).show()
             } else {
+                checkPerson(FamilyData(emptyList()))
 //                val credential = PhoneAuthProvider.getCredential(verificationID, otp)
 //                viewModel.signInWithPhoneAuthCredential(credential, this)
             }
@@ -139,7 +146,35 @@ class Login_activity : AppCompatActivity() {
 
         })
 
+        viewModel.user_data.observe(this, Observer {resources ->
+            when(resources.status){
+                Resource.Status.SUCCESS -> {
+                    var user_data = resources.data!!
+                    checkPerson(user_data)
+                    Log.e("D Success",resources.data.toString())
+                }
+                Resource.Status.LOADING -> {
+                    Log.e(" D Loading",resources.data.toString())
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("D Error",resources.apiError.toString())
+                }
+                else -> {}
+            }
+        })
 
+    }
+
+    private fun checkPerson(userData: FamilyData) {
+        if(userData.data.isEmpty()){
+            val intent = Intent(this, SignUpActivity::class.java)
+            val options = ActivityOptions.makeSceneTransitionAnimation(this, binding.logoImage, getString(R.string.transition_name)).toBundle()
+            startActivity(intent, options)
+        }else{
+            val intent = Intent(this,DashboardActivity::class.java)
+            intent.putExtra(Constants.USER_DATA,userData)
+            startActivity(intent)
+        }
     }
 
     private fun codeSent(data: String) {

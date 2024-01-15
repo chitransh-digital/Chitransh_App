@@ -14,26 +14,26 @@
         android:theme="@style/Theme.CommunityApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.SignUp.SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.jobPosting.JobPostingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.Business.BusinessActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".ui.feed.FeedsActivity"
-            android:exported="false" >
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.Dashboard.DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".ui.family.FamilyActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.jobs.JobsActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.auth.Login_activity"
             android:exported="true">

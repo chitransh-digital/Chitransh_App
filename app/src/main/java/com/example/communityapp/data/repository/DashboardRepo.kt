@@ -38,6 +38,7 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore) {
                                 )
                             )
                         }
+
                         continuation.resume(list)
                     }.addOnFailureListener {
                         continuation.resumeWithException(it)
