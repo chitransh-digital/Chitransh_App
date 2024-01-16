@@ -7,6 +7,7 @@ import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat.startActivityForResult
@@ -27,7 +28,7 @@ class JobsAdapter(private val jobList: List<Pair<Job,String>>, private val activ
 //        val jobSalary: TextView = itemView.findViewById(R.id.salary)
 //        val jobLocation: TextView = itemView.findViewById(R.id.job_location)
 //        val requirements: TextView = itemView.findViewById(R.id.job_requirements)
-        val contact:ImageView=itemView.findViewById(R.id.iv_contact)
+        val contact: Button =itemView.findViewById(R.id.iv_contact)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobsViewHolder {

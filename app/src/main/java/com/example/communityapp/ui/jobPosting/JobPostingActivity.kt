@@ -28,6 +28,10 @@ class JobPostingActivity : AppCompatActivity() {
             checkDetails()
         }
 
+        binding.jobPostingBack.setOnClickListener {
+            onBackPressed()
+        }
+
     }
 
     private fun checkDetails() {

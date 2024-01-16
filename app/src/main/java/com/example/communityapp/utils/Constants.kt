@@ -23,4 +23,5 @@ object Constants {
 
     //For data transfer b/w intents
     const val USER_DATA = "user_data"
+    const val HOME_FRAG = "home_frag"
 }

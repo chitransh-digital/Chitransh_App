@@ -25,7 +25,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/primary"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,17 +36,16 @@
         android:id="@+id/pre_login_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/welcome_text"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo_image"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/pre_login_lang_select"
@@ -56,13 +55,13 @@
         android:text="@string/choose_language"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo_image"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <Button
         android:id="@+id/button_proceed_phno"
@@ -74,15 +73,15 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.745" />
+        app:layout_constraintTop_toBottomOf="@id/pre_login_textView"
+        app:layout_constraintVertical_bias="0.184" />
 
     <Button
         android:id="@+id/button_Hindi"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.3"
         android:backgroundTint="@color/theme_brown"
         android:text="हिंदी"
         android:textSize="16sp"
@@ -90,13 +89,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_English"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.679" />
+        app:layout_constraintTop_toBottomOf="@id/pre_login_lang_select"
+        app:layout_constraintVertical_bias="0.184" />
 
     <Button
         android:id="@+id/button_English"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.3"
         android:backgroundTint="@color/theme_brown"
         android:text="English"
         android:textSize="16sp"
@@ -104,8 +104,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_Hindi"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.679"/>
+        app:layout_constraintTop_toBottomOf="@id/pre_login_lang_select"
+        app:layout_constraintVertical_bias="0.184" />
 
     <TextView
         android:id="@+id/login_otp_text"
@@ -118,10 +118,9 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo_image"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.053" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextPhone"
@@ -130,12 +129,14 @@
         android:hint="Phone No"
         android:textSize="16sp"
         android:visibility="gone"
+        android:background="@drawable/edittest_background"
+        android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintHorizontal_bias="0.325"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_otp_text"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.06"
         app:layout_constraintWidth_percent="0.8" />
 
     <Button
@@ -150,7 +151,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextPhone"
-        app:layout_constraintVertical_bias="0.189"
+        app:layout_constraintVertical_bias="0.13"
         app:layout_constraintWidth_percent="0.5" />
 
     <Button

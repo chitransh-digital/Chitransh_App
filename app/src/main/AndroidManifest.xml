@@ -27,7 +27,8 @@
             android:exported="false"/>
         <activity
             android:name=".ui.Dashboard.DashboardActivity"
-            android:exported="false" />
+            android:exported="false" >
+        </activity>
         <activity
             android:name=".ui.family.FamilyActivity"
             android:exported="false"/>
@@ -37,6 +38,7 @@
         <activity
             android:name=".ui.auth.Login_activity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

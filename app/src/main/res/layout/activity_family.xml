@@ -10,18 +10,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <View
+            android:id="@+id/top_section"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/theme_yellow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_brown_notifications_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintWidth_percent="0.22" />
+        <ImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/baseline_person_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintWidth_percent="0.22" />
+
+        <ImageView
+            android:id="@+id/family_back"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/back"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintHeight_percent="0.06"
             app:layout_constraintHorizontal_bias="0.005"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.10" />
+            app:layout_constraintTop_toBottomOf="@id/top_section"
+            app:layout_constraintWidth_percent="0.08" />
 
 
         <TextView
@@ -35,42 +70,42 @@
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.612"
+            app:layout_constraintHorizontal_bias="0.24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/top_section" />
 
         <LinearLayout
             android:id="@+id/name"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.9"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.39"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.06">
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintWidth_percent="0.9">
 
             <TextView
                 android:id="@+id/nametext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
+                android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/nameinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:hint="Your Name"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp"
                 android:layout_marginTop="5dp"
-                />
+                android:background="@drawable/edittest_background"
+                android:hint="Your Name"
+                android:padding="10dp"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -188,7 +223,7 @@
             app:layout_constraintEnd_toStartOf="@id/gender"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.093"
+            app:layout_constraintVertical_bias="0.07"
             app:layout_constraintWidth_percent="0.28">
 
             <TextView
@@ -204,19 +239,19 @@
                 android:id="@+id/ageSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:padding="10dp" />
 
             <EditText
                 android:id="@+id/ageinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Age"
-                android:visibility="gone"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
+                android:hint="Age"
                 android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -228,7 +263,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/age"
             app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.094"
+            app:layout_constraintVertical_bias="0.076"
             app:layout_constraintWidth_percent="0.55">
 
             <TextView
@@ -244,10 +279,10 @@
                 android:id="@+id/genderinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Gender"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:hint="Gender"
+                android:padding="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -257,9 +292,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.56"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gender"
-            app:layout_constraintVertical_bias="0.162"
+            app:layout_constraintVertical_bias="0.116"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -275,10 +311,10 @@
                 android:id="@+id/Addinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Address"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:hint="Address"
+                android:padding="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -316,13 +352,14 @@
             android:id="@+id/member_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submir"
+            android:text="@string/Submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.467"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Karya"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintVertical_bias="0.25" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

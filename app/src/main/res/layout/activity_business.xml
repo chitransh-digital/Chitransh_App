@@ -6,34 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".ui.Business.BusinessActivity">
 
+    <View
+        android:id="@+id/top_section"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/theme_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
+        android:id="@+id/iv_notification"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_brown_notifications_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.22" />
+    <ImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/baseline_person_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.22" />
+
+    <ImageView
+        android:id="@+id/business_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintHeight_percent="0.06"
         app:layout_constraintHorizontal_bias="0.005"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.10" />
+        app:layout_constraintTop_toBottomOf="@id/top_section"
+        app:layout_constraintWidth_percent="0.08" />
 
 
     <TextView
         android:id="@+id/top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:autoSizeTextType="uniform"
         android:text="Business Registration"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.612"
+        app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/top_section" />
 
     <LinearLayout
         android:id="@+id/name"
@@ -105,9 +140,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact"
-        app:layout_constraintVertical_bias="0.116"
+        app:layout_constraintVertical_bias="0.083"
         app:layout_constraintWidth_percent="0.9">
 
         <TextView
@@ -136,9 +172,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Add"
-        app:layout_constraintVertical_bias="0.162"
+        app:layout_constraintVertical_bias="0.098"
         app:layout_constraintWidth_percent="0.9">
 
         <TextView
@@ -155,9 +192,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:inputType="text|textMultiLine"
             android:background="@drawable/edittest_background"
             android:hint="Description"
+            android:inputType="text|textMultiLine"
             android:padding="10dp" />
     </LinearLayout>
 
@@ -166,16 +203,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autoSizeTextType="uniform"
+        android:backgroundTint="@color/theme_brown"
         android:text="@string/Submit"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:backgroundTint="@color/theme_brown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/desc"
-        app:layout_constraintVertical_bias="0.726"
+        app:layout_constraintVertical_bias="0.298"
         app:layout_constraintWidth_percent="0.4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

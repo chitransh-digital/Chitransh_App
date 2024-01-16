@@ -14,62 +14,67 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/user_cicrle_duotone"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.461"
-            app:layout_constraintWidth_percent="0.2" />
-
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Priyanshu Agarwal"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.372"
+            app:layout_constraintHorizontal_bias="0.065"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.275" />
+            app:layout_constraintVertical_bias="0.181" />
 
         <TextView
-            android:id="@+id/profile_contact"
+            android:id="@+id/profile_age_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+916378228784"
+            android:text="24/M"
             android:textColor="@color/black"
-            android:textSize="16dp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.348"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_name"
-            app:layout_constraintVertical_bias="0.2" />
-
-        <ImageView
-            android:id="@+id/profile_edit"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/edit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintHorizontal_bias="0.86"
+            app:layout_constraintHorizontal_bias="0.158"
             app:layout_constraintStart_toEndOf="@id/profile_name"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"
-            app:layout_constraintWidth_percent="0.1" />
+            app:layout_constraintVertical_bias="0.173" />
+
+        <TextView
+            android:id="@+id/profile_address_fixed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/address"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.105"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_name"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintWidth_percent="0.6" />
+
+        <Button
+            android:id="@+id/call_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/theme_brown"
+            android:drawableStart="@drawable/baseline_call_24"
+            android:text="Call Now"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.021"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_address_fixed"
+            app:layout_constraintVertical_bias="0.058" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

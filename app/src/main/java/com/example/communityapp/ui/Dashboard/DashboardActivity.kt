@@ -1,8 +1,10 @@
 package com.example.communityapp.ui.Dashboard
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -13,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityDashboardBinding
+import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.utils.Resource
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -57,6 +60,11 @@ class DashboardActivity : AppCompatActivity() {
                 Resource.Status.SUCCESS -> {
                     var user_data = resources.data!!
                     Log.e("D Success",resources.data.toString())
+                    if(user_data.isEmpty()){
+                        Toast.makeText(this, R.string.please_SignUp, Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this,SignUpActivity::class.java))
+                        finish()
+                    }
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" D Loading",resources.data.toString())

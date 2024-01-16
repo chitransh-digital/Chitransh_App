@@ -8,8 +8,8 @@
     app:cardCornerRadius="8dp">
 
     <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="120dp"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
         android:orientation="vertical"
         android:layout_margin="4dp"
         android:weightSum="1"

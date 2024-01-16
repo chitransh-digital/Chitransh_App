@@ -58,6 +58,10 @@ class JobsActivity : AppCompatActivity() {
 //            Job("b","87886785","afa","FSDASDA", listOf("a","b","c"),765,"jabalpur")
 //        )
 
+        binding.jobBack.setOnClickListener {
+            onBackPressed()
+        }
+
         setObservables()
     }
 

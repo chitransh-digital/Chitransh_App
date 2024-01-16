@@ -25,6 +25,11 @@ class SignUpActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.ageSpinner.adapter = adapter
 
+        val genderList = arrayListOf("Male","Female")
+        val genadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.genderSpinner.adapter = genadapter
+
         binding.dateSelector.setOnClickListener {
             showDatePickerDialog()
         }

@@ -5,23 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.jobs.JobsActivity">
-    <TextView
-        android:id="@+id/tv_job"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-    app:layout_constraintBottom_toTopOf="@+id/rv_jobs"
+
+    <View
+        android:id="@+id/top_section"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/theme_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/iv_notification"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_brown_notifications_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="8dp"
-        android:text="@string/active_jobs"
-        android:textSize="16sp"
-        />
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.22" />
+    <ImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/baseline_person_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.22" />
+
+    <ImageView
+        android:id="@+id/job_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="12dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_section"
+        app:layout_constraintWidth_percent="0.08" />
+
+
+    <TextView
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:autoSizeTextType="uniform"
+        android:text="Job Posting"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_section" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_jobs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        tools:listitem="@layout/job_item"
-        app:layout_constraintTop_toBottomOf="@+id/tv_job"
-        />
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top"
+        tools:listitem="@layout/job_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

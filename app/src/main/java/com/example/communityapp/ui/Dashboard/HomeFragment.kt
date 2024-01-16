@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
-import com.example.communityapp.databinding.FragmentHomeBinding
 import com.example.communityapp.databinding.FragmentHomeNewBinding
 import com.example.communityapp.ui.Business.BusinessActivity
 import com.example.communityapp.ui.family.FamilyActivity
@@ -58,6 +58,11 @@ class HomeFragment : Fragment(){
             startActivity(intent)
         }
 
+        binding.ivProfile.setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(R.id.Frag,ProfileFragment())
+                .addToBackStack(Constants.HOME_FRAG).commit()
+        }
+
         return binding.root
     }
 
@@ -84,8 +89,9 @@ class HomeFragment : Fragment(){
                     Log.e("news load Success",resources.data.toString())
                     try {
                         setupRv(resources.data!!)
-                        val newsBylocation = resources.data.filter { it.location in user_data.address }
-                        setupRvbyLocation(newsBylocation)
+//                        val newsBylocation = resources.data.filter { it.location in user_data.address }
+//                        setupRvbyLocation(newsBylocation)
+                        setupRvbyLocation(resources.data)
                     }
                     catch (e : Exception){
                         Log.e("news load error",e.toString())

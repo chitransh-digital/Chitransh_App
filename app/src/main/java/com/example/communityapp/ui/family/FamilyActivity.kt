@@ -56,6 +56,10 @@ class FamilyActivity : AppCompatActivity() {
         binding.dateSelector.setOnClickListener {
             showDatePickerDialog()
         }
+
+        binding.familyBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun checkDetails() {
