@@ -19,8 +19,8 @@ class SignUpViewModel @Inject constructor(private var signUpRepo: SignUpRepo) : 
     val user: LiveData<Resource<String>>
         get() = _user
 
-    fun addMember(member: Member) {
-        signUpRepo.addMember(member).onEach {
+    fun addMember(member: Member,imagePath: String) {
+        signUpRepo.addMember(member, imagePath).onEach {
             when(it.status){
                 Resource.Status.SUCCESS -> {
                     _user.value = Resource.success(it.data)

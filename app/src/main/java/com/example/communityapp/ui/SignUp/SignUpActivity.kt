@@ -1,19 +1,24 @@
 package com.example.communityapp.ui.SignUp
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.ActivitySignUpBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
@@ -27,6 +32,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignUpBinding
     private lateinit var viewModel: SignUpViewModel
     private var selectedDate: Calendar = Calendar.getInstance()
+    private var selectedImagePath:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -46,6 +52,9 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.dateSelector.setOnClickListener {
             showDatePickerDialog()
+        }
+        binding.ivAddImage.setOnClickListener {
+            openFilePicker()
         }
 
         setObservables()
@@ -74,6 +83,9 @@ class SignUpActivity : AppCompatActivity() {
         else if(binding.genderSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your gender no", Toast.LENGTH_SHORT).show()
         }
+        else if(selectedImagePath.isEmpty()) {
+            Toast.makeText(this, "Please select your image", Toast.LENGTH_SHORT).show()
+        }
         else{
             submitRegistration()
         }
@@ -98,7 +110,7 @@ class SignUpActivity : AppCompatActivity() {
             address = binding.Addinput.text.toString(),
             karyakarni = "null"
         )
-        viewModel.addMember(member = data)
+        viewModel.addMember(member = data, selectedImagePath)
     }
 
     private fun showDatePickerDialog() {
@@ -150,6 +162,38 @@ class SignUpActivity : AppCompatActivity() {
 
         // Set the calculated age to the Spinner
         binding.ageSpinner.setSelection(age - 1) // Subtract 1 since age starts from 1
+    }
+
+
+    val getImage=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val uri = data?.data
+            selectedImagePath = getImagePath(uri!!).toString()
+            binding.ivAddImage.setImageURI(uri)
+        }else{
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+    private fun openFilePicker() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "image/*"
+            addCategory(Intent.CATEGORY_OPENABLE)
+        }
+
+        getImage.launch(intent)
+    }
+
+    private fun getImagePath(uri: Uri): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+        return cursor?.use {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            it.moveToFirst()
+            it.getString(columnIndex)
+        }
     }
 
     private fun setObservables(){
