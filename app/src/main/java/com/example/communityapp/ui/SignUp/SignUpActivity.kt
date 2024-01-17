@@ -67,8 +67,6 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this, "Please enter your address no", Toast.LENGTH_SHORT).show()
         }else if(binding.DOBinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
-        }else if(isDateInCorrectFormat(binding.DOBinput.text.toString(),"dd-MM-yyyy")){
-                Toast.makeText(this, "Put date in correct format dd-MM-yyyy", Toast.LENGTH_SHORT).show()
         }
         else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your age no", Toast.LENGTH_SHORT).show()
