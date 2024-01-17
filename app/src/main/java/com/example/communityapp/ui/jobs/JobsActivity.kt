@@ -18,7 +18,9 @@ import com.example.communityapp.data.models.Job
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.ActivityJobPostingBinding
 import com.example.communityapp.databinding.ActivityJobsBinding
+import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.ui.feed.FeedsAdapter
+import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime

@@ -10,40 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
-            android:id="@+id/top_section"
-            android:transitionName="@string/top_section_transition"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:background="@color/theme_yellow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <ImageView
-            android:id="@+id/iv_notification"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_brown_notifications_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.05"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintWidth_percent="0.18" />
-        <ImageView
-            android:id="@+id/iv_profile"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/baseline_person_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintWidth_percent="0.22" />
 
         <ImageView
             android:id="@+id/family_back"
@@ -56,7 +22,7 @@
             app:layout_constraintHeight_percent="0.06"
             app:layout_constraintHorizontal_bias="0.005"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_section"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.08" />
 
 
@@ -64,16 +30,17 @@
             android:id="@+id/top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:autoSizeTextType="uniform"
             android:text="Registration"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_section" />
+            app:layout_constraintHorizontal_bias="0.216"
+            app:layout_constraintStart_toEndOf="@id/family_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.024" />
 
         <LinearLayout
             android:id="@+id/name"
@@ -86,7 +53,7 @@
             app:layout_constraintHorizontal_bias="0.034"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.017"
+            app:layout_constraintVertical_bias="0.038"
             app:layout_constraintWidth_percent="0.5">
 
             <TextView
@@ -116,10 +83,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintHorizontal_bias="0.112"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.035"
+            app:layout_constraintVertical_bias="0.038"
             app:layout_constraintWidth_percent="0.5">
 
             <TextView
@@ -145,16 +112,16 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
+            android:background="#DCD9D9"
             android:src="@drawable/account_circle"
             app:layout_constraintBottom_toTopOf="@id/DOB"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="#DCD9D9"
-            app:layout_constraintHeight_percent="0.2"
-            app:layout_constraintHorizontal_bias="0.714"
+            app:layout_constraintHeight_percent="0.16"
+            app:layout_constraintHorizontal_bias="0.479"
             app:layout_constraintStart_toEndOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/top_section"
-            app:layout_constraintVertical_bias="0.754"
-            app:layout_constraintWidth_percent="0.4" />
+            app:layout_constraintTop_toBottomOf="@id/top"
+            app:layout_constraintVertical_bias="0.765"
+            app:layout_constraintWidth_percent="0.32" />
 
         <LinearLayout
             android:id="@+id/DOB"
@@ -226,6 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="+91"
+                android:inputType="phone"
                 android:background="@drawable/edittest_background"
                 android:padding="10dp"
                 android:layout_marginTop="5dp" />

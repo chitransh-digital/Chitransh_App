@@ -10,6 +10,7 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Business
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityBusinessBinding
+import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint

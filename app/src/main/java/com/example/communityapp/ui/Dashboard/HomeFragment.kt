@@ -47,9 +47,7 @@ class HomeFragment : Fragment(){
         binding.card1.setOnClickListener {
             val intent = Intent(requireContext(),FamilyActivity::class.java)
             intent.putExtra(Constants.FAMILYID,user_data.familyID)
-            val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(),
-                binding.topSection, getString(R.string.top_section_transition)).toBundle()
-            startActivity(intent, options)
+            startActivity(intent)
         }
 
         binding.card2.setOnClickListener {

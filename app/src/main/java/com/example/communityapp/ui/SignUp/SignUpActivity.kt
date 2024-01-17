@@ -61,7 +61,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun checkDetails() {
         if (binding.nameinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
-        }else if(binding.contactinput.text.isNullOrEmpty()){
+        }else if(binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())){
             Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
         }else if(binding.Addinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your address no", Toast.LENGTH_SHORT).show()
@@ -79,6 +79,14 @@ class SignUpActivity : AppCompatActivity() {
         else{
             submitRegistration()
         }
+    }
+
+    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        val pattern = """^\+91\d{10}$""".toRegex()
+
+        val matchResult = pattern.find(phoneNumber)
+
+        return matchResult != null
     }
 
     private fun submitRegistration() {

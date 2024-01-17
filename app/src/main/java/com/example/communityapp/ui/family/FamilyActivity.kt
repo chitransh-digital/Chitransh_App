@@ -15,6 +15,7 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityBusinessBinding
 import com.example.communityapp.databinding.ActivityFamilyBinding
+import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -60,12 +61,13 @@ class FamilyActivity : AppCompatActivity() {
         binding.familyBack.setOnClickListener {
             onBackPressed()
         }
+
     }
 
     private fun checkDetails() {
         if (binding.nameinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
-        }else if(binding.contactinput.text.isNullOrEmpty()){
+        }else if(binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())){
             Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
         }else if(binding.Addinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your address no", Toast.LENGTH_SHORT).show()
@@ -85,6 +87,14 @@ class FamilyActivity : AppCompatActivity() {
         else{
             submitRegistration()
         }
+    }
+
+    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        val pattern = """^\+91\d{10}$""".toRegex()
+
+        val matchResult = pattern.find(phoneNumber)
+
+        return matchResult != null
     }
 
     private fun submitRegistration() {
