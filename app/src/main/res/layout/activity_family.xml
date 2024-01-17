@@ -77,7 +77,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/FamilyID"
+            android:id="@+id/relation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -88,6 +88,52 @@
             app:layout_constraintTop_toBottomOf="@id/name"
             app:layout_constraintVertical_bias="0.038"
             app:layout_constraintWidth_percent="0.5">
+
+            <TextView
+                android:id="@+id/realtion_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Relation"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/relationinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:hint="Your Relation"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:background="#DCD9D9"
+            android:src="@drawable/account_circle"
+            app:layout_constraintBottom_toTopOf="@id/FamilyID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.16"
+            app:layout_constraintHorizontal_bias="0.479"
+            app:layout_constraintStart_toEndOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/top"
+            app:layout_constraintVertical_bias="0.765"
+            app:layout_constraintWidth_percent="0.32" />
+
+        <LinearLayout
+            android:id="@+id/FamilyID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/relation"
+            app:layout_constraintVertical_bias="0.026"
+            app:layout_constraintWidth_percent="0.9">
 
             <TextView
                 android:id="@+id/IDtext"
@@ -107,21 +153,6 @@
                 android:hint="Family ID"
                 android:padding="10dp" />
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:background="#DCD9D9"
-            android:src="@drawable/account_circle"
-            app:layout_constraintBottom_toTopOf="@id/DOB"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.16"
-            app:layout_constraintHorizontal_bias="0.479"
-            app:layout_constraintStart_toEndOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.765"
-            app:layout_constraintWidth_percent="0.32" />
 
         <LinearLayout
             android:id="@+id/DOB"
@@ -227,16 +258,6 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
                 android:padding="10dp" />
-
-            <EditText
-                android:id="@+id/ageinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:hint="Age"
-                android:padding="10dp"
-                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -260,13 +281,12 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/genderinput"
+            <Spinner
+                android:id="@+id/genderSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:hint="Gender"
                 android:padding="10dp" />
         </LinearLayout>
 

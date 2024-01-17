@@ -69,10 +69,10 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
         }
         else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your age no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
         }
         else if(binding.genderSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your gender no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
         }
         else{
             submitRegistration()
@@ -96,7 +96,8 @@ class SignUpActivity : AppCompatActivity() {
             age = binding.ageSpinner.selectedItem.toString().toInt(),
             gender = binding.genderSpinner.selectedItem.toString(),
             address = binding.Addinput.text.toString(),
-            karyakarni = "null"
+            karyakarni = "null",
+            relation = "Head"
         )
         viewModel.addMember(member = data)
     }

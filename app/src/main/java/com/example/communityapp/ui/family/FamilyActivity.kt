@@ -46,6 +46,11 @@ class FamilyActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.ageSpinner.adapter = adapter
 
+        val genderList = arrayListOf("Male","Female")
+        val genadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.genderSpinner.adapter = genadapter
+
         val no = FirebaseAuth.getInstance().currentUser?.phoneNumber
 
         Log.d("Dashboard phoe no",no.toString())
@@ -76,11 +81,11 @@ class FamilyActivity : AppCompatActivity() {
         }else if(binding.DOBinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
         }
-        else if(binding.ageinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your age no", Toast.LENGTH_SHORT).show()
+        else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
         }
-        else if(binding.genderinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your gender no", Toast.LENGTH_SHORT).show()
+        else if(binding.genderSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
         }
         else{
             submitRegistration()
@@ -101,10 +106,11 @@ class FamilyActivity : AppCompatActivity() {
             name = binding.nameinput.text.toString(),
             DOB = binding.DOBinput.text.toString(),
             contact = binding.contactinput.text.toString(),
-            age = binding.ageinput.text.toString().toInt(),
-            gender = binding.genderinput.text.toString(),
+            age = binding.ageSpinner.selectedItem.toString().toInt(),
+            gender = binding.genderSpinner.selectedItem.toString(),
             address = binding.Addinput.text.toString(),
-            karyakarni = binding.Karyainput.text.toString()
+            karyakarni = binding.Karyainput.text.toString(),
+            relation = binding.relationinput.text.toString()
         )
         viewModel.addMember(member = data)
     }
@@ -132,12 +138,12 @@ class FamilyActivity : AppCompatActivity() {
                     Log.e("Success",resources.data.toString())
                     //clear all fields
                     binding.nameinput.text.clear()
-                    binding.contactinput.text.clear()
+                    binding.contactinput.setText("+91")
                     binding.Addinput.text.clear()
                     binding.Karyainput.text.clear()
                     binding.DOBinput.text.clear()
-                    binding.ageinput.text.clear()
-                    binding.genderinput.text.clear()
+                    binding.ageSpinner.setSelection(1)
+                    binding.genderSpinner.setSelection(1)
                     Toast.makeText(this, "Member Added Successfully", Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING -> {
