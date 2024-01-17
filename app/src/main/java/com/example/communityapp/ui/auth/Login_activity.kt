@@ -153,6 +153,7 @@ class Login_activity : AppCompatActivity() {
     private fun codeSent(data: String) {
         verificationID = data
         contentPointer++
+        binding.editTextPhone.setText("")
         showContent(contentPointer)
     }
 

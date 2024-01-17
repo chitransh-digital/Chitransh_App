@@ -16,6 +16,7 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.ui.SignUp.SignUpActivity
+import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DashboardViewModel
-
+    private lateinit var phoneNum : String
     private lateinit var binding : ActivityDashboardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class DashboardActivity : AppCompatActivity() {
         setUpNavigation()
 
         val id = FirebaseAuth.getInstance().currentUser?.phoneNumber
-
+        phoneNum = id.toString()
         Log.d("Dashboard phone no",id.toString())
 
         if (id != null) {
@@ -62,7 +63,9 @@ class DashboardActivity : AppCompatActivity() {
                     Log.e("D Success",resources.data.toString())
                     if(user_data.isEmpty()){
                         Toast.makeText(this, R.string.please_SignUp, Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this,SignUpActivity::class.java))
+                        val intent = Intent(this,SignUpActivity::class.java)
+                        intent.putExtra(Constants.PHONE_NUM,phoneNum)
+                        startActivity(intent)
                         finish()
                     }
                 }

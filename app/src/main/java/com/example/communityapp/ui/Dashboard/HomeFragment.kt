@@ -1,5 +1,6 @@
 package com.example.communityapp.ui.Dashboard
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.FragmentHomeNewBinding
 import com.example.communityapp.ui.Business.BusinessActivity
+import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.ui.jobPosting.JobPostingActivity
 import com.example.communityapp.ui.jobs.JobsActivity
@@ -45,7 +47,9 @@ class HomeFragment : Fragment(){
         binding.card1.setOnClickListener {
             val intent = Intent(requireContext(),FamilyActivity::class.java)
             intent.putExtra(Constants.FAMILYID,user_data.familyID)
-            startActivity(intent)
+            val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(),
+                binding.topSection, getString(R.string.top_section_transition)).toBundle()
+            startActivity(intent, options)
         }
 
         binding.card2.setOnClickListener {

@@ -47,10 +47,11 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.06"
-            app:layout_constraintWidth_percent="0.9">
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintWidth_percent="0.5">
 
             <TextView
                 android:id="@+id/nametext"
@@ -79,10 +80,11 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.06"
-            app:layout_constraintWidth_percent="0.9">
+            app:layout_constraintVertical_bias="0.043"
+            app:layout_constraintWidth_percent="0.5">
 
             <TextView
                 android:id="@+id/familyIDtext"
@@ -103,6 +105,21 @@
                 android:padding="10dp"
                 android:textSize="20sp" />
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:background="#DCD9D9"
+            android:src="@drawable/account_circle"
+            app:layout_constraintBottom_toTopOf="@id/DOB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintHorizontal_bias="0.333"
+            app:layout_constraintStart_toEndOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/top"
+            app:layout_constraintVertical_bias="0.492"
+            app:layout_constraintWidth_percent="0.36" />
 
         <LinearLayout
             android:id="@+id/DOB"
@@ -137,7 +154,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="8"
                     android:background="@drawable/edittest_background"
-                    android:hint="Date Of Birth"
+                    android:hint="@string/date_format"
                     android:padding="10dp" />
 
                 <ImageView

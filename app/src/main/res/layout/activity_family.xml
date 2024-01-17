@@ -12,11 +12,12 @@
 
         <View
             android:id="@+id/top_section"
+            android:transitionName="@string/top_section_transition"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="@color/theme_yellow"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintHeight_percent="0.05"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <ImageView
@@ -25,12 +26,12 @@
             android:layout_height="0dp"
             android:src="@drawable/ic_brown_notifications_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintHeight_percent="0.05"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintWidth_percent="0.22" />
+            app:layout_constraintWidth_percent="0.18" />
         <ImageView
             android:id="@+id/iv_profile"
             android:layout_width="0dp"
@@ -82,11 +83,11 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.39"
+            app:layout_constraintHorizontal_bias="0.034"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.9">
+            app:layout_constraintVertical_bias="0.017"
+            app:layout_constraintWidth_percent="0.5">
 
             <TextView
                 android:id="@+id/nametext"
@@ -111,14 +112,15 @@
         <LinearLayout
             android:id="@+id/FamilyID"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.9"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.034">
+            app:layout_constraintVertical_bias="0.035"
+            app:layout_constraintWidth_percent="0.5">
 
             <TextView
                 android:id="@+id/IDtext"
@@ -133,11 +135,26 @@
                 android:id="@+id/IDinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Family ID"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp"/>
+                android:hint="Family ID"
+                android:padding="10dp" />
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/account_circle"
+            app:layout_constraintBottom_toTopOf="@id/DOB"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="#DCD9D9"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintHorizontal_bias="0.714"
+            app:layout_constraintStart_toEndOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/top_section"
+            app:layout_constraintVertical_bias="0.754"
+            app:layout_constraintWidth_percent="0.4" />
 
         <LinearLayout
             android:id="@+id/DOB"
@@ -169,7 +186,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="8"
                     android:layout_height="wrap_content"
-                    android:hint="Date Of Birth"
+                    android:hint="@string/date_format"
                     android:background="@drawable/edittest_background"
                     android:padding="10dp"
                     android:layout_marginTop="5dp"/>

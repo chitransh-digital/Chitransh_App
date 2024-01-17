@@ -1,24 +1,38 @@
 package com.example.communityapp.ui.SignUp
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
+import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivitySignUpBinding
+import com.example.communityapp.ui.Dashboard.DashboardActivity
+import com.example.communityapp.utils.Constants
+import com.example.communityapp.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySignUpBinding
+    private lateinit var viewModel: SignUpViewModel
     private var selectedDate: Calendar = Calendar.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
 
         val ageList = (1..100).toList()
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, ageList)
@@ -33,6 +47,52 @@ class SignUpActivity : AppCompatActivity() {
         binding.dateSelector.setOnClickListener {
             showDatePickerDialog()
         }
+
+        setObservables()
+
+        val phoneNum = intent.getStringExtra(Constants.PHONE_NUM)
+        binding.contactinput.setText(phoneNum)
+
+        binding.memberSubmit.setOnClickListener {
+            checkDetails()
+        }
+    }
+
+    private fun checkDetails() {
+        if (binding.nameinput.text.isNullOrEmpty()){
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+        }else if(binding.contactinput.text.isNullOrEmpty()){
+            Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
+        }else if(binding.Addinput.text.isNullOrEmpty()){
+            Toast.makeText(this, "Please enter your address no", Toast.LENGTH_SHORT).show()
+        }else if(binding.DOBinput.text.isNullOrEmpty()) {
+            Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
+        }else if(isDateInCorrectFormat(binding.DOBinput.text.toString(),"dd-MM-yyyy")){
+                Toast.makeText(this, "Put date in correct format dd-MM-yyyy", Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your age no", Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.genderSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your gender no", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            submitRegistration()
+        }
+    }
+
+    private fun submitRegistration() {
+        val data = Member(
+            familyID = binding.familyIDinput.text.toString(),
+            name = binding.nameinput.text.toString(),
+            DOB = binding.DOBinput.text.toString(),
+            contact = binding.contactinput.text.toString(),
+            age = binding.ageSpinner.selectedItem.toString().toInt(),
+            gender = binding.genderSpinner.selectedItem.toString(),
+            address = binding.Addinput.text.toString(),
+            karyakarni = "null"
+        )
+        viewModel.addMember(member = data)
     }
 
     private fun showDatePickerDialog() {
@@ -51,6 +111,17 @@ class SignUpActivity : AppCompatActivity() {
         datePickerDialog.datePicker.maxDate = System.currentTimeMillis() // Optional: Set a maximum date
 
         datePickerDialog.show()
+    }
+
+    fun isDateInCorrectFormat(dateString: String, dateFormat: String): Boolean {
+        try {
+            val sdf = SimpleDateFormat(dateFormat)
+            sdf.isLenient = false
+            val date = sdf.parse(dateString)
+            return date != null && sdf.format(date) == dateString
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     private fun updateSelectedDateText() {
@@ -73,5 +144,32 @@ class SignUpActivity : AppCompatActivity() {
 
         // Set the calculated age to the Spinner
         binding.ageSpinner.setSelection(age - 1) // Subtract 1 since age starts from 1
+    }
+
+    private fun setObservables(){
+        viewModel.user.observe(this, Observer {resources ->
+            when(resources.status){
+                Resource.Status.SUCCESS -> {
+                    Log.e("Success",resources.data.toString())
+                    //clear all fields
+                    binding.nameinput.text.clear()
+                    binding.contactinput.text.clear()
+                    binding.Addinput.text.clear()
+                    binding.DOBinput.text.clear()
+                    binding.ageSpinner.setSelection(1)
+                    binding.genderSpinner.setSelection(1)
+                    Toast.makeText(this, R.string.registration_success, Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this,DashboardActivity::class.java))
+                    finish()
+                }
+                Resource.Status.LOADING -> {
+                    Log.e("Loading",resources.data.toString())
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("Error",resources.apiError.toString())
+                }
+                else -> {}
+            }
+        })
     }
 }

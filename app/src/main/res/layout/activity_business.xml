@@ -8,6 +8,7 @@
 
     <View
         android:id="@+id/top_section"
+        android:transitionName="@string/top_section_transition"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@color/theme_yellow"

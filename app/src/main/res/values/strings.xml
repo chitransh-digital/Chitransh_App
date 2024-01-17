@@ -51,6 +51,10 @@
     <string name="choose_language">Choose Language/भाषा चुनें</string>
     <string name="Screen_proceed">Proceed with Phone Number</string>
     <string name="welcome_text"><b>Welcome to \n<font color='#620402'>Chitransh Digital</font></b></string>
+    <string name="welcome_text_dashboard"><b>Welcome to <font color='#620402'>Chitransh Digital</font></b></string>
     <string name="address"><b>Address :</b></string>
     <string name="Submit">Submit</string>
+    <string name="registration_success">Registration Successful! Welcome</string>
+    <string name="date_format">dd-MM-yyyy</string>
+    <string name="top_section_transition">Top_Section</string>
 </resources>

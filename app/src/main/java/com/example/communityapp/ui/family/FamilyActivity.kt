@@ -73,6 +73,8 @@ class FamilyActivity : AppCompatActivity() {
             Toast.makeText(this, "Please enter your Karyakarni no", Toast.LENGTH_SHORT).show()
         }else if(binding.DOBinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
+        }else if(isDateInCorrectFormat(binding.DOBinput.text.toString(),"dd-MM-yyyy")){
+            Toast.makeText(this, "Put date in correct format dd-MM-yyyy", Toast.LENGTH_SHORT).show()
         }
         else if(binding.ageinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your age no", Toast.LENGTH_SHORT).show()
@@ -104,6 +106,16 @@ class FamilyActivity : AppCompatActivity() {
         binding.IDinput.setText(family_id)
     }
 
+    fun isDateInCorrectFormat(dateString: String, dateFormat: String): Boolean {
+        try {
+            val sdf = SimpleDateFormat(dateFormat)
+            sdf.isLenient = false
+            val date = sdf.parse(dateString)
+            return date != null && sdf.format(date) == dateString
+        } catch (e: Exception) {
+            return false
+        }
+    }
 
     private fun setObservables(){
         viewModel.user.observe(this, Observer {resources ->
