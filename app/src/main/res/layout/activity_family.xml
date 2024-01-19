@@ -19,7 +19,7 @@
             android:layout_marginTop="16dp"
             android:src="@drawable/back"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintHeight_percent="0.04"
             app:layout_constraintHorizontal_bias="0.005"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,10 +37,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.216"
+            app:layout_constraintHorizontal_bias="0.205"
             app:layout_constraintStart_toEndOf="@id/family_back"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.024" />
+            app:layout_constraintVertical_bias="0.015" />
 
         <LinearLayout
             android:id="@+id/name"
@@ -50,10 +50,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.034"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.038"
+            app:layout_constraintVertical_bias="0.023"
             app:layout_constraintWidth_percent="0.5">
 
             <TextView
@@ -83,10 +83,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.112"
+            app:layout_constraintHorizontal_bias="0.078"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.038"
+            app:layout_constraintVertical_bias="0.017"
             app:layout_constraintWidth_percent="0.5">
 
             <TextView
@@ -116,11 +116,11 @@
             android:src="@drawable/account_circle"
             app:layout_constraintBottom_toTopOf="@id/FamilyID"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.16"
+            app:layout_constraintHeight_percent="0.10"
             app:layout_constraintHorizontal_bias="0.479"
             app:layout_constraintStart_toEndOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.765"
+            app:layout_constraintVertical_bias="0.680"
             app:layout_constraintWidth_percent="0.32" />
 
         <LinearLayout
@@ -132,7 +132,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/relation"
-            app:layout_constraintVertical_bias="0.026"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -161,9 +161,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.487"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/FamilyID"
-            app:layout_constraintVertical_bias="0.052"
+            app:layout_constraintVertical_bias="0.015"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -179,22 +180,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/DOBinput"
                     android:layout_width="0dp"
-                    android:layout_weight="8"
                     android:layout_height="wrap_content"
-                    android:hint="@string/date_format"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="8"
                     android:background="@drawable/edittest_background"
-                    android:padding="10dp"
-                    android:layout_marginTop="5dp"/>
+                    android:hint="@string/date_format"
+                    android:padding="10dp" />
+
                 <ImageView
                     android:id="@+id/dateSelector"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/date"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:src="@drawable/date" />
             </LinearLayout>
         </LinearLayout>
 
@@ -207,7 +210,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/DOB"
-            app:layout_constraintVertical_bias="0.055"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -239,7 +242,7 @@
             app:layout_constraintEnd_toStartOf="@id/gender"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.07"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.28">
 
             <TextView
@@ -269,7 +272,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/age"
             app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.076"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.55">
 
             <TextView
@@ -300,7 +303,7 @@
             app:layout_constraintHorizontal_bias="0.56"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gender"
-            app:layout_constraintVertical_bias="0.116"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -331,7 +334,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Add"
-            app:layout_constraintVertical_bias="0.24"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -347,11 +350,53 @@
                 android:id="@+id/Karyainput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Karyakarni"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:hint="Karyakarni"
+                android:padding="10dp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/occupation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/occupationtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Occupation"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/occupationSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/family_business"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.95"
+            android:layout_height="wrap_content"
+            layout="@layout/family_business_include"
+            app:layout_constraintTop_toBottomOf="@id/occupation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <Button
             android:id="@+id/member_submit"
@@ -362,7 +407,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.467"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintTop_toBottomOf="@id/family_business"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintVertical_bias="0.25" />

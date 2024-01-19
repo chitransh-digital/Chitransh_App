@@ -6,6 +6,8 @@ import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
@@ -51,9 +53,14 @@ class FamilyActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.genderSpinner.adapter = genadapter
 
+        val occupationList = arrayListOf("None","Business","Government Job","Student")
+        val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.occupationSpinner.adapter = occupationadapter
+
         val no = FirebaseAuth.getInstance().currentUser?.phoneNumber
 
-        Log.d("Dashboard phoe no",no.toString())
+        Log.d("Dashboard phone no",no.toString())
 
         binding.memberSubmit.setOnClickListener {
             checkDetails()
@@ -66,6 +73,22 @@ class FamilyActivity : AppCompatActivity() {
         binding.familyBack.setOnClickListener {
             onBackPressed()
         }
+
+        binding.occupationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.d("Spinner" , "$position p $id")
+                if (position == 1) {
+                    binding.familyBusiness.familuBusinessLayout.visibility = View.VISIBLE
+                } else {
+                    binding.familyBusiness.familuBusinessLayout.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                binding.familyBusiness.familuBusinessLayout.visibility = View.GONE
+            }
+        }
+
 
     }
 
