@@ -9,5 +9,6 @@ data class Member(
     val familyID : String,
     val contact : String,
     val DOB : String,
+    var profilePic : String = "",
     val relation : String
 )
