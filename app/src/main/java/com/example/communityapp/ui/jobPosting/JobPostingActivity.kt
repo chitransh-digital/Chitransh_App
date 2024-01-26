@@ -9,7 +9,9 @@ import androidx.lifecycle.Observer
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Job
 import com.example.communityapp.databinding.ActivityJobPostingBinding
+import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.ui.jobs.JobsViewModel
+import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,12 +30,15 @@ class JobPostingActivity : AppCompatActivity() {
             checkDetails()
         }
 
+        binding.jobPostingBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun checkDetails() {
         if (binding.nameinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
-        }else if(binding.contactinput.text.isNullOrEmpty()){
+        }else if(binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())){
             Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
         }else if(binding.jobTitleinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter Title of job", Toast.LENGTH_SHORT).show()
@@ -51,6 +56,14 @@ class JobPostingActivity : AppCompatActivity() {
         else{
             submitRegistration()
         }
+    }
+
+    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        val pattern = """^\+91\d{10}$""".toRegex()
+
+        val matchResult = pattern.find(phoneNumber)
+
+        return matchResult != null
     }
 
     private fun submitRegistration() {

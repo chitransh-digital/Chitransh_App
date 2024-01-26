@@ -18,7 +18,9 @@ import com.example.communityapp.data.models.Job
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.ActivityJobPostingBinding
 import com.example.communityapp.databinding.ActivityJobsBinding
+import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.ui.feed.FeedsAdapter
+import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
@@ -57,6 +59,10 @@ class JobsActivity : AppCompatActivity() {
 //        jobsViewModel.addJob(
 //            Job("b","87886785","afa","FSDASDA", listOf("a","b","c"),765,"jabalpur")
 //        )
+
+        binding.jobBack.setOnClickListener {
+            onBackPressed()
+        }
 
         setObservables()
     }

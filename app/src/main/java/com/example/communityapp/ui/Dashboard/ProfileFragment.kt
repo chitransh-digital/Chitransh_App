@@ -31,6 +31,11 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(requireActivity())[DashboardViewModel::class.java]
         setObservables()
+
+        binding.profileBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
         return binding.root
     }
 
@@ -53,19 +58,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(data : List<Member>){
-        val list : ArrayList<Member> = ArrayList()
-        val id = FirebaseAuth.getInstance().currentUser?.phoneNumber
-        for(ip in data){
-            if(ip.contact == id){
-                binding.UserDetails.profileName.text = ip.name
-                binding.UserDetails.profileContact.text = ip.contact
-            }else{
-                list.add(ip)
-            }
-        }
-        val adapter = profileAdapter(list)
-        binding.memberRecycleView.adapter = adapter
-        binding.memberRecycleView.layoutManager  =LinearLayoutManager(requireContext())
+        val adapter = profileAdapter(requireContext(),data)
+        binding.rvMembers.adapter = adapter
+        binding.rvMembers.layoutManager  =LinearLayoutManager(requireContext())
     }
 
 }

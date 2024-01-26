@@ -19,8 +19,11 @@ object Constants {
     const val GENDER = "gender"
     const val KARYAKARNI = "karyakarni"
     const val familyYID = "familyID"
-    const val DOB = "DOB"
+    const val DOB = "dob"
+    const val RELATION = "relation"
 
     //For data transfer b/w intents
     const val USER_DATA = "user_data"
+    const val PHONE_NUM = "phone_num"
+    const val HOME_FRAG = "home_frag"
 }

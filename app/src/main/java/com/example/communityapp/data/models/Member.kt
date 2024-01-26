@@ -8,5 +8,7 @@ data class Member(
     val karyakarni : String,
     val familyID : String,
     val contact : String,
-    val DOB : String
+    val DOB : String,
+    var profilePic : String = "",
+    val relation : String
 )

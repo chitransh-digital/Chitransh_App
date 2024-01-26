@@ -4,38 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/familu_business_layout"
+    android:visibility="gone"
     tools:context=".ui.Business.BusinessActivity">
 
-    <ImageView
-        android:id="@+id/business_back"
+    <View
+        android:id="@+id/start_bar"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintHorizontal_bias="0.005"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.08" />
-
-
-    <TextView
-        android:id="@+id/top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoSizeTextType="uniform"
-        android:text="Business Registration"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_height="2dp"
+        android:background="#6A6969"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
-        app:layout_constraintStart_toEndOf="@id/business_back"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.02"
+        app:layout_constraintWidth_percent="0.9" />
 
     <LinearLayout
         android:id="@+id/name"
@@ -45,8 +29,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top"
-        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintTop_toBottomOf="@id/start_bar"
+        app:layout_constraintVertical_bias="0.01"
         app:layout_constraintWidth_percent="0.9">
 
         <TextView
@@ -78,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
-        app:layout_constraintVertical_bias="0.055"
+        app:layout_constraintVertical_bias="0.030"
         app:layout_constraintWidth_percent="0.9">
 
         <TextView
@@ -95,8 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:inputType="phone"
             android:background="@drawable/edittest_background"
+            android:inputType="phone"
             android:padding="10dp"
             android:text="+91" />
     </LinearLayout>
@@ -111,7 +95,7 @@
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact"
-        app:layout_constraintVertical_bias="0.083"
+        app:layout_constraintVertical_bias="0.030"
         app:layout_constraintWidth_percent="0.9">
 
         <TextView
@@ -143,7 +127,7 @@
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Add"
-        app:layout_constraintVertical_bias="0.098"
+        app:layout_constraintVertical_bias="0.030"
         app:layout_constraintWidth_percent="0.9">
 
         <TextView
@@ -166,21 +150,17 @@
             android:padding="10dp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/Submit"
+    <View
+        android:id="@+id/bottom_bar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:autoSizeTextType="uniform"
-        android:backgroundTint="@color/theme_brown"
-        android:text="@string/Submit"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_height="2dp"
+        android:background="#6A6969"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/desc"
-        app:layout_constraintVertical_bias="0.298"
-        app:layout_constraintWidth_percent="0.4" />
+        app:layout_constraintTop_toBottomOf="@+id/desc"
+        app:layout_constraintVertical_bias="0.04"
+        app:layout_constraintWidth_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

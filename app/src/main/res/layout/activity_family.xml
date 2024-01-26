@@ -10,80 +10,130 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <ImageView
+            android:id="@+id/family_back"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/back"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintHeight_percent="0.04"
             app:layout_constraintHorizontal_bias="0.005"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.10" />
+            app:layout_constraintWidth_percent="0.08" />
 
 
         <TextView
             android:id="@+id/top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:autoSizeTextType="uniform"
             android:text="Registration"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.612"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintStart_toEndOf="@id/family_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.015" />
 
         <LinearLayout
             android:id="@+id/name"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.9"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.06">
+            app:layout_constraintVertical_bias="0.023"
+            app:layout_constraintWidth_percent="0.5">
 
             <TextView
                 android:id="@+id/nametext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
+                android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/nameinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:hint="Your Name"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp"
                 android:layout_marginTop="5dp"
-                />
+                android:background="@drawable/edittest_background"
+                android:hint="Your Name"
+                android:padding="10dp"
+                android:textSize="20sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/relation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintVertical_bias="0.017"
+            app:layout_constraintWidth_percent="0.5">
+
+            <TextView
+                android:id="@+id/realtion_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Relation"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/relationinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:hint="Your Relation"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:background="#DCD9D9"
+            android:src="@drawable/account_circle"
+            app:layout_constraintBottom_toTopOf="@id/FamilyID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.10"
+            app:layout_constraintHorizontal_bias="0.479"
+            app:layout_constraintStart_toEndOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/top"
+            app:layout_constraintVertical_bias="0.680"
+            app:layout_constraintWidth_percent="0.32" />
 
         <LinearLayout
             android:id="@+id/FamilyID"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.9"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.034">
+            app:layout_constraintTop_toBottomOf="@id/relation"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
 
             <TextView
                 android:id="@+id/IDtext"
@@ -98,10 +148,10 @@
                 android:id="@+id/IDinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Family ID"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp"/>
+                android:hint="Family ID"
+                android:padding="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,9 +161,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.487"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/FamilyID"
-            app:layout_constraintVertical_bias="0.052"
+            app:layout_constraintVertical_bias="0.015"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -129,22 +180,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/DOBinput"
                     android:layout_width="0dp"
-                    android:layout_weight="8"
                     android:layout_height="wrap_content"
-                    android:hint="Date Of Birth"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="8"
                     android:background="@drawable/edittest_background"
-                    android:padding="10dp"
-                    android:layout_marginTop="5dp"/>
+                    android:hint="@string/date_format"
+                    android:padding="10dp" />
+
                 <ImageView
                     android:id="@+id/dateSelector"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/date"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:src="@drawable/date" />
             </LinearLayout>
         </LinearLayout>
 
@@ -157,7 +210,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/DOB"
-            app:layout_constraintVertical_bias="0.055"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -174,6 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="+91"
+                android:inputType="phone"
                 android:background="@drawable/edittest_background"
                 android:padding="10dp"
                 android:layout_marginTop="5dp" />
@@ -188,7 +242,7 @@
             app:layout_constraintEnd_toStartOf="@id/gender"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.093"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.28">
 
             <TextView
@@ -204,19 +258,9 @@
                 android:id="@+id/ageSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
-
-            <EditText
-                android:id="@+id/ageinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Age"
-                android:visibility="gone"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:padding="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -228,7 +272,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/age"
             app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.094"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.55">
 
             <TextView
@@ -240,14 +284,13 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/genderinput"
+            <Spinner
+                android:id="@+id/genderSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Gender"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:padding="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -257,9 +300,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.56"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gender"
-            app:layout_constraintVertical_bias="0.162"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -275,10 +319,10 @@
                 android:id="@+id/Addinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Address"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:hint="Address"
+                android:padding="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -290,7 +334,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Add"
-            app:layout_constraintVertical_bias="0.24"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -306,23 +350,66 @@
                 android:id="@+id/Karyainput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Karyakarni"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:layout_marginTop="5dp" />
+                android:hint="Karyakarni"
+                android:padding="10dp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/occupation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/occupationtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Occupation"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/occupationSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/family_business"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.95"
+            android:layout_height="wrap_content"
+            layout="@layout/family_business_include"
+            app:layout_constraintTop_toBottomOf="@id/occupation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <Button
             android:id="@+id/member_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submir"
+            android:text="@string/Submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.467"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintTop_toBottomOf="@id/family_business"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintVertical_bias="0.25" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

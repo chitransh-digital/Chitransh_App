@@ -6,6 +6,8 @@ import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
@@ -15,6 +17,7 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityBusinessBinding
 import com.example.communityapp.databinding.ActivityFamilyBinding
+import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -45,9 +48,19 @@ class FamilyActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.ageSpinner.adapter = adapter
 
+        val genderList = arrayListOf("Male","Female")
+        val genadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.genderSpinner.adapter = genadapter
+
+        val occupationList = arrayListOf("None","Business","Government Job","Student")
+        val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.occupationSpinner.adapter = occupationadapter
+
         val no = FirebaseAuth.getInstance().currentUser?.phoneNumber
 
-        Log.d("Dashboard phoe no",no.toString())
+        Log.d("Dashboard phone no",no.toString())
 
         binding.memberSubmit.setOnClickListener {
             checkDetails()
@@ -56,12 +69,33 @@ class FamilyActivity : AppCompatActivity() {
         binding.dateSelector.setOnClickListener {
             showDatePickerDialog()
         }
+
+        binding.familyBack.setOnClickListener {
+            onBackPressed()
+        }
+
+        binding.occupationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.d("Spinner" , "$position p $id")
+                if (position == 1) {
+                    binding.familyBusiness.familuBusinessLayout.visibility = View.VISIBLE
+                } else {
+                    binding.familyBusiness.familuBusinessLayout.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                binding.familyBusiness.familuBusinessLayout.visibility = View.GONE
+            }
+        }
+
+
     }
 
     private fun checkDetails() {
         if (binding.nameinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
-        }else if(binding.contactinput.text.isNullOrEmpty()){
+        }else if(binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())){
             Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
         }else if(binding.Addinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your address no", Toast.LENGTH_SHORT).show()
@@ -70,15 +104,23 @@ class FamilyActivity : AppCompatActivity() {
         }else if(binding.DOBinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
         }
-        else if(binding.ageinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your age no", Toast.LENGTH_SHORT).show()
+        else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
         }
-        else if(binding.genderinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your gender no", Toast.LENGTH_SHORT).show()
+        else if(binding.genderSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
         }
         else{
             submitRegistration()
         }
+    }
+
+    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        val pattern = """^\+91\d{10}$""".toRegex()
+
+        val matchResult = pattern.find(phoneNumber)
+
+        return matchResult != null
     }
 
     private fun submitRegistration() {
@@ -87,10 +129,11 @@ class FamilyActivity : AppCompatActivity() {
             name = binding.nameinput.text.toString(),
             DOB = binding.DOBinput.text.toString(),
             contact = binding.contactinput.text.toString(),
-            age = binding.ageinput.text.toString().toInt(),
-            gender = binding.genderinput.text.toString(),
+            age = binding.ageSpinner.selectedItem.toString().toInt(),
+            gender = binding.genderSpinner.selectedItem.toString(),
             address = binding.Addinput.text.toString(),
-            karyakarni = binding.Karyainput.text.toString()
+            karyakarni = binding.Karyainput.text.toString(),
+            relation = binding.relationinput.text.toString()
         )
         viewModel.addMember(member = data)
     }
@@ -100,6 +143,16 @@ class FamilyActivity : AppCompatActivity() {
         binding.IDinput.setText(family_id)
     }
 
+    fun isDateInCorrectFormat(dateString: String, dateFormat: String): Boolean {
+        try {
+            val sdf = SimpleDateFormat(dateFormat)
+            sdf.isLenient = false
+            val date = sdf.parse(dateString)
+            return date != null && sdf.format(date) == dateString
+        } catch (e: Exception) {
+            return false
+        }
+    }
 
     private fun setObservables(){
         viewModel.user.observe(this, Observer {resources ->
@@ -108,12 +161,12 @@ class FamilyActivity : AppCompatActivity() {
                     Log.e("Success",resources.data.toString())
                     //clear all fields
                     binding.nameinput.text.clear()
-                    binding.contactinput.text.clear()
+                    binding.contactinput.setText("+91")
                     binding.Addinput.text.clear()
                     binding.Karyainput.text.clear()
                     binding.DOBinput.text.clear()
-                    binding.ageinput.text.clear()
-                    binding.genderinput.text.clear()
+                    binding.ageSpinner.setSelection(1)
+                    binding.genderSpinner.setSelection(1)
                     Toast.makeText(this, "Member Added Successfully", Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING -> {
