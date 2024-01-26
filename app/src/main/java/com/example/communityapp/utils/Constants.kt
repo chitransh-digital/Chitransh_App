@@ -1,6 +1,8 @@
 package com.example.communityapp.utils
 
 object Constants {
+    const val OCCUPATION= "occupation"
+    const val BLOOD_GROUP= "bloodGroup"
     var token = ""
     var verID = ""
 

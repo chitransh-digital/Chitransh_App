@@ -7,8 +7,10 @@ data class Member(
     val gender : String,
     val karyakarni : String,
     val familyID : String,
-    val contact : String,
+    val contact : String="",
     val DOB : String,
     var profilePic : String = "",
-    val relation : String
+    val relation : String,
+    val bloodGroup:String,
+    val occupation:String
 )

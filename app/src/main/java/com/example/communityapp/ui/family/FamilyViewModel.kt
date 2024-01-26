@@ -27,8 +27,8 @@ class FamilyViewModel @Inject constructor(private var familyRepo: FamilyRepo) : 
     val user: LiveData<Resource<String>>
         get() = _user
 
-    fun addMember(member: Member) {
-        familyRepo.addMember(member).onEach {
+    fun addMember(member: Member,selectedImagePath:String) {
+        familyRepo.addMember(member,selectedImagePath).onEach {
             when(it.status){
                 Resource.Status.SUCCESS -> {
                     _user.value = Resource.success(it.data)

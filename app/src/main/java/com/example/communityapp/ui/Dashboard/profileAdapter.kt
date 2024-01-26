@@ -41,6 +41,10 @@ class profileAdapter(private val context : Context, private val members : List<M
         holder.address.text = "${name} ${model.address}"
         holder.age_gender.text = "${model.age}/${model.gender}"
 
+        if(model.contact == "NA") {
+            holder.button.visibility = View.GONE
+        }
+
         holder.button.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:${model.contact}")

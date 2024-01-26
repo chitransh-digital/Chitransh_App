@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.family.FamilyActivity">
+
+    <include
+        android:id="@+id/relationshipSelection1"
+        layout="@layout/relationship_selection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        />
+
+    <ScrollView
+        android:id="@+id/registrationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -60,7 +74,7 @@
                 android:id="@+id/nametext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Name *"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -71,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:hint="Your Name"
+                android:hint="Member Name"
                 android:padding="10dp"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -93,7 +107,7 @@
                 android:id="@+id/realtion_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Relation"
+                android:text="Your Relation *"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -109,6 +123,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/iv_addImageMember"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
@@ -139,7 +154,7 @@
                 android:id="@+id/IDtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FamilyID"
+                android:text="FamilyID *"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -171,7 +186,7 @@
                 android:id="@+id/DOBtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date of Birth"
+                android:text="Date of Birth *"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -217,7 +232,7 @@
                 android:id="@+id/contacttext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contact"
+                android:text="Contact (optional))"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -234,6 +249,36 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/blood_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/blood_group_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Group"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/blood_group_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/age"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -241,7 +286,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/gender"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact"
+            app:layout_constraintTop_toBottomOf="@id/blood_group"
             app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.28">
 
@@ -271,7 +316,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/age"
-            app:layout_constraintTop_toBottomOf="@id/contact"
+            app:layout_constraintTop_toBottomOf="@id/blood_group"
             app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.55">
 
@@ -293,6 +338,8 @@
                 android:padding="10dp" />
         </LinearLayout>
 
+        ...
+
         <LinearLayout
             android:id="@+id/Add"
             android:layout_width="0dp"
@@ -310,18 +357,37 @@
                 android:id="@+id/Addtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address"
+                android:text="Landmark, City, State"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <!-- Landmark -->
             <EditText
-                android:id="@+id/Addinput"
+                android:id="@+id/landmarkInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:hint="Address"
+                android:hint="Landmark"
+                android:padding="10dp" />
+
+            <!-- City Dropdown -->
+            <Spinner
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+
+            <!-- State Dropdown -->
+            <Spinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
                 android:padding="10dp" />
         </LinearLayout>
 
@@ -341,7 +407,7 @@
                 android:id="@+id/Karyatext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Karyakarni"
+                android:text="Karyakarni (optional)"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -410,7 +476,9 @@
             app:layout_constraintTop_toBottomOf="@id/family_business"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/theme_brown"
             app:layout_constraintVertical_bias="0.25" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+</FrameLayout>

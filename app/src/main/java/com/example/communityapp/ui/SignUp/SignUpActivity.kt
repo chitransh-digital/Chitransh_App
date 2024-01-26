@@ -109,7 +109,9 @@ class SignUpActivity : AppCompatActivity() {
             gender = binding.genderSpinner.selectedItem.toString(),
             address = binding.Addinput.text.toString(),
             karyakarni = "null",
-            relation = "Head"
+            relation = "Head",
+            bloodGroup = "NA",
+            occupation = "NA"
         )
         viewModel.addMember(member = data, selectedImagePath)
     }
