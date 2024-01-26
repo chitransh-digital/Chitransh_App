@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">चित्रांश ऐप</string>
+    <string name="title_activity_login">लॉगिन</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">पहला फ़्रैगमेंट</string>
+    <string name="second_fragment_label">दूसरा फ़्रैगमेंट</string>
+    <string name="next">आगे</string>
+    <string name="previous">पिछला</string>
+
+    <string name="lorem_ipsum">
+        लोरेम इप्सम डॉलर सिट अमेट, कॉन्सेक्टेटर एडिपिसिंग एलिट। नम इन स्केलेरिस्के सेम। मौरिस
+        वोलुत्पत, डोलोर इड इंटरदम उल्लाम्कॉर्पर, रिसस डोलोर एगेस्तास लेक्टस, सिट अमेट मत्तिस पुरुस
+    </string>
+    <string name="prompt_email">ईमेल</string>
+    <string name="prompt_password">पासवर्ड</string>
+    <string name="action_sign_in">साइन इन या रजिस्टर करें</string>
+    <string name="action_sign_in_short">साइन इन</string>
+    <string name="welcome">"स्वागत है!"</string>
+    <string name="invalid_username">अवैध उपयोगकर्ता नाम</string>
+    <string name="invalid_password">पासवर्ड 5 अक्षरों से अधिक होना चाहिए</string>
+    <string name="login_failed">"लॉगिन असफल हुआ"</string>
+    <string name="active_jobs">सक्रिय नौकरियां</string>
+    <string name="get_otp">ओटीपी प्राप्त करें</string>
+    <string name="submit_otp">सबमिट</string>
+    <string name="SignUp">साइन अप</string>
+    <string name="please_SignUp">कृपया साइन अप करें</string>
+    <string name="transition_name">साझा इमेज दृश्य</string>
+    <string name="enter_phno">अपना फ़ोन नंबर दर्ज करें</string>
+    <string name="enter_otp">अपना ओटीपी दर्ज करें</string>
+    <string name="login_phone">अपना फ़ोन नंबर दर्ज करें</string>
+    <string name="hello_blank_fragment">नमस्ते ब्लैंक फ़्रैगमेंट</string>
+    <string name="job_nhiring">नौकरी\nभर्ती</string>
+    <string name="business_nregistration">व्यापार\nरजिस्ट्रेशन</string>
+    <string name="job_nposting">नौकरी \nपोस्टिंग</string>
+    <string name="family">परिवार</string>
+    <string name="welcome_to">स्वागत है</string>
+    <string name="chitransh_digital">चित्रांश डिजिटल!</string>
+    <string name="recent_news">हाल की खबरें</string>
+    <string name="in_your_city">आपके शहर में</string>
+    <string name="write_a_comment">एक टिप्पणी लिखें...</string>
+    <string name="choose_language">भाषा चुनें/Choose Language</string>
+    <string name="Screen_proceed">फ़ोन नंबर के साथ आगे बढ़ें</string>
+    <string name="welcome_text"><b>चित्रांश डिजिटल में आपका स्वागत है\n<font color='#620402'>चित्रांश डिजिटल</font></b></string>
+    <string name="welcome_text_dashboard"><b>चित्रांश डिजिटल में आपका स्वागत है <font color='#620402'>चित्रांश डिजिटल</font></b></string>
+    <string name="address"><b>पता:</b></string>
+    <string name="Submit">सबमिट</string>
+    <string name="registration_success">रजिस्ट्रेशन सफल! स्वागत है</string>
+    <string name="date_format">dd-MM-yyyy</string>
+    <string name="top_section_transition">शीर्ष_खंड</string>
+</resources>

@@ -267,6 +267,7 @@
         android:layout_width="111dp"
         android:layout_height="120dp"
         android:elevation="8dp"
+        android:transitionName="@string/transition_name"
         android:src="@drawable/chitranshtransparentlogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

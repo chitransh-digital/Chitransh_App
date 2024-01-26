@@ -85,6 +85,10 @@ class HomeFragment : Fragment(){
             }
         })
 
+
+
+        
+
         viewModel.feeds.observe(viewLifecycleOwner, Observer {resources ->
             when(resources.status){
                 Resource.Status.SUCCESS -> {

@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/top_section"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:orientation="horizontal"
         android:background="@color/theme_yellow" >
         <ImageView
@@ -19,11 +19,13 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:padding="2dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="2dp"
             android:src="@drawable/ic_brown_notifications_24" />
 
         <View
             android:layout_width="0dp"
-            android:layout_weight="7"
+            android:layout_weight="6"
             android:layout_height="match_parent"/>
 
         <ImageView
@@ -33,6 +35,7 @@
             android:layout_height="match_parent"
             android:padding="2dp"
             android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/baseline_person_24" />
     </LinearLayout>
 

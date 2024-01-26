@@ -2,34 +2,33 @@ package com.example.communityapp.ui.auth
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
+import android.app.Activity
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
-import android.widget.Switch
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
-import com.example.communityapp.data.models.FamilyData
-import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityLoginBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.ui.SignUp.SignUpActivity
-import com.example.communityapp.ui.family.FamilyActivity
-import com.example.communityapp.utils.Constants
+import com.example.communityapp.utils.LocaleHelper
 import com.example.communityapp.utils.Resource
 import com.example.communityapp.utils.moveAndResizeView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class Login_activity : AppCompatActivity() {
@@ -39,6 +38,8 @@ class Login_activity : AppCompatActivity() {
     private lateinit var verificationID: String
     private var contentPointer = 1
     private var shortAnimationDuration = 500
+//    var context: Context? = null
+//    var resources: Resources? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -72,7 +73,9 @@ class Login_activity : AppCompatActivity() {
 
         Handler().postDelayed({
             if (phNo != null) {
-                startActivity(Intent(this,DashboardActivity::class.java))
+                val intent = Intent(this,DashboardActivity::class.java)
+                val options = ActivityOptions.makeSceneTransitionAnimation(this, binding.logoImage, getString(R.string.transition_name)).toBundle()
+                startActivity(intent, options)
                 finish()
             } else {
                 moveAndResizeView(binding.logoImage, -200f, (binding.logoImage.height / 1.2).toInt())
@@ -82,14 +85,21 @@ class Login_activity : AppCompatActivity() {
         },2000)
 
 
+
         binding.buttonEnglish.setOnClickListener {
             contentPointer++
             showContent(contentPointer)
+//            context = LocaleHelper.setLocale(this, "en");
+//            resources = context!!.resources;
+            setLocal(this@Login_activity,"en")
         }
 
         binding.buttonHindi.setOnClickListener {
             contentPointer++
             showContent(contentPointer)
+//            context = LocaleHelper.setLocale(this, "hi");
+//            resources = context!!.resources;
+            setLocal(this@Login_activity,"hi")
         }
 
         binding.buttonProceedPhno.setOnClickListener {
@@ -118,6 +128,15 @@ class Login_activity : AppCompatActivity() {
 
     }
 
+    private fun setLocal(activity : Activity, language : String){
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val configuration = activity.resources.configuration
+        configuration.setLocale(locale)
+        configuration.setLayoutDirection(locale)
+        activity.createConfigurationContext(configuration)
+    }
+
     private fun setObservables() {
         viewModel.verificationStatus.observe(this, Observer { resource ->
             when (resource.status) {
@@ -126,7 +145,7 @@ class Login_activity : AppCompatActivity() {
                     if (resource.data?.first == 1) {
                         codeSent(resource.data.second)
                     } else {
-                        val intent = Intent(this, SignUpActivity::class.java)
+                        val intent = Intent(this, DashboardActivity::class.java)
                         val options = ActivityOptions.makeSceneTransitionAnimation(this, binding.logoImage, getString(R.string.transition_name)).toBundle()
                         startActivity(intent, options)
                     }
