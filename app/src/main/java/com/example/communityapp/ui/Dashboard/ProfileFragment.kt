@@ -45,6 +45,7 @@ class ProfileFragment : Fragment() {
                 Resource.Status.SUCCESS -> {
                     Log.e("Profile Success",resources.data.toString())
                     setUpRecyclerView(resources.data!!)
+                    binding.familyIDShow.text = "Family ID : ${resources.data.get(0).familyID}"
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" Profile Loading",resources.data.toString())

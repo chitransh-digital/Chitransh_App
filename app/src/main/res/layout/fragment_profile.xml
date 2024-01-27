@@ -60,7 +60,6 @@
         android:id="@+id/top"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.06"
         android:layout_marginTop="10dp"
         android:autoSizeTextType="uniform"
         android:text="Your Family"
@@ -69,9 +68,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.311"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintStart_toEndOf="@id/profile_back"
         app:layout_constraintTop_toBottomOf="@id/top_section"
+        app:layout_constraintVertical_bias="0.003" />
+
+    <TextView
+        android:id="@+id/familyIDShow"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.06"
+        android:layout_marginTop="10dp"
+        android:text="Family : Family ID"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -83,7 +99,6 @@
         android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/familyIDShow"
         tools:listitem="@layout/profile_item_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>

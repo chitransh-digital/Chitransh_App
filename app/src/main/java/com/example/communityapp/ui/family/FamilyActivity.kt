@@ -187,7 +187,7 @@ class FamilyActivity : AppCompatActivity() {
         binding.occupationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 Log.d("Spinner" , "$position p $id")
-                if (position == 1) {
+                if (binding.occupationSpinner.selectedItem.toString() == "Business") {
                     binding.familyBusiness.familuBusinessLayout.visibility = View.VISIBLE
                 } else {
                     binding.familyBusiness.familuBusinessLayout.visibility = View.GONE

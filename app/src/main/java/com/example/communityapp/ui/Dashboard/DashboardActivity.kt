@@ -48,7 +48,6 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
     private lateinit var phoneNum : String
     private lateinit var binding : ActivityDashboardBinding
-    private val dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,10 +91,6 @@ class DashboardActivity : AppCompatActivity() {
             Log.e("FCM token", token)
         })
 
-        if (!runBlocking { isSubscribedToTopic() }) {
-            // Perform subscription only if not already subscribed
-            subscribeToTopic()
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -161,38 +156,5 @@ class DashboardActivity : AppCompatActivity() {
             }
         })
     }
-
-    private  fun subscribeToTopic() {
-        // Call the suspend function within a coroutine
-        FirebaseMessaging.getInstance().subscribeToTopic("notify")
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Subscription successful, set the flag to indicate subscription
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        setSubscriptionFlag()
-                    }
-                    val msg = "Subscribed to topic"
-                    Log.d(TAG, msg)
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                } else {
-                    val msg = "Subscribe to topic failed: ${task.exception?.message}"
-                    Log.d(TAG, msg)
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
-
-    private suspend fun isSubscribedToTopic(): Boolean {
-        val preferencesKey = booleanPreferencesKey("isSubscribed")
-        return dataStore.data.first()[preferencesKey] ?: false
-    }
-
-    private suspend fun setSubscriptionFlag() {
-        val preferencesKey = booleanPreferencesKey("isSubscribed")
-        dataStore.edit { settings ->
-            settings[preferencesKey] = true
-        }
-    }
-
 
 }

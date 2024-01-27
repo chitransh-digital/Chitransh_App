@@ -104,6 +104,16 @@
                 android:hint="Create Family ID"
                 android:padding="10dp"
                 android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/familyIDCreate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:hint="Create Family ID"
+                android:padding="10dp"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <ImageView
@@ -201,6 +211,36 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/blood_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/blood_group_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Group"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/blood_group_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/age"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -208,7 +248,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/gender"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact"
+            app:layout_constraintTop_toBottomOf="@id/blood_group"
             app:layout_constraintVertical_bias="0.093"
             app:layout_constraintWidth_percent="0.28">
 
@@ -238,7 +278,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/age"
-            app:layout_constraintTop_toBottomOf="@id/contact"
+            app:layout_constraintTop_toBottomOf="@id/blood_group"
             app:layout_constraintVertical_bias="0.094"
             app:layout_constraintWidth_percent="0.55">
 
@@ -267,9 +307,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.56"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gender"
-            app:layout_constraintVertical_bias="0.162"
+            app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -281,15 +322,107 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <!-- Landmark -->
             <EditText
-                android:id="@+id/Addinput"
+                android:id="@+id/landmarkInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:hint="Address"
+                android:hint="Landmark"
+                android:padding="10dp" />
+
+            <!-- City Dropdown -->
+            <Spinner
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+
+            <!-- State Dropdown -->
+            <Spinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
                 android:padding="10dp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Karya"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Add"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/Karyatext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Karyakarni (optional)"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/Karyainput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:hint="Karyakarni"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/occupation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/occupationtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Occupation"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/occupationSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/family_business"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.95"
+            android:layout_height="wrap_content"
+            layout="@layout/family_business_include"
+            app:layout_constraintTop_toBottomOf="@id/occupation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <Button
             android:id="@+id/member_submit"
@@ -301,7 +434,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.467"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Add"
+            app:layout_constraintTop_toBottomOf="@id/family_business"
             app:layout_constraintVertical_bias="0.25"
             android:layout_marginBottom="10dp"/>
 

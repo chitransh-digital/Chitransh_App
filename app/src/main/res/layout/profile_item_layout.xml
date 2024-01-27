@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/profile_name"
@@ -47,7 +48,7 @@
             android:id="@+id/profile_address_fixed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/address"
             android:textColor="@color/black"
             android:textSize="16dp"
@@ -67,6 +68,7 @@
             android:backgroundTint="@color/theme_brown"
             android:drawableStart="@drawable/baseline_call_24"
             android:text="Call Now"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.021"
