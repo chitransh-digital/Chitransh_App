@@ -111,7 +111,8 @@ class SignUpActivity : AppCompatActivity() {
             karyakarni = "null",
             relation = "Head",
             bloodGroup = "NA",
-            occupation = "NA"
+            occupation = "NA",
+            education = "NA"
         )
         viewModel.addMember(member = data, selectedImagePath)
     }

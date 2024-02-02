@@ -5,5 +5,8 @@ data class Business(
     val ownerID : String,
     val contact : String,
     val desc : String,
-    val address : String
+    val address : String,
+    val type:String,
+    val link:String,
+    val images: List<String>
 )

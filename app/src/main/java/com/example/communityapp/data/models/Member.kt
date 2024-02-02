@@ -12,5 +12,6 @@ data class Member(
     var profilePic : String = "",
     val relation : String,
     val bloodGroup:String,
-    val occupation:String
+    val occupation:String,
+    val education:String,
 )

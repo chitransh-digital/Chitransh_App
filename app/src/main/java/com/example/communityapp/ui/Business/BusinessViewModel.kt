@@ -19,11 +19,11 @@ class BusinessViewModel @Inject constructor(private var businessRepo: BusinessRe
     val business : LiveData<Resource<String>>
         get() = _business
 
-    fun addBusiness(business: Business){
+    fun addBusiness(business: Business, imagesList: MutableList<String>){
         _business.value = Resource.loading()
         viewModelScope.launch {
             try{
-                val business = businessRepo.addBusiness(business)
+                val business = businessRepo.addBusiness(business, imagesList)
                 _business.value = Resource.success("Done")
             }catch (e : Exception){
                 _business.value = Resource.error(e)

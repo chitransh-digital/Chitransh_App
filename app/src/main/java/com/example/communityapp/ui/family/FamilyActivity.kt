@@ -120,9 +120,11 @@ class FamilyActivity : AppCompatActivity() {
             binding.genderSpinner.setSelection(1)
         }
         else if(familyMember =="son"){
+            binding.education.visibility= View.VISIBLE
             binding.genderSpinner.setSelection(0)
         }
         else if(familyMember =="daughter"){
+            binding.education.visibility= View.VISIBLE
             binding.genderSpinner.setSelection(1)
         }
         else if(familyMember =="husband"){
@@ -143,6 +145,11 @@ class FamilyActivity : AppCompatActivity() {
         val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.occupationSpinner.adapter = occupationadapter
+
+        val educationList = arrayListOf("10th","12th","Graduate","Post Graduate","Other")
+        val educationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, educationList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.educationSpinner.adapter = educationadapter
 
         //add states in state spinners
         val statesList = arrayListOf("Madhya Pradesh")
@@ -199,6 +206,21 @@ class FamilyActivity : AppCompatActivity() {
             }
         }
 
+        binding.educationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.d("Spinner" , "$position p $id")
+                if (position == 4 || position == 3 || position == 2 ) {
+                    binding.educationInput.visibility = View.VISIBLE
+                } else {
+                    binding.educationInput.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                binding.educationInput.visibility = View.GONE
+            }
+        }
+
     }
 
     private fun checkDetails() {
@@ -240,6 +262,10 @@ class FamilyActivity : AppCompatActivity() {
         if(binding.contactinput.text.toString() != "+91"){
             contact = binding.contactinput.text.toString()
         }
+        var education = binding.educationSpinner.selectedItem.toString()
+        if(binding.educationInput.text.isNotEmpty()){
+            education += ","+binding.educationInput.text.toString()
+        }
 
         var karyakanri = "NA"
         if(binding.Karyainput.text.isNotEmpty()){
@@ -257,7 +283,8 @@ class FamilyActivity : AppCompatActivity() {
             relation = binding.relationinput.text.toString(),
             occupation = binding.occupationSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
-            profilePic = "NA"
+            profilePic = "NA",
+            education = education
         )
         viewModel.addMember(member = data,selectedImagePath)
     }

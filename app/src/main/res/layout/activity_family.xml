@@ -423,6 +423,47 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/education"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/educationtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="education"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/educationSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/educationInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:hint="College and Course"
+                android:visibility="gone"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/occupation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -430,7 +471,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Karya"
+            app:layout_constraintTop_toBottomOf="@id/education"
             app:layout_constraintVertical_bias="0.022"
             app:layout_constraintWidth_percent="0.9">
 
