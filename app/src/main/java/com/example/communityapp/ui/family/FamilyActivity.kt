@@ -40,6 +40,7 @@ class FamilyActivity : AppCompatActivity() {
     private var selectedDate: Calendar = Calendar.getInstance()
     private var familyMember="other"
     private var selectedImagePath:String = ""
+    private var uniqueRelations: List<String>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFamilyBinding.inflate(layoutInflater)
@@ -50,6 +51,21 @@ class FamilyActivity : AppCompatActivity() {
         setObservables()
 
         getArguements()
+        e("uniqueRelations",uniqueRelations.toString())
+
+        if(uniqueRelations?.contains("wife") == true){
+            binding.relationshipSelection1.btnWife.visibility = View.GONE
+        }
+        if(uniqueRelations?.contains("husband") == true){
+            binding.relationshipSelection1.btnHusband.visibility = View.GONE
+        }
+        if(uniqueRelations?.contains("father") == true){
+            binding.relationshipSelection1.btnFather.visibility = View.GONE
+        }
+        if(uniqueRelations?.contains("mother") == true){
+            binding.relationshipSelection1.btnMother.visibility = View.GONE
+        }
+
 
 
         binding.relationshipSelection1.btnWife.setOnClickListener {
@@ -292,6 +308,7 @@ class FamilyActivity : AppCompatActivity() {
     private fun getArguements(){
         family_id = intent.getStringExtra(Constants.FAMILYID).toString()
         binding.IDinput.setText(family_id)
+        uniqueRelations = intent.getStringArrayListExtra(Constants.UNIQUE_RELATIONS)
     }
 
     fun isDateInCorrectFormat(dateString: String, dateFormat: String): Boolean {

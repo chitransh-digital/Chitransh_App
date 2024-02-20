@@ -29,6 +29,7 @@ class HomeFragment : Fragment(){
     private lateinit var binding: FragmentHomeNewBinding
     private lateinit var viewModel: DashboardViewModel
     private lateinit var user_data : Member
+    private var uniqueRelations: List<String>? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +48,7 @@ class HomeFragment : Fragment(){
         binding.card1.setOnClickListener {
             val intent = Intent(requireContext(),FamilyActivity::class.java)
             intent.putExtra(Constants.FAMILYID,user_data.familyID)
+            intent.putStringArrayListExtra(Constants.UNIQUE_RELATIONS, ArrayList(uniqueRelations))
             startActivity(intent)
         }
 
@@ -78,6 +80,7 @@ class HomeFragment : Fragment(){
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     Log.e("home Success",resources.data.toString())
+                    uniqueRelations = resources.data?.distinctBy { it.relation }?.map { it.relation }
                     updateUI(resources.data!!)
                 }
                 Resource.Status.LOADING -> {

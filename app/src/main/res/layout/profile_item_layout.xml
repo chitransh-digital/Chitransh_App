@@ -28,6 +28,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.181" />
+        <TextView
+            android:id="@+id/profile_relation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Relation"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="visible"
+            android:layout_margin="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toEndOf="@id/profile_address_fixed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.490" />
+
 
         <TextView
             android:id="@+id/profile_age_gender"

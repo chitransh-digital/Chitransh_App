@@ -15,6 +15,7 @@ object Constants {
     const val BUSINESS = "BUSINESS"
 
     //Fields for Member/Users
+    const val UNIQUE_RELATIONS= "uniqueRelations"
     const val NAME = "name"
     const val ADDRESS = "address"
     const val CONTACT = "contact"
