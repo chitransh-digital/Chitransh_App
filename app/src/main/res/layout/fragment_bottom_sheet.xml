@@ -119,20 +119,49 @@
                 android:scrollbars="vertical" />
 
         </androidx.core.widget.NestedScrollView>
+        <LinearLayout
 
-        <Button
-            android:id="@+id/btn_jobApply"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Apply"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@color/theme_brown"
-            android:layout_gravity="center"
-            android:textColor="@color/white"
-            />
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+            <Button
+                android:id="@+id/btn_jobCall"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:text="Contact"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/theme_brown"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="match_parent"
+                />
+
+            <Button
+                android:id="@+id/btn_jobLink"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:text="Apply"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/theme_brown"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:text="Comments"
             />
 
@@ -146,7 +175,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/detailedJobLayout"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:nestedScrollingEnabled="true"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"

@@ -56,8 +56,13 @@ class HomeFragment : Fragment(){
         }
 
         binding.card4.setOnClickListener {
-            val intent = Intent(requireContext(),JobsActivity::class.java)
-            startActivity(intent)
+            try {
+                val intent = Intent(requireContext(),JobsActivity::class.java)
+                intent.putExtra(Constants.NAME,user_data.name)
+                startActivity(intent)
+            }catch (e:Exception){
+                Log.e("error",e.toString())
+            }
         }
 
         binding.ivProfile.setOnClickListener {

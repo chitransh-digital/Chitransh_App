@@ -77,7 +77,8 @@ class JobPostingActivity : AppCompatActivity() {
             jobTitle = binding.jobTitleinput.text.toString(),
             requirements = req_list,
             salary = binding.salaryinput.text.toString().toInt(),
-            location = binding.locationinput.text.toString()
+            location = binding.locationinput.text.toString(),
+            "NA"
         )
 
         jobsPostingViewModel.addJob(data)

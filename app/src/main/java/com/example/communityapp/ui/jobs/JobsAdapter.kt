@@ -2,22 +2,23 @@ package com.example.communityapp.ui.jobs
 
 import android.content.Intent
 import android.net.Uri
-import android.provider.ContactsContract
 import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Job
 
 
-class JobsAdapter(private val jobList: List<Pair<Job,String>>, private val activity: JobsActivity) :
+class JobsAdapter(
+    private val jobList: List<Pair<Job, String>>,
+    private val activity: JobsActivity,
+    private val username: String
+) :
     RecyclerView.Adapter<JobsAdapter.JobsViewHolder>() {
     lateinit var bottomSheetFragment: BottomSheetFragment
 
@@ -56,7 +57,7 @@ class JobsAdapter(private val jobList: List<Pair<Job,String>>, private val activ
 
         holder.itemView.setOnClickListener {
             try {
-                bottomSheetFragment = BottomSheetFragment(currentItem) // send the id to fragment
+                bottomSheetFragment = BottomSheetFragment(currentItem,username) // send the id to fragment
                 bottomSheetFragment.show(activity.supportFragmentManager, "BSDialogFragment")
             }
             catch (e:Exception) {

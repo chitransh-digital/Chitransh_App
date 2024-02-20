@@ -55,7 +55,8 @@ class JobsRepo @Inject constructor(private val db: FirebaseFirestore) {
                         val requirements = document.data.get("requirements") as List<String>
                         val salary = document.data.get("salary").toString().toInt()
                         val location = document.data.get("location").toString()
-                        val job = Job(name, contact, jobDescription, jobTitle, requirements, salary,location)
+                        val externalLink = document.data.get("externalLink").toString()
+                        val job = Job(name, contact, jobDescription, jobTitle, requirements, salary,location,externalLink)
                         jobsList.add(Pair(job,id))
 
 //                        e("JobsRepo", "job: ${job}")
