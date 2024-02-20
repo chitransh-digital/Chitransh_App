@@ -2,8 +2,11 @@ package com.example.communityapp.ui.auth
 
 import android.app.Activity
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.communityapp.data.repository.LoginRepo
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.FirebaseException
@@ -13,12 +16,13 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewModel(){
+class LoginViewModel@Inject constructor(private val auth: FirebaseAuth, private val loginRepo: LoginRepo) : ViewModel(){
 
 
     val TAG = "Login View Model"
@@ -77,5 +81,27 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth) : ViewMo
                     }
                 }
             }
+    }
+
+    private val _loginStatus = MutableLiveData<Resource<Boolean>>()
+
+    val loginStatus : LiveData<Resource<Boolean>>
+        get() = _loginStatus
+
+    fun signInWithUsername(username: String, familyID: String) {
+        _loginStatus.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val res = loginRepo.signInWithUsername(username)
+                Log.d("LoginViewModel", "signInWithUsername: $res")
+                if(res == familyID) {
+                    _loginStatus.value = Resource.success(true)
+                } else {
+                    _loginStatus.value = Resource.error(Exception("Invalid Password"))
+                }
+            }catch (e : Exception){
+                _loginStatus.value = Resource.error(e)
+            }
+        }
     }
 }

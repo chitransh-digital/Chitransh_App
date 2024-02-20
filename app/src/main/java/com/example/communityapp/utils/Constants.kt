@@ -28,4 +28,5 @@ object Constants {
     const val USER_DATA = "user_data"
     const val PHONE_NUM = "phone_num"
     const val HOME_FRAG = "home_frag"
+    const val USERNAME = "username"
 }

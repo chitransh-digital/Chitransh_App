@@ -68,7 +68,7 @@ class SignUpActivity : AppCompatActivity() {
             checkDetails()
         }
 
-        binding.familyIDCreate.setOnClickListener {
+        binding.familyIDinput.setOnClickListener {
             val name = binding.nameinput.text.toString()
             val contact = binding.contactinput.text.toString()
             if (name.isNotEmpty() && contact.isNotEmpty()){

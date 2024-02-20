@@ -20,7 +20,7 @@
             android:transitionName="@string/transition_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintHeight_percent="0.1"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,6 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.14"
@@ -78,12 +79,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.043"
+            app:layout_constraintVertical_bias="0.01999998"
             app:layout_constraintWidth_percent="0.5">
 
             <TextView
@@ -102,18 +104,10 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
                 android:hint="Create Family ID"
+                android:focusable="false"
                 android:padding="10dp"
                 android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/familyIDCreate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:hint="Create Family ID"
-                android:padding="10dp"
-                android:textSize="20sp" />
         </LinearLayout>
 
         <ImageView
@@ -123,13 +117,14 @@
             android:layout_marginStart="4dp"
             android:background="#DCD9D9"
             android:src="@drawable/account_circle"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/DOB"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintHeight_percent="0.12"
             app:layout_constraintHorizontal_bias="0.333"
             app:layout_constraintStart_toEndOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.492"
+            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent="0.36" />
 
         <LinearLayout
@@ -137,11 +132,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/FamilyID"
-            app:layout_constraintVertical_bias="0.052"
+            app:layout_constraintVertical_bias="0.01999998"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -173,8 +169,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:layout_margin="8dp"
+                    android:layout_weight="1"
                     android:src="@drawable/date" />
             </LinearLayout>
         </LinearLayout>
@@ -184,11 +180,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/DOB"
-            app:layout_constraintVertical_bias="0.055"
+            app:layout_constraintVertical_bias="0.01999998"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -215,6 +212,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -245,11 +243,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/gender"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/blood_group"
-            app:layout_constraintVertical_bias="0.093"
+            app:layout_constraintVertical_bias="0.04"
             app:layout_constraintWidth_percent="0.28">
 
             <TextView
@@ -275,11 +274,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/age"
             app:layout_constraintTop_toBottomOf="@id/blood_group"
-            app:layout_constraintVertical_bias="0.094"
+            app:layout_constraintVertical_bias="0.04000002"
             app:layout_constraintWidth_percent="0.55">
 
             <TextView
@@ -305,6 +305,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.56"
@@ -356,6 +357,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -387,6 +389,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -417,6 +420,7 @@
             android:layout_width="0dp"
             app:layout_constraintWidth_percent="0.95"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             layout="@layout/family_business_include"
             app:layout_constraintTop_toBottomOf="@id/occupation"
             app:layout_constraintStart_toStartOf="parent"
@@ -430,6 +434,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/Submit"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.467"

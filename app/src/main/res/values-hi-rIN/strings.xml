@@ -48,4 +48,8 @@
     <string name="registration_success">रजिस्ट्रेशन सफल! स्वागत है</string>
     <string name="date_format">dd-MM-yyyy</string>
     <string name="top_section_transition">शीर्ष_खंड</string>
+    <string name="Screen_proceed_familyID">परिवार आईडी के साथ आगे बढ़ें</string>
+    <string name="login_username">केवल मौजूदा परिवार के सदस्यों के लिए</string>
+    <string name="login_via_otp">OTP के माध्यम से लॉगिन करें</string>
+    <string name="login_via_familyID">परिवार आईडी के माध्यम से लॉगिन करें</string>
 </resources>

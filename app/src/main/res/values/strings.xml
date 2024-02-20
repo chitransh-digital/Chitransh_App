@@ -57,4 +57,8 @@
     <string name="registration_success">Registration Successful! Welcome</string>
     <string name="date_format">dd-MM-yyyy</string>
     <string name="top_section_transition">Top_Section</string>
+    <string name="Screen_proceed_familyID">Proceed with Family ID</string>
+    <string name="login_username">Only for existing family members</string>
+    <string name="login_via_otp">Login via OTP</string>
+    <string name="login_via_familyID">Login via FamilyID</string>
 </resources>

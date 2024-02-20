@@ -25,7 +25,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/primary"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +78,20 @@
         app:layout_constraintVertical_bias="0.184" />
 
     <Button
+        android:id="@+id/button_proceed_familyID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/theme_brown"
+        android:text="@string/Screen_proceed_familyID"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_proceed_phno"
+        app:layout_constraintVertical_bias="0.102" />
+
+    <Button
         android:id="@+id/button_Hindi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -115,7 +129,7 @@
         android:text="@string/login_phone"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +142,7 @@
         android:layout_height="wrap_content"
         android:hint="Phone No"
         android:textSize="16sp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@drawable/edittest_background"
         android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -145,7 +159,7 @@
         android:backgroundTint="@color/theme_brown"
         android:text="@string/get_otp"
         android:textSize="16sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,9 +177,106 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextPhone"
+        app:layout_constraintVertical_bias="0.137"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <TextView
+        android:id="@+id/login_via_familyID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/login_via_familyID"
+        android:textColor="@color/theme_brown"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonOTP"
+        app:layout_constraintVertical_bias="0.357" />
+
+    <TextView
+        android:id="@+id/login_username_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/login_username"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image"
+        app:layout_constraintVertical_bias="0.053" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Phone No"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:background="@drawable/edittest_background"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_username_text"
+        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextFamilyID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Family ID"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:background="@drawable/edittest_background"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextUsername"
+        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <Button
+        android:id="@+id/button_login_username_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/theme_brown"
+        android:text="@string/submit_otp"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextFamilyID"
         app:layout_constraintVertical_bias="0.189"
         app:layout_constraintWidth_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/login_via_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/login_via_otp"
+        android:textColor="@color/theme_brown"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_login_username_submit"
+        app:layout_constraintVertical_bias="0.275" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
