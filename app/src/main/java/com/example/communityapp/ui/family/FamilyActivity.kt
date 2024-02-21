@@ -40,6 +40,7 @@ class FamilyActivity : AppCompatActivity() {
     private var selectedDate: Calendar = Calendar.getInstance()
     private var familyMember="other"
     private var selectedImagePath:String = ""
+    private var uniqueRelations: List<String>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFamilyBinding.inflate(layoutInflater)
@@ -50,6 +51,21 @@ class FamilyActivity : AppCompatActivity() {
         setObservables()
 
         getArguements()
+        e("uniqueRelations",uniqueRelations.toString())
+
+        if(uniqueRelations?.contains("wife") == true){
+            binding.relationshipSelection1.btnWife.visibility = View.GONE
+        }
+        if(uniqueRelations?.contains("husband") == true){
+            binding.relationshipSelection1.btnHusband.visibility = View.GONE
+        }
+        if(uniqueRelations?.contains("father") == true){
+            binding.relationshipSelection1.btnFather.visibility = View.GONE
+        }
+        if(uniqueRelations?.contains("mother") == true){
+            binding.relationshipSelection1.btnMother.visibility = View.GONE
+        }
+
 
 
         binding.relationshipSelection1.btnWife.setOnClickListener {
@@ -86,6 +102,11 @@ class FamilyActivity : AppCompatActivity() {
             changeUI()
         }
 
+        binding.relationshipSelection1.btnNewFamily.setOnClickListener {
+            val intent= Intent(this, NewFamilyActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun changeUI(){
@@ -98,6 +119,8 @@ class FamilyActivity : AppCompatActivity() {
         binding.relationshipSelection1.btnFather.visibility = View.GONE
         binding.relationshipSelection1.btnMother.visibility = View.GONE
         binding.relationshipSelection1.btnOther.visibility = View.GONE
+        binding.relationshipSelection1.tvOr.visibility = View.GONE
+        binding.relationshipSelection1.btnNewFamily.visibility = View.GONE
         registerPageUI()
     }
 
@@ -120,9 +143,11 @@ class FamilyActivity : AppCompatActivity() {
             binding.genderSpinner.setSelection(1)
         }
         else if(familyMember =="son"){
+            binding.education.visibility= View.VISIBLE
             binding.genderSpinner.setSelection(0)
         }
         else if(familyMember =="daughter"){
+            binding.education.visibility= View.VISIBLE
             binding.genderSpinner.setSelection(1)
         }
         else if(familyMember =="husband"){
@@ -143,6 +168,11 @@ class FamilyActivity : AppCompatActivity() {
         val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.occupationSpinner.adapter = occupationadapter
+
+        val educationList = arrayListOf("10th","12th","Graduate","Post Graduate","Other")
+        val educationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, educationList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.educationSpinner.adapter = educationadapter
 
         //add states in state spinners
         val statesList = arrayListOf("Madhya Pradesh")
@@ -199,6 +229,21 @@ class FamilyActivity : AppCompatActivity() {
             }
         }
 
+        binding.educationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.d("Spinner" , "$position p $id")
+                if (position == 4 || position == 3 || position == 2 ) {
+                    binding.educationInput.visibility = View.VISIBLE
+                } else {
+                    binding.educationInput.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                binding.educationInput.visibility = View.GONE
+            }
+        }
+
     }
 
     private fun checkDetails() {
@@ -240,6 +285,10 @@ class FamilyActivity : AppCompatActivity() {
         if(binding.contactinput.text.toString() != "+91"){
             contact = binding.contactinput.text.toString()
         }
+        var education = binding.educationSpinner.selectedItem.toString()
+        if(binding.educationInput.text.isNotEmpty()){
+            education += ","+binding.educationInput.text.toString()
+        }
 
         var karyakanri = "NA"
         if(binding.Karyainput.text.isNotEmpty()){
@@ -257,7 +306,8 @@ class FamilyActivity : AppCompatActivity() {
             relation = binding.relationinput.text.toString(),
             occupation = binding.occupationSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
-            profilePic = "NA"
+            profilePic = "NA",
+            education = education
         )
         viewModel.addMember(member = data,selectedImagePath)
     }
@@ -265,6 +315,7 @@ class FamilyActivity : AppCompatActivity() {
     private fun getArguements(){
         family_id = intent.getStringExtra(Constants.FAMILYID).toString()
         binding.IDinput.setText(family_id)
+        uniqueRelations = intent.getStringArrayListExtra(Constants.UNIQUE_RELATIONS)
     }
 
     fun isDateInCorrectFormat(dateString: String, dateFormat: String): Boolean {

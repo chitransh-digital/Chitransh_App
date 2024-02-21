@@ -19,6 +19,7 @@ class profileAdapter(private val context : Context, private val members : List<M
         val address = binding.profileAddressFixed
         val age_gender = binding.profileAgeGender
         val button = binding.callNow
+        var relation =binding.profileRelation
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,6 +41,7 @@ class profileAdapter(private val context : Context, private val members : List<M
         val name = context.getString(R.string.address)
         holder.address.text = "${name} ${model.address}"
         holder.age_gender.text = "${model.age}/${model.gender}"
+        holder.relation.text = model.relation
 
         if(model.contact == "NA") {
             holder.button.visibility = View.GONE

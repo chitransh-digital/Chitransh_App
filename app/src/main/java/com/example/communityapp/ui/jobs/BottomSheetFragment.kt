@@ -1,5 +1,7 @@
 package com.example.communityapp.ui.jobs
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -9,12 +11,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -24,10 +28,11 @@ import com.example.communityapp.data.models.Comment
 import com.example.communityapp.data.models.Job
 import com.example.communityapp.utils.Resource
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class BottomSheetFragment(private var jobId:Pair<Job,String>) : BottomSheetDialogFragment() {
+class BottomSheetFragment(private var jobId:Pair<Job,String>,private val username:String) : BottomSheetDialogFragment() {
     private val jobsViewModel: JobsViewModel by activityViewModels()
     private var comments:MutableList<Comment> = mutableListOf()
     private lateinit var commentsAdapter: CommentsAdapter
@@ -61,7 +66,6 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>) : BottomSheetDialo
         rootView.findViewById<TextView>(R.id.jobExpandedLocation).text = jobId.first.location
 
         rootView.findViewById<ImageView>(R.id.submitComment)?.setOnClickListener {
-            e("comment", "clicked")
             if (rootView.findViewById<EditText>(R.id.commentInput)?.text?.isNotEmpty() == true) {
                 val currentDateTime = LocalDateTime.now()
 
@@ -69,7 +73,7 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>) : BottomSheetDialo
 
                 // Format LocalDateTime to a string
                 val formattedDateTime = currentDateTime.format(formatter)
-                lastCommentAdded = Comment("a", formattedDateTime, rootView.findViewById<EditText>(R.id.commentInput)?.text.toString())
+                lastCommentAdded = Comment(username, formattedDateTime, rootView.findViewById<EditText>(R.id.commentInput)?.text.toString())
 
                 jobsViewModel.addComment(
                     jobId.second,
@@ -79,6 +83,22 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>) : BottomSheetDialo
             } else {
                 Toast.makeText(context, "Please enter a comment", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        rootView.findViewById<Button>(R.id.btn_jobLink).setOnClickListener {
+            val url = jobId.first.externalLink
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+
+            startActivity(intent)
+        }
+
+        rootView.findViewById<Button>(R.id.btn_jobCall) .setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:${jobId.first.contact}")
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            context?.let { it1 -> ContextCompat.startActivity(it1, intent, null) }
         }
 
         return rootView

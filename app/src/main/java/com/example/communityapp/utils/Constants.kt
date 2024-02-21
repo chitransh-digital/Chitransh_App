@@ -1,6 +1,7 @@
 package com.example.communityapp.utils
 
 object Constants {
+    const val EDUCATION= "education"
     const val OCCUPATION= "occupation"
     const val BLOOD_GROUP= "bloodGroup"
     var token = ""
@@ -14,6 +15,7 @@ object Constants {
     const val BUSINESS = "BUSINESS"
 
     //Fields for Member/Users
+    const val UNIQUE_RELATIONS= "uniqueRelations"
     const val NAME = "name"
     const val ADDRESS = "address"
     const val CONTACT = "contact"

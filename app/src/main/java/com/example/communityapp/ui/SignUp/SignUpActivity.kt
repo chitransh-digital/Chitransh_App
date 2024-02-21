@@ -252,6 +252,7 @@ class SignUpActivity : AppCompatActivity() {
                     //clear all fields
                     binding.nameinput.text.clear()
                     binding.contactinput.text.clear()
+                    binding.Addinput.text.clear()
                     binding.DOBinput.text.clear()
                     binding.ageSpinner.setSelection(1)
                     binding.genderSpinner.setSelection(1)

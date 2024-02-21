@@ -4,27 +4,17 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.Log.e
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import com.example.communityapp.R
-import com.example.communityapp.data.models.Comment
 import com.example.communityapp.data.models.Job
-import com.example.communityapp.data.models.NewsFeed
-import com.example.communityapp.databinding.ActivityJobPostingBinding
 import com.example.communityapp.databinding.ActivityJobsBinding
-import com.example.communityapp.ui.Dashboard.ProfileFragment
-import com.example.communityapp.ui.feed.FeedsAdapter
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
@@ -32,6 +22,7 @@ class JobsActivity : AppCompatActivity() {
 
     private val jobsViewModel: JobsViewModel by viewModels()
     private lateinit var binding : ActivityJobsBinding
+    private var username:String = "NA"
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +54,10 @@ class JobsActivity : AppCompatActivity() {
         binding.jobBack.setOnClickListener {
             onBackPressed()
         }
+
+        if(intent.hasExtra(Constants.NAME)){
+            username = intent.getStringExtra(Constants.NAME).toString()
+         }
 
         setObservables()
     }
@@ -167,7 +162,7 @@ class JobsActivity : AppCompatActivity() {
 
     private fun setupRecyclerView(jobs: List<Pair<Job,String>>){
         Log.d("Recycler view Job",jobs.toString())
-        val jobsAdapter = JobsAdapter(jobs, this@JobsActivity)
+        val jobsAdapter = JobsAdapter(jobs, this@JobsActivity,username)
         binding.rvJobs.adapter = jobsAdapter
         binding.rvJobs.layoutManager = LinearLayoutManager(this)
     }
