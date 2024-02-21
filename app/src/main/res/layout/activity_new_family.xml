@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.family.NewFamilyActivity">
+
+
+
+    <ImageView
+        android:id="@+id/profile_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/back"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintBottom_toBottomOf="@+id/et_searchBar"
+        app:layout_constraintTop_toTopOf="@+id/et_searchBar"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.06" />
+
+
+    <EditText
+        android:id="@+id/et_searchBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:hint="Enter Family ID"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.311"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rv_OtherFamillyMembers"
+        app:layout_constraintStart_toEndOf="@id/profile_back"
+        />
+    <ImageView
+        android:id="@+id/baseline_search_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_search_24"
+        app:layout_constraintStart_toEndOf="@+id/et_searchBar"
+        app:layout_constraintTop_toTopOf="@id/et_searchBar"
+        app:layout_constraintBottom_toBottomOf="@id/et_searchBar"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_OtherFamillyMembers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.85"
+        android:layout_margin="4dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_searchBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/profile_item_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

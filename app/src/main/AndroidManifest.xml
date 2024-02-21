@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".chitranshApp"
@@ -15,6 +16,9 @@
         android:theme="@style/Theme.CommunityApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.family.NewFamilyActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SignUp.SignUpActivity"
             android:exported="false" />
         <activity
@@ -25,21 +29,19 @@
             android:exported="false" />
         <activity
             android:name=".ui.feed.FeedsActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.Dashboard.DashboardActivity"
-            android:exported="false" >
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".ui.family.FamilyActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.jobs.JobsActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.auth.Login_activity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,18 +56,20 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-     See README(https://goo.gl/l4GJaQ) for more. -->
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/chitranshtransparentlogo" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/theme_brown" />
-
     </application>
 
 </manifest>

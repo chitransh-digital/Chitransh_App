@@ -13,9 +13,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select member to add"
+        android:text="Select member to add to your family"
         android:textSize="24sp"
         android:id="@+id/tv_member"
+        android:layout_margin="16dp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_gravity="center"/>
@@ -92,5 +93,27 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"/>
 
+    <TextView
+        android:id="@+id/tv_or"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        />
+
+    <Button
+        android:id="@+id/btnNewFamily"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Other Family"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/theme_brown"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 
 </LinearLayout>

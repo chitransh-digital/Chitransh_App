@@ -89,4 +89,37 @@ class FamilyRepo @Inject constructor(
         val bytes = MessageDigest.getInstance(type).digest(input.toByteArray())
         return bytes.joinToString("") { "%02x".format(it) }
     }
+
+
+    suspend fun findMembers(familyID: String): List<Member> {
+        return suspendCoroutine { continuation ->
+                db.collection(Constants.FAMILY).document(familyID)
+                    .collection(Constants.MEMBER).get().addOnSuccessListener { document ->
+                        val list: ArrayList<Member> = ArrayList()
+
+                        for (ip in document) {
+                            list.add(
+                                Member(
+                                    name = ip.get(Constants.NAME).toString(),
+                                    contact = ip.get(Constants.CONTACT).toString(),
+                                    address = ip.get(Constants.ADDRESS).toString(),
+                                    gender = ip.get(Constants.GENDER).toString(),
+                                    age = ip.get(Constants.AGE).toString().toInt(),
+                                    karyakarni = ip.get(Constants.KARYAKARNI).toString(),
+                                    familyID = ip.get(Constants.familyYID).toString(),
+                                    DOB = ip.get(Constants.DOB).toString(),
+                                    relation = ip.get(Constants.RELATION).toString(),
+                                    bloodGroup = ip.get(Constants.BLOOD_GROUP).toString(),
+                                    occupation = ip.get(Constants.OCCUPATION).toString(),
+                                    education = ip.get(Constants.EDUCATION).toString(),
+                                )
+                            )
+                        }
+
+                        continuation.resume(list)
+                    }.addOnFailureListener {
+                        continuation.resumeWithException(it)
+                    }
+            }
+    }
 }
