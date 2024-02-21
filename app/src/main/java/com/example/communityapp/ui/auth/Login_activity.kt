@@ -118,6 +118,7 @@ class Login_activity : AppCompatActivity() {
             if (ph.isEmpty()) {
                 Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
             } else {
+                Toast.makeText(this, "pmessage sent", Toast.LENGTH_SHORT).show()
                 viewModel.OnVerificationCodeSent(ph, this)
             }
         }

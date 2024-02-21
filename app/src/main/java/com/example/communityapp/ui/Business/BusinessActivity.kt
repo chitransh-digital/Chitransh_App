@@ -1,8 +1,11 @@
 package com.example.communityapp.ui.Business
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -13,6 +16,7 @@ import com.example.communityapp.databinding.ActivityBusinessBinding
 import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +25,7 @@ class BusinessActivity : AppCompatActivity() {
     private val viewModel: BusinessViewModel by viewModels()
     private lateinit var binding: ActivityBusinessBinding
     private lateinit var id : String
+    private var shortAnimationDuration = 500
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBusinessBinding.inflate(layoutInflater)
@@ -36,6 +41,31 @@ class BusinessActivity : AppCompatActivity() {
         binding.businessBack.setOnClickListener {
             onBackPressed()
         }
+
+        binding.top.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                Log.d("Tab Selected", "onTabSelected: ${tab?.position}, ${tab?.text}")
+                if(tab?.text == "Registration"){
+                    crossFade(
+                        listOf(binding.name, binding.contact, binding.Add, binding.desc,binding.Submit),
+                        listOf(binding.rvBusiness)
+                    )
+                }else{
+                    crossFade(listOf(binding.rvBusiness),
+                        listOf(binding.name, binding.contact, binding.Add, binding.desc,binding.Submit)
+                    )
+                }
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                Log.d("Tab ReSelected", "onTabSelected: ${tab?.position} , 3${tab?.text}")
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                Log.d("Tab UnSelected", "onTabSelected: ${tab?.position} , ${tab?.text}")
+            }
+        })
 
     }
 
@@ -89,5 +119,33 @@ class BusinessActivity : AppCompatActivity() {
             ownerID = id
         )
         viewModel.addBusiness(data)
+    }
+
+    private fun crossFade(visible: List<View>, invisible: List<View>) {
+
+        for (view in visible) {
+            view.apply {
+                // Set the content view to 0% opacity but visible, so that it is
+                // visible but fully transparent during the animation.
+                alpha = 0f
+                visibility = View.VISIBLE
+                // Animate the content view to 100% opacity and clear any animation
+                // listener set on the view.
+                animate()
+                    .alpha(1f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+        }
+
+        for (view in invisible) {
+            view.animate()
+                .alpha(0f)
+                .setDuration(shortAnimationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                    }
+                })
+        }
     }
 }

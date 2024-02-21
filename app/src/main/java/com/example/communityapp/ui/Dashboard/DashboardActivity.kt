@@ -60,8 +60,10 @@ class DashboardActivity : AppCompatActivity() {
         setObservables()
         setUpNavigation()
 
-        val id = intent.getStringExtra(Constants.USERNAME)
+        var id = intent.getStringExtra(Constants.USERNAME)
         phoneNum = id.toString()
+        phoneNum = FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()
+        id = phoneNum
         Log.d("Dashboard phone no",id.toString())
 
         if (id != null) {
