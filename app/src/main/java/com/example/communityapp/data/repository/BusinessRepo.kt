@@ -12,6 +12,35 @@ import kotlin.coroutines.suspendCoroutine
 
 class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,private val storage: FirebaseStorage) {
 
+    suspend fun getBusiness() : List<Business>{
+        return suspendCoroutine { continuation ->
+            val businessCollection = db.collection(Constants.BUSINESS)
+            businessCollection.get()
+                .addOnSuccessListener { documents ->
+                    val businessList = mutableListOf<Business>()
+                    for (document in documents) {
+
+                        businessList.add(
+                            Business(
+                                name = document.get(Constants.NAME).toString(),
+                                desc = document.get(Constants.DESC).toString(),
+                                address = document.get(Constants.ADDRESS).toString(),
+                                contact = document.get(Constants.CONTACT).toString(),
+                                ownerID = document.get(Constants.OWNER_ID).toString(),
+                                images = document.get(Constants.IMAGES) as List<String>,
+                                link = document.get(Constants.LINK).toString(),
+                                type = document.get(Constants.TYPE).toString()
+                            )
+                        )
+                    }
+                    continuation.resume(businessList)
+                }
+                .addOnFailureListener { exception ->
+                    continuation.resumeWithException(exception)
+                }
+        }
+    }
+
     suspend fun addBusiness(business: Business, imagesList: MutableList<String>) {
         return suspendCoroutine { continuation ->
             val businessCollection = db.collection(Constants.BUSINESS)

@@ -41,7 +41,7 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore) {
                                     gender = ip.get(Constants.GENDER).toString(),
                                     age = ip.get(Constants.AGE).toString().toInt(),
                                     karyakarni = ip.get(Constants.KARYAKARNI).toString(),
-                                    familyID = ip.get(Constants.familyYID).toString(),
+                                    familyID = ip.get(Constants.familyID).toString(),
                                     DOB = ip.get(Constants.DOB).toString(),
                                     relation = ip.get(Constants.RELATION).toString(),
                                     bloodGroup = ip.get(Constants.BLOOD_GROUP).toString(),
@@ -105,7 +105,7 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore) {
                             author = author as String,
                             body = body as String,
                             images = images,
-                            timestamp = timestamp as String,
+                            timestamp = "1985‑09‑25 17:45:30.005",
                             title = title as String,
                             visible = visible as Boolean,
                             location = location as String

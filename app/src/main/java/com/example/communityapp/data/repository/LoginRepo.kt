@@ -15,7 +15,7 @@ class LoginRepo @Inject constructor(private val auth: FirebaseFirestore) {
             val userDoc = userCollection.document(username).get()
                 .addOnSuccessListener {
                     Log.d("LoginRepo", "signInWithUsername: ${it.data}")
-                    val id = it.get(Constants.familyYID).toString()
+                    val id = it.get(Constants.familyID).toString()
                     continuation.resume(id)
                 }.addOnFailureListener {
                     continuation.resumeWithException(it)

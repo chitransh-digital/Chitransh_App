@@ -16,6 +16,7 @@ import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.FragmentHomeNewBinding
 import com.example.communityapp.ui.Business.BusinessActivity
+import com.example.communityapp.ui.Business.ViewBusinessActivity
 import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.ui.jobPosting.JobPostingActivity
@@ -39,7 +40,7 @@ class HomeFragment : Fragment(){
         viewModel = ViewModelProvider(requireActivity())[DashboardViewModel::class.java]
         setObservables()
 
-        binding.card3.setOnClickListener {
+        binding.card2.setOnClickListener {
             val intent = Intent(requireContext(),BusinessActivity::class.java)
             intent.putExtra(Constants.CONTACT,user_data.contact)
             startActivity(intent)
@@ -52,11 +53,6 @@ class HomeFragment : Fragment(){
             startActivity(intent)
         }
 
-        binding.card2.setOnClickListener {
-            val intent = Intent(requireContext(),JobPostingActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.card4.setOnClickListener {
             try {
                 val intent = Intent(requireContext(),JobsActivity::class.java)
@@ -65,6 +61,11 @@ class HomeFragment : Fragment(){
             }catch (e:Exception){
                 Log.e("error",e.toString())
             }
+        }
+
+        binding.card6.setOnClickListener{
+            val intent = Intent(requireContext(),ViewBusinessActivity::class.java)
+            startActivity(intent)
         }
 
         binding.ivProfile.setOnClickListener {

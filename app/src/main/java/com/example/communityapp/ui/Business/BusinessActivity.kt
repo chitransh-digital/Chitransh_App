@@ -69,30 +69,6 @@ class BusinessActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGES_REQUEST)
     }
 
-        binding.top.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                Log.d("Tab Selected", "onTabSelected: ${tab?.position}, ${tab?.text}")
-                if(tab?.text == "Registration"){
-                    crossFade(
-                        listOf(binding.name, binding.contact, binding.Add, binding.desc,binding.Submit),
-                        listOf(binding.rvBusiness)
-                    )
-                }else{
-                    crossFade(listOf(binding.rvBusiness),
-                        listOf(binding.name, binding.contact, binding.Add, binding.desc,binding.Submit)
-                    )
-                }
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                Log.d("Tab ReSelected", "onTabSelected: ${tab?.position} , 3${tab?.text}")
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Log.d("Tab UnSelected", "onTabSelected: ${tab?.position} , ${tab?.text}")
-            }
-        })
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -149,6 +125,8 @@ class BusinessActivity : AppCompatActivity() {
                 else -> {}
             }
         })
+
+
     }
 
     private fun checkFields(){

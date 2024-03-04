@@ -149,7 +149,7 @@ class Login_activity : AppCompatActivity() {
         }
 
         binding.buttonLoginUsernameSubmit.setOnClickListener {
-            val username = binding.editTextUsername.text.toString()
+            val username = "+91"+binding.editTextUsername.text.toString()
             val familyID = binding.editTextFamilyID.text.toString()
             if (username.isEmpty() || familyID.isEmpty()) {
                 Toast.makeText(this, "Please enter username and family ID", Toast.LENGTH_SHORT)

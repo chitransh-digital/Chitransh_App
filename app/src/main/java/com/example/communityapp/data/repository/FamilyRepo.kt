@@ -106,7 +106,7 @@ class FamilyRepo @Inject constructor(
                                     gender = ip.get(Constants.GENDER).toString(),
                                     age = ip.get(Constants.AGE).toString().toInt(),
                                     karyakarni = ip.get(Constants.KARYAKARNI).toString(),
-                                    familyID = ip.get(Constants.familyYID).toString(),
+                                    familyID = ip.get(Constants.familyID).toString(),
                                     DOB = ip.get(Constants.DOB).toString(),
                                     relation = ip.get(Constants.RELATION).toString(),
                                     bloodGroup = ip.get(Constants.BLOOD_GROUP).toString(),

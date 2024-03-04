@@ -31,4 +31,21 @@ class BusinessViewModel @Inject constructor(private var businessRepo: BusinessRe
         }
     }
 
+    private val _business_list = MutableLiveData<Resource<List<Business>>>()
+
+    val business_list : LiveData<Resource<List<Business>>>
+        get() = _business_list
+
+    fun getBusiness(){
+        _business_list.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val business = businessRepo.getBusiness()
+                _business_list.value = Resource.success(business)
+            }catch (e : Exception){
+                _business_list.value = Resource.error(e)
+            }
+        }
+    }
+
 }

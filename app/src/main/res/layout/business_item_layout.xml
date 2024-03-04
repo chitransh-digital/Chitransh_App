@@ -16,7 +16,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/profile_name"
+            android:id="@+id/businessname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Priyanshu Agarwal"
@@ -31,7 +31,7 @@
             app:layout_constraintVertical_bias="0.181" />
 
         <TextView
-            android:id="@+id/profile_address_fixed"
+            android:id="@+id/businessaddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.105"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_name"
+            app:layout_constraintTop_toBottomOf="@id/businessname"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent="0.6" />
 
@@ -57,14 +57,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.6"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/profile_name"
+            app:layout_constraintStart_toEndOf="@id/businessname"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.228"
             app:layout_constraintWidth_percent="0.2"
             app:tint="@color/theme_brown" />
 
         <TextView
-            android:id="@+id/profile_description"
+            android:id="@+id/businessDescription"
             android:layout_width="261dp"
             android:layout_height="28dp"
             android:layout_marginTop="8dp"
@@ -75,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.105"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_address_fixed"
+            app:layout_constraintTop_toBottomOf="@id/businessaddress"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent="0.6" />
 
