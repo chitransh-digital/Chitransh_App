@@ -1,6 +1,7 @@
 package com.example.communityapp.utils
 
 object Constants {
+    const val COUPON = "coupon"
     const val EDUCATION= "education"
     const val OCCUPATION= "occupation"
     const val BLOOD_GROUP= "bloodGroup"

@@ -156,7 +156,8 @@ class BusinessActivity : AppCompatActivity() {
             ownerID = id,
             type = binding.businessSpinner.selectedItem.toString(),
             link = businessLink,
-            images = emptyList()
+            images = emptyList(),
+            coupon = "NA"
         )
         viewModel.addBusiness(data, imagesList)
     }

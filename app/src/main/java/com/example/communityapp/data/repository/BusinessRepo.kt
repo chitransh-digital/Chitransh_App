@@ -29,7 +29,8 @@ class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,privat
                                 ownerID = document.get(Constants.OWNER_ID).toString(),
                                 images = document.get(Constants.IMAGES) as List<String>,
                                 link = document.get(Constants.LINK).toString(),
-                                type = document.get(Constants.TYPE).toString()
+                                type = document.get(Constants.TYPE).toString(),
+                                coupon = document.get(Constants.COUPON).toString()
                             )
                         )
                     }
