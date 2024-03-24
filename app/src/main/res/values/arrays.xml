@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner2_values">
+        <item>Type</item> <!-- Prompt -->
+        <item>Tech</item>
+        <item>Restaurant</item>
+        <item>Retail Store</item>
+        <item>Consulting Firm</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="spinner3_values">
+        <item>City</item> <!-- Prompt -->
+        <item>Jabalpur</item>
+        <item>Bhopal</item>
+        <item>Indore</item>
+        <item>Patna</item>
+    </string-array>
+
+</resources>

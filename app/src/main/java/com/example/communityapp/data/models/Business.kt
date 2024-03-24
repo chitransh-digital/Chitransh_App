@@ -1,5 +1,7 @@
 package com.example.communityapp.data.models
 
+import java.io.Serializable
+
 data class Business(
     val name : String,
     val ownerID : String,
@@ -9,4 +11,4 @@ data class Business(
     val type:String,
     val link:String,
     val images: List<String>
-)
+):Serializable

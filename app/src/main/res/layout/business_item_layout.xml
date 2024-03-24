@@ -1,85 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/profile_item_color"
-    android:layout_margin="16dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="16dp">
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <View
+        android:id="@+id/topLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/profile_item_color" />
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/businessname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Priyanshu Agarwal"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.065"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.181" />
-
-        <TextView
-            android:id="@+id/businessaddress"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        >
+        <LinearLayout
             android:layout_width="0dp"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/address"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.105"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/businessname"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.6" />
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/businessname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lorem_ipsum"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="2dp"
+                android:layout_marginTop="8dp"/>
 
-        <ImageButton
-            android:id="@+id/call_now"
+            <TextView
+                android:id="@+id/businessDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="40dp"
+                android:layout_marginTop="2dp"
+                android:text="@string/lorem_ipsum"
+                android:textColor="@color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:padding="2dp"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/tv_businessType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" | "/>
+
+                <TextView
+                    android:id="@+id/tv_businessAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_businessLogo"
+            android:padding="16dp"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/phone"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/businessname"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.228"
-            app:layout_constraintWidth_percent="0.2"
-            app:tint="@color/theme_brown" />
+            android:layout_weight="0.3"
+            android:layout_height="match_parent"
+            android:src="@drawable/chitranshlogo"
+            android:scaleType="centerCrop"
+            />
 
-        <TextView
-            android:id="@+id/businessDescription"
-            android:layout_width="261dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="8dp"
-            android:text="This business is great to hadle"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.105"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/businessaddress"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.6" />
+    </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>
