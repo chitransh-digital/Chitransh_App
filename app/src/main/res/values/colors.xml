@@ -7,4 +7,7 @@
     <color name="theme_purple">#C95EFC</color>
     <color name="theme_yellow">#FCE45E</color>
     <color name="theme_brown">#620402</color>
+    <color name="head_color">#FA9C4A49</color>
+    <color name="male_card_color">#46AEF3</color>
+    <color name="female_card_color">#F16CC1</color>
 </resources>

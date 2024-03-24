@@ -1,4 +1,4 @@
-package com.example.communityapp.ui.Dashboard
+package com.example.communityapp.ui.family
 
 import android.content.Context
 import android.content.Intent
@@ -6,14 +6,17 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.models.allMembers
 import com.example.communityapp.databinding.ProfileItemLayoutBinding
+import com.example.communityapp.utils.Constants
 
-class profileAdapter(private val context : Context, private val members : List<Member>) : RecyclerView.Adapter<profileAdapter.ViewHolder>() {
+class FamilyAdapter(private val context : Context, private val members : List<List<Member>>) : RecyclerView.Adapter<FamilyAdapter.ViewHolder>() {
 
     class ViewHolder(binding: ProfileItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         var name = binding.profileName
@@ -38,7 +41,7 @@ class profileAdapter(private val context : Context, private val members : List<M
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val model = members[position]
+        val model = members[position][0]
 
         holder.name.text = model.name
         val name = context.getString(R.string.address)
@@ -60,6 +63,12 @@ class profileAdapter(private val context : Context, private val members : List<M
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
             ContextCompat.startActivity(context, intent, null)
+        }
+
+        holder.ItemView.setOnClickListener {
+            val intent = Intent(context, FamilyDetailsActivity::class.java)
+            intent.putExtra(Constants.FAMILYDATA, allMembers(members[position]))
+            context.startActivity(intent)
         }
 
         Glide.with(context)

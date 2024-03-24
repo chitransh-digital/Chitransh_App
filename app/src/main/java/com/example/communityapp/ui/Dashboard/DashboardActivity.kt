@@ -2,6 +2,7 @@ package com.example.communityapp.ui.Dashboard
 
 import android.Manifest
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -60,14 +61,13 @@ class DashboardActivity : AppCompatActivity() {
         setObservables()
         setUpNavigation()
 
-        var id = intent.getStringExtra(Constants.USERNAME)
-        phoneNum = id.toString()
-        phoneNum = FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()
-        id = phoneNum
-        Log.d("Dashboard phone no",id.toString())
+        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+        val phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
+//        phoneNum = intent.getStringExtra(Constants.USERNAME).toString()
+        Log.d("Dashboard phone no",phoneNum.toString())
 
-        if (id != null) {
-            viewModel.getMember(id)
+        if (phoneNum != null) {
+            viewModel.getMember(phoneNum)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

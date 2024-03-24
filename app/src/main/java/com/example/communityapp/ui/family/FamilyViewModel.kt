@@ -45,16 +45,16 @@ class FamilyViewModel @Inject constructor(private var familyRepo: FamilyRepo) : 
     }
 
 
-    private val _user_data = MutableLiveData<Resource<List<Member>>>()
+    private val _user_data = MutableLiveData<Resource<List<List<Member>>>>()
 
-    val user_data : LiveData<Resource<List<Member>>>
+    val user_data : LiveData<Resource<List<List<Member>>>>
         get() = _user_data
 
-    fun getMembers(familyID : String){
+    fun getFamilyByCity(){
         _user_data.value = Resource.loading()
         viewModelScope.launch {
             try{
-                val user = familyRepo.findMembers(familyID)
+                val user = familyRepo.getAllFamily()
                 _user_data.value = Resource.success(user)
             }catch (e : Exception){
                 _user_data.value = Resource.error(e)

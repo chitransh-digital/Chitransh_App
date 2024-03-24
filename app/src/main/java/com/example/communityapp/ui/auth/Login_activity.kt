@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -35,6 +36,7 @@ class Login_activity : AppCompatActivity() {
     private lateinit var verificationID: String
     private var contentPointer = 1
     private var shortAnimationDuration = 500
+    private var contact = ""
 
     //    var context: Context? = null
 //    var resources: Resources? = null
@@ -64,13 +66,14 @@ class Login_activity : AppCompatActivity() {
         contentPointer = 1
         showContent(contentPointer)
 
-        val phNo = FirebaseAuth.getInstance().currentUser?.phoneNumber
-
+//        val phNo = FirebaseAuth.getInstance().currentUser?.phoneNumber
+        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+        val phNo = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
         Log.e("Login Activity", " Answer it $phNo")
 
 
         Handler().postDelayed({
-            if (phNo != null) {
+            if (!phNo.isNullOrEmpty()) {
                 val intent = Intent(this, DashboardActivity::class.java)
                 val options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -115,6 +118,7 @@ class Login_activity : AppCompatActivity() {
 
         binding.buttonPhoneNo.setOnClickListener {
             val ph = "+91" + binding.editTextPhone.text.toString()
+            contact = ph
             if (ph.isEmpty()) {
                 Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
             } else {
@@ -150,6 +154,7 @@ class Login_activity : AppCompatActivity() {
 
         binding.buttonLoginUsernameSubmit.setOnClickListener {
             val username = "+91"+binding.editTextUsername.text.toString()
+            contact = username
             val familyID = binding.editTextFamilyID.text.toString()
             if (username.isEmpty() || familyID.isEmpty()) {
                 Toast.makeText(this, "Please enter username and family ID", Toast.LENGTH_SHORT)
@@ -180,8 +185,15 @@ class Login_activity : AppCompatActivity() {
                     if (resource.data?.first == 1) {
                         codeSent(resource.data.second)
                     } else {
+                        // shared pref update
+                        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString(Constants.PHONE_NUM, contact)
+                        editor.apply()
+
+                        // start DashboardActivity after otp verification
                         val intent = Intent(this, DashboardActivity::class.java)
-                        intent.putExtra(Constants.USERNAME, FirebaseAuth.getInstance().currentUser?.phoneNumber)
+                        intent.putExtra(Constants.USERNAME, contact)
                         val options = ActivityOptions.makeSceneTransitionAnimation(
                             this,
                             binding.logoImage,
@@ -211,8 +223,15 @@ class Login_activity : AppCompatActivity() {
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     Log.e("url", resource.status.toString())
+                    //shared pref update
+                    val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.putString(Constants.PHONE_NUMBER, contact)
+                    editor.apply()
+
+                    //start dashboard activty after family id verfiication
                     val intent = Intent(this, DashboardActivity::class.java)
-                    intent.putExtra(Constants.USERNAME, binding.editTextUsername.text.toString())
+                    intent.putExtra(Constants.USERNAME, contact)
                     val options = ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         binding.logoImage,

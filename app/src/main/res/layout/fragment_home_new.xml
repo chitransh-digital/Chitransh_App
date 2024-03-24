@@ -16,25 +16,26 @@
         app:layout_constraintHeight_percent="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/iv_notification"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/ic_brown_notifications_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:layout_constraintWidth_percent="0.18" />
+
     <ImageView
         android:id="@+id/iv_profile"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +50,7 @@
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.48"
+        app:layout_constraintHeight_percent="0.42"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_section"
         app:layout_constraintVertical_bias="0.120000005"
@@ -59,7 +60,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="320dp">
 
             <TextView
                 android:id="@+id/tv_welcome1"
@@ -90,7 +91,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="4"
                     android:background="@drawable/image_view_background"
                     android:padding="12dp"
                     android:src="@drawable/family" />
@@ -98,7 +99,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="Family \n Registration"
                     android:textSize="12sp" />
@@ -121,7 +122,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="4"
                     android:background="@drawable/image_view_background"
                     android:padding="12dp"
                     android:src="@drawable/business" />
@@ -129,7 +130,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="Business \n Registration"
                     android:textSize="12sp" />
@@ -151,7 +152,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="4"
                     android:background="@drawable/image_view_background"
                     android:padding="12dp"
                     android:src="@drawable/hire_me" />
@@ -159,7 +160,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="Jobs"
                     android:textSize="12sp" />
@@ -182,7 +183,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="4"
                     android:background="@drawable/image_view_background"
                     android:padding="12dp"
                     android:src="@drawable/hire_me" />
@@ -190,7 +191,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="View Family"
                     android:textSize="12sp" />
@@ -213,7 +214,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="4"
                     android:background="@drawable/image_view_background"
                     android:padding="12dp"
                     android:src="@drawable/hire_me" />
@@ -221,7 +222,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="View Business"
                     android:textSize="12sp" />
@@ -275,25 +276,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.04"
-        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_recentNews"
-        app:layout_constraintVertical_bias="0.07999998"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent="0.9" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_localNews"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="horizontal"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.20"
+        app:layout_constraintHeight_percent="0.38"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_localNews"
-        app:layout_constraintVertical_bias="0.19"
-        app:layout_constraintWidth_percent="0.95"
+        app:layout_constraintVertical_bias="0.466"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/news_small_item" />
 

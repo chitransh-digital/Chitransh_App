@@ -1,5 +1,7 @@
 package com.example.communityapp.data.models
 
+import java.io.Serializable
+
 data class Member(
     val name : String,
     val age : Int,
@@ -14,4 +16,4 @@ data class Member(
     val bloodGroup:String,
     val occupation:String,
     val education:String,
-)
+) : Serializable

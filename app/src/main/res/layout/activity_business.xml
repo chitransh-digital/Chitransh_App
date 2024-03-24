@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.06"
@@ -58,7 +58,7 @@
                 android:id="@+id/nametext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Business Name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -90,7 +90,7 @@
                 android:id="@+id/contacttext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contact"
+                android:text="Business Contact"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -123,7 +123,7 @@
                 android:id="@+id/Addtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address"
+                android:text="Business Address"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -155,7 +155,7 @@
                 android:id="@+id/desctext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="Business Description"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />

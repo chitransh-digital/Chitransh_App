@@ -11,67 +11,70 @@
     app:cardElevation="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
+
 
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:text="Priyanshu Agarwal"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.065"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.176"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.181" />
+            app:layout_constraintVertical_bias="0.061" />
+
         <TextView
             android:id="@+id/profile_relation"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:text="Relation"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:visibility="visible"
-            android:layout_margin="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toEndOf="@id/profile_address_fixed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490" />
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.644"
+            app:layout_constraintStart_toEndOf="@id/profile_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.047" />
 
         <TextView
             android:id="@+id/profile_age_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:text="24/M"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.158"
-            app:layout_constraintStart_toEndOf="@id/profile_name"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.173" />
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_name"
+            app:layout_constraintVertical_bias="0.31" />
 
         <TextView
             android:id="@+id/profile_address_fixed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_margin="4dp"
             android:text="@string/address"
             android:textColor="@color/black"
             android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/profile_age_gender"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.105"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.785"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
             app:layout_constraintTop_toBottomOf="@id/profile_name"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent="0.6" />
@@ -80,17 +83,29 @@
             android:id="@+id/call_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="4dp"
             android:backgroundTint="@color/theme_brown"
             android:drawableStart="@drawable/baseline_call_24"
             android:text="Call Now"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.021"
+            app:layout_constraintHorizontal_bias="0.086"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/profile_age_gender"
+            app:layout_constraintVertical_bias="0.272" />
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="108dp"
+            android:layout_height="126dp"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_address_fixed"
-            app:layout_constraintVertical_bias="0.058" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.482"
+            app:srcCompat="@drawable/baseline_person_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
