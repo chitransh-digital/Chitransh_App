@@ -62,4 +62,7 @@
     <string name="login_username">Only for existing family members</string>
     <string name="login_via_otp">Login via OTP</string>
     <string name="login_via_familyID">Login via FamilyID</string>
+    <string name="spinner2_prompt" translatable="false">City</string>
+    <string name="spinner3_prompt" translatable="false">Type</string>
+
 </resources>

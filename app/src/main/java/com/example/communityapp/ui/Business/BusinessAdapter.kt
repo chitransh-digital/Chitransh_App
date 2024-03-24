@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Business
 
@@ -19,9 +20,9 @@ class BusinessAdapter (private val context : Context, private val Businesses: Li
         inner class BuisnessViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val businessName: TextView = itemView.findViewById(R.id.businessname)
             val businessDescription: TextView = itemView.findViewById(R.id.businessDescription)
-            val businessLocation: TextView = itemView.findViewById(R.id.businessaddress)
-            val businessContact : ImageButton = itemView.findViewById(R.id.call_now)
-//            val businessImage: ImageView = itemView.findViewById(R.id.businessImage)
+            val businessLocation: TextView = itemView.findViewById(R.id.tv_businessAdd)
+            val businessType: TextView = itemView.findViewById(R.id.tv_businessType)
+            val businessImage: ImageView = itemView.findViewById(R.id.iv_businessLogo)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BuisnessViewHolder {
@@ -34,14 +35,20 @@ class BusinessAdapter (private val context : Context, private val Businesses: Li
             holder.businessName.text = business.name
             holder.businessDescription.text = business.desc
             holder.businessLocation.text = business.address
-            holder.businessContact.setOnClickListener {
-                val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse("tel:${business.contact}")
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            holder.businessType.text=business.type
+            Glide.with(holder.itemView).load(business.images[0]).into(holder.businessImage)
 
-                ContextCompat.startActivity(context, intent, null)
+
+            holder.itemView.setOnClickListener {
+                // Create an Intent to open BusinessDetailsActivity
+                val intent = Intent(context, BusinessDetailsActivity::class.java).apply {
+                    // Pass the selected business data to the intent
+                    putExtra("business", business)
+                }
+                // Start the activity
+                context.startActivity(intent)
             }
-//            Glide.with(holder.itemView).load(business.images[0]).into(holder.businessImage)
+
         }
 
         override fun getItemCount(): Int {

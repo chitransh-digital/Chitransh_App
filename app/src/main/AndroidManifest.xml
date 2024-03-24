@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CommunityApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.Business.BusinessDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.family.FamilyDetailsActivity"
             android:exported="false" />
         <activity
