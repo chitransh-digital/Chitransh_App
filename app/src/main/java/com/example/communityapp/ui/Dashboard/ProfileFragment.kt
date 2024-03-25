@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
         binding.logoutButton.setOnClickListener{
             val sharedPreferences = requireActivity().getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
-            editor.putString(Constants.PHONE_NUM, null)
+            editor.putString(Constants.PHONE_NUM, "NA")
             editor.apply()
             startActivity(Intent(requireContext(),Login_activity::class.java))
             requireActivity().finish()

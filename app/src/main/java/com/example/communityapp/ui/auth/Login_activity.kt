@@ -73,7 +73,7 @@ class Login_activity : AppCompatActivity() {
 
 
         Handler().postDelayed({
-            if (!phNo.isNullOrEmpty()) {
+            if (!phNo.isNullOrEmpty() && phNo != "NA") {
                 val intent = Intent(this, DashboardActivity::class.java)
                 val options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
