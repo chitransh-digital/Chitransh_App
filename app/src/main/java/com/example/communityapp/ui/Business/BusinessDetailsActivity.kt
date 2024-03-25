@@ -64,6 +64,11 @@ class BusinessDetailsActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            binding.button3.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.file))
+                startActivity(intent)
+            }
+
             if(business.coupon!="NA"){
                 binding.llCoupon.visibility= View.VISIBLE
                 binding.tvCoupon.text = business.coupon

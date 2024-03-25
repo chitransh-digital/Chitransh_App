@@ -30,7 +30,8 @@ class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,privat
                                 images = document.get(Constants.IMAGES) as List<String>,
                                 link = document.get(Constants.LINK).toString(),
                                 type = document.get(Constants.TYPE).toString(),
-                                coupon = document.get(Constants.COUPON).toString()
+                                coupon = document.get(Constants.COUPON).toString(),
+                                file = document.get(Constants.FILEURL).toString()
                             )
                         )
                     }
@@ -42,26 +43,47 @@ class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,privat
         }
     }
 
-    suspend fun addBusiness(business: Business, imagesList: MutableList<String>) {
+    suspend fun addBusiness(business: Business, fileUri: String, imagesList: MutableList<String>) {
         return suspendCoroutine { continuation ->
             val businessCollection = db.collection(Constants.BUSINESS)
-            val busDoc = businessCollection.document(business.ownerID).set(business)
-                .addOnSuccessListener {
-                    // If business data is added successfully, upload images
-                    uploadImages(imagesList) { imageUrls ->
-                        // Once all images are uploaded, add image URLs to the business data
-                        val updatedBusiness = business.copy(images = imageUrls)
-                        // Update business data in Firestore with image URLs
-                        businessCollection.document(business.ownerID).set(updatedBusiness)
-                            .addOnSuccessListener {
-                                continuation.resume(Unit)
-                            }.addOnFailureListener { exception ->
-                                continuation.resumeWithException(exception)
-                            }
+            val batch = db.batch()
+
+            // Add business data to the batch
+            val businessDocRef = businessCollection.document(business.ownerID)
+            batch.set(businessDocRef, business)
+
+            // Upload images
+            val imageUrls = mutableListOf<String>()
+            uploadImages(imagesList) { uploadedImageUrls ->
+                imageUrls.addAll(uploadedImageUrls)
+
+                // Upload file if provided
+                if (fileUri != "NA") {
+                    uploadFile(fileUri) { fileUrl ->
+                        // Once file is uploaded, add file URL to the business data
+                        val updatedBusiness = business.copy(images = imageUrls, file = fileUrl)
+                        // Update business data in Firestore with image URLs and file URL
+                        batch.set(businessDocRef, updatedBusiness, com.google.firebase.firestore.SetOptions.merge())
+                        // Commit the batch
+                        batch.commit().addOnSuccessListener {
+                            continuation.resume(Unit)
+                        }.addOnFailureListener { exception ->
+                            continuation.resumeWithException(exception)
+                        }
                     }
-                }.addOnFailureListener { exception ->
-                    continuation.resumeWithException(exception)
+                } else {
+                    // If no file provided, proceed with only image URLs
+                    val updatedBusiness = business.copy(images = imageUrls)
+                    // Update business data in Firestore with image URLs
+                    batch.set(businessDocRef, updatedBusiness, com.google.firebase.firestore.SetOptions.merge())
+                    // Commit the batch
+                    batch.commit().addOnSuccessListener {
+                        continuation.resume(Unit)
+                    }.addOnFailureListener { exception ->
+                        continuation.resumeWithException(exception)
+                    }
                 }
+            }
         }
     }
 
@@ -100,5 +122,27 @@ class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,privat
             }
         }
     }
+
+    private fun uploadFile(filePath: String, onComplete: (String) -> Unit) {
+        val fileUri = Uri.parse(filePath)
+        val fileRef = storage.reference.child("business_files/${System.currentTimeMillis()}_${fileUri.lastPathSegment}")
+        val uploadTask = fileRef.putFile(fileUri)
+
+        uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            fileRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                // Call onComplete callback with file URL
+                onComplete(downloadUri.toString())
+            }
+        }
+    }
+
 
 }

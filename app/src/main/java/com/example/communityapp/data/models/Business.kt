@@ -11,5 +11,6 @@ data class Business(
     val type:String,
     val link:String,
     val images: List<String>,
-    val coupon:String
+    val coupon:String,
+    val file:String
 ):Serializable

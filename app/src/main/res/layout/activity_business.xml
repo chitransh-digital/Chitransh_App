@@ -266,6 +266,35 @@
                 android:backgroundTint="@color/theme_brown" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/fileText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="file/file/file"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageSection"
+            android:visibility="invisible"
+            />
+
+
+        <Button
+            android:id="@+id/addFileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add File"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/theme_brown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageSection"
+            app:layout_constraintVertical_bias="0.298"
+            app:layout_constraintWidth_percent="0.4"
+            />
 
         <Button
             android:id="@+id/Submit"
@@ -280,8 +309,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageSection"
-            app:layout_constraintVertical_bias="0.298"
+            app:layout_constraintTop_toBottomOf="@id/addFileButton"
             app:layout_constraintWidth_percent="0.4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
