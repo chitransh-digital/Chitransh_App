@@ -1,6 +1,7 @@
 package com.example.communityapp.ui.Dashboard
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ import com.example.communityapp.ui.Business.BusinessActivity
 import com.example.communityapp.ui.Business.ViewBusinessActivity
 import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.ui.family.FamilyActivity
+import com.example.communityapp.ui.family.NewFamilyActivity
 import com.example.communityapp.ui.jobPosting.JobPostingActivity
 import com.example.communityapp.ui.jobs.JobsActivity
 import com.example.communityapp.utils.Constants
@@ -31,6 +33,8 @@ class HomeFragment : Fragment(){
     private lateinit var viewModel: DashboardViewModel
     private lateinit var user_data : Member
     private var uniqueRelations: List<String>? = null
+    private var contact = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +43,9 @@ class HomeFragment : Fragment(){
 
         viewModel = ViewModelProvider(requireActivity())[DashboardViewModel::class.java]
         setObservables()
+
+        val sharedPreferences = requireActivity().getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+        contact = sharedPreferences.getString(Constants.PHONE_NUMBER, null).toString()
 
         binding.card2.setOnClickListener {
             val intent = Intent(requireContext(),BusinessActivity::class.java)
@@ -65,6 +72,11 @@ class HomeFragment : Fragment(){
 
         binding.card6.setOnClickListener{
             val intent = Intent(requireContext(),ViewBusinessActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.card5.setOnClickListener {
+            val intent = Intent(requireContext(),NewFamilyActivity::class.java)
             startActivity(intent)
         }
 
@@ -125,7 +137,7 @@ class HomeFragment : Fragment(){
 
     private fun updateUI(data : List<Member>){
         for(ip in data){
-            val id = FirebaseAuth.getInstance().currentUser?.phoneNumber
+            val id = contact
             if (ip.contact == id){
                 user_data = ip
                 viewModel.getFeedsByPaging()
@@ -182,7 +194,7 @@ class HomeFragment : Fragment(){
         binding.rvLocalNews.adapter = adapter
 
         binding.rvLocalNews.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(),
-            androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,false)
+            androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,false)
     }
 
 

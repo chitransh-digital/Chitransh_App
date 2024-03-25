@@ -1,7 +1,9 @@
 package com.example.communityapp.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.example.communityapp.data.models.NewsFeed
+import com.example.communityapp.utils.Constants
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore

@@ -102,10 +102,6 @@ class FamilyActivity : AppCompatActivity() {
             changeUI()
         }
 
-        binding.relationshipSelection1.btnNewFamily.setOnClickListener {
-            val intent= Intent(this, NewFamilyActivity::class.java)
-            startActivity(intent)
-        }
 
     }
 
@@ -119,8 +115,6 @@ class FamilyActivity : AppCompatActivity() {
         binding.relationshipSelection1.btnFather.visibility = View.GONE
         binding.relationshipSelection1.btnMother.visibility = View.GONE
         binding.relationshipSelection1.btnOther.visibility = View.GONE
-        binding.relationshipSelection1.tvOr.visibility = View.GONE
-        binding.relationshipSelection1.btnNewFamily.visibility = View.GONE
         registerPageUI()
     }
 

@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,10 +33,10 @@ class NewFamilyActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setObservables()
-
+        viewModel.getFamilyByCity()
         binding.baselineSearchIcon.setOnClickListener {
-            if(binding.etSearchBar.text.isNotEmpty()){
-                viewModel.getMembers(binding.etSearchBar.text.toString())
+            if(binding.searchTypeSpinner.selectedItem.toString() == "ALL" || binding.etSearchBar.text.isNotEmpty()){
+                viewModel.getFamilyByCity()
             }else{
                 Toast.makeText(this,"Please enter a family ID",Toast.LENGTH_SHORT).show()
             }
@@ -43,6 +45,14 @@ class NewFamilyActivity : AppCompatActivity() {
         binding.profileBack.setOnClickListener {
             onBackPressed()
         }
+
+
+
+        val TypeList = arrayListOf("ALL","Family ID","City")
+        val Typeadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, TypeList)
+        Typeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.searchTypeSpinner.adapter = Typeadapter
+
 
     }
 
@@ -55,7 +65,7 @@ class NewFamilyActivity : AppCompatActivity() {
                             Toast.makeText(this,"No family found",Toast.LENGTH_SHORT).show()
                             return@Observer
                         }
-                        val user_data = resources.data!!
+                        val user_data = resources.data
                         Log.e("D Success",resources.data.toString())
                         setUpRecyclerView(user_data)
                     } catch (e: Exception){
@@ -73,8 +83,32 @@ class NewFamilyActivity : AppCompatActivity() {
         })
     }
 
-    private fun setUpRecyclerView(data : List<Member>){
-        val adapter = profileAdapter(this,data)
+    private fun setUpRecyclerView(data : List<List<Member>>){
+        val result = mutableListOf<List<Member>>()
+
+        if(binding.searchTypeSpinner.selectedItem.toString() == "ALL"){
+            for (it in data){
+                if(it.isNotEmpty())result.add(it)
+            }
+        }else if (binding.searchTypeSpinner.selectedItem.toString() == "City"){
+            for(it in data){
+                if(it.isNotEmpty()){
+                    if (it[0].address == binding.etSearchBar.text.toString()){
+                        result.add(it)
+                    }
+                }
+            }
+        }else if(binding.searchTypeSpinner.selectedItem.toString() == "Family ID"){
+            for (it in data){
+                if (it.isNotEmpty()){
+                    if (it[0].familyID == binding.etSearchBar.text.toString()){
+                        result.add(it);
+                    }
+                }
+            }
+        }
+
+        val adapter = FamilyAdapter(this,result)
         binding.rvOtherFamillyMembers.adapter = adapter
         binding.rvOtherFamillyMembers.layoutManager  = LinearLayoutManager(this)
     }

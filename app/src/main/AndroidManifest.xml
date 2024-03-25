@@ -19,6 +19,9 @@
             android:name=".ui.Business.BusinessDetailsActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.family.FamilyDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.Business.ViewBusinessActivity"
             android:exported="false" />
         <activity

@@ -1,5 +1,7 @@
 package com.example.communityapp.ui.Dashboard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.FragmentProfileBinding
+import com.example.communityapp.ui.auth.Login_activity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +37,15 @@ class ProfileFragment : Fragment() {
 
         binding.profileBack.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+
+        binding.logoutButton.setOnClickListener{
+            val sharedPreferences = requireActivity().getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString(Constants.PHONE_NUM, "NA")
+            editor.apply()
+            startActivity(Intent(requireContext(),Login_activity::class.java))
+            requireActivity().finish()
         }
 
         return binding.root

@@ -22,11 +22,10 @@
         android:layout_height="0dp"
         android:src="@drawable/ic_brown_notifications_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:layout_constraintWidth_percent="0.18" />
     <ImageView
         android:id="@+id/iv_profile"
@@ -34,7 +33,7 @@
         android:layout_height="0dp"
         android:src="@drawable/baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -101,4 +100,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/familyIDShow"
         tools:listitem="@layout/profile_item_layout" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/logout_button"
+        android:layout_width="70dp"
+        android:layout_height="38dp"
+        android:src="@drawable/account_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.73"
+        app:layout_constraintStart_toEndOf="@+id/top"
+        app:layout_constraintTop_toBottomOf="@+id/top_section"
+        app:layout_constraintVertical_bias="0.012" />
+</androidx.constraintlayout.widget.ConstraintLayout>

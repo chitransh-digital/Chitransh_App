@@ -7,44 +7,57 @@
     tools:context=".ui.family.NewFamilyActivity">
 
 
-
     <ImageView
         android:id="@+id/profile_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/back"
         android:layout_margin="8dp"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintBottom_toBottomOf="@+id/et_searchBar"
-        app:layout_constraintTop_toTopOf="@+id/et_searchBar"
-        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
         app:layout_constraintWidth_percent="0.06" />
-
 
     <EditText
         android:id="@+id/et_searchBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoSizeTextType="uniform"
+        android:layout_width="138dp"
+        android:layout_height="46dp"
         android:hint="Enter Family ID"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.311"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/rv_OtherFamillyMembers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.086"
         app:layout_constraintStart_toEndOf="@id/profile_back"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/search_type_spinner"
+        android:layout_width="122dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/baseline_search_icon"
+        app:layout_constraintHorizontal_bias="0.707"
+        app:layout_constraintStart_toEndOf="@id/et_searchBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.016" />
+
     <ImageView
         android:id="@+id/baseline_search_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="46dp"
         android:src="@drawable/baseline_search_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.812"
         app:layout_constraintStart_toEndOf="@+id/et_searchBar"
-        app:layout_constraintTop_toTopOf="@id/et_searchBar"
-        app:layout_constraintBottom_toBottomOf="@id/et_searchBar"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_OtherFamillyMembers"
