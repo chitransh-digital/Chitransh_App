@@ -204,7 +204,7 @@ class FamilyActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding.ivAddImageMember.setOnClickListener {
+        binding.addImageText.setOnClickListener {
             openFilePicker()
         }
 

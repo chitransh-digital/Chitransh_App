@@ -12,14 +12,14 @@
         layout="@layout/relationship_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
+        android:visibility="visible"
         />
 
     <ScrollView
         android:id="@+id/registrationLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="invisible">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -120,23 +120,6 @@
                 android:hint="Your Relation"
                 android:padding="10dp" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_addImageMember"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:background="#DCD9D9"
-            android:src="@drawable/account_circle"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/FamilyID"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.10"
-            app:layout_constraintHorizontal_bias="0.479"
-            app:layout_constraintStart_toEndOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.680"
-            app:layout_constraintWidth_percent="0.32" />
 
         <LinearLayout
             android:id="@+id/FamilyID"
@@ -345,6 +328,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.56"
@@ -377,7 +361,7 @@
                 android:id="@+id/citySpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/edittest_background"
                 android:padding="10dp" />
 
@@ -386,7 +370,7 @@
                 android:id="@+id/stateSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/edittest_background"
                 android:padding="10dp" />
         </LinearLayout>
@@ -505,6 +489,49 @@
             app:layout_constraintVertical_bias="0.022"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <LinearLayout
+            android:id="@+id/addImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/occupation"
+            app:layout_constraintVertical_bias="0.022"
+            app:layout_constraintWidth_percent="0.9">
+
+            <ImageView
+                android:id="@+id/iv_addImageMember"
+                android:layout_width="108dp"
+                android:layout_height="108dp"
+                android:background="#DCD9D9"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/account_circle"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@id/DOB"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toEndOf="@id/name"
+                app:layout_constraintTop_toBottomOf="@id/top"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/addImageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Image"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+
         <Button
             android:id="@+id/member_submit"
             android:layout_width="wrap_content"
@@ -514,7 +541,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.467"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/family_business"
+            app:layout_constraintTop_toBottomOf="@id/addImage"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/theme_brown"

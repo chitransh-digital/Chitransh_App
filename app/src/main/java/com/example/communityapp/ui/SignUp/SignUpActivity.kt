@@ -55,7 +55,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.dateSelector.setOnClickListener {
             showDatePickerDialog()
         }
-        binding.ivAddImage.setOnClickListener {
+        binding.addImageText.setOnClickListener {
             openFilePicker()
         }
 

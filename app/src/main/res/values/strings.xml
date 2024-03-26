@@ -64,5 +64,6 @@
     <string name="login_via_familyID">Login via FamilyID</string>
     <string name="spinner2_prompt" translatable="false">City</string>
     <string name="spinner3_prompt" translatable="false">Type</string>
+    <string name="Sign_up_warning" translatable="false">By Signing Up you are making a new family being a head yourself, \n If you just want to sign up as a member please login via Family Heads Contact</string>
 
 </resources>
