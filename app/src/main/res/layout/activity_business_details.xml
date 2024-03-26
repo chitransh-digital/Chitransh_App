@@ -83,16 +83,24 @@
 
     </LinearLayout>
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:id="@+id/business_imageView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:src="@drawable/chitranshlogo"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/buttonsLayout"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/buttonsLayout"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout" />-->
+
+        <org.imaginativeworld.whynotimagecarousel.ImageCarousel
         android:id="@+id/business_imageView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:src="@drawable/chitranshlogo"
-        android:layout_marginTop="12dp"
-        android:scaleType="fitCenter"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
         app:layout_constraintEnd_toEndOf="@+id/buttonsLayout"
         app:layout_constraintStart_toStartOf="@+id/buttonsLayout"
-        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout"/>
 
     <TextView
         android:id="@+id/textViewBusinessDescription"
@@ -137,10 +145,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewBusinessOwner">
 
         <LinearLayout
+            android:id="@+id/ll_coupon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -152,6 +162,7 @@
 
 
             <TextView
+                android:id="@+id/tv_coupon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Get 20% off on all items"
