@@ -7,59 +7,51 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
+import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.utils.Constants
-import com.example.communityapp.utils.FirebaseFCMService
 import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+
 
 @AndroidEntryPoint
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity() {
 
     private lateinit var viewModel: DashboardViewModel
     private lateinit var phoneNum : String
     private lateinit var binding : ActivityDashboardBinding
 
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
 
         setObservables()
         setUpNavigation()
+//        setDialog()
 
         val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
         val phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
@@ -67,6 +59,7 @@ class DashboardActivity : AppCompatActivity() {
         Log.d("Dashboard phone no",phoneNum.toString())
 
         if (phoneNum != null) {
+            showProgressDialog("Please wait...")
             viewModel.getMember(phoneNum)
         }
 
@@ -92,6 +85,8 @@ class DashboardActivity : AppCompatActivity() {
 
             Log.e("FCM token", token)
         })
+
+        setWindowsUp()
 
     }
 
@@ -136,27 +131,33 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setObservables() {
         viewModel.user_data.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     val user_data = resources.data!!
+                    startSignUpActivity(user_data)
                     Log.e("D Success",resources.data.toString())
-                    if(user_data.isEmpty()){
-                        Toast.makeText(this, R.string.please_SignUp, Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this,SignUpActivity::class.java)
-                        intent.putExtra(Constants.PHONE_NUM,phoneNum)
-                        startActivity(intent)
-                        finish()
-                    }
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" D Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
                     Log.e("D Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
                 else -> {}
             }
         })
     }
+
+    private fun startSignUpActivity(user_data: List<Member>) {
+        if(user_data.isNotEmpty()) return
+        val intent = Intent(this,SignUpActivity::class.java)
+        Log.d("Dashboard phone no",intent.toString())
+        startActivity(intent)
+        Toast.makeText(this, R.string.please_SignUp, Toast.LENGTH_SHORT).show()
+        finish()
+    }
+
 
 }

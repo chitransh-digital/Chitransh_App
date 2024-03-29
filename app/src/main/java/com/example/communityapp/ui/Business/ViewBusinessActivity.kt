@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Business
 import com.example.communityapp.databinding.ActivityViewBusinessBinding
@@ -21,7 +22,7 @@ import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ViewBusinessActivity : AppCompatActivity() {
+class ViewBusinessActivity : BaseActivity() {
 
     lateinit var binding: ActivityViewBusinessBinding
     private val viewModel: BusinessViewModel by viewModels()
@@ -32,21 +33,15 @@ class ViewBusinessActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityViewBusinessBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        setWindowsUp()
 
         binding.viewBusinessBack.setOnClickListener {
             onBackPressed()
         }
 
-        binding.viewBusinessBack.setOnClickListener {
-            OnBackPressedDispatcher().onBackPressed()
-        }
-
         setObservales()
+        showProgressDialog("Fetching Business Details...")
         viewModel.getBusiness()
 
         binding.businessSearchIcon.setOnClickListener {
@@ -91,6 +86,7 @@ class ViewBusinessActivity : AppCompatActivity() {
 
     private fun setObservales(){
         viewModel.business_list.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     mOriginalBusinessList.clear()
@@ -104,7 +100,7 @@ class ViewBusinessActivity : AppCompatActivity() {
                     Log.e(" B Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this, "Some Error Occurred! Please try again", Toast.LENGTH_SHORT).show()
+                    showErrorSnackBar("Some error occurred please try again later")
                     Log.e("B Error",resources.apiError.toString())
                 }
                 else -> {}

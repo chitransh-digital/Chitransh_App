@@ -47,6 +47,7 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/curved_edittext_bg"
         android:hint=" search business "
+        android:padding="8dp"
         app:layout_constraintEnd_toStartOf="@+id/business_search_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_business_back" />
@@ -69,6 +70,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:text="sort by"
+        android:padding="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSearchBusiness" />
 
@@ -81,6 +83,7 @@
         android:layout_marginStart="16dp"
         android:background="@drawable/curved_edittext_bg"
         android:prompt="@string/spinner2_prompt"
+        android:padding="6dp"
         android:entries="@array/spinner2_values"
         app:layout_constraintStart_toEndOf="@+id/spinner1"
         app:layout_constraintTop_toBottomOf="@id/etSearchBusiness" />
@@ -94,6 +97,7 @@
         android:layout_marginStart="16dp"
         android:background="@drawable/curved_edittext_bg"
         android:prompt="@string/spinner3_prompt"
+        android:padding="6dp"
         android:entries="@array/spinner3_values"
         app:layout_constraintStart_toEndOf="@+id/spinner2"
         app:layout_constraintTop_toBottomOf="@id/etSearchBusiness" />
@@ -104,7 +108,8 @@
         android:id="@+id/rvBusiness"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner1"

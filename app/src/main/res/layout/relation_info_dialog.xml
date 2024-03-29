@@ -1,112 +1,117 @@
 <!-- relationship_selection.xml -->
 
 <LinearLayout
-    android:id="@+id/relationshipSelectionLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:gravity="center"
     android:layout_margin="8dp"
     android:background="@drawable/relationship_selection_background">
-
-
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select member to add to your family"
-        android:textSize="24sp"
+        android:text="@string/select_your_relation"
+        android:textSize="18sp"
         android:id="@+id/tv_member"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_gravity="center"/>
 
     <!-- Add buttons for different relationship types -->
     <Button
-        android:id="@+id/btnWife"
-        android:layout_width="match_parent"
+        android:id="@+id/qHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Head"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/theme_brown"
+        android:textSize="14sp"
+        android:visibility="visible"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/qWife"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wife"
         android:textColor="@color/white"
         android:backgroundTint="@color/theme_brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:visibility="visible"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"/>
     <Button
-        android:id="@+id/btnHusband"
-        android:layout_width="match_parent"
+        android:id="@+id/qHusband"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Husband"
         android:textColor="@color/white"
         android:backgroundTint="@color/theme_brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:visibility="visible"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"/>
     <Button
-        android:id="@+id/btnSon"
-        android:layout_width="match_parent"
+        android:id="@+id/qSon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Son"
         android:textColor="@color/white"
         android:backgroundTint="@color/theme_brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:visibility="visible"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginEnd="16dp"/>
     <Button
-        android:id="@+id/btnDaughter"
-        android:layout_width="match_parent"
+        android:id="@+id/qDaughter"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Daughter"
         android:textColor="@color/white"
         android:backgroundTint="@color/theme_brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:visibility="visible"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginEnd="16dp"/>
     <Button
-        android:id="@+id/btnFather"
-        android:layout_width="match_parent"
+        android:id="@+id/qFather"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Father"
         android:textColor="@color/white"
         android:backgroundTint="@color/theme_brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:visibility="visible"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginEnd="16dp"/>
     <Button
-        android:id="@+id/btnMother"
-        android:layout_width="match_parent"
+        android:id="@+id/qMother"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Mother"
         android:textColor="@color/white"
         android:backgroundTint="@color/theme_brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:visibility="visible"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginEnd="16dp"/>
     <Button
-        android:id="@+id/btnOther"
-        android:layout_width="match_parent"
+        android:id="@+id/qOther"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Other"
         android:textColor="@color/white"
         android:backgroundTint="@color/theme_brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:visibility="visible"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginEnd="16dp"/>
 
 </LinearLayout>

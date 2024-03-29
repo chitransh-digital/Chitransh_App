@@ -1,6 +1,7 @@
 package com.example.communityapp.ui.Dashboard
 
 import android.app.ActivityOptions
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +10,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.RadioButton
 import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +20,7 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.FragmentHomeNewBinding
+import com.example.communityapp.databinding.RelationInfoDialogBinding
 import com.example.communityapp.ui.Business.BusinessActivity
 import com.example.communityapp.ui.Business.ViewBusinessActivity
 import com.example.communityapp.ui.SignUp.SignUpActivity
@@ -95,12 +100,14 @@ class HomeFragment : Fragment(){
                     Log.e("home Success",resources.data.toString())
                     uniqueRelations = resources.data?.distinctBy { it.relation }?.map { it.relation }
                     updateUI(resources.data!!)
+
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" Profile Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
                     Log.e("Profile Error",resources.apiError.toString())
+
                 }
                 else -> {}
             }
@@ -136,16 +143,17 @@ class HomeFragment : Fragment(){
     }
 
     private fun updateUI(data : List<Member>){
+        val id = contact
         for(ip in data){
-            val id = contact
             if (ip.contact == id){
                 user_data = ip
-                viewModel.getFeedsByPaging()
 //                binding.topGreeting.text = "Namaskar ${ip.name} Ji"
                 break
             }
         }
 
+        viewModel.getFeedsByPaging()
+//        setDialog(data)
     }
 
     private fun setupRv(newsList: List<NewsFeed>){
@@ -197,5 +205,65 @@ class HomeFragment : Fragment(){
             androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,false)
     }
 
+    private fun setDialog(
+        user_data: List<Member>
+    ) {
+        if (user_data.isEmpty()){
+            return
+        }
+
+
+
+        val dialog = Dialog(requireContext())
+
+        dialog.setContentView(R.layout.relation_info_dialog)
+
+        val window = dialog.window
+        window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//        window?.setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg))
+
+        dialog.setCancelable(false) // Make dialog non-cancelable
+
+        dialog.show()  // Add this line to show the dialog
+
+        var bind = RelationInfoDialogBinding.inflate(layoutInflater)
+
+        for (user in user_data){
+            Log.d("Relation",user.relation.uppercase())
+            if (user.relation.uppercase() == "WIFE"){
+                activity?.findViewById<Button>(R.id.qWife)?.visibility = View.VISIBLE
+                Log.d("Wife","Wife")
+            }
+            if (user.relation.uppercase() == "HEAD"){
+                bind.qHead.visibility = View.VISIBLE
+                Log.d("Head","Head")
+            }
+            if (user.relation.uppercase() == "HUSBAND") {
+                activity?.findViewById<Button>(R.id.qHusband)?.visibility = View.VISIBLE
+                Log.d("Husband","Husband")
+            }
+            if (user.relation.uppercase() == "SON") {
+                activity?.findViewById<Button>(R.id.qSon)?.visibility = View.VISIBLE
+                Log.d("Son","Son")
+            }
+            if (user.relation.uppercase() == "DAUGHTER") {
+                activity?.findViewById<Button>(R.id.qDaughter)?.visibility = View.VISIBLE
+                Log.d("Daughter","Daughter")
+            }
+            if (user.relation.uppercase() == "FATHER") {
+                activity?.findViewById<Button>(R.id.qFather)?.visibility = View.VISIBLE
+                Log.d("Father","Father")
+            }
+            if (user.relation.uppercase() == "MOTHER") {
+                activity?.findViewById<Button>(R.id.qMother)?.visibility = View.VISIBLE
+                Log.d("Mother","Mother")
+            }
+            if (user.relation.uppercase() == "OTHER") {
+                activity?.findViewById<Button>(R.id.qOther)?.visibility = View.VISIBLE
+                Log.d("Other","Other")
+            }
+        }
+
+    }
 
 }

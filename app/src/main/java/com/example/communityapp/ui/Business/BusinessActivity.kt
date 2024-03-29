@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Business
 import com.example.communityapp.data.models.Member
@@ -22,17 +24,22 @@ import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import java.net.URI
 
 @AndroidEntryPoint
-class BusinessActivity : AppCompatActivity() {
+class BusinessActivity : BaseActivity() {
 
     private val viewModel: BusinessViewModel by viewModels()
     private lateinit var binding: ActivityBusinessBinding
     private lateinit var id : String
     private var shortAnimationDuration = 500
     private val PICK_IMAGES_REQUEST = 1
+    private val FILE_PICK_REQUEST_CODE = 2
     private lateinit var imageAdapter: ImageAdapter
     private val imagesList: MutableList<String> = ArrayList()
+    private var mFileURI: String= "NA"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBusinessBinding.inflate(layoutInflater)
@@ -58,6 +65,12 @@ class BusinessActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this, "at most 4 images can be uploaded", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.addFileButton.setOnClickListener {
+            val filePickerIntent = Intent(Intent.ACTION_GET_CONTENT)
+            filePickerIntent.type = "*/*" // Allow any file type to be selected
+            startActivityForResult(filePickerIntent, FILE_PICK_REQUEST_CODE)
         }
 
     }
@@ -88,6 +101,25 @@ class BusinessActivity : AppCompatActivity() {
             // Notify adapter about data changes
             imageAdapter.notifyDataSetChanged()
         }
+
+        if (requestCode == FILE_PICK_REQUEST_CODE && resultCode == RESULT_OK) {
+            val fileUri = data?.data
+            // Handle the selected file URI, for example:
+            mFileURI=fileUri.toString()
+            fileUri?.let { uri ->
+                val resolver = contentResolver
+                val cursor = resolver.query(uri, null, null, null, null)
+                cursor?.use {
+                    if (it.moveToFirst()) {
+                        val displayName = it.getString(it.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME))
+                        // Now you have the display name of the file
+                        binding.fileText.text = displayName
+                        binding.fileText.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+        }
     }
 
 
@@ -103,6 +135,7 @@ class BusinessActivity : AppCompatActivity() {
 
     private fun setObservables() {
         viewModel.business.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     Toast.makeText(this, "Business Registered", Toast.LENGTH_SHORT).show()
@@ -119,14 +152,13 @@ class BusinessActivity : AppCompatActivity() {
                     Log.e(" B Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this, "Some Error Occurred! Please try again", Toast.LENGTH_SHORT).show()
+                    showErrorSnackBar("Some error occurred please try again later")
                     Log.e("B Error",resources.apiError.toString())
                 }
                 else -> {}
             }
         })
-
-
+        setWindowsUp()
     }
 
     private fun checkFields(){
@@ -156,9 +188,12 @@ class BusinessActivity : AppCompatActivity() {
             ownerID = id,
             type = binding.businessSpinner.selectedItem.toString(),
             link = businessLink,
-            images = emptyList()
+            images = emptyList(),
+            coupon = "NA",
+            file = "NA"
         )
-        viewModel.addBusiness(data, imagesList)
+        showProgressDialog("Registering Business...")
+        viewModel.addBusiness(data,imagesList,mFileURI)
     }
 
     private fun crossFade(visible: List<View>, invisible: List<View>) {

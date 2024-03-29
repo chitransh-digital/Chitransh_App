@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.databinding.ActivityLoginBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
@@ -29,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
 @AndroidEntryPoint
-class Login_activity : AppCompatActivity() {
+class Login_activity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
@@ -108,7 +109,7 @@ class Login_activity : AppCompatActivity() {
             showContent(contentPointer)
 //            context = LocaleHelper.setLocale(this, "hi");
 //            resources = context!!.resources;
-            setLocal(this@Login_activity, "hi")
+//            setLocal(this@Login_activity, "hi")
         }
 
         binding.buttonProceedPhno.setOnClickListener {
@@ -122,7 +123,7 @@ class Login_activity : AppCompatActivity() {
             if (ph.isEmpty()) {
                 Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "pmessage sent", Toast.LENGTH_SHORT).show()
+                showProgressDialog("Sending Otp..")
                 viewModel.OnVerificationCodeSent(ph, this)
             }
         }
@@ -134,6 +135,7 @@ class Login_activity : AppCompatActivity() {
             } else {
                 val credential = PhoneAuthProvider.getCredential(verificationID, otp)
                 viewModel.signInWithPhoneAuthCredential(credential, this)
+                showProgressDialog("Verifying OTP..")
             }
         }
 
@@ -161,10 +163,12 @@ class Login_activity : AppCompatActivity() {
                     .show()
             } else {
                 Log.d("LoginActivity", "Username: $username, FamilyID: $familyID")
-
+                showProgressDialog("Verifying Family ID..")
                 viewModel.signInWithUsername(username, familyID)
             }
         }
+
+        setWindowsUp()
 
     }
 
@@ -188,8 +192,9 @@ class Login_activity : AppCompatActivity() {
                         // shared pref update
                         val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
-                        editor.putString(Constants.PHONE_NUM, contact)
+                        editor.putString(Constants.PHONE_NUMBER, contact)
                         editor.apply()
+                        hideProgressDialog()
 
                         // start DashboardActivity after otp verification
                         val intent = Intent(this, DashboardActivity::class.java)
@@ -205,6 +210,7 @@ class Login_activity : AppCompatActivity() {
 
                 Resource.Status.ERROR -> {
                     Log.e("url", resource.status.toString())
+                    showErrorSnackBar("Error: ${resource.apiError?.message}")
                 }
 
                 Resource.Status.LOADING -> {
@@ -228,6 +234,7 @@ class Login_activity : AppCompatActivity() {
                     val editor = sharedPreferences.edit()
                     editor.putString(Constants.PHONE_NUMBER, contact)
                     editor.apply()
+                    hideProgressDialog()
 
                     //start dashboard activty after family id verfiication
                     val intent = Intent(this, DashboardActivity::class.java)
@@ -244,7 +251,7 @@ class Login_activity : AppCompatActivity() {
                     Log.e("url Error", "what is it " + resource.apiError)
                     binding.editTextUsername.setText("")
                     binding.editTextFamilyID.setText("")
-                    Toast.makeText(this, "Invalid username or family ID", Toast.LENGTH_SHORT).show()
+                    showErrorSnackBar("Error: ${resource.apiError?.message}")
                 }
 
                 Resource.Status.LOADING -> {
@@ -266,6 +273,8 @@ class Login_activity : AppCompatActivity() {
         contentPointer++
         binding.editTextPhone.setText("")
         showContent(contentPointer)
+        hideProgressDialog()
+        Toast.makeText(this, "OTP sent", Toast.LENGTH_SHORT).show()
     }
 
     private fun showContent(pointer: Int) {

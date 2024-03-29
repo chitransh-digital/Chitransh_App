@@ -1,5 +1,9 @@
 package com.example.communityapp.ui.Business
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,11 +23,11 @@ class BusinessViewModel @Inject constructor(private var businessRepo: BusinessRe
     val business : LiveData<Resource<String>>
         get() = _business
 
-    fun addBusiness(business: Business, imagesList: MutableList<String>){
+    fun addBusiness(business: Business, imagesList: MutableList<String>,fileUri: String){
         _business.value = Resource.loading()
         viewModelScope.launch {
             try{
-                val business = businessRepo.addBusiness(business, imagesList)
+                val business = businessRepo.addBusiness(business, fileUri,imagesList)
                 _business.value = Resource.success("Done")
             }catch (e : Exception){
                 _business.value = Resource.error(e)

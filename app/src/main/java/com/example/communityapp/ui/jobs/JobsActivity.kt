@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.data.models.Job
 import com.example.communityapp.databinding.ActivityJobsBinding
 import com.example.communityapp.utils.Constants
@@ -18,7 +19,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
-class JobsActivity : AppCompatActivity() {
+class JobsActivity : BaseActivity() {
 
     private val jobsViewModel: JobsViewModel by viewModels()
     private lateinit var binding : ActivityJobsBinding
@@ -28,7 +29,7 @@ class JobsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityJobsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        showProgressDialog("Fetching Jobs...")
         jobsViewModel.getAllJobs()
 
 //        jobsViewModel.deleteJob("b")
@@ -60,12 +61,14 @@ class JobsActivity : AppCompatActivity() {
          }
 
         setObservables()
+        setWindowsUp()
     }
 
     private fun setObservables() {
         //observe get all jobs
 
         jobsViewModel.jobResult.observe(this, Observer { resource ->
+            hideProgressDialog()
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     // Handle success state
@@ -79,6 +82,7 @@ class JobsActivity : AppCompatActivity() {
                 Resource.Status.ERROR -> {
                     // Handle error state
                     val error = resource.apiError
+                    showErrorSnackBar("Error: ${resource.apiError?.message}")
                     // Handle the error, show a message or retry
                 }
                 Resource.Status.LOADING -> {

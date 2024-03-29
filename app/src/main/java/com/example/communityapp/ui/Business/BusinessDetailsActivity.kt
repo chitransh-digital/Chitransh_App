@@ -3,6 +3,7 @@ package com.example.communityapp.ui.Business
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,19 +11,22 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Business
 import com.example.communityapp.databinding.ActivityBusinessDetailsBinding
 import com.example.communityapp.databinding.ActivityViewBusinessBinding
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
-class BusinessDetailsActivity : AppCompatActivity() {
+class BusinessDetailsActivity : BaseActivity() {
     lateinit var binding: ActivityBusinessDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBusinessDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        setWindowsUp()
         val business = intent.getSerializableExtra("business") as? Business
 
         // Now you can use the business object to populate your UI or perform other operations
@@ -34,7 +38,17 @@ class BusinessDetailsActivity : AppCompatActivity() {
             binding.textViewBusinessType.text=business.type
             binding.textViewBusinessDescription.text=business.desc
             binding.textViewBusinessAddress.text=business.address
-            Glide.with(this).load(business.images[0]).into(binding.businessImageView)
+//            Glide.with(this).load(business.images[0]).into(binding.businessImageView)
+
+            val carousel: ImageCarousel = binding.businessImageView
+            carousel.registerLifecycle(lifecycle)
+            val imageList = mutableListOf<CarouselItem>()
+
+            for(i in business.images){
+                imageList.add(CarouselItem(i))
+            }
+
+            carousel.setData(imageList)
 
             binding.button1.setOnClickListener {
 
@@ -49,6 +63,16 @@ class BusinessDetailsActivity : AppCompatActivity() {
             binding.button2.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.link))
                 startActivity(intent)
+            }
+
+            binding.button3.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.file))
+                startActivity(intent)
+            }
+
+            if(business.coupon!="NA"){
+                binding.llCoupon.visibility= View.VISIBLE
+                binding.tvCoupon.text = business.coupon
             }
 
 //            binding.textViewBusinessOwner.text = business.name

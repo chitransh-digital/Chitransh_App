@@ -46,8 +46,8 @@
         <Button
             android:id="@+id/button1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:layout_weight="0.8"
             android:layout_margin="2dp"
             android:background="@drawable/curved_edittext_bg"
             android:drawableLeft="@drawable/baseline_call_24"
@@ -59,7 +59,7 @@
         <Button
             android:id="@+id/button2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_weight="0.6"
             android:layout_margin="2dp"
             android:background="@drawable/curved_edittext_bg"
@@ -71,7 +71,7 @@
         <Button
             android:id="@+id/button3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:background="@drawable/curved_edittext_bg"
@@ -83,86 +83,101 @@
 
     </LinearLayout>
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:id="@+id/business_imageView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:src="@drawable/chitranshlogo"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/buttonsLayout"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/buttonsLayout"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout" />-->
+
+        <org.imaginativeworld.whynotimagecarousel.ImageCarousel
         android:id="@+id/business_imageView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:src="@drawable/chitranshlogo"
-        android:layout_marginTop="12dp"
-        android:scaleType="fitCenter"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+            android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="@+id/buttonsLayout"
         app:layout_constraintStart_toStartOf="@+id/buttonsLayout"
-        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout"/>
 
     <TextView
         android:id="@+id/textViewBusinessDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Business Description"
+        android:layout_margin="16dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/business_imageView"
         app:layout_constraintStart_toStartOf="@+id/business_imageView"
         app:layout_constraintTop_toBottomOf="@+id/business_imageView" />
 
-    <TextView
-        android:id="@+id/textViewBusinessAddress"
-        android:layout_width="0dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/baseline_location_on_24"
-        android:layout_height="wrap_content"
-        android:text="Business Address"
-        app:layout_constraintEnd_toEndOf="@+id/textViewBusinessDescription"
-        app:layout_constraintStart_toStartOf="@+id/textViewBusinessDescription"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBusinessDescription" />
+        <TextView
+            android:id="@+id/textViewBusinessAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:drawableLeft="@drawable/baseline_location_on_24"
+            android:text="Business Address"
+            app:layout_constraintEnd_toEndOf="@+id/textViewBusinessDescription"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewBusinessDescription"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBusinessDescription" />
 
-    <TextView
-        android:id="@+id/textViewBusinessOwner"
-        android:layout_width="0dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/baseline_black_person_24"
-        android:layout_height="wrap_content"
-        android:text="Owner Name"
-        app:layout_constraintEnd_toEndOf="@+id/textViewBusinessAddress"
-        app:layout_constraintStart_toStartOf="@+id/textViewBusinessAddress"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBusinessAddress" />
+        <TextView
+            android:id="@+id/textViewBusinessOwner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_black_person_24"
+            android:text="Owner Name"
+            app:layout_constraintEnd_toEndOf="@+id/textViewBusinessAddress"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewBusinessAddress"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBusinessAddress" />
 
-    <androidx.cardview.widget.CardView
+        <androidx.cardview.widget.CardView
         android:id="@+id/cardViewCoupons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="@+id/textViewBusinessOwner"
         app:layout_constraintStart_toStartOf="@+id/textViewBusinessOwner"
         app:layout_constraintTop_toBottomOf="@+id/textViewBusinessOwner">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_coupon"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Coupon"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="New Coupon"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Get 20% off on all items"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_coupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Get 20% off on all items"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
