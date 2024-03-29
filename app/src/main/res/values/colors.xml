@@ -13,5 +13,6 @@
     <color name="warning_red_start">#FFE0E0</color>
     <color name="warning_red_center">#FFD0D0</color>
     <color name="warning_red_end">#FFC0C0</color>
+    <color name="hint_color">#A6A6A6</color>
 
 </resources>

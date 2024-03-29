@@ -102,4 +102,5 @@ dependencies {
     implementation ("me.relex:circleindicator:2.1.6")
 
     implementation ("org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.0")
+
 }

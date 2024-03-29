@@ -65,6 +65,19 @@
     <string name="spinner2_prompt" translatable="false">City</string>
     <string name="spinner3_prompt" translatable="false">Type</string>
     <string name="Sign_up_warning" translatable="false">By Signing Up you are making a new family being a head yourself, \n If you just want to sign up as a member please login via Family Heads Contact</string>
-    <string name="select_your_relation">Select your relation</string>
+    <string name="select_your_relation" translatable="false">Select your relation</string>
+    <string name="any_details_want_to_mentioned" translatable="false">Any details want to mentioned</string>
+    <string name="additional_details" translatable="false">Additional Details</string>
+    <string name="insitute_name" translatable="false">Insitute Name</string>
+    <string name="insitute" translatable="false">Insitute</string>
+    <string name="department" translatable="false">Department</string>
+    <string name="department_name" translatable="false">Department Name</string>
+    <string name="major" translatable="false">Major</string>
+    <string name="education_details" translatable="false">Education Details</string>
+    <string name="position" translatable="false">Position</string>
+    <string name="field" translatable="false">Field</string>
+    <string name="occupation_field" translatable="false">Occupation Field</string>
+    <string name="occupation_details" translatable="false">Occupation Details</string>
+    <string name="address_of_occupation" translatable="false">Address of Occupation</string>
 
 </resources>

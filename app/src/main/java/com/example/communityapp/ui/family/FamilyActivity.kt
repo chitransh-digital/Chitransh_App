@@ -1,12 +1,14 @@
 package com.example.communityapp.ui.family
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -22,14 +24,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
-import com.example.communityapp.databinding.ActivityBusinessBinding
 import com.example.communityapp.databinding.ActivityFamilyBinding
-import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import java.nio.channels.MembershipKey
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -42,6 +41,9 @@ class FamilyActivity : BaseActivity() {
     private var familyMember="other"
     private var selectedImagePath:String = ""
     private var uniqueRelations: List<String>? = null
+    private var screenPointer = 0
+    private var shortAnimationDuration = 500
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFamilyBinding.inflate(layoutInflater)
@@ -52,6 +54,7 @@ class FamilyActivity : BaseActivity() {
         setObservables()
         setWindowsUp()
         getArguements()
+        changeUI(screenPointer)
         e("uniqueRelations",uniqueRelations.toString())
 
         if(uniqueRelations?.contains("wife") == true){
@@ -67,65 +70,88 @@ class FamilyActivity : BaseActivity() {
             binding.relationshipSelection1.btnMother.visibility = View.GONE
         }
 
-
-
         binding.relationshipSelection1.btnWife.setOnClickListener {
             familyMember = "wife"
-            changeUI()
+            screenPointer++
+            changeUI(screenPointer)
         }
 
         binding.relationshipSelection1.btnHusband.setOnClickListener {
             familyMember = "husband"
-            changeUI()
+            screenPointer++
+            changeUI(screenPointer)
         }
 
         binding.relationshipSelection1.btnSon.setOnClickListener {
             familyMember = "son"
-            changeUI()
+            screenPointer++
+            changeUI(screenPointer)
         }
 
         binding.relationshipSelection1.btnDaughter.setOnClickListener {
             familyMember = "daughter"
-            changeUI()
+            screenPointer++
+            changeUI(screenPointer)
         }
 
         binding.relationshipSelection1.btnFather.setOnClickListener {
             familyMember = "father"
-            changeUI()
+            screenPointer++
+            changeUI(screenPointer)
         }
 
         binding.relationshipSelection1.btnMother.setOnClickListener {
             familyMember = "mother"
-            changeUI()
+            screenPointer++
+            changeUI(screenPointer)
         }
 
         binding.relationshipSelection1.btnOther.setOnClickListener {
-            changeUI()
-        }
-
-        binding.relationshipSelection1.familyBack.setOnClickListener {
-            onBackPressed()
+            screenPointer++
+            changeUI(screenPointer)
         }
 
         binding.familyBack.setOnClickListener {
-            onBackPressed()
+            screenPointer--
+            changeUI(screenPointer)
         }
 
     }
 
-    private fun changeUI(){
-        binding.registrationLayout.visibility = View.VISIBLE
-        binding.relationshipSelection1.tvMember.visibility = View.GONE
-        binding.relationshipSelection1.btnWife.visibility = View.GONE
-        binding.relationshipSelection1.btnHusband.visibility = View.GONE
-        binding.relationshipSelection1.btnSon.visibility = View.GONE
-        binding.relationshipSelection1.btnDaughter.visibility = View.GONE
-        binding.relationshipSelection1.btnFather.visibility = View.GONE
-        binding.relationshipSelection1.btnMother.visibility = View.GONE
-        binding.relationshipSelection1.btnOther.visibility = View.GONE
-        binding.relationshipSelection1.familyBack.visibility = View.GONE
-        binding.relationshipSelection1.top.visibility = View.GONE
-        registerPageUI()
+    private fun changeUI(screenPointer : Int){
+        when(screenPointer){
+            -1-> onBackPressed()
+
+            0-> {
+                crossFade(
+                    listOf(binding.relationshipSelection1.relationshipSelectionLayout),
+                    listOf(binding.registrationLayout,
+                        binding.occupatioBusinessPage,
+                        binding.addImage)
+                    )
+            }
+
+            1-> {
+                registerPageUI()
+                crossFade(
+                    listOf(binding.registrationLayout),
+                    listOf(binding.relationshipSelection1.relationshipSelectionLayout,
+                        binding.occupatioBusinessPage,
+                        binding.addImage)
+                )
+            }
+
+            2-> {
+                crossFade(
+                    listOf(binding.occupatioBusinessPage),
+                    listOf(binding.relationshipSelection1.relationshipSelectionLayout,
+                        binding.registrationLayout,
+                        binding.addImage)
+                )
+            }
+
+            else -> {}
+        }
     }
 
     private fun registerPageUI(){
@@ -147,11 +173,9 @@ class FamilyActivity : BaseActivity() {
             binding.genderSpinner.setSelection(1)
         }
         else if(familyMember =="son"){
-            binding.education.visibility= View.VISIBLE
             binding.genderSpinner.setSelection(0)
         }
         else if(familyMember =="daughter"){
-            binding.education.visibility= View.VISIBLE
             binding.genderSpinner.setSelection(1)
         }
         else if(familyMember =="husband"){
@@ -171,12 +195,12 @@ class FamilyActivity : BaseActivity() {
 
         val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.occupationSpinner.adapter = occupationadapter
+        binding.occuLevelSpinner.adapter = occupationadapter
 
-        val educationList = arrayListOf("10th","12th","Graduate","Post Graduate","Other")
+        val educationList = arrayListOf("10th","12th","Bachelor's","Master's","Phd")
         val educationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, educationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.educationSpinner.adapter = educationadapter
+        binding.eduLevelSpinner.adapter = educationadapter
 
         //add states in state spinners
         val statesList = arrayListOf("Madhya Pradesh")
@@ -196,14 +220,15 @@ class FamilyActivity : BaseActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.bloodGroupSpinner.adapter = bloodGroupadapter
 
-        val no = FirebaseAuth.getInstance().currentUser?.phoneNumber
+        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+        val no = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
 
         binding.relationinput.setText(familyMember)
 
         Log.d("Dashboard phone no",no.toString())
 
         binding.memberSubmit.setOnClickListener {
-            checkDetails()
+            checkDetails1()
         }
 
         binding.dateSelector.setOnClickListener {
@@ -218,45 +243,20 @@ class FamilyActivity : BaseActivity() {
             openFilePicker()
         }
 
-        binding.occupationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Log.d("Spinner" , "$position p $id")
-                if (binding.occupationSpinner.selectedItem.toString() == "Business") {
-                    binding.familyBusiness.familuBusinessLayout.visibility = View.VISIBLE
-                } else {
-                    binding.familyBusiness.familuBusinessLayout.visibility = View.GONE
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                binding.familyBusiness.familuBusinessLayout.visibility = View.GONE
-            }
+        binding.occuBuisSubmit.setOnClickListener {
+            checkDetails2()
         }
 
-        binding.educationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Log.d("Spinner" , "$position p $id")
-                if (position == 4 || position == 3 || position == 2 ) {
-                    binding.educationInput.visibility = View.VISIBLE
-                } else {
-                    binding.educationInput.visibility = View.GONE
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                binding.educationInput.visibility = View.GONE
-            }
+        binding.familyRegistrationSubmit.setOnClickListener {
+            submitRegistration()
         }
-
     }
 
-    private fun checkDetails() {
+    private fun checkDetails1() {
         if (binding.nameinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
         }else if(!isValidPhoneNumber(binding.contactinput.text.toString())){
             Toast.makeText(this, "Please enter valid contact no", Toast.LENGTH_SHORT).show()
-        }else if(binding.DOBinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
         }
         else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
@@ -267,8 +267,28 @@ class FamilyActivity : BaseActivity() {
         else if(binding.relationinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your relation", Toast.LENGTH_SHORT).show()
         }
+        else if(binding.IDinput.text.isNullOrEmpty()){
+            Toast.makeText(this, "Please enter your FamilyID", Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.bloodGroupSpinner.selectedItem.toString().isEmpty()){
+            Toast.makeText(this, "Please enter your relation", Toast.LENGTH_SHORT).show()
+        }
         else{
-            submitRegistration()
+            screenPointer++
+            changeUI(screenPointer)
+        }
+    }
+
+    private fun checkDetails2() {
+        if(binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
+            Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
+            Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            screenPointer++
+            changeUI(screenPointer)
         }
     }
 
@@ -289,9 +309,9 @@ class FamilyActivity : BaseActivity() {
         if(binding.contactinput.text.toString() != "+91"){
             contact = binding.contactinput.text.toString()
         }
-        var education = binding.educationSpinner.selectedItem.toString()
-        if(binding.educationInput.text.isNotEmpty()){
-            education += ","+binding.educationInput.text.toString()
+        var education = binding.eduLevelSpinner.selectedItem.toString()
+        if(binding.eduInstituteInput.text.isNotEmpty()){
+            education += ","+binding.eduInstituteInput.text.toString()
         }
 
         var karyakanri = "NA"
@@ -308,7 +328,7 @@ class FamilyActivity : BaseActivity() {
             address = completeAddress,
             karyakarni = karyakanri,
             relation = binding.relationinput.text.toString(),
-            occupation = binding.occupationSpinner.selectedItem.toString(),
+            occupation = binding.occuLevelSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
             profilePic = "NA",
             education = education
@@ -432,6 +452,36 @@ class FamilyActivity : BaseActivity() {
             val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
             it.moveToFirst()
             it.getString(columnIndex)
+        }
+    }
+
+    private fun crossFade(visible: List<View>, invisible: List<View>) {
+
+        for (view in visible) {
+            view.apply {
+                // Set the content view to 0% opacity but visible, so that it is
+                // visible but fully transparent during the animation.
+                alpha = 0f
+                visibility = View.VISIBLE
+                // Animate the content view to 100% opacity and clear any animation
+                // listener set on the view.
+                animate()
+                    .alpha(1f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+        }
+
+        for (view in invisible) {
+            view.apply {
+                alpha = 0f
+                visibility = View.GONE
+
+                animate()
+                    .alpha(0f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+            }
         }
     }
 }
