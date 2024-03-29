@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Business
 import com.example.communityapp.data.models.Member
@@ -26,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.net.URI
 
 @AndroidEntryPoint
-class BusinessActivity : AppCompatActivity() {
+class BusinessActivity : BaseActivity() {
 
     private val viewModel: BusinessViewModel by viewModels()
     private lateinit var binding: ActivityBusinessBinding
@@ -134,6 +135,7 @@ class BusinessActivity : AppCompatActivity() {
 
     private fun setObservables() {
         viewModel.business.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     Toast.makeText(this, "Business Registered", Toast.LENGTH_SHORT).show()
@@ -150,14 +152,13 @@ class BusinessActivity : AppCompatActivity() {
                     Log.e(" B Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this, "Some Error Occurred! Please try again", Toast.LENGTH_SHORT).show()
+                    showErrorSnackBar("Some error occurred please try again later")
                     Log.e("B Error",resources.apiError.toString())
                 }
                 else -> {}
             }
         })
-
-
+        setWindowsUp()
     }
 
     private fun checkFields(){
@@ -191,6 +192,7 @@ class BusinessActivity : AppCompatActivity() {
             coupon = "NA",
             file = "NA"
         )
+        showProgressDialog("Registering Business...")
         viewModel.addBusiness(data,imagesList,mFileURI)
     }
 

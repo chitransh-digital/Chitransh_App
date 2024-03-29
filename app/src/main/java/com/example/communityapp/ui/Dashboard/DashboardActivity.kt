@@ -1,7 +1,6 @@
 package com.example.communityapp.ui.Dashboard
 
 import android.Manifest
-import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -12,19 +11,14 @@ import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityDashboardBinding
@@ -38,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity() {
 
     private lateinit var viewModel: DashboardViewModel
     private lateinit var phoneNum : String
@@ -52,6 +46,8 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
 
         setObservables()
         setUpNavigation()
@@ -63,6 +59,7 @@ class DashboardActivity : AppCompatActivity() {
         Log.d("Dashboard phone no",phoneNum.toString())
 
         if (phoneNum != null) {
+            showProgressDialog("Please wait...")
             viewModel.getMember(phoneNum)
         }
 
@@ -88,6 +85,8 @@ class DashboardActivity : AppCompatActivity() {
 
             Log.e("FCM token", token)
         })
+
+        setWindowsUp()
 
     }
 
@@ -132,29 +131,33 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setObservables() {
         viewModel.user_data.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     val user_data = resources.data!!
+                    startSignUpActivity(user_data)
                     Log.e("D Success",resources.data.toString())
-                    if(user_data.isEmpty()){
-                        Toast.makeText(this, R.string.please_SignUp, Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this,SignUpActivity::class.java)
-                        intent.putExtra(Constants.PHONE_NUM,phoneNum)
-                        startActivity(intent)
-                        finish()
-                    }
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" D Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
                     Log.e("D Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
                 else -> {}
             }
         })
     }
 
+    private fun startSignUpActivity(user_data: List<Member>) {
+        if(user_data.isNotEmpty()) return
+        val intent = Intent(this,SignUpActivity::class.java)
+        Log.d("Dashboard phone no",intent.toString())
+        startActivity(intent)
+        Toast.makeText(this, R.string.please_SignUp, Toast.LENGTH_SHORT).show()
+        finish()
+    }
 
 
 }

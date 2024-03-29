@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityBusinessBinding
@@ -32,7 +33,7 @@ import java.nio.channels.MembershipKey
 import java.util.Locale
 
 @AndroidEntryPoint
-class FamilyActivity : AppCompatActivity() {
+class FamilyActivity : BaseActivity() {
 
     private lateinit var viewModel: FamilyViewModel
     private lateinit var binding: ActivityFamilyBinding
@@ -49,7 +50,7 @@ class FamilyActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[FamilyViewModel::class.java]
 
         setObservables()
-
+        setWindowsUp()
         getArguements()
         e("uniqueRelations",uniqueRelations.toString())
 
@@ -102,6 +103,13 @@ class FamilyActivity : AppCompatActivity() {
             changeUI()
         }
 
+        binding.relationshipSelection1.familyBack.setOnClickListener {
+            onBackPressed()
+        }
+
+        binding.familyBack.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 
@@ -115,6 +123,8 @@ class FamilyActivity : AppCompatActivity() {
         binding.relationshipSelection1.btnFather.visibility = View.GONE
         binding.relationshipSelection1.btnMother.visibility = View.GONE
         binding.relationshipSelection1.btnOther.visibility = View.GONE
+        binding.relationshipSelection1.familyBack.visibility = View.GONE
+        binding.relationshipSelection1.top.visibility = View.GONE
         registerPageUI()
     }
 
@@ -303,6 +313,7 @@ class FamilyActivity : AppCompatActivity() {
             profilePic = "NA",
             education = education
         )
+        showProgressDialog("Adding Member...")
         viewModel.addMember(member = data,selectedImagePath)
     }
 
@@ -325,6 +336,7 @@ class FamilyActivity : AppCompatActivity() {
 
     private fun setObservables(){
         viewModel.user.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     Log.e("Success",resources.data.toString())
@@ -345,6 +357,7 @@ class FamilyActivity : AppCompatActivity() {
                 }
                 Resource.Status.ERROR -> {
                     Log.e("Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
                 else -> {}
             }

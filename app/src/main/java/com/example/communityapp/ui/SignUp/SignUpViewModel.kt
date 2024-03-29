@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.repository.BusinessRepo
 import com.example.communityapp.data.repository.SignUpRepo
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private var signUpRepo: SignUpRepo) : ViewModel() {
+class SignUpViewModel @Inject constructor(private var signUpRepo: SignUpRepo,
+    private var businessRepo: BusinessRepo) : ViewModel() {
 
     private val _user = MutableLiveData<Resource<String>>()
     val user: LiveData<Resource<String>>

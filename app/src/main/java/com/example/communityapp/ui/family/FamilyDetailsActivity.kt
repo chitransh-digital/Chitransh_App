@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidworrkshop.ui.FamilyDetailsAdapter
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.allMembers
@@ -21,7 +22,7 @@ import com.example.communityapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FamilyDetailsActivity : AppCompatActivity() {
+class FamilyDetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityFamilyDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +30,14 @@ class FamilyDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         var member_data = getIntent().getSerializableExtra(Constants.FAMILYDATA) as allMembers
-
+        setWindowsUp()
         Log.e("FamilyDetailsActivity",member_data.toString())
 
         setUpRv(member_data.allMembers)
+
+        binding.familyBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setUpRv(member_data : List<Member>){

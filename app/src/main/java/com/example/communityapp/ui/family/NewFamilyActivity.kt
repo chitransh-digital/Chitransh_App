@@ -12,6 +12,7 @@ import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityFamilyBinding
@@ -24,7 +25,7 @@ import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewFamilyActivity : AppCompatActivity() {
+class NewFamilyActivity : BaseActivity() {
     private lateinit var binding: ActivityNewFamilyBinding
     val viewModel: FamilyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +33,13 @@ class NewFamilyActivity : AppCompatActivity() {
         binding = ActivityNewFamilyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setWindowsUp()
         setObservables()
+        showProgressDialog("Fetching Family Details...")
         viewModel.getFamilyByCity()
         binding.baselineSearchIcon.setOnClickListener {
             if(binding.searchTypeSpinner.selectedItem.toString() == "ALL" || binding.etSearchBar.text.isNotEmpty()){
+                showProgressDialog("Fetching Family Details...")
                 viewModel.getFamilyByCity()
             }else{
                 Toast.makeText(this,"Please enter a family ID",Toast.LENGTH_SHORT).show()
@@ -58,6 +62,7 @@ class NewFamilyActivity : AppCompatActivity() {
 
     private fun setObservables() {
         viewModel.user_data.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     try {
@@ -77,6 +82,7 @@ class NewFamilyActivity : AppCompatActivity() {
                 }
                 Resource.Status.ERROR -> {
                     Log.e("D Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
                 else -> {}
             }

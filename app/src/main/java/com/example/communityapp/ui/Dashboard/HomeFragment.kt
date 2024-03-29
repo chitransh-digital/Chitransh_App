@@ -107,6 +107,7 @@ class HomeFragment : Fragment(){
                 }
                 Resource.Status.ERROR -> {
                     Log.e("Profile Error",resources.apiError.toString())
+
                 }
                 else -> {}
             }
@@ -142,15 +143,16 @@ class HomeFragment : Fragment(){
     }
 
     private fun updateUI(data : List<Member>){
+        val id = contact
         for(ip in data){
-            val id = contact
             if (ip.contact == id){
                 user_data = ip
-                viewModel.getFeedsByPaging()
 //                binding.topGreeting.text = "Namaskar ${ip.name} Ji"
                 break
             }
         }
+
+        viewModel.getFeedsByPaging()
 //        setDialog(data)
     }
 

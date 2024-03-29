@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.databinding.ActivityFeedsBinding
@@ -22,7 +23,7 @@ import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FeedsActivity : AppCompatActivity() {
+class FeedsActivity : BaseActivity() {
 
     private val feedsViewModel: FeedsViewModel by viewModels()
     private val selectedImagePaths = mutableListOf<String>()
@@ -68,7 +69,7 @@ class FeedsActivity : AppCompatActivity() {
 //        binding.btnFeeds.setOnClickListener {
 //            openFilePicker()
 //        }
-
+        setWindowsUp()
         //getFeedsbyPaging
         if(lastNews == null){
             showAdapter(feedsList)

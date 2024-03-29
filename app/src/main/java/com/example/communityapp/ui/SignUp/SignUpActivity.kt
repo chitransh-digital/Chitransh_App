@@ -3,6 +3,7 @@ package com.example.communityapp.ui.SignUp
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -11,12 +12,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
@@ -29,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
 @AndroidEntryPoint
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : BaseActivity() {
 
     private lateinit var binding : ActivitySignUpBinding
     private lateinit var viewModel: SignUpViewModel
@@ -41,6 +45,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
+        setWindowsUp()
 
         val ageList = (1..100).toList()
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, ageList)
@@ -61,7 +66,8 @@ class SignUpActivity : AppCompatActivity() {
 
         setObservables()
 
-        val phoneNum = intent.getStringExtra(Constants.PHONE_NUM)
+        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+        val phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
         binding.contactinput.setText(phoneNum)
 
         binding.memberSubmit.setOnClickListener {
@@ -95,6 +101,7 @@ class SignUpActivity : AppCompatActivity() {
         val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.occupationSpinner.adapter = occupationadapter
+
 
         //add blood groups in blood group spinners
         val bloodGroupList = arrayListOf("A+","A-","B+","B-","AB+","AB-","O+","O-","other")
@@ -159,6 +166,7 @@ class SignUpActivity : AppCompatActivity() {
             profilePic = "NA",
             education = "NA"
         )
+        showProgressDialog("Please wait...")
         viewModel.addMember(member = data,selectedImagePath)
     }
 
@@ -247,6 +255,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun setObservables(){
         viewModel.user.observe(this, Observer {resources ->
+            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     Log.e("Success",resources.data.toString())
@@ -266,6 +275,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
                 Resource.Status.ERROR -> {
                     Log.e("Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
                 else -> {}
             }
