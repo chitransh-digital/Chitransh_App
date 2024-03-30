@@ -1,5 +1,6 @@
 package com.example.communityapp.ui.family
 
+import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
@@ -147,6 +148,15 @@ class FamilyActivity : BaseActivity() {
                     listOf(binding.relationshipSelection1.relationshipSelectionLayout,
                         binding.registrationLayout,
                         binding.addImage)
+                )
+            }
+
+            3-> {
+                crossFade(
+                    listOf(binding.addImage),
+                    listOf(binding.relationshipSelection1.relationshipSelectionLayout,
+                        binding.registrationLayout,
+                        binding.occupatioBusinessPage)
                 )
             }
 
@@ -439,7 +449,6 @@ class FamilyActivity : BaseActivity() {
     private fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
-            addCategory(Intent.CATEGORY_OPENABLE)
         }
 
         getImage.launch(intent)
