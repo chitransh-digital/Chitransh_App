@@ -20,6 +20,9 @@
             android:name=".ui.Dashboard.UpdateMemberActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.NotificationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
@@ -36,7 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.SignUp.SignUpActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".ui.jobPosting.JobPostingActivity"
             android:exported="false" />

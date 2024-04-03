@@ -39,6 +39,9 @@ class SignUpActivity : BaseActivity() {
     private lateinit var viewModel: SignUpViewModel
     private var selectedDate: Calendar = Calendar.getInstance()
     private var selectedImagePath:String = ""
+    private var shortAnimationDuration = 500
+    private var screenPointer = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -57,9 +60,9 @@ class SignUpActivity : BaseActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.genderSpinner.adapter = genadapter
 
-        binding.dateSelector.setOnClickListener {
-            showDatePickerDialog()
-        }
+//        binding.dateSelector.setOnClickListener {
+//            showDatePickerDialog()
+//        }
         binding.addImageText.setOnClickListener {
             openFilePicker()
         }
@@ -71,7 +74,15 @@ class SignUpActivity : BaseActivity() {
         binding.contactinput.setText(phoneNum)
 
         binding.memberSubmit.setOnClickListener {
-            checkDetails()
+            checkDetails1()
+        }
+
+        binding.occuBuisSubmit.setOnClickListener {
+            checkDetails2()
+        }
+
+        binding.familyRegistrationSubmit.setOnClickListener {
+            submitRegistration()
         }
 
         binding.familyIDinput.setOnClickListener {
@@ -100,7 +111,7 @@ class SignUpActivity : BaseActivity() {
         val occupationList = arrayListOf("Government Job","Student","Retired","Business","HouseWife","Other")
         val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.occupationSpinner.adapter = occupationadapter
+        binding.occuLevelSpinner.adapter = occupationadapter
 
 
         //add blood groups in blood group spinners
@@ -108,27 +119,94 @@ class SignUpActivity : BaseActivity() {
         val bloodGroupadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, bloodGroupList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.bloodGroupSpinner.adapter = bloodGroupadapter
+
+        val educationList = arrayListOf("10th","12th","Bachelor's","Master's","Phd")
+        val educationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, educationList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.eduLevelSpinner.adapter = educationadapter
     }
 
-    private fun checkDetails() {
+    private fun checkDetails1() {
         if (binding.nameinput.text.isNullOrEmpty()){
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
         }else if(binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())){
             Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
-        } else if(binding.DOBinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
         }
+//        else if(binding.DOBinput.text.isNullOrEmpty()) {
+//            Toast.makeText(this, "Please enter your Date of Birth no", Toast.LENGTH_SHORT).show()
+//        }
         else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
         }
         else if(binding.genderSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
         }
-        else if(selectedImagePath.isEmpty()) {
-            Toast.makeText(this, "Please select your image", Toast.LENGTH_SHORT).show()
+        else if(binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+        }
+        else if (binding.landmarkInput.text.isNullOrEmpty()){
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.citySpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.stateSpinner.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
         }
         else{
-            submitRegistration()
+            screenPointer++
+            changeUI(screenPointer)
+        }
+    }
+
+    private fun checkDetails2() {
+        if(binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
+            Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
+        }
+        else if(binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
+            Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            screenPointer++
+            changeUI(screenPointer)
+        }
+    }
+
+    private fun changeUI(screenPointer : Int){
+        when(screenPointer){
+
+            0-> {
+                onBackPressed()
+            }
+
+            1-> {
+                crossFade(
+                    listOf(binding.registrationLayout),
+                    listOf(
+                        binding.occupatioBusinessPage,
+                        binding.addImage)
+                )
+            }
+
+            2-> {
+                crossFade(
+                    listOf(binding.occupatioBusinessPage),
+                    listOf(
+                        binding.registrationLayout,
+                        binding.addImage)
+                )
+            }
+
+            3-> {
+                crossFade(
+                    listOf(binding.addImage),
+                    listOf(
+                        binding.registrationLayout,
+                        binding.occupatioBusinessPage)
+                )
+            }
+
+            else -> {}
         }
     }
 
@@ -161,7 +239,7 @@ class SignUpActivity : BaseActivity() {
             address = completeAddress,
             karyakarni = karyakanri,
             relation = "HEAD",
-            occupation = binding.occupationSpinner.selectedItem.toString(),
+            occupation = binding.occuLevelSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
             profilePic = "NA",
             education = "NA"
@@ -222,13 +300,14 @@ class SignUpActivity : BaseActivity() {
     }
 
 
-    val getImage=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
+    private val getImage=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        Log.d("Image Path", result.toString())
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val uri = data?.data
             selectedImagePath = getImagePath(uri!!).toString()
             binding.ivAddImage.setImageURI(uri)
+            Log.d("Image Path", selectedImagePath)
         }else{
             Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
         }
@@ -280,5 +359,35 @@ class SignUpActivity : BaseActivity() {
                 else -> {}
             }
         })
+    }
+
+    private fun crossFade(visible: List<View>, invisible: List<View>) {
+
+        for (view in visible) {
+            view.apply {
+                // Set the content view to 0% opacity but visible, so that it is
+                // visible but fully transparent during the animation.
+                alpha = 0f
+                visibility = View.VISIBLE
+                // Animate the content view to 100% opacity and clear any animation
+                // listener set on the view.
+                animate()
+                    .alpha(1f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+        }
+
+        for (view in invisible) {
+            view.apply {
+                alpha = 0f
+                visibility = View.GONE
+
+                animate()
+                    .alpha(0f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+        }
     }
 }

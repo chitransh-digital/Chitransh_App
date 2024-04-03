@@ -1,491 +1,783 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.SignUp.SignUpActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/registrationLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/logo_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/chitranshlogo"
-            android:transitionName="@string/transition_name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.025" />
-
-        <TextView
-            android:id="@+id/warning"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent="0.8"
-            android:layout_marginTop="16dp"
-            android:padding="8dp"
-            android:textStyle="italic|bold"
-            android:autoSizeTextType="uniform"
-            android:background="@drawable/warning_border_drawable"
-            android:text="@string/Sign_up_warning"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo_image" />
-
-        <TextView
-            android:id="@+id/top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:autoSizeTextType="uniform"
-            android:text="@string/SignUp"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/warning" />
-
-        <LinearLayout
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/nametext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/nameinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:hint="Your Name"
-                android:padding="10dp"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/FamilyID"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.01999998"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/familyIDtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Family ID"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/familyIDinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:hint="Create Family ID"
-                android:focusable="false"
-                android:padding="10dp"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_addImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:background="#DCD9D9"
-            android:src="@drawable/account_circle"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/DOB"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.12"
-            app:layout_constraintHorizontal_bias="0.333"
-            app:layout_constraintStart_toEndOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/top"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.36" />
-
-        <LinearLayout
-            android:id="@+id/DOB"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/FamilyID"
-            app:layout_constraintVertical_bias="0.01999998"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/DOBtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Birth"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/DOBinput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="8"
-                    android:background="@drawable/edittest_background"
-                    android:hint="@string/date_format"
-                    android:padding="10dp" />
-
-                <ImageView
-                    android:id="@+id/dateSelector"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/date" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/contact"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/DOB"
-            app:layout_constraintVertical_bias="0.01999998"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/contacttext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contact"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/contactinput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp"
-                android:text="+91" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/blood_group"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.022"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/blood_group_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Blood Group"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/blood_group_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/age"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/gender"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/blood_group"
-            app:layout_constraintVertical_bias="0.04"
-            app:layout_constraintWidth_percent="0.28">
-
-            <TextView
-                android:id="@+id/agetext"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Age"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/ageSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/gender"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/age"
-            app:layout_constraintTop_toBottomOf="@id/blood_group"
-            app:layout_constraintVertical_bias="0.04000002"
-            app:layout_constraintWidth_percent="0.55">
-
-            <TextView
-                android:id="@+id/gendertext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gender"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/genderSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/Add"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.56"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gender"
-            app:layout_constraintVertical_bias="0.022"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/Addtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <!-- Landmark -->
-            <EditText
-                android:id="@+id/landmarkInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edittest_background"
-                android:hint="Landmark"
-                android:padding="10dp" />
-
-            <!-- City Dropdown -->
-            <Spinner
-                android:id="@+id/citySpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp" />
-
-            <!-- State Dropdown -->
-            <Spinner
-                android:id="@+id/stateSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/Karya"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Add"
-            app:layout_constraintVertical_bias="0.022"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/Karyatext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Karyakarni (optional)"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/Karyainput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:hint="Karyakarni"
-                android:padding="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/occupation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Karya"
-            app:layout_constraintVertical_bias="0.022"
-            app:layout_constraintWidth_percent="0.9">
-
-            <TextView
-                android:id="@+id/occupationtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Occupation"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/occupationSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittest_background"
-                android:padding="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/addImage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/occupation"
-            app:layout_constraintVertical_bias="0.022"
-            app:layout_constraintWidth_percent="0.9">
 
             <ImageView
-                android:id="@+id/iv_addImageMember"
-                android:layout_width="108dp"
-                android:layout_height="108dp"
-                android:background="#DCD9D9"
+                android:id="@+id/logo_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/chitranshlogo"
+                android:transitionName="@string/transition_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.025" />
+
+            <TextView
+                android:id="@+id/warning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/account_circle"
+                android:autoSizeTextType="uniform"
+                android:background="@drawable/warning_border_drawable"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/Sign_up_warning"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="italic|bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo_image"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <TextView
+                android:id="@+id/top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/SignUp"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/warning" />
+
+            <LinearLayout
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.9">
+
+                <TextView
+                    android:id="@+id/nametext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/nameinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="Your Name"
+                    android:padding="10dp"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FamilyID"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                app:layout_constraintVertical_bias="0.01999998"
+                app:layout_constraintWidth_percent="0.9">
+
+                <TextView
+                    android:id="@+id/familyIDtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Family ID"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/familyIDinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:focusable="false"
+                    android:hint="Create Family ID"
+                    android:padding="10dp"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_addImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:background="#DCD9D9"
+                android:src="@drawable/account_circle"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/DOB"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.12"
                 app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toEndOf="@id/name"
                 app:layout_constraintTop_toBottomOf="@id/top"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.36" />
 
-            <TextView
-                android:id="@+id/addImageText"
+            <LinearLayout
+                android:id="@+id/contact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/FamilyID"
+                app:layout_constraintVertical_bias="0.01999998"
+                app:layout_constraintWidth_percent="0.9">
+
+                <TextView
+                    android:id="@+id/contacttext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/contactinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp"
+                    android:text="+91" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/DOB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.487"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/FamilyID"
+                app:layout_constraintVertical_bias="0.015"
+                app:layout_constraintWidth_percent="0.9">
+
+                <TextView
+                    android:id="@+id/DOBtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Birth *"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/DOBinput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="8"
+                        android:background="@drawable/edittest_background"
+                        android:hint="@string/date_format"
+                        android:padding="10dp" />
+
+                    <ImageView
+                        android:id="@+id/dateSelector"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:src="@drawable/date" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/blood_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contact"
+                app:layout_constraintVertical_bias="0.022"
+                app:layout_constraintWidth_percent="0.9">
+
+                <TextView
+                    android:id="@+id/blood_group_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Blood Group"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/blood_group_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/age"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/gender"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/blood_group"
+                app:layout_constraintVertical_bias="0.04"
+                app:layout_constraintWidth_percent="0.28">
+
+                <TextView
+                    android:id="@+id/agetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Age"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/ageSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/age"
+                app:layout_constraintTop_toBottomOf="@id/blood_group"
+                app:layout_constraintVertical_bias="0.04000002"
+                app:layout_constraintWidth_percent="0.55">
+
+                <TextView
+                    android:id="@+id/gendertext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/genderSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.56"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gender"
+                app:layout_constraintVertical_bias="0.022"
+                app:layout_constraintWidth_percent="0.9">
+
+                <TextView
+                    android:id="@+id/Addtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- Landmark -->
+                <EditText
+                    android:id="@+id/landmarkInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="Landmark"
+                    android:padding="10dp" />
+
+                <!-- City Dropdown -->
+                <Spinner
+                    android:id="@+id/citySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp" />
+
+                <!-- State Dropdown -->
+                <Spinner
+                    android:id="@+id/stateSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Karya"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Add"
+                app:layout_constraintVertical_bias="0.022"
+                app:layout_constraintWidth_percent="0.9">
+
+                <TextView
+                    android:id="@+id/Karyatext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Karyakarni (optional)"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/Karyainput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="Karyakarni"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/member_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Image"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/theme_brown"
+                android:text="Next"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.938"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Karya"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/occupatio_business_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/edu_top"
+                android:layout_width="188dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:text="@string/education_details"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_gravity="center"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.034" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/edu_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edu_top"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
 
-        <Button
-            android:id="@+id/member_submit"
+                <TextView
+                    android:id="@+id/leveltext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Level"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/edu_level_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edu_department"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edu_level"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/edu_depart_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/department"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edu_depart_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="@string/department_name"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edu_institute"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edu_department"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/edu_institute_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insitute"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edu_institute_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="@string/insitute_name"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edu_additionalDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edu_institute"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/edu_additional_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/additional_details"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edu_additional_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="@string/any_details_want_to_mentioned"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/occupation_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:text="@string/occupation_details"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edu_additionalDetails"
+                app:layout_constraintVertical_bias="0.07999998" />
+
+            <LinearLayout
+                android:id="@+id/occu_position"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/occupation_top"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/occu_positiontext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Occuption Position"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/occu_positioninput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="@string/position"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/occu_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/occu_position"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/occuleveltext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/occupation_field"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/occu_level_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:background="@drawable/edittest_background"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/occu_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/occu_level"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/occu_address_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address_of_occupation"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/occu_address_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="Address"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/occu_buis_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/theme_brown"
+                android:text="Next"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.938"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/occu_address"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/addImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_addImageMember"
+            android:layout_width="224dp"
+            android:layout_height="224dp"
+            android:background="#DCD9D9"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/account_circle"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/DOB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.333"
+            app:layout_constraintStart_toEndOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/top"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/addImageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/Submit"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.467"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addImage"
-            app:layout_constraintVertical_bias="0.25"
-            android:layout_marginBottom="10dp"/>
+            android:text="Add Image"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="48dp"
+            android:layout_gravity="center"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        <Button
+            android:id="@+id/family_registration_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/theme_brown"
+            android:text="@string/Submit"
+            android:layout_gravity="end"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</LinearLayout>

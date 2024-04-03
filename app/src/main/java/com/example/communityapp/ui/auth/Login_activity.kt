@@ -101,7 +101,7 @@ class Login_activity : BaseActivity() {
             showContent(contentPointer)
 //            context = LocaleHelper.setLocale(this, "en");
 //            resources = context!!.resources;
-            setLocal(this@Login_activity, "en")
+//            setLocal(this@Login_activity, "en")
         }
 
         binding.buttonHindi.setOnClickListener {
@@ -118,13 +118,17 @@ class Login_activity : BaseActivity() {
         }
 
         binding.buttonPhoneNo.setOnClickListener {
-            val ph = "+91" + binding.editTextPhone.text.toString()
-            contact = ph
-            if (ph.isEmpty()) {
-                Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
-            } else {
-                showProgressDialog("Sending Otp..")
-                viewModel.OnVerificationCodeSent(ph, this)
+            if(binding.editTextPhone.text.toString().length != 10){
+                Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
+            }else {
+                val ph = "+91" + binding.editTextPhone.text.toString()
+                contact = ph
+                if (ph.isEmpty()) {
+                    Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
+                } else {
+                    showProgressDialog("Sending Otp..")
+                    viewModel.OnVerificationCodeSent(ph, this)
+                }
             }
         }
 
@@ -133,9 +137,9 @@ class Login_activity : BaseActivity() {
             if (otp.isEmpty()) {
                 Toast.makeText(this, "Please enter otp", Toast.LENGTH_SHORT).show()
             } else {
+                showProgressDialog("Verifying OTP..")
                 val credential = PhoneAuthProvider.getCredential(verificationID, otp)
                 viewModel.signInWithPhoneAuthCredential(credential, this)
-                showProgressDialog("Verifying OTP..")
             }
         }
 
@@ -183,6 +187,7 @@ class Login_activity : BaseActivity() {
 
     private fun setObservables() {
         viewModel.verificationStatus.observe(this, Observer { resource ->
+            hideProgressDialog()
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     Log.e("url", resource.status.toString())
@@ -226,6 +231,7 @@ class Login_activity : BaseActivity() {
         })
 
         viewModel.loginStatus.observe(this, Observer { resource ->
+            hideProgressDialog()
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     Log.e("url", resource.status.toString())
