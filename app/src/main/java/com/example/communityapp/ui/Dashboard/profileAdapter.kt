@@ -23,6 +23,7 @@ class profileAdapter(private val context : Context, private val members : List<M
         var relation =binding.profileRelation
         var image = binding.profileImage
         var ItemView = binding.itemView
+        var update=binding.editIcon
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -60,6 +61,12 @@ class profileAdapter(private val context : Context, private val members : List<M
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
             ContextCompat.startActivity(context, intent, null)
+        }
+
+        holder.update.setOnClickListener {
+            val intent = Intent(context, UpdateMemberActivity::class.java)
+            intent.putExtra("member", model)
+            context.startActivity(intent)
         }
 
         Glide.with(context)

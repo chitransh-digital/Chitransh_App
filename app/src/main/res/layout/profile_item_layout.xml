@@ -79,6 +79,17 @@
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent="0.6" />
 
+        <ImageView
+            android:id="@+id/edit_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:src="@drawable/edit_brown"
+            app:layout_constraintBottom_toBottomOf="@id/call_now"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/call_now"
+            app:layout_constraintVertical_bias="0.272" />
+
         <Button
             android:id="@+id/call_now"
             android:layout_width="wrap_content"

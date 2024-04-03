@@ -1,29 +1,23 @@
 package com.example.communityapp.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageTask
-import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.tasks.await
 import java.io.File
+import java.security.MessageDigest
 import javax.inject.Inject
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class DashboardRepo @Inject constructor(private val db: FirebaseFirestore) {
+class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, private val storage: FirebaseStorage) {
 
     suspend fun findMember(uuid: String): List<Member> {
         return suspendCoroutine { continuation ->
@@ -123,6 +117,76 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore) {
                 }
         }
     }
+
+    fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?): Flow<Resource<String>> {
+        return flow {
+            emit(Resource.loading())
+            var ch = "OK"
+            try {
+                // Check if a new image is selected for update
+                if (selectedImagePath != null && selectedImagePath.isNotEmpty()) {
+                    // Upload new image to Firebase Storage
+                    val imageUrl = uploadImage(selectedImagePath, generateMemberId(updatedMember))
+                    // Associate new image URL with the member
+                    updatedMember.profilePic = imageUrl
+                }
+
+                // Update member in Firestore
+                val familyCollection = db.collection(Constants.FAMILY)
+                    .document(updatedMember.familyID)
+                    .collection(Constants.MEMBER)
+                    .document(memberId)
+                val userCollection = db.collection(Constants.USERS)
+                    .document(memberId)
+
+                db.runBatch { batch ->
+                    batch.update(userCollection, "contact", updatedMember.contact)
+                    batch.set(familyCollection, updatedMember)
+                    // You can update other fields of the member here if needed
+                }.addOnCompleteListener {
+                    ch = "OK"
+                }.addOnFailureListener {
+                    ch = it.message.toString()
+                }
+
+                if (ch == "OK") emit(Resource.success("OK"))
+                else emit(Resource.error(Exception(ch)))
+            } catch (e: Exception) {
+                emit(Resource.error(e))
+            }
+        }
+    }
+
+
+    private suspend fun uploadImage(imagePath: String, imageName: String): String {
+        return suspendCoroutine { continuation ->
+            val imageRef = storage.reference.child("images/$imageName.jpg")
+            val uploadTask = imageRef.putFile(Uri.fromFile(File(imagePath)))
+
+            uploadTask.addOnSuccessListener {
+                // Get the download URL
+                imageRef.downloadUrl.addOnSuccessListener { uri ->
+                    continuation.resume(uri.toString())
+                }.addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+            }.addOnFailureListener {
+                continuation.resumeWithException(it)
+            }
+        }
+    }
+
+    private fun generateMemberId(member: Member): String {
+        val inputString = "${member.name}_${member.age}_${member.familyID.hashCode()}"
+
+        return hashString("SHA-256", inputString)
+    }
+
+    private fun hashString(type: String, input: String): String {
+        val bytes = MessageDigest.getInstance(type).digest(input.toByteArray())
+        return bytes.joinToString("") { "%02x".format(it) }
+    }
+
 
 
 }

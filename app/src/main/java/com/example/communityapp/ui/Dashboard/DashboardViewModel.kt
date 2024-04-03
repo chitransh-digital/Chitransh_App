@@ -8,7 +8,6 @@ import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.data.repository.DashboardRepo
 import com.example.communityapp.utils.Resource
-import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -51,6 +50,28 @@ class DashboardViewModel @Inject constructor(private var dashboardRepo: Dashboar
                 _feeds.postValue(Resource.error(e))
             }
         }
+    }
+
+
+    private val _updatedUser = MutableLiveData<Resource<String>>()
+    val updatedUser: LiveData<Resource<String>>
+        get() = _updatedUser
+
+    fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?) {
+        dashboardRepo.updateMember(memberId, updatedMember, selectedImagePath).onEach {
+            when(it.status){
+                Resource.Status.SUCCESS -> {
+                    _updatedUser.value = Resource.success(it.data)
+                }
+                Resource.Status.LOADING -> {
+                    _updatedUser.value = Resource.loading()
+                }
+                Resource.Status.ERROR -> {
+                    _updatedUser.value = Resource.error(it.apiError)
+                }
+                else -> {}
+            }
+        }.launchIn(viewModelScope)
     }
 
 
