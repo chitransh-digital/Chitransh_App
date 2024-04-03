@@ -90,14 +90,6 @@ class DashboardActivity : BaseActivity() {
 
         setWindowsUp()
 
-//        findViewById<ImageButton>(R.id.logout_button).setOnClickListener {
-//            val editor = sharedPreferences.edit()
-//            editor.putString(Constants.PHONE_NUM, "NA")
-//            editor.apply()
-//            startActivity(Intent(this, Login_activity::class.java))
-//            finish()
-//        }
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
