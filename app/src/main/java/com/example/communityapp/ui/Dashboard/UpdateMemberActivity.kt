@@ -39,6 +39,7 @@ class UpdateMemberActivity : BaseActivity() {
             member = intent.getSerializableExtra("member") as Member
         }
         setObservables()
+        setWindowsUp()
 
         binding.nameinput.setText(member.name)
         binding.relationinput.setText(member.relation)

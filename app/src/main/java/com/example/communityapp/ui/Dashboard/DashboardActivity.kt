@@ -37,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DashboardActivity : BaseActivity() {
 
     private lateinit var viewModel: DashboardViewModel
-    private lateinit var phoneNum : String
+    private var phoneNum : String = ""
     private lateinit var binding : ActivityDashboardBinding
 
 
@@ -56,14 +56,14 @@ class DashboardActivity : BaseActivity() {
 //        setDialog()
 
         val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-        val phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
+        phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null).toString()
 //        phoneNum = intent.getStringExtra(Constants.USERNAME).toString()
         Log.d("Dashboard phone no",phoneNum.toString())
 
-        if (phoneNum != null) {
-            showProgressDialog("Please wait...")
-            viewModel.getMember(phoneNum)
-        }
+//        if (phoneNum.isEmpty()) {
+//            showProgressDialog("Please wait...")
+//            viewModel.getMember(phoneNum)
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -161,5 +161,13 @@ class DashboardActivity : BaseActivity() {
         finish()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("Onresume","Data fetching")
+        if (phoneNum.isEmpty()) {
+            showProgressDialog("Please wait...")
+            viewModel.getMember(phoneNum)
+        }
+    }
 
 }
