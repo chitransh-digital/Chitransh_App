@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -23,6 +24,7 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.ui.SignUp.SignUpActivity
+import com.example.communityapp.ui.auth.Login_activity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
@@ -87,6 +89,14 @@ class DashboardActivity : BaseActivity() {
         })
 
         setWindowsUp()
+
+//        findViewById<ImageButton>(R.id.logout_button).setOnClickListener {
+//            val editor = sharedPreferences.edit()
+//            editor.putString(Constants.PHONE_NUM, "NA")
+//            editor.apply()
+//            startActivity(Intent(this, Login_activity::class.java))
+//            finish()
+//        }
 
     }
 
