@@ -10,17 +10,17 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.communityapp.BaseActivity
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityUpdateMemberBinding
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UpdateMemberActivity : AppCompatActivity() {
+class UpdateMemberActivity : BaseActivity() {
 
 
     private lateinit var binding: ActivityUpdateMemberBinding
@@ -147,14 +147,17 @@ class UpdateMemberActivity : AppCompatActivity() {
             when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     Log.e("Success", resources.data.toString())
+                    hideProgressDialog()
                     Toast.makeText(this, "Member Updated Successfully", Toast.LENGTH_SHORT).show()
                 }
 
                 Resource.Status.LOADING -> {
                     Log.e("Loading", resources.data.toString())
+                    showProgressDialog("loading")
                 }
 
                 Resource.Status.ERROR -> {
+                    showErrorSnackBar(resources.apiError.toString())
                     Log.e("Error", resources.apiError.toString())
                 }
 
