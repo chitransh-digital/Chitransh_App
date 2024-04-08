@@ -13,15 +13,30 @@
         android:padding="16dp"
         tools:context=".ui.Business.BusinessDetailsActivity">
 
-    <TextView
+
+        <ImageView
+            android:id="@+id/business_back"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.08" />
+
+        <TextView
         android:id="@+id/textViewBusinessName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Business Name Business Name Business Name Business Name Business Name"
+        android:text="Business Name"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:layout_marginStart="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/business_back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

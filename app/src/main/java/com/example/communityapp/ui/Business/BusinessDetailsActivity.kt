@@ -84,5 +84,9 @@ class BusinessDetailsActivity : BaseActivity() {
             // You might want to finish() the activity or handle this case appropriately
         }
 
+        binding.businessBack.setOnClickListener {
+            onBackPressed()
+        }
+
     }
 }

@@ -40,7 +40,7 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
                                     relation = ip.get(Constants.RELATION).toString(),
                                     bloodGroup = ip.get(Constants.BLOOD_GROUP).toString(),
                                     occupation = ip.get(Constants.OCCUPATION).toString(),
-                                    education = ip.get(Constants.EDUCATION).toString(),
+                                    highestEducation = ip.get(Constants.EDUCATION).toString(),
                                     profilePic = ip.get(Constants.ProfilePic).toString()
                                 )
                             )

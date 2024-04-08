@@ -121,7 +121,7 @@ class FamilyRepo @Inject constructor(
                                 relation = ip.get(Constants.RELATION).toString(),
                                 bloodGroup = ip.get(Constants.BLOOD_GROUP).toString(),
                                 occupation = ip.get(Constants.OCCUPATION).toString(),
-                                education = ip.get(Constants.EDUCATION).toString(),
+                                highestEducation = ip.get(Constants.EDUCATION).toString(),
                                 profilePic = ip.get(Constants.ProfilePic).toString()
                             )
                         )
@@ -191,13 +191,13 @@ class FamilyRepo @Inject constructor(
                                 relation = doc.get(Constants.RELATION).toString(),
                                 bloodGroup = doc.get(Constants.BLOOD_GROUP).toString(),
                                 occupation = doc.get(Constants.OCCUPATION).toString(),
-                                education = doc.get(Constants.EDUCATION).toString(),
+                                highestEducation = doc.get(Constants.EDUCATION).toString(),
                                 profilePic = doc.get(Constants.ProfilePic).toString()
                             )
                         )
                     }
 
-                    Log.e("FamilyRepo", "getFamilyByCity: $members  ${user}")
+                    Log.e("FamilyRepo", "getFamilyByCity: $members  $user")
 
                     continuation.resume(members)
                 }

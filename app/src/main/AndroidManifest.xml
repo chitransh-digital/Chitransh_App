@@ -7,9 +7,9 @@
 
     <application
         android:name=".chitranshApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
+        android:fullBackupContent="false"
         android:icon="@mipmap/chitransh_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"

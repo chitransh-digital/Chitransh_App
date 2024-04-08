@@ -77,8 +77,7 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth, private 
                     verificationStatus.value = Resource.success(Pair(2,user.toString()))
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                    }
+                    verificationStatus.value = Resource.error(task.exception!!)
                 }
             }
     }

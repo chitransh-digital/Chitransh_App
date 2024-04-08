@@ -306,7 +306,7 @@ class SignUpActivity : BaseActivity() {
             val data: Intent? = result.data
             val uri = data?.data
             selectedImagePath = getImagePath(uri!!).toString()
-            binding.ivAddImage.setImageURI(uri)
+            binding.ivAddImageMember.setImageURI(uri)
             Log.d("Image Path", selectedImagePath)
         }else{
             Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()

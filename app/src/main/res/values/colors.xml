@@ -8,8 +8,8 @@
     <color name="theme_yellow">#FCE45E</color>
     <color name="theme_brown">#620402</color>
     <color name="head_color">#FA9C4A49</color>
-    <color name="male_card_color">#46AEF3</color>
-    <color name="female_card_color">#F16CC1</color>
+    <color name="male_card_color">#6EC4FD</color>
+    <color name="female_card_color">#F88DD1</color>
     <color name="warning_red_start">#FFE0E0</color>
     <color name="warning_red_center">#FFD0D0</color>
     <color name="warning_red_end">#FFC0C0</color>

@@ -14,4 +14,8 @@
         <item name="android:windowSharedElementExitTransition">@transition/shared_element_transition</item>
     </style>
 
+    <style name="spinnerStyle"  parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:padding">5sp</item>
+    </style>
+
 </resources>

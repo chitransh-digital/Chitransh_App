@@ -164,8 +164,10 @@ class DashboardActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         Log.d("Onresume","Data fetching")
-        if (phoneNum.isEmpty()) {
+        Log.d("Onresume phone num","Data fetching $phoneNum")
+        if (phoneNum.isNotEmpty()) {
             showProgressDialog("Please wait...")
+            Log.d("Onresume phone num","Data fetching $phoneNum")
             viewModel.getMember(phoneNum)
         }
     }

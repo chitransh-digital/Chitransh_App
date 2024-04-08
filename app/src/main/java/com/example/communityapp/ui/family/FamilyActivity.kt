@@ -117,6 +117,32 @@ class FamilyActivity : BaseActivity() {
             changeUI(screenPointer)
         }
 
+        binding.eduLevelSpinner.setOnClickListener {
+            if(binding.eduLevelSpinner.selectedItem.toString() == "High School" ||
+                binding.eduLevelSpinner.selectedItem.toString() == "Higher Secondary School"){
+                binding.eduDepartment.visibility = View.VISIBLE
+                binding.eduInstitute.visibility = View.VISIBLE
+                binding.eduAdditionalDetails.visibility = View.VISIBLE
+            }else {
+                binding.eduDepartment.visibility = View.GONE
+                binding.eduInstitute.visibility = View.GONE
+                binding.eduAdditionalDetails.visibility = View.GONE
+            }
+
+        }
+
+        binding.occuLevelSpinner.setOnClickListener {
+            if(binding.eduLevelSpinner.selectedItem.toString() == "Government Job" ||
+                binding.eduLevelSpinner.selectedItem.toString() == "Private Job"){
+                binding.occuDepartment.visibility = View.VISIBLE
+                binding.occuEmployer.visibility = View.VISIBLE
+            }else {
+                binding.occuDepartment.visibility = View.GONE
+                binding.occuEmployer.visibility = View.GONE
+            }
+
+        }
+
     }
 
     private fun changeUI(screenPointer : Int){
@@ -167,12 +193,12 @@ class FamilyActivity : BaseActivity() {
     private fun registerPageUI(){
 
         val ageList = (1..100).toList()
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, ageList)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ageList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.ageSpinner.adapter = adapter
 
         val genderList = arrayListOf("Male","Female")
-        val genadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderList)
+        val genadapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item                                                                                                                                                                                  , genderList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.genderSpinner.adapter = genadapter
 
@@ -198,37 +224,50 @@ class FamilyActivity : BaseActivity() {
             binding.genderSpinner.setSelection(0)
         }
 
-        val occupationList = arrayListOf("Government Job","Student","Retired","Business","Other")
+        if(familyMember =="other"){
+            binding.relationSpinner.visibility = View.VISIBLE
+            binding.relationinput.visibility = View.GONE
+        }else{
+            binding.relationSpinner.visibility = View.GONE
+            binding.relationinput.visibility = View.VISIBLE
+        }
+
+        val occupationList = arrayListOf("Student","Government Job","Private Job","Retired","Business","Doctor","Lawyer","Chartered Accountant","Not Working")
         if(familyMember =="mother" || familyMember =="wife" || familyMember =="daughter"){
             occupationList.add("HouseWife")
         }
 
-        val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
+        val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, occupationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.occuLevelSpinner.adapter = occupationadapter
 
-        val educationList = arrayListOf("10th","12th","Bachelor's","Master's","Phd")
-        val educationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, educationList)
+        val educationList = arrayListOf("High School","Higher Secondary School","Bachelors","Masters","Phd")
+        val educationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, educationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.eduLevelSpinner.adapter = educationadapter
 
         //add states in state spinners
         val statesList = arrayListOf("Madhya Pradesh")
-        val statesadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, statesList)
+        val statesadapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statesList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = statesadapter
 
         //add cities in city spinners
         val citiesList = arrayListOf("Indore","Bhopal","Gwalior","Jabalpur" )
-        val citiesadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, citiesList)
+        val citiesadapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, citiesList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.citySpinner.adapter = citiesadapter
 
         //add blood groups in blood group spinners
         val bloodGroupList = arrayListOf("A+","A-","B+","B-","AB+","AB-","O+","O-","other")
-        val bloodGroupadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, bloodGroupList)
+        val bloodGroupadapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, bloodGroupList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.bloodGroupSpinner.adapter = bloodGroupadapter
+
+        val relationList = arrayListOf("Brother","Sister","GrandParents")
+        val relationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, relationList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.relationSpinner.adapter = relationadapter
 
         val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
         val no = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
@@ -284,9 +323,16 @@ class FamilyActivity : BaseActivity() {
             Toast.makeText(this, "Please enter your relation", Toast.LENGTH_SHORT).show()
         }
         else{
+            binding.nameinput.setText(capitalizeNames(binding.nameinput.text.toString()))
             screenPointer++
             changeUI(screenPointer)
         }
+    }
+
+    private fun capitalizeNames(input: String): String {
+        val words = input.split(" ")
+        val capitalizedWords = words.map { it.toLowerCase().capitalize() }
+        return capitalizedWords.joinToString(" ")
     }
 
     private fun checkDetails2() {
@@ -341,7 +387,14 @@ class FamilyActivity : BaseActivity() {
             occupation = binding.occuLevelSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
             profilePic = "NA",
-            education = education
+            highestEducation = binding.eduLevelSpinner.selectedItem.toString(),
+            branch = if(binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
+            institute = if(binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
+            additionalDetails = if(binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.text.toString() else "NA",
+            employer = if(binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
+            department = if(binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
+            location = if(binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
+            post = if(binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
         )
         showProgressDialog("Adding Member...")
         viewModel.addMember(member = data,selectedImagePath)
@@ -440,6 +493,7 @@ class FamilyActivity : BaseActivity() {
             val data: Intent? = result.data
             val uri = data?.data
             selectedImagePath = getImagePath(uri!!).toString()
+            Log.d("Image Path","The image is $selectedImagePath and the uri is $uri")
             binding.ivAddImageMember.setImageURI(uri)
         }else{
             Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()

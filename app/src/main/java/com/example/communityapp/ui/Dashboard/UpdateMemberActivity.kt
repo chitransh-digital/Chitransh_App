@@ -110,6 +110,10 @@ class UpdateMemberActivity : BaseActivity() {
             viewModel.updateMember(member.contact, updatedMember, selectedImagePath)
 
         }
+
+        binding.familyBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     val getImage=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
