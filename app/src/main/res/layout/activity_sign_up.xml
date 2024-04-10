@@ -471,7 +471,7 @@
                     android:id="@+id/leveltext"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Level"
+                    android:text="Highest Education"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -504,7 +504,7 @@
                     android:id="@+id/edu_depart_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/department"
+                    android:text="@string/branch"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -515,7 +515,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="@string/department_name"
+                    android:hint="@string/branch_name"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"
@@ -598,7 +598,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="24dp"
-                android:text="@string/occupation_details"
+                android:text="@string/job_details"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -610,7 +610,7 @@
                 app:layout_constraintVertical_bias="0.07999998" />
 
             <LinearLayout
-                android:id="@+id/occu_position"
+                android:id="@+id/occu_level"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -623,45 +623,10 @@
                 app:layout_constraintWidth_percent="0.8">
 
                 <TextView
-                    android:id="@+id/occu_positiontext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Occuption Position"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/occu_positioninput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittest_background"
-                    android:hint="@string/position"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/hint_color"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/occu_level"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/occu_position"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintWidth_percent="0.8">
-
-                <TextView
                     android:id="@+id/occuleveltext"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/occupation_field"
+                    android:text="@string/job_field"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -678,7 +643,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/occu_address"
+                android:id="@+id/occu_position"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -691,10 +656,115 @@
                 app:layout_constraintWidth_percent="0.8">
 
                 <TextView
+                    android:id="@+id/occu_positiontext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Job Post"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/occu_positioninput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="Post"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/occu_department"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/occu_position"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/occu_department_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Job Department"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/occu_department_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="Department"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/occu_employer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/occu_department"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
+                    android:id="@+id/occu_employer_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Job Employer"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/occu_employer_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittest_background"
+                    android:hint="Employer"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/occu_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/occu_employer"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.8">
+
+                <TextView
                     android:id="@+id/occu_address_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/address_of_occupation"
+                    android:text="Job Location"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -705,7 +775,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Address"
+                    android:hint="Job Location"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"

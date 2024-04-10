@@ -22,5 +22,8 @@ data class Member(
     val employer : String = "NA",
     val post : String = "NA",
     val department : String = "NA",
-    val location : String = "NA"
+    val location : String = "NA",
+    val buisType : String = "NA",
+    val buisName : String = "NA",
+    val course : String = "NA"
 ) : Serializable

@@ -51,7 +51,7 @@ class FamilyRepo @Inject constructor(
                 val familyCollection = db.collection(Constants.FAMILY)
                     .document(member.familyID)
                     .collection(Constants.MEMBER)
-                    .document(generateMemberId(member))
+                    .document(member.contact)
                 val userCollection = db.collection(Constants.USERS)
                     .document(generateMemberId(member))
 
@@ -122,6 +122,13 @@ class FamilyRepo @Inject constructor(
                                 bloodGroup = ip.get(Constants.BLOOD_GROUP).toString(),
                                 occupation = ip.get(Constants.OCCUPATION).toString(),
                                 highestEducation = ip.get(Constants.EDUCATION).toString(),
+                                branch = ip.get(Constants.BRANCH).toString(),
+                                institute = ip.get(Constants.INSTITUTE).toString(),
+                                additionalDetails = ip.get(Constants.ADDITIONAL_DETAILS).toString(),
+                                employer = ip.get(Constants.EMPLOYER).toString(),
+                                post = ip.get(Constants.POST).toString(),
+                                department = ip.get(Constants.DEPARTMENT).toString(),
+                                location = ip.get(Constants.LOCATION).toString(),
                                 profilePic = ip.get(Constants.ProfilePic).toString()
                             )
                         )

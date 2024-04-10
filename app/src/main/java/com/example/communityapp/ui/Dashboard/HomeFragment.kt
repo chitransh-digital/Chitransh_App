@@ -39,6 +39,7 @@ class HomeFragment : Fragment(){
     private lateinit var user_data : Member
     private var uniqueRelations: List<String>? = null
     private var contact = ""
+    private var headAddress = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +63,8 @@ class HomeFragment : Fragment(){
             val intent = Intent(requireContext(),FamilyActivity::class.java)
             intent.putExtra(Constants.FAMILYID,user_data.familyID)
             intent.putStringArrayListExtra(Constants.UNIQUE_RELATIONS, ArrayList(uniqueRelations))
+            intent.putExtra(Constants.HEAD_ADDRESS,headAddress)
+            Log.d("Head Address",headAddress)
             startActivity(intent)
         }
 
@@ -145,6 +148,9 @@ class HomeFragment : Fragment(){
     private fun updateUI(data : List<Member>){
         val id = contact
         for(ip in data){
+            if(ip.relation == "HEAD"){
+                headAddress = ip.address
+            }
             if (ip.contact == id){
                 user_data = ip
 //                binding.topGreeting.text = "Namaskar ${ip.name} Ji"

@@ -1,9 +1,10 @@
 package com.example.communityapp.utils
 
 object Constants {
+
     const val FILEURL= "file"
     const val COUPON = "coupon"
-    const val EDUCATION= "education"
+    const val EDUCATION= "highestEducation"
     const val OCCUPATION= "occupation"
     const val BLOOD_GROUP= "bloodGroup"
     var token = ""
@@ -38,6 +39,13 @@ object Constants {
     const val IMAGES = "images"
     const val LINK = "link"
     const val TYPE = "type"
+    const val BRANCH = "branch"
+    const val INSTITUTE = "institute"
+    const val ADDITIONAL_DETAILS = "additionalDetails"
+    const val EMPLOYER = "employer"
+    const val POST = "post"
+    const val DEPARTMENT = "department"
+    const val LOCATION = "location"
 
     //For data transfer b/w intents
     const val USER_DATA = "user_data"
@@ -45,4 +53,5 @@ object Constants {
     const val HOME_FRAG = "home_frag"
     const val USERNAME = "username"
     const val FAMILYDATA = "family_data"
+    const val HEAD_ADDRESS = "headAddress"
 }

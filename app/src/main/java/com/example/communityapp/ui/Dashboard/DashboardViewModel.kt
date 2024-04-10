@@ -74,5 +74,21 @@ class DashboardViewModel @Inject constructor(private var dashboardRepo: Dashboar
         }.launchIn(viewModelScope)
     }
 
+    private var _deleteUser = MutableLiveData<Resource<Unit>>()
+    val deleteUser: LiveData<Resource<Unit>>
+        get() = _deleteUser
+
+    fun deleteMember(familyId : String, contact : String) {
+        _deleteUser.value = Resource.loading()
+        viewModelScope.launch {
+            try {
+                val res = dashboardRepo.deleteMember(familyId,contact)
+                _deleteUser.value = Resource.success(res)
+            }catch (e : Exception){
+                _deleteUser.value = Resource.error(e)
+            }
+        }
+    }
+
 
 }

@@ -13,23 +13,26 @@ import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ProfileItemLayoutBinding
 
-class profileAdapter(private val context : Context, private val members : List<Member>) : RecyclerView.Adapter<profileAdapter.ViewHolder>() {
+class profileAdapter(
+    private val context: Context, private val members: List<Member>,
+    private var OnItemClickListener: onClickListener
+) : RecyclerView.Adapter<profileAdapter.ViewHolder>() {
 
-    class ViewHolder(binding: ProfileItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding: ProfileItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         var name = binding.profileName
         val address = binding.profileAddressFixed
         val age_gender = binding.profileAgeGender
         val button = binding.callNow
-        var relation =binding.profileRelation
+        var relation = binding.profileRelation
         var image = binding.profileImage
         var ItemView = binding.itemView
-        var update=binding.editIcon
+        var update = binding.editIcon
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ProfileItemLayoutBinding.inflate(
-                LayoutInflater.from(parent.context),parent,false
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }
@@ -47,12 +50,13 @@ class profileAdapter(private val context : Context, private val members : List<M
         holder.age_gender.text = "${model.age}/${model.gender}"
         holder.relation.text = model.relation
 
-        if(model.contact == "NA") {
+        if (model.contact == "NA") {
             holder.button.visibility = View.GONE
         }
 
-        if (model.relation.uppercase() == "HEAD"){
-            holder.ItemView.background = ContextCompat.getDrawable(context, R.drawable.head_drawable_border)
+        if (model.relation.uppercase() == "HEAD") {
+            holder.ItemView.background =
+                ContextCompat.getDrawable(context, R.drawable.head_drawable_border)
         }
 
         holder.button.setOnClickListener {
@@ -63,7 +67,7 @@ class profileAdapter(private val context : Context, private val members : List<M
             ContextCompat.startActivity(context, intent, null)
         }
 
-        holder.update.setOnClickListener {
+        holder.itemView.setOnClickListener {
             val intent = Intent(context, UpdateMemberActivity::class.java)
             intent.putExtra("member", model)
             context.startActivity(intent)
@@ -74,7 +78,10 @@ class profileAdapter(private val context : Context, private val members : List<M
             .centerCrop()
             .placeholder(R.drawable.baseline_person_24)
             .into(holder.image)
+    }
 
+    interface onClickListener {
+        fun onClick(member: Member)
     }
 
 }

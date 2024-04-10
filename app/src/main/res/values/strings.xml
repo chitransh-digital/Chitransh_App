@@ -69,14 +69,14 @@
     <string name="any_details_want_to_mentioned" translatable="false">Any details want to mentioned</string>
     <string name="additional_details" translatable="false">Additional Details</string>
     <string name="insitute_name" translatable="false">Insitute Name</string>
-    <string name="insitute" translatable="false">Insitute</string>
-    <string name="branch" translatable="false">Branch</string>
+    <string name="insitute" translatable="false">Insitute :</string>
+    <string name="branch" translatable="false">Branch :</string>
     <string name="branch_name" translatable="false">Branch Name</string>
     <string name="major" translatable="false">Major</string>
     <string name="education_details" translatable="false">Education Details</string>
     <string name="position" translatable="false">Position</string>
     <string name="field" translatable="false">Field</string>
-    <string name="job_field" translatable="false">Job Field</string>
+    <string name="job_field" translatable="false">Job Field :</string>
     <string name="job_details" translatable="false">Job Details</string>
     <string name="address_of_occupation" translatable="false">Address of Occupation</string>
 

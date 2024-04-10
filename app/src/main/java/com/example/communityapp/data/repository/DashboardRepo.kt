@@ -41,6 +41,13 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
                                     bloodGroup = ip.get(Constants.BLOOD_GROUP).toString(),
                                     occupation = ip.get(Constants.OCCUPATION).toString(),
                                     highestEducation = ip.get(Constants.EDUCATION).toString(),
+                                    branch = ip.get(Constants.BRANCH).toString(),
+                                    institute = ip.get(Constants.INSTITUTE).toString(),
+                                    additionalDetails = ip.get(Constants.ADDITIONAL_DETAILS).toString(),
+                                    employer = ip.get(Constants.EMPLOYER).toString(),
+                                    post = ip.get(Constants.POST).toString(),
+                                    department = ip.get(Constants.DEPARTMENT).toString(),
+                                    location = ip.get(Constants.LOCATION).toString(),
                                     profilePic = ip.get(Constants.ProfilePic).toString()
                                 )
                             )
@@ -185,6 +192,19 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
     private fun hashString(type: String, input: String): String {
         val bytes = MessageDigest.getInstance(type).digest(input.toByteArray())
         return bytes.joinToString("") { "%02x".format(it) }
+    }
+
+    suspend fun deleteMember(familyID : String, contact : String){
+        return suspendCoroutine {continuation ->
+            db.collection(Constants.FAMILY).document(familyID).
+                    collection(Constants.MEMBER).document(contact).
+                    delete().addOnSuccessListener {
+                        continuation.resume(Unit)
+            }.addOnFailureListener {
+                continuation.resumeWithException(it)
+            }
+
+        }
     }
 
 

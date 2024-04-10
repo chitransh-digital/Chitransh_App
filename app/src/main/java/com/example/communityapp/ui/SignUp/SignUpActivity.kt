@@ -108,7 +108,17 @@ class SignUpActivity : BaseActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.citySpinner.adapter = citiesadapter
 
-        val occupationList = arrayListOf("Government Job","Student","Retired","Business","HouseWife","Other")
+        val occupationList = arrayListOf(
+            "Student",
+            "Government Job",
+            "Private Job",
+            "Retired",
+            "Business",
+            "Doctor",
+            "Lawyer",
+            "Chartered Accountant",
+            "Not Working"
+        )
         val occupationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.occuLevelSpinner.adapter = occupationadapter
@@ -120,10 +130,48 @@ class SignUpActivity : BaseActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.bloodGroupSpinner.adapter = bloodGroupadapter
 
-        val educationList = arrayListOf("10th","12th","Bachelor's","Master's","Phd")
+        val educationList =
+            arrayListOf("High School", "Higher Secondary School", "Bachelors", "Masters", "Phd")
         val educationadapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, educationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.eduLevelSpinner.adapter = educationadapter
+
+        binding.eduLevelSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (binding.eduLevelSpinner.selectedItem.toString() == "High School" ||
+                    binding.eduLevelSpinner.selectedItem.toString() == "Higher Secondary School") {
+                    binding.eduDepartment.visibility = View.GONE
+                    binding.eduInstitute.visibility = View.GONE
+                    binding.eduAdditionalDetails.visibility = View.GONE
+                } else {
+                    binding.eduDepartment.visibility = View.VISIBLE
+                    binding.eduInstitute.visibility = View.VISIBLE
+                    binding.eduAdditionalDetails.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Optional: Handle case when nothing is selected
+            }
+        }
+
+
+        binding.occuLevelSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (binding.occuLevelSpinner.selectedItem.toString() == "Government Job" ||
+                    binding.occuLevelSpinner.selectedItem.toString() == "Private Job") {
+                    binding.occuDepartment.visibility = View.VISIBLE
+                    binding.occuEmployer.visibility = View.VISIBLE
+                } else {
+                    binding.occuDepartment.visibility = View.GONE
+                    binding.occuEmployer.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Optional: Handle case when nothing is selected
+            }
+        }
     }
 
     private fun checkDetails1() {
@@ -233,7 +281,7 @@ class SignUpActivity : BaseActivity() {
             familyID = binding.familyIDinput.text.toString(),
             name = binding.nameinput.text.toString(),
             DOB = binding.DOBinput.text.toString(),
-            contact = contact,
+            contact = binding.contactinput.text.toString(),
             age = binding.ageSpinner.selectedItem.toString().toInt(),
             gender = binding.genderSpinner.selectedItem.toString(),
             address = completeAddress,
@@ -242,7 +290,14 @@ class SignUpActivity : BaseActivity() {
             occupation = binding.occuLevelSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
             profilePic = "NA",
-            education = "NA"
+            highestEducation = binding.eduLevelSpinner.selectedItem.toString(),
+            branch = if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
+            institute = if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
+            additionalDetails = if (binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.text.toString() else "NA",
+            employer = if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
+            department = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
+            location = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
+            post = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
         )
         showProgressDialog("Please wait...")
         viewModel.addMember(member = data,selectedImagePath)

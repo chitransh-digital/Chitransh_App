@@ -18,9 +18,10 @@
 
         <TextView
             android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.45"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginTop="2dp"
             android:text="Priyanshu Agarwal"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -36,7 +37,8 @@
             android:id="@+id/profile_relation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="2dp"
             android:text="Relation"
             android:textColor="@color/black"
             android:textSize="12sp"
@@ -66,35 +68,23 @@
         <TextView
             android:id="@+id/profile_address_fixed"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_margin="4dp"
             android:text="@string/address"
             android:textColor="@color/black"
             android:textSize="16dp"
             app:layout_constraintBottom_toTopOf="@id/profile_age_gender"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.785"
+            app:layout_constraintHorizontal_bias="0.11"
             app:layout_constraintStart_toEndOf="@id/profile_image"
             app:layout_constraintTop_toBottomOf="@id/profile_name"
             app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.6" />
-
-        <ImageView
-            android:id="@+id/edit_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:src="@drawable/edit_brown"
-            app:layout_constraintBottom_toBottomOf="@id/call_now"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/call_now"
-            app:layout_constraintVertical_bias="0.272" />
+            app:layout_constraintWidth_percent="0.5" />
 
         <Button
             android:id="@+id/call_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
             android:backgroundTint="@color/theme_brown"
             android:drawableStart="@drawable/baseline_call_24"
             android:text="Call Now"
@@ -106,11 +96,26 @@
             app:layout_constraintTop_toBottomOf="@id/profile_age_gender"
             app:layout_constraintVertical_bias="0.272" />
 
+        <Button
+            android:id="@+id/edit_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/theme_brown"
+            android:drawableStart="@drawable/baseline_call_24"
+            android:text="Edit"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.086"
+            app:layout_constraintStart_toEndOf="@id/call_now"
+            app:layout_constraintTop_toBottomOf="@id/profile_age_gender"
+            app:layout_constraintVertical_bias="0.272" />
+
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="108dp"
             android:layout_height="126dp"
-            android:layout_margin="8dp"
+            android:layout_margin="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
