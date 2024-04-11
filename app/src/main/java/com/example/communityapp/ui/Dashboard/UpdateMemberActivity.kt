@@ -41,6 +41,7 @@ class UpdateMemberActivity : BaseActivity() {
     var buisTypeSpinner = 0
     var courseSpinner = 0
     var headAddress = ""
+    var change = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,7 +160,7 @@ class UpdateMemberActivity : BaseActivity() {
                             binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduInstitute.visibility = View.VISIBLE
                             binding.eduAdditionalDetails.visibility = View.VISIBLE
-                            binding.eduCourse.visibility = View.VISIBLE
+                            binding.eduCourse.visibility = View.GONE
                         }
                     }
                 }
@@ -181,7 +182,7 @@ class UpdateMemberActivity : BaseActivity() {
                     occuSpinner = position
                     if (binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
-                        binding.occuLevelSpinner.selectedItem.toString() == "Housewife" ||
+                        binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "Student"
                     ) {
                         binding.occuDepartment.visibility = View.GONE
@@ -321,23 +322,23 @@ class UpdateMemberActivity : BaseActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.genderSpinner.adapter = genadapter
 
-        if (familyMember == "father") {
+        if (familyMember == "Father") {
             binding.genderSpinner.setSelection(0)
-        } else if (familyMember == "mother") {
+        } else if (familyMember == "Mother") {
             binding.genderSpinner.setSelection(1)
-        } else if (familyMember == "son") {
+        } else if (familyMember == "Son") {
             binding.genderSpinner.setSelection(0)
-        } else if (familyMember == "daughter") {
+        } else if (familyMember == "Daughter") {
             binding.genderSpinner.setSelection(1)
-        } else if (familyMember == "husband") {
+        } else if (familyMember == "Husband") {
             binding.genderSpinner.setSelection(0)
-        } else if (familyMember == "wife") {
+        } else if (familyMember == "Wife") {
             binding.genderSpinner.setSelection(1)
         } else {
             binding.genderSpinner.setSelection(0)
         }
 
-        if (familyMember == "other") {
+        if (familyMember == "oher") {
             binding.relationSpinner.visibility = View.VISIBLE
             binding.relationinput.visibility = View.GONE
         } else {
@@ -356,7 +357,7 @@ class UpdateMemberActivity : BaseActivity() {
             "Chartered Accountant",
             "Not Working"
         )
-        if (familyMember == "mother" || familyMember == "wife" || familyMember == "daughter") {
+        if (familyMember == "Mother" || familyMember == "Wife" || familyMember == "Daughter") {
             occupationList.add("HouseWife")
         }
 
@@ -534,7 +535,7 @@ class UpdateMemberActivity : BaseActivity() {
         )
         showProgressDialog("Updating")
         Log.d("UpdateMemberActivity", "Updated Member $updatedMember")
-        viewModel.updateMember(member.contact, updatedMember, selectedImagePath)
+        viewModel.updateMember(member.contact, updatedMember, selectedImagePath , change)
     }
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {
@@ -562,7 +563,7 @@ class UpdateMemberActivity : BaseActivity() {
         } else if (binding.IDinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your FamilyID", Toast.LENGTH_SHORT).show()
         } else if (binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your relation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please enter your Blood Group", Toast.LENGTH_SHORT).show()
         } else {
             binding.nameinput.setText(capitalizeNames(binding.nameinput.text.toString()))
             screenPointer++
@@ -595,6 +596,7 @@ class UpdateMemberActivity : BaseActivity() {
             }
 
             0 -> {
+                pageUpdates()
                 crossFade(
                     listOf(binding.informationPreviewPage),
                     listOf(
@@ -641,6 +643,57 @@ class UpdateMemberActivity : BaseActivity() {
             }
 
             else -> {}
+        }
+    }
+
+    private fun pageUpdates() {
+        if (member.highestEducation == "Phd"){
+            binding.previewEduDepartment.visibility = View.VISIBLE
+            binding.previewEduInstitute.visibility = View.VISIBLE
+            binding.previewEduAdditionalDetails.visibility = View.VISIBLE
+            binding.previewEduCourse.visibility = View.GONE
+        }
+        else if (member.highestEducation == "Bachelors") {
+            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduInstitute.visibility = View.VISIBLE
+            binding.previewEduAdditionalDetails.visibility = View.VISIBLE
+            binding.previewEduCourse.visibility = View.VISIBLE
+        } else if (member.highestEducation == "Masters") {
+            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduInstitute.visibility = View.VISIBLE
+            binding.previewEduAdditionalDetails.visibility = View.VISIBLE
+            binding.previewEduCourse.visibility = View.VISIBLE
+        } else {
+            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduInstitute.visibility = View.GONE
+            binding.previewEduAdditionalDetails.visibility = View.GONE
+            binding.previewEduCourse.visibility = View.GONE
+        }
+
+        if(member.occupation == "Business") {
+            binding.previewOccuEmployer.visibility = View.GONE
+            binding.previewOccuDepartment.visibility = View.GONE
+            binding.previewOccuPosition.visibility = View.GONE
+            binding.previewOccuAddress.visibility = View.GONE
+            binding.previewBuisName.visibility = View.VISIBLE
+            binding.previewBuisType.visibility = View.VISIBLE
+            binding.previewBuisAddress.visibility = View.VISIBLE
+        }else if (member.occupation == "Student" || member.occupation == "Not Working" || member.occupation == "Retired" || member.occupation == "HouseWife") {
+            binding.previewOccuEmployer.visibility = View.GONE
+            binding.previewOccuDepartment.visibility = View.GONE
+            binding.previewOccuPosition.visibility = View.GONE
+            binding.previewOccuAddress.visibility = View.GONE
+            binding.previewBuisName.visibility = View.GONE
+            binding.previewBuisType.visibility = View.GONE
+            binding.previewBuisAddress.visibility = View.GONE
+        } else {
+            binding.previewOccuEmployer.visibility = View.VISIBLE
+            binding.previewOccuDepartment.visibility = View.VISIBLE
+            binding.previewOccuPosition.visibility = View.VISIBLE
+            binding.previewOccuAddress.visibility = View.VISIBLE
+            binding.previewBuisName.visibility = View.GONE
+            binding.previewBuisType.visibility = View.GONE
+            binding.previewBuisAddress.visibility = View.GONE
         }
     }
 
@@ -880,6 +933,7 @@ class UpdateMemberActivity : BaseActivity() {
                 val uri = data?.data
                 selectedImagePath = getImagePath(uri!!).toString()
                 binding.ivAddImageMember.setImageURI(uri)
+                change = true
             } else {
                 Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
             }

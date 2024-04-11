@@ -57,8 +57,8 @@ class DashboardViewModel @Inject constructor(private var dashboardRepo: Dashboar
     val updatedUser: LiveData<Resource<String>>
         get() = _updatedUser
 
-    fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?) {
-        dashboardRepo.updateMember(memberId, updatedMember, selectedImagePath).onEach {
+    fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?, change : Boolean) {
+        dashboardRepo.updateMember(memberId, updatedMember, selectedImagePath, change).onEach {
             when(it.status){
                 Resource.Status.SUCCESS -> {
                     _updatedUser.value = Resource.success(it.data)

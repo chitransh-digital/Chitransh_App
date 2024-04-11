@@ -202,6 +202,11 @@ class FamilyActivity : BaseActivity() {
                             binding.eduCourseSpinner.adapter = courseAdapter
 
                             binding.eduCourseSpinner.setSelection(courseSpinner)
+                        }else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
+                            binding.eduDepartment.visibility = View.VISIBLE
+                            binding.eduInstitute.visibility = View.VISIBLE
+                            binding.eduAdditionalDetails.visibility = View.VISIBLE
+                            binding.eduCourse.visibility = View.GONE
                         }
                     }
                 }
@@ -223,7 +228,7 @@ class FamilyActivity : BaseActivity() {
                     occuSpinner = position
                     if(binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
-                        binding.occuLevelSpinner.selectedItem.toString() == "Housewife" ||
+                        binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "Student"){
                         binding.occuDepartment.visibility = View.GONE
                         binding.occuEmployer.visibility = View.GONE
@@ -417,10 +422,20 @@ class FamilyActivity : BaseActivity() {
 
     private fun populateInformationPreview() {
 
+        binding.eduLevelSpinner.setSelection(eduSpinner)
+        binding.occuLevelSpinner.setSelection(occuSpinner)
+
         val completeAddress = if(binding.sameAsHead.isChecked){
             headAddress
         }else{
             binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
+        }
+
+        val course = "NA"
+        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            binding.eduCourseOtherInput.text.toString()
+        } else if(binding.eduCourseSpinner.isSelected){
+            binding.eduCourseSpinner.selectedItem.toString()
         }
 
         binding.previewNameinput.text = binding.nameinput.text.toString()
@@ -442,7 +457,7 @@ class FamilyActivity : BaseActivity() {
         binding.previewOccuDepartmentInput.text = binding.occuDepartmentInput.text.toString()
         binding.previewOccuAddressInput.text = binding.occuAddressInput.text.toString()
         binding.previewOccuPositioninput.text = binding.occuPositioninput.text.toString()
-        binding.previewEduCourseInput.text = binding.eduCourseSpinner.selectedItem.toString()
+        binding.previewEduCourseInput.text = course
         binding.previewIvAddImageMember.setImageURI(uri)
 
         if(binding.occuLevelSpinner.selectedItem.toString() == "Business"){
@@ -458,6 +473,62 @@ class FamilyActivity : BaseActivity() {
             binding.previewBuisAddressInput.text = binding.occuAddressInput.text.toString()
         }else{
 
+            binding.previewOccuDepartment.visibility = View.VISIBLE
+            binding.previewOccuEmployer.visibility = View.VISIBLE
+            binding.previewOccuPosition.visibility = View.VISIBLE
+            binding.previewOccuAddress.visibility = View.VISIBLE
+            binding.previewBuisType.visibility = View.GONE
+            binding.previewBuisName.visibility = View.GONE
+            binding.previewBuisAddress.visibility = View.GONE
+        }
+        pageUpdates()
+
+    }
+
+    private fun pageUpdates() {
+        if (binding.eduLevelSpinner.selectedItem.toString() == "Phd"){
+            binding.previewEduDepartment.visibility = View.VISIBLE
+            binding.previewEduInstitute.visibility = View.VISIBLE
+            binding.previewEduAdditionalDetails.visibility = View.VISIBLE
+            binding.previewEduCourse.visibility = View.GONE
+        }
+        else if (binding.eduLevelSpinner.selectedItem.toString() == "Bachelors") {
+            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduInstitute.visibility = View.VISIBLE
+            binding.previewEduAdditionalDetails.visibility = View.VISIBLE
+            binding.previewEduCourse.visibility = View.VISIBLE
+        } else if (binding.eduLevelSpinner.selectedItem.toString() == "Masters") {
+            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduInstitute.visibility = View.VISIBLE
+            binding.previewEduAdditionalDetails.visibility = View.VISIBLE
+            binding.previewEduCourse.visibility = View.VISIBLE
+        } else {
+            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduInstitute.visibility = View.GONE
+            binding.previewEduAdditionalDetails.visibility = View.GONE
+            binding.previewEduCourse.visibility = View.GONE
+        }
+
+        if (binding.occuLevelSpinner.selectedItem.toString() == "Business") {
+            binding.previewOccuDepartment.visibility = View.GONE
+            binding.previewOccuEmployer.visibility = View.GONE
+            binding.previewOccuPosition.visibility = View.GONE
+            binding.previewOccuAddress.visibility = View.GONE
+            binding.previewBuisType.visibility = View.VISIBLE
+            binding.previewBuisName.visibility = View.VISIBLE
+            binding.previewBuisAddress.visibility = View.VISIBLE
+        } else if (binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
+            binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
+            binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
+            binding.occuLevelSpinner.selectedItem.toString() == "Student") {
+            binding.previewOccuDepartment.visibility = View.GONE
+            binding.previewOccuEmployer.visibility = View.GONE
+            binding.previewOccuPosition.visibility = View.GONE
+            binding.previewOccuAddress.visibility = View.GONE
+            binding.previewBuisType.visibility = View.GONE
+            binding.previewBuisName.visibility = View.GONE
+            binding.previewBuisAddress.visibility = View.GONE
+        } else {
             binding.previewOccuDepartment.visibility = View.VISIBLE
             binding.previewOccuEmployer.visibility = View.VISIBLE
             binding.previewOccuPosition.visibility = View.VISIBLE
@@ -521,7 +592,7 @@ class FamilyActivity : BaseActivity() {
             "Chartered Accountant",
             "Not Working"
         )
-        if (familyMember == "mother" || familyMember == "wife" || familyMember == "daughter") {
+        if (familyMember == "Mother" || familyMember == "Wife" || familyMember == "Daughter") {
             occupationList.add("HouseWife")
         }
 
@@ -714,10 +785,15 @@ class FamilyActivity : BaseActivity() {
         }
 
         val course = "NA"
-        if (binding.eduCourseSpinner.isSelected || binding.eduCourseSpinner.selectedItem.toString() == "other") {
+        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
             binding.eduCourseOtherInput.text.toString()
-        } else {
+        } else if(binding.eduCourseSpinner.isSelected) {
             binding.eduCourseSpinner.selectedItem.toString()
+        }
+
+        val buisType = "NA"
+        if (binding.occuBuisTypeSpinner.isSelected) {
+            binding.occuBuisTypeSpinner.selectedItem.toString()
         }
 
         val data = Member(
@@ -741,7 +817,7 @@ class FamilyActivity : BaseActivity() {
             department = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
             location = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
             post = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
-            buisType = binding.occuBuisTypeSpinner.selectedItem.toString(),
+            buisType = buisType,
             buisName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
             course = course
         )

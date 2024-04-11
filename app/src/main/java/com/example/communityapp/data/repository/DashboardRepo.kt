@@ -112,7 +112,7 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
                             visible = visible as Boolean,
                             location = location as String
                         )
-                        feed?.let {
+                        feed.let {
                             feeds.add(it)
                         }
                     }
@@ -125,13 +125,13 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
         }
     }
 
-    fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?): Flow<Resource<String>> {
+    fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?, change : Boolean): Flow<Resource<String>> {
         return flow {
             emit(Resource.loading())
             var ch = "OK"
             try {
                 // Check if a new image is selected for update
-                if (selectedImagePath != null && selectedImagePath.isNotEmpty()) {
+                if (!selectedImagePath.isNullOrEmpty() && change) {
                     // Upload new image to Firebase Storage
                     val imageUrl = uploadImage(selectedImagePath, generateMemberId(updatedMember))
                     // Associate new image URL with the member
@@ -143,11 +143,8 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
                     .document(updatedMember.familyID)
                     .collection(Constants.MEMBER)
                     .document(memberId)
-                val userCollection = db.collection(Constants.USERS)
-                    .document(memberId)
 
                 db.runBatch { batch ->
-                    batch.update(userCollection, "contact", updatedMember.contact)
                     batch.set(familyCollection, updatedMember)
                     // You can update other fields of the member here if needed
                 }.addOnCompleteListener {
