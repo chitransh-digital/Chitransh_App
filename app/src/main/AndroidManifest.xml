@@ -39,7 +39,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.SignUp.SignUpActivity"
-            android:exported="false"/>
+            android:exported="false">
+        >
+        </activity>
         <activity
             android:name=".ui.jobPosting.JobPostingActivity"
             android:exported="false" />

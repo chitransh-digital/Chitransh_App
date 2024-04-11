@@ -178,7 +178,7 @@ class FamilyActivity : BaseActivity() {
                             val courseAdapter = ArrayAdapter(this@FamilyActivity, android.R.layout.simple_spinner_dropdown_item, list)
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
-
+                            binding.eduDepartment.visibility = View.GONE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
                         } else if (binding.eduLevelSpinner.selectedItem.toString() == "Masters") {
                             val list = arrayListOf(
@@ -200,7 +200,7 @@ class FamilyActivity : BaseActivity() {
                             val courseAdapter = ArrayAdapter(this@FamilyActivity, android.R.layout.simple_spinner_dropdown_item, list)
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
-
+                            binding.eduDepartment.visibility = View.GONE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
                         }else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
                             binding.eduDepartment.visibility = View.VISIBLE

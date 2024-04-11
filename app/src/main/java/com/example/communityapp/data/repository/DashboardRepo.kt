@@ -48,7 +48,10 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
                                     post = ip.get(Constants.POST).toString(),
                                     department = ip.get(Constants.DEPARTMENT).toString(),
                                     location = ip.get(Constants.LOCATION).toString(),
-                                    profilePic = ip.get(Constants.ProfilePic).toString()
+                                    profilePic = ip.get(Constants.ProfilePic).toString(),
+                                    buisType = ip.get(Constants.BUIS_TYPE).toString(),
+                                    buisName = ip.get(Constants.BUIS_NAME).toString(),
+                                    course = ip.get(Constants.COURSE).toString()
                                 )
                             )
                         }

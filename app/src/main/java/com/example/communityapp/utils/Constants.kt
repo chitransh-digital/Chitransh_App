@@ -46,6 +46,9 @@ object Constants {
     const val POST = "post"
     const val DEPARTMENT = "department"
     const val LOCATION = "location"
+    const val BUIS_TYPE = "buisType"
+    const val BUIS_NAME = "buisName"
+    const val COURSE = "course"
 
     //For data transfer b/w intents
     const val USER_DATA = "user_data"

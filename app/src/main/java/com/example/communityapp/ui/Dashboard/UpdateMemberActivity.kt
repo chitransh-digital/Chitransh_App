@@ -40,8 +40,10 @@ class UpdateMemberActivity : BaseActivity() {
     var ageSpinner = 0
     var buisTypeSpinner = 0
     var courseSpinner = 0
-    var headAddress = ""
     var change = false
+    var course = "NA"
+    var buisType = "NA"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,11 +60,15 @@ class UpdateMemberActivity : BaseActivity() {
         setObservables()
         setWindowsUp()
 
+        if (familyMember == "HEAD") {
+            binding.previewDelete.visibility = View.GONE
+        }
+
         populateUI()
         changeUI(screenPointer)
 
         binding.previewInfoNotSubmit.setOnClickListener {
-            Log.d("updateMemberActivity","preview info tapped $screenPointer")
+            Log.d("updateMemberActivity", "preview info tapped $screenPointer")
             screenPointer++
             changeUI(screenPointer)
         }
@@ -128,7 +134,54 @@ class UpdateMemberActivity : BaseActivity() {
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
 
-                            binding.eduCourseSpinner.setSelection(courseSpinner)
+                            if (member.course == "BTech") {
+                                binding.eduCourseSpinner.setSelection(0)
+                            } else if (member.course == "BSc") {
+                                binding.eduCourseSpinner.setSelection(1)
+                            } else if (member.course == "BCom") {
+                                binding.eduCourseSpinner.setSelection(2)
+                            } else if (member.course == "BA") {
+                                binding.eduCourseSpinner.setSelection(3)
+                            } else if (member.course == "BBA") {
+                                binding.eduCourseSpinner.setSelection(4)
+                            } else if (member.course == "BCA") {
+                                binding.eduCourseSpinner.setSelection(5)
+                            } else if (member.course == "BEd") {
+                                binding.eduCourseSpinner.setSelection(6)
+                            } else if (member.course == "BPharma") {
+                                binding.eduCourseSpinner.setSelection(7)
+                            } else if (member.course == "BDS") {
+                                binding.eduCourseSpinner.setSelection(8)
+                            } else if (member.course == "BAMS") {
+                                binding.eduCourseSpinner.setSelection(9)
+                            } else if (member.course == "BHMS") {
+                                binding.eduCourseSpinner.setSelection(10)
+                            } else if (member.course == "LLB") {
+                                binding.eduCourseSpinner.setSelection(11)
+                            } else if (member.course == "BHM") {
+                                binding.eduCourseSpinner.setSelection(12)
+                            } else if (member.course == "BHMCT") {
+                                binding.eduCourseSpinner.setSelection(13)
+                            } else if (member.course == "Ded") {
+                                binding.eduCourseSpinner.setSelection(14)
+                            } else if (member.course == "LLB") {
+                                binding.eduCourseSpinner.setSelection(15)
+                            } else if (member.course == "BA/LLB") {
+                                binding.eduCourseSpinner.setSelection(16)
+                            } else if (member.course == "BCom/LLB") {
+                                binding.eduCourseSpinner.setSelection(17)
+                            } else if (member.course == "BPharma") {
+                                binding.eduCourseSpinner.setSelection(18)
+                            } else if (member.course == "BDS") {
+                                binding.eduCourseSpinner.setSelection(19)
+                            } else if (member.course == "CS") {
+                                binding.eduCourseSpinner.setSelection(20)
+                            } else {
+                                binding.eduCourseSpinner.setSelection(21)
+                                binding.eduCourseOtherInput.setText(member.course)
+                            }
+
+
                         } else if (binding.eduLevelSpinner.selectedItem.toString() == "Masters") {
                             val list = arrayListOf(
                                 "MTech",
@@ -153,10 +206,38 @@ class UpdateMemberActivity : BaseActivity() {
                             )
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
+                            if (member.course == "MTech") {
+                                binding.eduCourseSpinner.setSelection(0)
+                            } else if (member.course == "MSc") {
+                                binding.eduCourseSpinner.setSelection(1)
+                            } else if (member.course == "MCom") {
+                                binding.eduCourseSpinner.setSelection(2)
+                            } else if (member.course == "MA") {
+                                binding.eduCourseSpinner.setSelection(3)
+                            } else if (member.course == "MBA") {
+                                binding.eduCourseSpinner.setSelection(4)
+                            } else if (member.course == "MCA") {
+                                binding.eduCourseSpinner.setSelection(5)
+                            } else if (member.course == "MPharma") {
+                                binding.eduCourseSpinner.setSelection(6)
+                            } else if (member.course == "MDS") {
+                                binding.eduCourseSpinner.setSelection(7)
+                            } else if (member.course == "LLM") {
+                                binding.eduCourseSpinner.setSelection(8)
+                            } else if (member.course == "MA/LLM") {
+                                binding.eduCourseSpinner.setSelection(9)
+                            } else if (member.course == "MCom/LLM") {
+                                binding.eduCourseSpinner.setSelection(10)
+                            } else if (member.course == "MPharma") {
+                                binding.eduCourseSpinner.setSelection(11)
+                            } else if (member.course == "MDS") {
+                                binding.eduCourseSpinner.setSelection(12)
+                            } else {
+                                binding.eduCourseSpinner.setSelection(13)
+                                binding.eduCourseOtherInput.setText(member.course)
+                            }
 
-                            binding.eduCourseSpinner.setSelection(courseSpinner)
-                        }
-                        else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
+                        } else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
                             binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduInstitute.visibility = View.VISIBLE
                             binding.eduAdditionalDetails.visibility = View.VISIBLE
@@ -180,6 +261,7 @@ class UpdateMemberActivity : BaseActivity() {
                     id: Long
                 ) {
                     occuSpinner = position
+
                     if (binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
@@ -214,7 +296,17 @@ class UpdateMemberActivity : BaseActivity() {
                         businessTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         binding.occuBuisTypeSpinner.adapter = businessTypeAdapter
 
-                        binding.occuBuisTypeSpinner.setSelection(buisTypeSpinner)
+                        if (member.buisType == "Restaurant") {
+                            binding.occuBuisTypeSpinner.setSelection(0)
+                        } else if (member.buisType == "Retail Store") {
+                            binding.occuBuisTypeSpinner.setSelection(1)
+                        } else if (member.buisType == "Tech") {
+                            binding.occuBuisTypeSpinner.setSelection(2)
+                        } else if (member.buisType == "Consulting Firm") {
+                            binding.occuBuisTypeSpinner.setSelection(3)
+                        } else {
+                            binding.occuBuisTypeSpinner.setSelection(4)
+                        }
                     } else {
                         binding.occuDepartment.visibility = View.VISIBLE
                         binding.occuEmployer.visibility = View.VISIBLE
@@ -248,21 +340,6 @@ class UpdateMemberActivity : BaseActivity() {
             }
         }
 
-        binding.eduCourseSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Optional: Handle case when nothing is selected
-                }
-            }
 
         binding.occuBuisTypeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -272,7 +349,10 @@ class UpdateMemberActivity : BaseActivity() {
                     position: Int,
                     id: Long
                 ) {
+
                     buisTypeSpinner = position
+                    buisType = binding.occuBuisTypeSpinner.selectedItem.toString()
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -289,6 +369,7 @@ class UpdateMemberActivity : BaseActivity() {
                     id: Long
                 ) {
                     courseSpinner = position
+
                     if (binding.eduCourseSpinner.selectedItem.toString() == "other") {
                         binding.eduCourseOtherInput.visibility = View.VISIBLE
                     } else {
@@ -302,7 +383,7 @@ class UpdateMemberActivity : BaseActivity() {
             }
 
         binding.previewDelete.setOnClickListener {
-            showDeleteMemberDialog(this,member)
+            showDeleteMemberDialog(this, member)
         }
 
     }
@@ -496,18 +577,6 @@ class UpdateMemberActivity : BaseActivity() {
             karyakanri = binding.Karyainput.text.toString()
         }
 
-        val course = "NA"
-        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            binding.eduCourseOtherInput.text.toString()
-        } else if(binding.eduCourseSpinner.isSelected){
-            binding.eduCourseSpinner.selectedItem.toString()
-        }
-
-        var buisType = "NA"
-        if (binding.occuBuisTypeSpinner.isSelected) {
-            buisType = binding.occuBuisTypeSpinner.selectedItem.toString()
-        }
-
         val updatedMember = Member(
             familyID = binding.IDinput.text.toString(),
             name = binding.nameinput.text.toString(),
@@ -520,7 +589,7 @@ class UpdateMemberActivity : BaseActivity() {
             relation = binding.relationinput.text.toString(),
             occupation = binding.occuLevelSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
-            profilePic = "NA",
+            profilePic = member.profilePic,
             highestEducation = binding.eduLevelSpinner.selectedItem.toString(),
             branch = if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
             institute = if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
@@ -533,9 +602,9 @@ class UpdateMemberActivity : BaseActivity() {
             buisName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
             course = course
         )
-        showProgressDialog("Updating")
+
         Log.d("UpdateMemberActivity", "Updated Member $updatedMember")
-        viewModel.updateMember(member.contact, updatedMember, selectedImagePath , change)
+        viewModel.updateMember(member.contact, updatedMember, selectedImagePath, change)
     }
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {
@@ -586,10 +655,16 @@ class UpdateMemberActivity : BaseActivity() {
             screenPointer++
             changeUI(screenPointer)
         }
+
+        if (binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            course = binding.eduCourseOtherInput.text.toString()
+        } else {
+            course = binding.eduCourseSpinner.selectedItem.toString()
+        }
     }
 
     private fun changeUI(screenPointer: Int) {
-        Log.d("UpdateMemberActivty","value $screenPointer")
+        Log.d("UpdateMemberActivty", "value $screenPointer")
         when (screenPointer) {
             -1 -> {
                 onBackPressed()
@@ -647,13 +722,12 @@ class UpdateMemberActivity : BaseActivity() {
     }
 
     private fun pageUpdates() {
-        if (member.highestEducation == "Phd"){
+        if (member.highestEducation == "Phd") {
             binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.GONE
-        }
-        else if (member.highestEducation == "Bachelors") {
+        } else if (member.highestEducation == "Bachelors") {
             binding.previewEduDepartment.visibility = View.GONE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
@@ -670,7 +744,7 @@ class UpdateMemberActivity : BaseActivity() {
             binding.previewEduCourse.visibility = View.GONE
         }
 
-        if(member.occupation == "Business") {
+        if (member.occupation == "Business") {
             binding.previewOccuEmployer.visibility = View.GONE
             binding.previewOccuDepartment.visibility = View.GONE
             binding.previewOccuPosition.visibility = View.GONE
@@ -678,7 +752,7 @@ class UpdateMemberActivity : BaseActivity() {
             binding.previewBuisName.visibility = View.VISIBLE
             binding.previewBuisType.visibility = View.VISIBLE
             binding.previewBuisAddress.visibility = View.VISIBLE
-        }else if (member.occupation == "Student" || member.occupation == "Not Working" || member.occupation == "Retired" || member.occupation == "HouseWife") {
+        } else if (member.occupation == "Student" || member.occupation == "Not Working" || member.occupation == "Retired" || member.occupation == "HouseWife") {
             binding.previewOccuEmployer.visibility = View.GONE
             binding.previewOccuDepartment.visibility = View.GONE
             binding.previewOccuPosition.visibility = View.GONE
@@ -715,87 +789,6 @@ class UpdateMemberActivity : BaseActivity() {
             binding.eduLevelSpinner.setSelection(6)
         }
 
-        if(member.highestEducation == "Bachelor"){
-            if (member.course == "BTech"){
-                binding.eduCourseSpinner.setSelection(0)
-            }else if (member.course == "BSc"){
-                binding.eduCourseSpinner.setSelection(1)
-            }else if (member.course == "BCom"){
-                binding.eduCourseSpinner.setSelection(2)
-            }else if (member.course == "BA"){
-                binding.eduCourseSpinner.setSelection(3)
-            }else if (member.course == "BBA"){
-                binding.eduCourseSpinner.setSelection(4)
-            }else if (member.course == "BCA"){
-                binding.eduCourseSpinner.setSelection(5)
-            }else if (member.course == "BEd"){
-                binding.eduCourseSpinner.setSelection(6)
-            }else if (member.course == "BPharma"){
-                binding.eduCourseSpinner.setSelection(7)
-            }else if (member.course == "BDS"){
-                binding.eduCourseSpinner.setSelection(8)
-            }else if (member.course == "BAMS"){
-                binding.eduCourseSpinner.setSelection(9)
-            }else if (member.course == "BHMS"){
-                binding.eduCourseSpinner.setSelection(10)
-            }else if (member.course == "LLB"){
-                binding.eduCourseSpinner.setSelection(11)
-            }else if (member.course == "BHM"){
-                binding.eduCourseSpinner.setSelection(12)
-            }else if (member.course == "BHMCT"){
-                binding.eduCourseSpinner.setSelection(13)
-            }else if (member.course == "Ded"){
-                binding.eduCourseSpinner.setSelection(14)
-            }else if (member.course == "LLB"){
-                binding.eduCourseSpinner.setSelection(15)
-            }else if (member.course == "BA/LLB"){
-                binding.eduCourseSpinner.setSelection(16)
-            }else if (member.course == "BCom/LLB"){
-                binding.eduCourseSpinner.setSelection(17)
-            }else if (member.course == "BPharma"){
-                binding.eduCourseSpinner.setSelection(18)
-            }else if (member.course == "BDS"){
-                binding.eduCourseSpinner.setSelection(19)
-            }else if (member.course == "CS"){
-                binding.eduCourseSpinner.setSelection(20)
-            }else{
-                binding.eduCourseSpinner.setSelection(21)
-            }
-        }
-        else if(member.highestEducation == "Masters") {
-            if (member.course == "MTech") {
-                binding.eduCourseSpinner.setSelection(0)
-            } else if (member.course == "MSc") {
-                binding.eduCourseSpinner.setSelection(1)
-            } else if (member.course == "MCom") {
-                binding.eduCourseSpinner.setSelection(2)
-            } else if (member.course == "MA") {
-                binding.eduCourseSpinner.setSelection(3)
-            } else if (member.course == "MBA") {
-                binding.eduCourseSpinner.setSelection(4)
-            } else if (member.course == "MCA") {
-                binding.eduCourseSpinner.setSelection(5)
-            } else if (member.course == "MPharma") {
-                binding.eduCourseSpinner.setSelection(6)
-            } else if (member.course == "MDS") {
-                binding.eduCourseSpinner.setSelection(7)
-            } else if (member.course == "LLM") {
-                binding.eduCourseSpinner.setSelection(8)
-            } else if (member.course == "MA/LLM") {
-                binding.eduCourseSpinner.setSelection(9)
-            } else if (member.course == "MCom/LLM") {
-                binding.eduCourseSpinner.setSelection(10)
-            } else if (member.course == "MPharma") {
-                binding.eduCourseSpinner.setSelection(11)
-            } else if (member.course == "MDS") {
-                binding.eduCourseSpinner.setSelection(12)
-            } else {
-                binding.eduCourseSpinner.setSelection(13)
-            }
-        }
-        else{
-            binding.eduCourseSpinner.setSelection(13)
-        }
 
         if (member.occupation == "Student") {
             binding.occuLevelSpinner.setSelection(0)
@@ -819,19 +812,10 @@ class UpdateMemberActivity : BaseActivity() {
             binding.occuLevelSpinner.setSelection(9)
         }
 
-        if (member.occupation == "Business"){
-            if (member.buisType == "Restaurant"){
-                binding.occuBuisTypeSpinner.setSelection(0)
-            }else if (member.buisType == "Retail Store"){
-                binding.occuBuisTypeSpinner.setSelection(1)
-            }else if (member.buisType == "Tech"){
-                binding.occuBuisTypeSpinner.setSelection(2)
-            }else if (member.buisType == "Consulting Firm"){
-                binding.occuBuisTypeSpinner.setSelection(3)
-            }else{
-                binding.occuBuisTypeSpinner.setSelection(4)
-            }
-        }else{
+        if (member.occupation == "Business") {
+            binding.occuBuisNameInput.setText(member.buisName)
+
+        } else {
             binding.occuBuisTypeSpinner.setSelection(4)
         }
 
@@ -900,6 +884,7 @@ class UpdateMemberActivity : BaseActivity() {
         binding.eduInstituteInput.setText(member.institute)
         binding.eduDepartInput.setText(member.branch)
         binding.landmarkInput.setText(member.address.split(" ").first())
+        binding.Karyainput.setText(member.karyakarni)
 
 
 
@@ -970,6 +955,7 @@ class UpdateMemberActivity : BaseActivity() {
                 }
 
                 Resource.Status.LOADING -> {
+                    showProgressDialog("Updating")
                     Log.e("Loading", resources.data.toString())
                 }
 
