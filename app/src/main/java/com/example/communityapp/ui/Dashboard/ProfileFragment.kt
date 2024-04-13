@@ -1,5 +1,6 @@
 package com.example.communityapp.ui.Dashboard
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.FragmentProfileBinding
@@ -38,12 +38,20 @@ class ProfileFragment : Fragment() {
         }
 
         binding.logoutButton.setOnClickListener {
-            val sharedPreferences =
-                requireActivity().getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.clear().apply()
-            startActivity(Intent(requireContext(), Login_activity::class.java))
-            requireActivity().finish()
+
+            //show a dialog to confirm logout
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes") { _, _ ->
+                    val sharedPreferences = requireActivity().getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.clear().apply()
+                    startActivity(Intent(requireContext(), Login_activity::class.java))
+                    requireActivity().finish()
+                }
+                .setNegativeButton("No", null)
+                .show()
         }
 
         return binding.root

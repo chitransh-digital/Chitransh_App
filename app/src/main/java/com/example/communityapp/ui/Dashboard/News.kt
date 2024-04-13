@@ -7,19 +7,16 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Log.e
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
-import com.example.communityapp.R
 import com.example.communityapp.data.models.NewsFeed
-import com.example.communityapp.databinding.ActivityFeedsBinding
 import com.example.communityapp.databinding.FragmentNewsBinding
 import com.example.communityapp.ui.feed.FeedsAdapter
 import com.example.communityapp.ui.feed.FeedsViewModel
@@ -132,7 +129,7 @@ class News : Fragment() {
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     // Handle success state
-                    Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.ERROR -> {
                     // Handle error state

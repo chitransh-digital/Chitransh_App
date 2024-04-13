@@ -1,8 +1,5 @@
 package com.example.communityapp.ui.family
 
-import android.Manifest
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
@@ -22,7 +19,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
@@ -30,7 +26,6 @@ import com.example.communityapp.databinding.ActivityFamilyBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
@@ -559,16 +554,22 @@ class FamilyActivity : BaseActivity() {
 
         if (familyMember == "Father") {
             binding.genderSpinner.setSelection(0)
+            binding.genderSpinner.isEnabled = false
         } else if (familyMember == "Mother") {
             binding.genderSpinner.setSelection(1)
+            binding.genderSpinner.isEnabled = false
         } else if (familyMember == "Son") {
             binding.genderSpinner.setSelection(0)
+            binding.genderSpinner.isEnabled = false
         } else if (familyMember == "Daughter") {
             binding.genderSpinner.setSelection(1)
+            binding.genderSpinner.isEnabled = false
         } else if (familyMember == "Husband") {
             binding.genderSpinner.setSelection(0)
+            binding.genderSpinner.isEnabled = false
         } else if (familyMember == "Wife") {
             binding.genderSpinner.setSelection(1)
+            binding.genderSpinner.isEnabled = false
         } else {
             binding.genderSpinner.setSelection(0)
         }

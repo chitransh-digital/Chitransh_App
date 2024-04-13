@@ -187,7 +187,7 @@
                     android:layout_weight="4"
                     android:background="@drawable/image_view_background"
                     android:padding="12dp"
-                    android:src="@drawable/hire_me" />
+                    android:src="@drawable/diversity_3_24px" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -219,7 +219,7 @@
                     android:layout_weight="4"
                     android:background="@drawable/image_view_background"
                     android:padding="12dp"
-                    android:src="@drawable/hire_me" />
+                    android:src="@drawable/storefront_24px" />
 
                 <TextView
                     android:layout_width="match_parent"
