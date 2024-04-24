@@ -11,8 +11,10 @@ import com.bumptech.glide.Glide
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.FamilyMemberItemLayoutBinding
+import com.example.communityapp.ui.Dashboard.profileAdapter
 
-class FamilyDetailsAdapter(private val context: Context, private val FamilyDetails : List<Member>) : RecyclerView.Adapter<FamilyDetailsAdapter.ViewHolder>() {
+class FamilyDetailsAdapter(private val context: Context, private val FamilyDetails : List<Member>,
+    private var OnItemClickListener : profileAdapter.onClickListener) : RecyclerView.Adapter<FamilyDetailsAdapter.ViewHolder>() {
 
 
     class ViewHolder(binding: FamilyMemberItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
@@ -25,6 +27,7 @@ class FamilyDetailsAdapter(private val context: Context, private val FamilyDetai
         var address = binding.memberAddress
         var phone = binding.callNow
         var genColor = binding.genderColor
+        var itemView = binding.itemView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -69,12 +72,20 @@ class FamilyDetailsAdapter(private val context: Context, private val FamilyDetai
             holder.genColor.setBackgroundColor(context.resources.getColor(R.color.female_card_color))
         }
 
+        holder.itemView.setOnClickListener {
+            OnItemClickListener.onClick(model)
+        }
+
         Glide.with(context)
             .load(model.profilePic)
             .circleCrop()
             .placeholder(R.drawable.baseline_person_24)
             .into(holder.image)
 
+    }
+
+    interface onClickListener {
+        fun onClick(member: Member)
     }
 
 }

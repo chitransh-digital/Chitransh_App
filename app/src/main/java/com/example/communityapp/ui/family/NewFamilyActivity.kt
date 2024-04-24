@@ -114,6 +114,8 @@ class NewFamilyActivity : BaseActivity() {
             }
         }
 
+        Log.e("Result",result.toString())
+
         val adapter = FamilyAdapter(this,result)
         binding.rvOtherFamillyMembers.adapter = adapter
         binding.rvOtherFamillyMembers.layoutManager  = LinearLayoutManager(this)

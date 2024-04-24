@@ -173,7 +173,7 @@ class FamilyActivity : BaseActivity() {
                             val courseAdapter = ArrayAdapter(this@FamilyActivity, android.R.layout.simple_spinner_dropdown_item, list)
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
-                            binding.eduDepartment.visibility = View.GONE
+                            binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
                         } else if (binding.eduLevelSpinner.selectedItem.toString() == "Masters") {
                             val list = arrayListOf(
@@ -195,7 +195,7 @@ class FamilyActivity : BaseActivity() {
                             val courseAdapter = ArrayAdapter(this@FamilyActivity, android.R.layout.simple_spinner_dropdown_item, list)
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
-                            binding.eduDepartment.visibility = View.GONE
+                            binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
                         }else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
                             binding.eduDepartment.visibility = View.VISIBLE
@@ -279,22 +279,6 @@ class FamilyActivity : BaseActivity() {
                 // Optional: Handle case when nothing is selected
             }
         }
-
-        binding.eduCourseSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Optional: Handle case when nothing is selected
-                }
-            }
 
         binding.occuBuisTypeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -488,12 +472,12 @@ class FamilyActivity : BaseActivity() {
             binding.previewEduCourse.visibility = View.GONE
         }
         else if (binding.eduLevelSpinner.selectedItem.toString() == "Bachelors") {
-            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.VISIBLE
         } else if (binding.eduLevelSpinner.selectedItem.toString() == "Masters") {
-            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.VISIBLE

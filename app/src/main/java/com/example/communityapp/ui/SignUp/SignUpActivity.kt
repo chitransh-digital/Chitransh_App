@@ -48,6 +48,8 @@ class SignUpActivity : BaseActivity() {
     var courseSpinner = 0
     var headAddress = ""
     var uri: Uri? = null
+    var course = "NA"
+    var buisType = "NA"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,7 +129,7 @@ class SignUpActivity : BaseActivity() {
                             val courseAdapter = ArrayAdapter(this@SignUpActivity, android.R.layout.simple_spinner_dropdown_item, list)
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
-                            binding.eduDepartment.visibility = View.GONE
+                            binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
                         } else if (binding.eduLevelSpinner.selectedItem.toString() == "Masters") {
                             val list = arrayListOf(
@@ -149,7 +151,7 @@ class SignUpActivity : BaseActivity() {
                             val courseAdapter = ArrayAdapter(this@SignUpActivity, android.R.layout.simple_spinner_dropdown_item, list)
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
-                            binding.eduDepartment.visibility = View.GONE
+                            binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
                         }else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
                             binding.eduDepartment.visibility = View.VISIBLE
@@ -234,22 +236,6 @@ class SignUpActivity : BaseActivity() {
             }
         }
 
-        binding.eduCourseSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Optional: Handle case when nothing is selected
-                }
-            }
-
         binding.occuBuisTypeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -259,6 +245,7 @@ class SignUpActivity : BaseActivity() {
                     id: Long
                 ) {
                     buisTypeSpinner = position
+                    buisType = binding.occuBuisTypeSpinner.selectedItem.toString()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -453,6 +440,12 @@ class SignUpActivity : BaseActivity() {
             screenPointer++
             changeUI(screenPointer)
         }
+
+        if (binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            course = binding.eduCourseOtherInput.text.toString()
+        } else {
+            course = binding.eduCourseSpinner.selectedItem.toString()
+        }
     }
 
     private fun changeUI(screenPointer : Int){
@@ -528,14 +521,6 @@ class SignUpActivity : BaseActivity() {
             binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
 
 
-
-        var course = "NA"
-        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            course = binding.eduCourseOtherInput.text.toString()
-        } else if(binding.eduCourseSpinner.isSelected){
-            course = binding.eduCourseSpinner.selectedItem.toString()
-        }
-
         binding.previewNameinput.text = binding.nameinput.text.toString()
         binding.previewContactinput.text = binding.contactinput.text.toString()
         binding.previewDOBtext.text = binding.DOBinput.text.toString()
@@ -591,12 +576,12 @@ class SignUpActivity : BaseActivity() {
             binding.previewEduCourse.visibility = View.GONE
         }
         else if (binding.eduLevelSpinner.selectedItem.toString() == "Bachelors") {
-            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.VISIBLE
         } else if (binding.eduLevelSpinner.selectedItem.toString() == "Masters") {
-            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.VISIBLE
@@ -655,18 +640,6 @@ class SignUpActivity : BaseActivity() {
         var karyakanri = "NA"
         if(binding.Karyainput.text.isNotEmpty()){
             karyakanri = binding.Karyainput.text.toString()
-        }
-
-        val course = "NA"
-        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            binding.eduCourseOtherInput.text.toString()
-        } else if(binding.eduCourseSpinner.isSelected) {
-            binding.eduCourseSpinner.selectedItem.toString()
-        }
-
-        val buisType = "NA"
-        if (binding.occuBuisTypeSpinner.isSelected) {
-            binding.occuBuisTypeSpinner.selectedItem.toString()
         }
 
         val data = Member(
@@ -801,7 +774,7 @@ class SignUpActivity : BaseActivity() {
                     finish()
                 }
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Please wait...")
+                    showProgressDialog("Adding Your Details as Family Head ...")
                     Log.e("Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {

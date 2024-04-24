@@ -126,7 +126,7 @@ class Login_activity : BaseActivity() {
                 if (ph.isEmpty()) {
                     Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
                 } else {
-                    showProgressDialog("Sending Otp..")
+
                     viewModel.OnVerificationCodeSent(ph, this)
                 }
             }
@@ -187,9 +187,10 @@ class Login_activity : BaseActivity() {
 
     private fun setObservables() {
         viewModel.verificationStatus.observe(this, Observer { resource ->
-            hideProgressDialog()
+
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
                     Log.e("url", resource.status.toString())
                     if (resource.data?.first == 1) {
                         codeSent(resource.data.second)
@@ -214,11 +215,13 @@ class Login_activity : BaseActivity() {
                 }
 
                 Resource.Status.ERROR -> {
+                    hideProgressDialog()
                     Log.e("url", resource.status.toString())
                     showErrorSnackBar("Error: ${resource.apiError?.message}")
                 }
 
                 Resource.Status.LOADING -> {
+                    showProgressDialog("Sending Otp..")
                     Log.e("url", "loading")
 
                 }
@@ -284,6 +287,7 @@ class Login_activity : BaseActivity() {
     }
 
     private fun showContent(pointer: Int) {
+        Log.d("LoginActivity", "Pointer: $pointer")
         when (pointer) {
             1 -> {
                 crossFade(
@@ -472,14 +476,25 @@ class Login_activity : BaseActivity() {
         }
 
         for (view in invisible) {
-            view.animate()
-                .alpha(0f)
-                .setDuration(shortAnimationDuration.toLong())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        binding.progressBar.visibility = View.GONE
-                    }
-                })
+
+            view.apply {
+                alpha = 0f
+                visibility = View.GONE
+
+                animate()
+                    .alpha(0f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+            }
+
+//            view.animate()
+//                .alpha(0f)
+//                .setDuration(shortAnimationDuration.toLong())
+//                .setListener(object : AnimatorListenerAdapter() {
+//                    override fun onAnimationEnd(animation: Animator) {
+//                        binding.progressBar.visibility = View.GONE
+//                    }
+//                })
         }
     }
 }

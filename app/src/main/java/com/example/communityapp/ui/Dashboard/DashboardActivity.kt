@@ -1,6 +1,7 @@
 package com.example.communityapp.ui.Dashboard
 
 import android.Manifest
+import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -57,11 +59,6 @@ class DashboardActivity : BaseActivity() {
         phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null).toString()
 //        phoneNum = intent.getStringExtra(Constants.USERNAME).toString()
         Log.d("Dashboard phone no",phoneNum.toString())
-
-//        if (phoneNum.isEmpty()) {
-//            showProgressDialog("Please wait...")
-//            viewModel.getMember(phoneNum)
-//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -131,17 +128,20 @@ class DashboardActivity : BaseActivity() {
 
     private fun setObservables() {
         viewModel.user_data.observe(this, Observer {resources ->
-            hideProgressDialog()
+
             when(resources.status){
                 Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
                     val user_data = resources.data!!
                     startSignUpActivity(user_data)
                     Log.e("D Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {
+                    showProgressDialog("Please wait...")
                     Log.e(" D Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
+                    hideProgressDialog()
                     Log.e("D Error",resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
@@ -164,7 +164,7 @@ class DashboardActivity : BaseActivity() {
         Log.d("Onresume","Data fetching")
         Log.d("Onresume phone num","Data fetching $phoneNum")
         if (phoneNum.isNotEmpty()) {
-            showProgressDialog("Please wait...")
+
             Log.d("Onresume phone num","Data fetching $phoneNum")
             viewModel.getMember(phoneNum)
         }

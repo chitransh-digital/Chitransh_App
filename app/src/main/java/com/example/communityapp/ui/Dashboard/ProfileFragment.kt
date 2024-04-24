@@ -111,7 +111,7 @@ class ProfileFragment : Fragment() {
             }
         }
         val adapter =
-            profileAdapter(requireContext(), data, object : profileAdapter.onClickListener {
+            profileAdapter(requireContext(), members, object : profileAdapter.onClickListener {
                 override fun onClick(member: Member) {
 //                    viewModel.deleteMember(member.familyID, member.contact)
                 }

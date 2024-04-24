@@ -419,7 +419,7 @@ class UpdateMemberActivity : BaseActivity() {
             binding.genderSpinner.setSelection(0)
         }
 
-        if (familyMember == "oher") {
+        if (familyMember == "other") {
             binding.relationSpinner.visibility = View.VISIBLE
             binding.relationinput.visibility = View.GONE
         } else {
@@ -728,12 +728,12 @@ class UpdateMemberActivity : BaseActivity() {
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.GONE
         } else if (member.highestEducation == "Bachelors") {
-            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.VISIBLE
         } else if (member.highestEducation == "Masters") {
-            binding.previewEduDepartment.visibility = View.GONE
+            binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.VISIBLE
