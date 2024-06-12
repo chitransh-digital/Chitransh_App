@@ -6,12 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.communityapp.data.models.LoginResponse
 import com.example.communityapp.data.repository.LoginRepo
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -100,6 +100,26 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth, private 
                 }
             }catch (e : Exception){
                 _loginStatus.value = Resource.error(e)
+            }
+        }
+    }
+
+    private val _loginStatusPhone = MutableLiveData<Resource<LoginResponse>>()
+    val loginStatusPhone: LiveData<Resource<LoginResponse>>
+        get() = _loginStatusPhone
+    fun signInWithPhone(phone: String) {
+        _loginStatusPhone.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val res = loginRepo.signInWithPhone(phone)
+                if(res.isSuccessful){
+                    Log.d("LoginViewModel", "signInWithPhone: ${res.body()}")
+                    _loginStatusPhone.value = Resource.success(res.body())
+                }else if(res.code() == 404){
+                    _loginStatusPhone.value = Resource.error(Exception(Constants.Error404))
+                }
+            }catch (e : Exception){
+                _loginStatusPhone.value = Resource.error(e)
             }
         }
     }

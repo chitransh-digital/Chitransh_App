@@ -1,70 +1,71 @@
 package com.example.communityapp.data.repository
 
-import android.content.ContentValues
+import android.content.Context
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import androidx.core.net.toUri
+import com.example.communityapp.data.models.LoginRequest
 import com.example.communityapp.data.models.Member
-import com.example.communityapp.data.models.User
-import com.example.communityapp.utils.Constants
-import com.example.communityapp.utils.Resource
-import com.google.android.gms.tasks.Task
+import com.example.communityapp.data.newModels.ImageResponse
+import com.example.communityapp.data.newModels.SignupRequest
+import com.example.communityapp.data.retrofit.CustomAPI
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.tasks.await
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Response
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.security.MessageDigest
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private val storage: FirebaseStorage){
+class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private val storage: FirebaseStorage,private val api: CustomAPI){
 
-    fun addMember(member: Member, selectedImagePath: String): Flow<Resource<String>> {
-
-        return flow {
-            emit(Resource.loading())
-            var ch = "OK"
-            try {
-                // Upload image to Firebase Storage
-                if(selectedImagePath.isNotEmpty()){
-                    val imageUrl = uploadImage(selectedImagePath, generateMemberId(member))
-
-                    // Associate image URL with the member
-                    member.profilePic = imageUrl
-                }
-
-                subscribeToTopic()
-
-
-                // Save member to Firestore
-                val familyCollection = db.collection(Constants.FAMILY)
-                    .document(member.familyID)
-                    .collection(Constants.MEMBER)
-                    .document(member.contact)
-                val userCollection = db.collection(Constants.USERS)
-                    .document(member.contact)
-
-                db.runBatch { batch ->
-                    batch.set(userCollection, User(member.familyID, member.contact))
-                    batch.set(familyCollection, member)
-                }.addOnCompleteListener {
-                    ch = "OK"
-                }.addOnFailureListener {
-                    ch = it.message.toString()
-                }
-                if (ch == "OK") emit(Resource.success("OK"))
-                else emit(Resource.error(java.lang.Exception(ch)))
-            } catch (e: Exception) {
-                emit(Resource.error(e))
-            }
-        }
-    }
+//    fun addMember(member: Member, selectedImagePath: String): Flow<Resource<String>> {
+//
+//        return flow {
+//            emit(Resource.loading())
+//            var ch = "OK"
+//            try {
+//                // Upload image to Firebase Storage
+//                if(selectedImagePath.isNotEmpty()){
+//                    val imageUrl = uploadImage(selectedImagePath, generateMemberId(member))
+//
+//                    // Associate image URL with the member
+//                    member.profilePic = imageUrl
+//                }
+//
+//                subscribeToTopic()
+//
+//
+//                // Save member to Firestore
+//                val familyCollection = db.collection(Constants.FAMILY)
+//                    .document(member.familyID)
+//                    .collection(Constants.MEMBER)
+//                    .document(member.contact)
+//                val userCollection = db.collection(Constants.USERS)
+//                    .document(member.contact)
+//
+//                db.runBatch { batch ->
+//                    batch.set(userCollection, User(member.familyID, member.contact))
+//                    batch.set(familyCollection, member)
+//                }.addOnCompleteListener {
+//                    ch = "OK"
+//                }.addOnFailureListener {
+//                    ch = it.message.toString()
+//                }
+//                if (ch == "OK") emit(Resource.success("OK"))
+//                else emit(Resource.error(java.lang.Exception(ch)))
+//            } catch (e: Exception) {
+//                emit(Resource.error(e))
+//            }
+//        }
+//    }
 
     // Make subscribeToTopic() a suspendCoroutine function to run with uploadImage() in parallel
 
@@ -87,23 +88,32 @@ class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private 
         }
     }
 
-    private suspend fun uploadImage(imagePath: String, imageName: String): String {
-        return suspendCoroutine { continuation ->
-            val imageRef = storage.reference.child("images/$imageName.jpg")
-            val uploadTask = imageRef.putFile(Uri.fromFile(File(imagePath)))
 
-            uploadTask.addOnSuccessListener {
-                // Get the download URL
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
-                    continuation.resume(uri.toString())
-                }.addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-            }.addOnFailureListener {
-                continuation.resumeWithException(it)
+    suspend fun uploadImage(fileUri: Uri, context: Context): Response<ImageResponse> {
+        val imagePart = prepareFilePart("file", fileUri, context)
+        return api.uploadImage(imagePart)
+    }
+
+    private fun prepareFilePart(partName: String, fileUri: Uri, context: Context): MultipartBody.Part {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(fileUri)
+        val tempFile = File.createTempFile("temp_image", null, context.cacheDir)
+
+        inputStream.use { input ->
+            FileOutputStream(tempFile).use { output ->
+                input?.copyTo(output)
             }
         }
+
+
+        val mimeType = context.contentResolver.getType(fileUri) ?: "image/*"
+
+        val requestBody = tempFile
+            .asRequestBody(mimeType.toMediaType())
+
+        return MultipartBody.Part.createFormData(partName, tempFile.name, requestBody)
     }
+
+
 
     private fun generateMemberId(member: Member): String {
         val inputString = "${member.name}_${member.age}_${member.familyID.hashCode()}"
@@ -115,5 +125,11 @@ class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private 
         val bytes = MessageDigest.getInstance(type).digest(input.toByteArray())
         return bytes.joinToString("") { "%02x".format(it) }
     }
+
+
+    suspend fun signInWithPhone(phone: String) = api.loginPhone(LoginRequest(phone))
+
+    suspend fun addMember(signupRequest: SignupRequest) = api.addMember(signupRequest)
+
 
 }

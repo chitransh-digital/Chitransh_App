@@ -1,10 +1,7 @@
 package com.example.communityapp.ui.auth
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.app.ActivityOptions
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -14,24 +11,27 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
+import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.databinding.ActivityLoginBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
+import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.example.communityapp.utils.moveAndResizeView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class Login_activity : BaseActivity() {
 
+    @Inject
+    lateinit var preferencesHelper: PreferencesHelper
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
     private lateinit var verificationID: String
@@ -68,8 +68,8 @@ class Login_activity : BaseActivity() {
         showContent(contentPointer)
 
 //        val phNo = FirebaseAuth.getInstance().currentUser?.phoneNumber
-        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-        val phNo = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
+//        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+        val phNo = preferencesHelper.getContact()
         Log.e("Login Activity", " Answer it $phNo")
 
 
@@ -126,7 +126,7 @@ class Login_activity : BaseActivity() {
                 if (ph.isEmpty()) {
                     Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
                 } else {
-
+//                    viewModel.signInWithPhone(binding.editTextPhone.text.toString())
                     viewModel.OnVerificationCodeSent(ph, this)
                 }
             }
@@ -196,21 +196,12 @@ class Login_activity : BaseActivity() {
                         codeSent(resource.data.second)
                     } else {
                         // shared pref update
-                        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-                        val editor = sharedPreferences.edit()
-                        editor.putString(Constants.PHONE_NUMBER, contact)
-                        editor.apply()
-                        hideProgressDialog()
+                        val contactWithoutPrefix = contact.replaceFirst("+91", "")
+                        preferencesHelper.setContact(contactWithoutPrefix)
+                        viewModel.signInWithPhone(contactWithoutPrefix)
+                        Log.e(this.javaClass.simpleName, "Phone number verified")
 
-                        // start DashboardActivity after otp verification
-                        val intent = Intent(this, DashboardActivity::class.java)
-                        intent.putExtra(Constants.USERNAME, contact)
-                        val options = ActivityOptions.makeSceneTransitionAnimation(
-                            this,
-                            binding.logoImage,
-                            getString(R.string.transition_name)
-                        ).toBundle()
-                        startActivity(intent, options)
+
                     }
                 }
 
@@ -233,16 +224,57 @@ class Login_activity : BaseActivity() {
 
         })
 
+        viewModel.loginStatusPhone.observe(this, Observer { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    // start DashboardActivity after otp verification
+                    Log.e("JWTToken", resource.data?.token.toString())
+                    //save to shared pref
+                    preferencesHelper.setToken( resource.data?.token.toString())
+
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    intent.putExtra(Constants.USERNAME, contact)
+                    val options = ActivityOptions.makeSceneTransitionAnimation(
+                        this,
+                        binding.logoImage,
+                        getString(R.string.transition_name)
+                    ).toBundle()
+                    startActivity(intent, options)
+                    finish()
+                }
+
+                Resource.Status.ERROR -> {
+                    Log.e("JWTToken Error", "what is it " + resource.apiError)
+                    showErrorSnackBar("Error: ${resource.apiError?.message}")
+                    if(resource.apiError?.message == Constants.Error404) {
+                        val intent = Intent(this, SignUpActivity::class.java)
+                        startActivity(intent)
+                        Toast.makeText(this, R.string.please_SignUp, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+
+                Resource.Status.LOADING -> {
+                    Log.e("JWTToken", "loading")
+
+                }
+
+                else -> {
+                    Log.e("JWTToken", "else")
+                }
+            }
+
+        })
+
         viewModel.loginStatus.observe(this, Observer { resource ->
             hideProgressDialog()
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     Log.e("url", resource.status.toString())
                     //shared pref update
-                    val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putString(Constants.PHONE_NUMBER, contact)
-                    editor.apply()
+
+                    val contactWithoutPrefix = contact.replaceFirst("+91", "")
+                    preferencesHelper.setContact(contactWithoutPrefix)
                     hideProgressDialog()
 
                     //start dashboard activty after family id verfiication

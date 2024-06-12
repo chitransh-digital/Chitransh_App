@@ -1,14 +1,13 @@
 package com.example.communityapp.ui.SignUp
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.app.DatePickerDialog
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -22,19 +21,23 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
+import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.models.Member
-import com.example.communityapp.data.models.NewsFeed
+import com.example.communityapp.data.newModels.MemberDataX
+import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.databinding.ActivitySignUpBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
-import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity() {
 
+    @Inject
+    lateinit var preferencesHelper: PreferencesHelper
     private lateinit var binding : ActivitySignUpBinding
     private lateinit var viewModel: SignUpViewModel
     private var selectedDate: Calendar = Calendar.getInstance()
@@ -47,7 +50,7 @@ class SignUpActivity : BaseActivity() {
     var buisTypeSpinner = 0
     var courseSpinner = 0
     var headAddress = ""
-    var uri: Uri? = null
+    var uri: Uri = Uri.EMPTY
     var course = "NA"
     var buisType = "NA"
 
@@ -70,7 +73,7 @@ class SignUpActivity : BaseActivity() {
             val name = binding.nameinput.text.toString()
             val contact = binding.contactinput.text.toString()
             if (name.isNotEmpty() && contact.isNotEmpty()){
-                val familyID = "CH" + name.substring(0,3) + contact.substring(9,12)
+                val familyID = "CH" + name.substring(0,3) + contact.substring(6,9)
                 binding.familyIDinput.setText(familyID)
             }else{
                 Toast.makeText(this, "Please enter your name and contact no", Toast.LENGTH_SHORT).show()
@@ -642,6 +645,35 @@ class SignUpActivity : BaseActivity() {
             karyakanri = binding.Karyainput.text.toString()
         }
 
+        val memberData = MemberDataX(
+            name = binding.nameinput.text.toString(),
+            contact = binding.contactinput.text.toString(),
+            age = binding.ageSpinner.selectedItem.toString(),
+            gender = binding.genderSpinner.selectedItem.toString(),
+            karyakarni = karyakanri,
+            relation = "HEAD",
+            occupation = binding.occuLevelSpinner.selectedItem.toString(),
+            bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
+            profilePic = "NA",
+            education = binding.eduLevelSpinner.selectedItem.toString(),
+            course = if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
+            institute = if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
+            additionalDetails = if (binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.text.toString() else "NA",
+            jobEmployer = if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
+            jobDepartment = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
+            jobLocation = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
+            jobPost = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
+            businessType = buisType,
+            businessName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
+            businessAddress = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
+            fieldOfStudy = course,
+            city = binding.citySpinner.selectedItem.toString(),
+            state = binding.stateSpinner.selectedItem.toString(),
+            landmark = binding.landmarkInput.text.toString(),
+            contactVisibility = true
+        )
+
+
         val data = Member(
             familyID = binding.familyIDinput.text.toString(),
             name = binding.nameinput.text.toString(),
@@ -668,7 +700,9 @@ class SignUpActivity : BaseActivity() {
             course = course
         )
 
-        viewModel.addMember(member = data,selectedImagePath)
+        val signupRequest= SignupRequest(binding.familyIDinput.text.toString(),memberData)
+
+        viewModel.addMember(signupRequest,uri,this)
     }
 
     private fun showDatePickerDialog() {
@@ -727,10 +761,9 @@ class SignUpActivity : BaseActivity() {
         Log.d("Image Path", result.toString())
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            uri = data?.data
+            uri = data?.data!!
             selectedImagePath = getImagePath(uri!!).toString()
             binding.ivAddImageMember.setImageURI(uri)
-            Log.d("Image Path", selectedImagePath)
         }else{
             Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
         }
@@ -769,6 +802,11 @@ class SignUpActivity : BaseActivity() {
                     binding.DOBinput.text.clear()
                     binding.ageSpinner.setSelection(1)
                     binding.genderSpinner.setSelection(1)
+
+                    preferencesHelper.getContact()?.let { viewModel.signInWithPhone(it) }
+
+
+
                     Toast.makeText(this, R.string.registration_success, Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this,DashboardActivity::class.java))
                     finish()
@@ -785,6 +823,43 @@ class SignUpActivity : BaseActivity() {
                 else -> {}
             }
         })
+
+        viewModel.loginStatusPhone.observe(this, Observer { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    // start DashboardActivity after otp verification
+                    Log.e("JWTToken", resource.data?.token.toString())
+                    //save to shared pref
+                    preferencesHelper.setToken( resource.data?.token.toString())
+
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    intent.putExtra(Constants.USERNAME,preferencesHelper.getContact() )
+                    val options = ActivityOptions.makeSceneTransitionAnimation(
+                        this,
+                        binding.logoImage,
+                        getString(R.string.transition_name)
+                    ).toBundle()
+                    startActivity(intent, options)
+                    finish()
+                }
+
+                Resource.Status.ERROR -> {
+                    Log.e("JWTToken Error", "what is it " + resource.apiError)
+                    showErrorSnackBar("Error: ${resource.apiError?.message}")
+                }
+
+                Resource.Status.LOADING -> {
+                    Log.e("JWTToken", "loading")
+
+                }
+
+                else -> {
+                    Log.e("JWTToken", "else")
+                }
+            }
+
+        })
+
     }
 
     private fun crossFade(visible: List<View>, invisible: List<View>) {

@@ -2,6 +2,9 @@ package com.example.communityapp.utils
 
 object Constants {
 
+    const val CUSTOM_BASE_URL = "http://159.89.165.67/"
+
+    const val Error404= "user not found"
     const val FILEURL= "file"
     const val COUPON = "coupon"
     const val EDUCATION= "highestEducation"
