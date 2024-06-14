@@ -24,7 +24,6 @@ import com.example.communityapp.utils.Resource
 import com.example.communityapp.utils.moveAndResizeView
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.cdimascio.dotenv.Dotenv
 import io.github.cdimascio.dotenv.dotenv
 import java.util.Locale
 import javax.inject.Inject
@@ -191,7 +190,7 @@ class Login_activity : BaseActivity() {
         }
 
         binding.buttonLoginUsernameSubmit.setOnClickListener {
-            val username = "+91"+binding.editTextUsername.text.toString()
+            val username = binding.editTextUsername.text.toString()
             contact = username
             val familyID = binding.editTextFamilyID.text.toString()
             if (username.isEmpty() || familyID.isEmpty()) {
@@ -206,10 +205,6 @@ class Login_activity : BaseActivity() {
 
         setWindowsUp()
 
-    }
-
-    fun loadEnvVariables(): Dotenv {
-        return Dotenv.load()
     }
 
     private fun setLocal(activity: Activity, language: String) {
@@ -311,6 +306,7 @@ class Login_activity : BaseActivity() {
 
                     val contactWithoutPrefix = contact.replaceFirst("+91", "")
                     preferencesHelper.setContact(contactWithoutPrefix)
+                    preferencesHelper.setToken( resource.data?.token.toString())
                     hideProgressDialog()
 
                     //start dashboard activty after family id verfiication
