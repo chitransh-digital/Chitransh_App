@@ -13,10 +13,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
-import java.io.File
-import java.io.FileOutputStream
 import java.io.InputStream
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -89,29 +87,25 @@ class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private 
     }
 
 
-    suspend fun uploadImage(fileUri: Uri, context: Context): Response<ImageResponse> {
-        val imagePart = prepareFilePart("file", fileUri, context)
+    suspend fun uploadImage(imagePart: MultipartBody.Part, context: Context): Response<ImageResponse> {
         return api.uploadImage(imagePart)
     }
 
+
     private fun prepareFilePart(partName: String, fileUri: Uri, context: Context): MultipartBody.Part {
         val inputStream: InputStream? = context.contentResolver.openInputStream(fileUri)
-        val tempFile = File.createTempFile("temp_image", null, context.cacheDir)
 
-        inputStream.use { input ->
-            FileOutputStream(tempFile).use { output ->
-                input?.copyTo(output)
-            }
+        val mimeType = context.contentResolver.getType(fileUri) ?: "application/octet-stream"
+
+        val requestBody = inputStream?.use { input ->
+            input.readBytes().toRequestBody(mimeType.toMediaType())
         }
 
-
-        val mimeType = context.contentResolver.getType(fileUri) ?: "image/*"
-
-        val requestBody = tempFile
-            .asRequestBody(mimeType.toMediaType())
-
-        return MultipartBody.Part.createFormData(partName, tempFile.name, requestBody)
+        return MultipartBody.Part.createFormData(partName, "filename", requestBody!!)
     }
+
+
+
 
 
 
