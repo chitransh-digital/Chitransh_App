@@ -1,8 +1,10 @@
 package com.example.communityapp.data.repository
 
 import android.net.Uri
+import com.example.communityapp.data.models.LoginRequest
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
+import com.example.communityapp.data.retrofit.CustomAPI
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,7 +19,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, private val storage: FirebaseStorage) {
+class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, private val storage: FirebaseStorage, private val api: CustomAPI) {
 
     suspend fun findMember(uuid: String): List<Member> {
         return suspendCoroutine { continuation ->
@@ -65,6 +67,8 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
             }
         }
     }
+
+    suspend fun findFamilyByContact(contact:String) = api.getFamilyByContact(contact)
 
 
     private fun addFeedToFirestore(feedData: NewsFeed, imageUrls: List<String>, continuation: Continuation<Unit>) {
@@ -127,6 +131,8 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
                 }
         }
     }
+
+    suspend fun getNewFeeds(limit: Int, page :Int) = api.getFeeds(limit,page)
 
     fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?, change : Boolean): Flow<Resource<String>> {
         return flow {
@@ -206,6 +212,8 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
 
         }
     }
+
+    suspend fun refreshToken(contact: String) = api.loginPhone(LoginRequest(contact))
 
 
 

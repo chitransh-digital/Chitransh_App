@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.databinding.FragmentProfileBinding
 import com.example.communityapp.ui.auth.Login_activity
 import com.example.communityapp.utils.Constants
@@ -62,8 +63,8 @@ class ProfileFragment : Fragment() {
             when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     Log.e("Profile Success", resources.data.toString())
-                    setUpRecyclerView(resources.data!!, resources.data[0].relation)
-                    binding.familyIDShow.text = "Family ID : ${resources.data.get(0).familyID}"
+                    setUpRecyclerView(resources.data!!.families[0].members, resources.data.families[0].members[0].relation)
+                    binding.familyIDShow.text = "Family ID : ${resources.data.families[0].familyID}"
                 }
 
                 Resource.Status.LOADING -> {
@@ -98,13 +99,13 @@ class ProfileFragment : Fragment() {
         })
     }
 
-    private fun setUpRecyclerView(data: List<Member>, relation: String) {
-        val members = arrayListOf<Member>()
+    private fun setUpRecyclerView(data: List<MemberX>, relation: String) {
+        val members = arrayListOf<MemberX>()
         for(mem in data){
             members.add(mem)
         }
         for(i in 0 until members.size){
-            if(members[i].relation == "HEAD"){
+            if(members[i].relation == "Head"){
                 val temp = members[0]
                 members[0] = members[i]
                 members[i] = temp

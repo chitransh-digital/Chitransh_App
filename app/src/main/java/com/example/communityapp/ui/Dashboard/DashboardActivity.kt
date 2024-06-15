@@ -1,9 +1,7 @@
 package com.example.communityapp.ui.Dashboard
 
 import android.Manifest
-import android.app.Dialog
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -12,8 +10,6 @@ import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
 import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -23,21 +19,23 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
-import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.ui.SignUp.SignUpActivity
-import com.example.communityapp.ui.auth.Login_activity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity() {
 
+    @Inject
+    lateinit var preferencesHelper: PreferencesHelper
     private lateinit var viewModel: DashboardViewModel
     private var phoneNum : String = ""
     private lateinit var binding : ActivityDashboardBinding
@@ -55,10 +53,10 @@ class DashboardActivity : BaseActivity() {
         setUpNavigation()
 //        setDialog()
 
-        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-        phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null).toString()
+        phoneNum = preferencesHelper.getContact().toString()
+        Log.d("Dashboard token no",preferencesHelper.getToken().toString())
 //        phoneNum = intent.getStringExtra(Constants.USERNAME).toString()
-        Log.d("Dashboard phone no",phoneNum.toString())
+        Log.d("Dashboard phone no",phoneNum)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -132,8 +130,6 @@ class DashboardActivity : BaseActivity() {
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    val user_data = resources.data!!
-                    startSignUpActivity(user_data)
                     Log.e("D Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {
@@ -144,14 +140,37 @@ class DashboardActivity : BaseActivity() {
                     hideProgressDialog()
                     Log.e("D Error",resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
+                    if(resources.apiError?.message == Constants.Error404)startSignUpActivity()
+                }
+                else -> {}
+            }
+        })
+
+        viewModel.loginStatusPhone.observe(this, Observer {resources ->
+
+            when(resources.status){
+                Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
+                    preferencesHelper.setToken(resources.data?.token.toString())
+                    Log.e("D Success",resources.data.toString())
+                    viewModel.getMember(phoneNum)
+                }
+                Resource.Status.LOADING -> {
+                    showProgressDialog("Please wait...")
+                    Log.e(" D Loading",resources.data.toString())
+                }
+                Resource.Status.ERROR -> {
+                    hideProgressDialog()
+                    Log.e("D Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
+                    if(resources.apiError?.message == Constants.Error404)startSignUpActivity()
                 }
                 else -> {}
             }
         })
     }
 
-    private fun startSignUpActivity(user_data: List<Member>) {
-        if(user_data.isNotEmpty()) return
+    private fun startSignUpActivity() {
         val intent = Intent(this,SignUpActivity::class.java)
         Log.d("Dashboard phone no",intent.toString())
         startActivity(intent)

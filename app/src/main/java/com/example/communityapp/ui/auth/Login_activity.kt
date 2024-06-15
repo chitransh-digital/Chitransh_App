@@ -72,9 +72,7 @@ class Login_activity : BaseActivity() {
             ).toBundle()
             startActivity(intent, options)
             finish()
-        }
-
-        preferencesHelper.setToken(apiKey)
+        } else preferencesHelper.setToken(apiKey)
 
 
         val welcomeText = getString(R.string.welcome_text)

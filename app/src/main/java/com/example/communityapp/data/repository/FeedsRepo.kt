@@ -1,10 +1,8 @@
 package com.example.communityapp.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.example.communityapp.data.models.NewsFeed
-import com.example.communityapp.utils.Constants
-import com.google.android.gms.tasks.Task
+import com.example.communityapp.data.retrofit.CustomAPI
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -17,7 +15,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class FeedsRepo @Inject constructor(private val db: FirebaseFirestore, private val storage: FirebaseStorage) {
+class FeedsRepo @Inject constructor(private val db: FirebaseFirestore, private val storage: FirebaseStorage,private val api: CustomAPI) {
 
     suspend fun addFeed(feedData: NewsFeed, imagePaths: List<String>) {
         return suspendCoroutine { continuation ->
@@ -116,4 +114,6 @@ class FeedsRepo @Inject constructor(private val db: FirebaseFirestore, private v
                 }
         }
     }
+
+    suspend fun getNewFeeds(limit: Int, page :Int) = api.getFeeds(limit,page)
 }

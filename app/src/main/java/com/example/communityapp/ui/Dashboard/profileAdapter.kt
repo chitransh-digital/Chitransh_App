@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.databinding.ProfileItemLayoutBinding
 
 class profileAdapter(
-    private val context: Context, private val members: List<Member>,
+    private val context: Context, private val members: List<MemberX>,
     private var OnItemClickListener: onClickListener
 ) : RecyclerView.Adapter<profileAdapter.ViewHolder>() {
 
@@ -46,7 +47,7 @@ class profileAdapter(
 
         holder.name.text = model.name
         val name = context.getString(R.string.address)
-        holder.address.text = "${name} ${model.address}"
+        holder.address.text = "${name} ${model.city + ", " + model.state }"
         holder.age_gender.text = "${model.age}/${model.gender}"
         holder.relation.text = model.relation
 

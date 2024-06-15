@@ -1,14 +1,12 @@
 package com.example.communityapp.ui.feed
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.communityapp.data.models.Job
 import com.example.communityapp.data.models.NewsFeed
+import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.repository.FeedsRepo
-import com.example.communityapp.data.repository.JobsRepo
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -34,16 +32,23 @@ class FeedsViewModel @Inject constructor(private  val feedsRepo: FeedsRepo): Vie
     }
 
     //getFeedsByPaging
-    private val _feeds = MutableLiveData<Resource<List<NewsFeed>>>()
-    val feeds: LiveData<Resource<List<NewsFeed>>>
+    private val _feeds = MutableLiveData<Resource<FeedsResponse>>()
+    val feeds: LiveData<Resource<FeedsResponse>>
         get() = _feeds
 
-    fun getFeedsByPaging(lastFeed: NewsFeed? = null) {
+    fun getFeedsByPaging(limit:Int,page: Int) {
         _feeds.value = Resource.loading()
         viewModelScope.launch {
             try {
-                val feeds = feedsRepo.getFeeds(lastFeed)
-                _feeds.postValue(Resource.success(feeds))
+                val response = feedsRepo.getNewFeeds(limit,page)
+                if (response.isSuccessful) {
+                    _feeds.postValue(Resource.success(response.body()!!))
+                }else if(response.code()==400){
+                    _feeds.postValue(Resource.error(Exception("No more news available")))
+                }
+                else {
+                    _feeds.postValue(Resource.error(Exception(response.message())))
+                }
             } catch (e: Exception) {
                 _feeds.postValue(Resource.error(e))
             }
