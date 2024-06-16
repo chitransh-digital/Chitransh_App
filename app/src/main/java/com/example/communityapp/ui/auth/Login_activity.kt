@@ -11,6 +11,8 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
@@ -50,28 +52,35 @@ class Login_activity : BaseActivity() {
         val spannableString = SpannableString(welcomeText)
 
         // Set color for "Chitransh Digital"
-        val colorSpan = ForegroundColorSpan(Color.parseColor("#620402"))
-        spannableString.setSpan(
-            colorSpan,
-            welcomeText.indexOf("Chitransh Digital"),
-            welcomeText.length,
-            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        val targetText = "Chitransh Digital"
+        val startIndex = welcomeText.indexOf(targetText)
+        val endIndex = startIndex + targetText.length
+
+        // Ensure indices are valid before setting span
+        if (startIndex >= 0 && endIndex <= welcomeText.length) {
+            val colorSpan = ForegroundColorSpan(Color.parseColor("#620402"))
+            spannableString.setSpan(
+                colorSpan,
+                startIndex,
+                endIndex,
+                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        } else {
+            Log.e("LoginActivity", "Invalid span indices: startIndex=$startIndex, endIndex=$endIndex")
+        }
 
         binding.preLoginTextView.text = spannableString
 
+        // Continue with the rest of your initialization code
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
         setObservables()
 
-        contentPointer = 1
+        contentPointer = preferencesHelper.getPointer()
         showContent(contentPointer)
 
-//        val phNo = FirebaseAuth.getInstance().currentUser?.phoneNumber
-//        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
         val phNo = preferencesHelper.getContact()
         Log.e("Login Activity", " Answer it $phNo")
-
 
         Handler().postDelayed({
             if (!phNo.isNullOrEmpty() && phNo != "NA") {
@@ -94,22 +103,16 @@ class Login_activity : BaseActivity() {
             }
         }, 2000)
 
-
-
         binding.buttonEnglish.setOnClickListener {
             contentPointer++
             showContent(contentPointer)
-//            context = LocaleHelper.setLocale(this, "en");
-//            resources = context!!.resources;
-//            setLocal(this@Login_activity, "en")
+            changeLanguage("en")
         }
 
         binding.buttonHindi.setOnClickListener {
             contentPointer++
             showContent(contentPointer)
-//            context = LocaleHelper.setLocale(this, "hi");
-//            resources = context!!.resources;
-//            setLocal(this@Login_activity, "hi")
+            changeLanguage("hi")
         }
 
         binding.buttonProceedPhno.setOnClickListener {
@@ -118,15 +121,14 @@ class Login_activity : BaseActivity() {
         }
 
         binding.buttonPhoneNo.setOnClickListener {
-            if(binding.editTextPhone.text.toString().length != 10){
+            if (binding.editTextPhone.text.toString().length != 10) {
                 Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
-            }else {
+            } else {
                 val ph = "+91" + binding.editTextPhone.text.toString()
                 contact = ph
                 if (ph.isEmpty()) {
                     Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
                 } else {
-//                    viewModel.signInWithPhone(binding.editTextPhone.text.toString())
                     viewModel.OnVerificationCodeSent(ph, this)
                 }
             }
@@ -159,12 +161,11 @@ class Login_activity : BaseActivity() {
         }
 
         binding.buttonLoginUsernameSubmit.setOnClickListener {
-            val username = "+91"+binding.editTextUsername.text.toString()
+            val username = "+91" + binding.editTextUsername.text.toString()
             contact = username
             val familyID = binding.editTextFamilyID.text.toString()
             if (username.isEmpty() || familyID.isEmpty()) {
-                Toast.makeText(this, "Please enter username and family ID", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Please enter username and family ID", Toast.LENGTH_SHORT).show()
             } else {
                 Log.d("LoginActivity", "Username: $username, FamilyID: $familyID")
                 showProgressDialog("Verifying Family ID..")
@@ -173,8 +174,8 @@ class Login_activity : BaseActivity() {
         }
 
         setWindowsUp()
-
     }
+
 
     private fun setLocal(activity: Activity, language: String) {
         val locale = Locale(language)
@@ -528,5 +529,16 @@ class Login_activity : BaseActivity() {
 //                    }
 //                })
         }
+    }
+
+    private fun changeLanguage(language: String) {
+        val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(language)
+
+// Call this on the main thread as it may require Activity.restart()
+        AppCompatDelegate.setApplicationLocales(appLocale)
+
+        val selectedLocale = AppCompatDelegate.getApplicationLocales()[0]
+        Log.e("LoginActivity", "Selected Locale: $selectedLocale")
+        preferencesHelper.putPointer(2)
     }
 }

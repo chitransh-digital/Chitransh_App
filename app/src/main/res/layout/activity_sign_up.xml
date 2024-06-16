@@ -81,7 +81,7 @@
                     android:id="@+id/nametext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Your Name"
+                    android:hint="@string/your_name"
                     android:padding="10dp"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -114,7 +114,7 @@
                     android:id="@+id/familyIDtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Family ID"
+                    android:text="@string/family_id"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -126,7 +126,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
                     android:focusable="false"
-                    android:hint="Create Family ID"
+                    android:hint="@string/create_family_id"
                     android:padding="10dp"
                     android:textSize="20sp" />
 
@@ -166,7 +166,7 @@
                     android:id="@+id/contacttext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Contact"
+                    android:text="@string/contact"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -246,7 +246,7 @@
                     android:id="@+id/blood_group_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Blood Group"
+                    android:text="@string/blood_group"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/black"
@@ -279,7 +279,7 @@
                     android:id="@+id/agetext"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Age"
+                    android:text="@string/age"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -309,7 +309,7 @@
                     android:id="@+id/gendertext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gender"
+                    android:text="@string/gender"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -340,7 +340,7 @@
                     android:id="@+id/Addtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -352,7 +352,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Landmark"
+                    android:hint="@string/landmark"
                     android:padding="10dp" />
 
                 <!-- City Dropdown -->
@@ -389,7 +389,7 @@
                     android:id="@+id/Karyatext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Karyakarni (optional)"
+                    android:text="@string/karyakarni_optional"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -400,7 +400,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Karyakarni"
+                    android:hint="@string/karyakarni"
                     android:padding="10dp" />
             </LinearLayout>
 
@@ -411,7 +411,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/theme_brown"
-                android:text="Next"
+                android:text="@string/next"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -466,7 +466,7 @@
                     android:id="@+id/leveltext"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Highest Education"
+                    android:text="@string/highest_education"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -498,7 +498,7 @@
                     android:id="@+id/coursetext"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Course"
+                    android:text="@string/course"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -524,7 +524,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginStart="5dp"
                         android:background="@drawable/edittest_background"
-                        android:hint="Mention your course"
+                        android:hint="@string/mention_your_course"
                         android:padding="10dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hint_color"
@@ -704,7 +704,7 @@
                     android:id="@+id/occu_positiontext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Job Post"
+                    android:text="@string/job_post"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -715,7 +715,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Post"
+                    android:hint="@string/post"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"
@@ -739,7 +739,7 @@
                     android:id="@+id/occu_department_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Job Department"
+                    android:text="@string/job_department"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -750,7 +750,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Department"
+                    android:hint="@string/department"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"
@@ -774,7 +774,7 @@
                     android:id="@+id/occu_employer_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Job Employer"
+                    android:text="@string/job_employer"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -785,7 +785,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Employer"
+                    android:hint="@string/employer"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"
@@ -809,7 +809,7 @@
                     android:id="@+id/occu_buis_name_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Buisness Name"
+                    android:text="@string/business_name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -820,7 +820,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Department"
+                    android:hint="@string/department"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"
@@ -844,7 +844,7 @@
                     android:id="@+id/occu_buis_type_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Buisness type"
+                    android:text="@string/business_type"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -876,7 +876,7 @@
                     android:id="@+id/occu_address_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Job Location"
+                    android:text="@string/job_location"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -887,7 +887,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="Job Location"
+                    android:hint="@string/job_location"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"
@@ -901,7 +901,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/theme_brown"
-                android:text="Next"
+                android:text="@string/next"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -917,7 +917,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/theme_brown"
-                android:text="Previous"
+                android:text="@string/previous"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -957,7 +957,7 @@
             android:id="@+id/addImageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Image"
+            android:text="@string/add_image"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -980,7 +980,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
                 android:backgroundTint="@color/theme_brown"
-                android:text="Previous"
+                android:text="@string/previous"
                 android:textColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/preview_addImage" />
 
@@ -996,7 +996,7 @@
                 android:layout_gravity="right"
                 android:layout_weight="3"
                 android:backgroundTint="@color/theme_brown"
-                android:text="Preview Information"
+                android:text="@string/preview_information"
                 android:textColor="@color/white" />
 
 
@@ -1020,7 +1020,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="24dp"
-                android:text="Check Your Information"
+                android:text="@string/check_your_information"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -1079,7 +1079,7 @@
                     android:id="@+id/preview_nametext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name :"
+                    android:text="@string/name :"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -1089,7 +1089,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:hint="Your Name"
+                    android:hint="@string/your_name"
                     android:padding="10dp"
                     android:textSize="20sp" />
             </LinearLayout>

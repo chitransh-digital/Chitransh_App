@@ -101,7 +101,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="Family \nRegistration"
+                    android:text="@string/family_nregistration"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -132,7 +132,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="Business \nRegistration"
+                    android:text="@string/business_nregistration"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -162,7 +162,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="Jobs"
+                    android:text="@string/jobs"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -194,7 +194,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="View \nFamily"
+                    android:text="@string/view_nfamily"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -226,7 +226,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="View \nBusiness"
+                    android:text="@string/view_nbusiness"
                     android:textSize="12sp" />
             </LinearLayout>
 

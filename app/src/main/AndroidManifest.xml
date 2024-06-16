@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CommunityApp"
+        android:localeConfig="@xml/local_config"
         tools:targetApi="31">
         <activity
             android:name=".ui.Dashboard.UpdateMemberActivity"
@@ -77,6 +78,15 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
+        </service>
+
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
         </service>
         <!--
  Set custom default icon. This is used when no icon is set for incoming notification messages.
