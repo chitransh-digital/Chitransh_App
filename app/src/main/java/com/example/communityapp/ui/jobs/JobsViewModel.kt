@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.Comment
 import com.example.communityapp.data.models.Job
+import com.example.communityapp.data.newModels.JobsResponse
 import com.example.communityapp.data.repository.JobsRepo
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,17 +40,24 @@ class JobsViewModel @Inject constructor(private  val jobsRepo: JobsRepo): ViewMo
     }
 
 
-    private val _jobResult = MutableLiveData<Resource<List<Pair<Job,String>>>>()
-    val jobResult: LiveData<Resource<List<Pair<Job,String>>>>
+    private val _jobResult = MutableLiveData<Resource<JobsResponse>>()
+    val jobResult: LiveData<Resource<JobsResponse>>
         get() = _jobResult
 
     // Function to fetch all jobs
-    fun getAllJobs() {
+    fun getAllJobs(limit: Int = 10, page: Int) {
         _jobResult.value = Resource.loading()
         viewModelScope.launch {
             try {
-                val jobs = jobsRepo.getAllJobs()
-                _jobResult.postValue(Resource.success(jobs))
+                val response = jobsRepo.getJobs(limit,page)
+                if(response.isSuccessful){
+                    _jobResult.postValue(Resource.success(response.body()))
+                }else if(response.code()==400){
+                    _jobResult.postValue(Resource.error(Exception("All jobs shown")))
+                }
+                else{
+                    _jobResult.postValue(Resource.error(Exception(response.message())))
+                }
             } catch (e: Exception) {
                 _jobResult.postValue(Resource.error(e))
             }

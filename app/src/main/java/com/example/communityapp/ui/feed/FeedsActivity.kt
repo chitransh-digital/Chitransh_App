@@ -21,7 +21,7 @@ class FeedsActivity : BaseActivity() {
     private var lastNews: NewsFeed? = null
     private  var feedsList:MutableList<NewsFeed> = mutableListOf()
     private lateinit var newsAdapter: FeedsAdapter
-    private val limit =2
+    private val limit =5
     private var page = 1
 
 

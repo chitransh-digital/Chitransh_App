@@ -6,6 +6,7 @@ import com.example.communityapp.data.models.LoginResponse
 import com.example.communityapp.data.newModels.FamilyResponse
 import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.newModels.ImageResponse
+import com.example.communityapp.data.newModels.JobsResponse
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
 import okhttp3.MultipartBody
@@ -41,5 +42,11 @@ interface CustomAPI {
         @Query("limit") limit: Int,
         @Query("page") page: Int
     ): Response<FeedsResponse>
+
+    @GET("api/job/getAll")
+    suspend fun getJobs(
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Response<JobsResponse>
 
 }

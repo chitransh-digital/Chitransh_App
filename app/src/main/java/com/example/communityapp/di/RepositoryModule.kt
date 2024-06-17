@@ -17,8 +17,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideJobsRepository(): JobsRepo {
-        return JobsRepo(FirebaseFirestore.getInstance())
+    fun provideJobsRepository(customAPI: CustomAPI): JobsRepo {
+        return JobsRepo(FirebaseFirestore.getInstance(), customAPI)
     }
 
     @Provides
