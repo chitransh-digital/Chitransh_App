@@ -6,7 +6,8 @@
         <item>Restaurant</item>
         <item>Retail Store</item>
         <item>Consulting Firm</item>
-        <item>other</item>
+        <item>Support</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="spinner3_values">

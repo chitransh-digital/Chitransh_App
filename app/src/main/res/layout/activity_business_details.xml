@@ -37,16 +37,20 @@
         android:layout_marginStart="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/business_back"
-        app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/business_back"
+            />
 
     <TextView
         android:id="@+id/textViewBusinessType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Type"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/textViewBusinessName"
-        app:layout_constraintStart_toStartOf="@+id/textViewBusinessName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBusinessName" />
+        app:layout_constraintStart_toStartOf="@+id/business_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBusinessName"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
+        />
 
     <LinearLayout
         android:id="@+id/buttonsLayout"
@@ -62,7 +66,7 @@
             android:id="@+id/button1"
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:layout_weight="0.8"
+            android:layout_weight="0.7"
             android:layout_margin="2dp"
             android:background="@drawable/curved_edittext_bg"
             android:drawableLeft="@drawable/baseline_call_24"
@@ -75,7 +79,7 @@
             android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:layout_weight="0.6"
+            android:layout_weight="0.5"
             android:layout_margin="2dp"
             android:background="@drawable/curved_edittext_bg"
             app:backgroundTint="@color/theme_brown"
@@ -169,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

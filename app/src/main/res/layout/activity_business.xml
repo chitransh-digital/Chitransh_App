@@ -129,14 +129,32 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/Addinput"
+                android:id="@+id/landmarkInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edittest_background"
-                android:hint="Address"
+                android:hint="Landmark"
                 android:padding="10dp" />
+
+            <Spinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:background="@drawable/edittest_background"/>
+
+            <Spinner
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:background="@drawable/edittest_background"/>
+
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/desc"

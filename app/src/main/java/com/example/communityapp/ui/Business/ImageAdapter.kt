@@ -7,8 +7,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.communityapp.R
+import okhttp3.MultipartBody
 
-class ImageAdapter(private val images: MutableList<String>) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+class ImageAdapter(private val images: MutableList<String>,private val multiPartList:MutableList<MultipartBody.Part>) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageBusinessView)
@@ -27,6 +28,7 @@ class ImageAdapter(private val images: MutableList<String>) : RecyclerView.Adapt
         holder.cancelButton.setOnClickListener {
             // Remove the image at the clicked position
             images.removeAt(position)
+            multiPartList.removeAt(position)
             // Notify adapter about data changes
             notifyDataSetChanged()
         }

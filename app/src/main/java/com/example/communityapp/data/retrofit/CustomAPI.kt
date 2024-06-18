@@ -3,6 +3,9 @@ package com.example.communityapp.data.retrofit
 import com.example.communityapp.data.models.LoginRequest
 import com.example.communityapp.data.models.LoginRequestByID
 import com.example.communityapp.data.models.LoginResponse
+import com.example.communityapp.data.newModels.AddBusinessResponse
+import com.example.communityapp.data.newModels.Business
+import com.example.communityapp.data.newModels.BusinessResponse
 import com.example.communityapp.data.newModels.FamilyResponse
 import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.newModels.ImageResponse
@@ -49,4 +52,12 @@ interface CustomAPI {
         @Query("page") page: Int
     ): Response<JobsResponse>
 
+    @GET("api/business/getBusinesses")
+    suspend fun getBusinesses(
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Response<BusinessResponse>
+
+    @POST("api/business/registerBusiness")
+    suspend fun addBusiness(@Body request: Business): Response<AddBusinessResponse>
 }

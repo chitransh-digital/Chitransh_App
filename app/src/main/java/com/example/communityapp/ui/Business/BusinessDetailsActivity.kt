@@ -5,17 +5,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
 import com.example.communityapp.BaseActivity
-import com.example.communityapp.R
-import com.example.communityapp.data.models.Business
+import com.example.communityapp.data.newModels.Business
 import com.example.communityapp.databinding.ActivityBusinessDetailsBinding
-import com.example.communityapp.databinding.ActivityViewBusinessBinding
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
@@ -33,11 +26,11 @@ class BusinessDetailsActivity : BaseActivity() {
         if (business != null) {
             // For example, you can set the business name to a TextView
 //            Toast.makeText(this, business.name, Toast.LENGTH_SHORT).show()
-
+            val address= business.landmark + ", " + business.city + ", " + business.state
             binding.textViewBusinessName.text=business.name
             binding.textViewBusinessType.text=business.type
             binding.textViewBusinessDescription.text=business.desc
-            binding.textViewBusinessAddress.text=business.address
+            binding.textViewBusinessAddress.text=address
 //            Glide.with(this).load(business.images[0]).into(binding.businessImageView)
 
             val carousel: ImageCarousel = binding.businessImageView
@@ -61,16 +54,24 @@ class BusinessDetailsActivity : BaseActivity() {
             }
 
             binding.button2.setOnClickListener {
+                if(business.link.isEmpty() || business.link == "NA"){
+                    Toast.makeText(this, "No link found", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.link))
                 startActivity(intent)
             }
 
             binding.button3.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.file))
+                if(business.attachments.isEmpty()){
+                    Toast.makeText(this, "No attachment found", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.attachments[0]))
                 startActivity(intent)
             }
 
-            if(business.coupon!="NA"){
+            if(business.coupon.isNotEmpty() && business.coupon.isNotBlank() && business.coupon != "None"){
                 binding.llCoupon.visibility= View.VISIBLE
                 binding.tvCoupon.text = business.coupon
             }
