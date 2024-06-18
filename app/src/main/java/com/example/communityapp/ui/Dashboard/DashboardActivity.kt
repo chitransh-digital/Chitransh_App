@@ -11,12 +11,14 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -31,12 +33,13 @@ import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DashboardActivity : BaseActivity() {
+class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var viewModel: DashboardViewModel
     private var phoneNum : String = ""
@@ -54,6 +57,8 @@ class DashboardActivity : BaseActivity() {
         setObservables()
         setUpNavigation()
 //        setDialog()
+
+        binding.navDrawerView.setNavigationItemSelectedListener(this)
 
         val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
         phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null).toString()
@@ -133,7 +138,7 @@ class DashboardActivity : BaseActivity() {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
                     val user_data = resources.data!!
-                    startSignUpActivity(user_data)
+//                    startSignUpActivity(user_data)
                     Log.e("D Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {
@@ -168,6 +173,24 @@ class DashboardActivity : BaseActivity() {
             Log.d("Onresume phone num","Data fetching $phoneNum")
             viewModel.getMember(phoneNum)
         }
+    }
+
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+
+        when(p0.itemId){
+            R.id.nav_myprofile->{
+                val intent = Intent(this, SignUpActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.nav_signout->{
+                val intent = Intent(this, Login_activity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 
 }
