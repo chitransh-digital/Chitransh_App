@@ -14,6 +14,31 @@
         android:orientation="vertical"
         tools:context=".ui.Dashboard.DashboardActivity">
 
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/top_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_main_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/theme_yellow"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    >
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/notifications"
+                        android:background="@drawable/image_view_background"
+                        android:layout_gravity="end"/>
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/Frag"
             android:name="androidx.navigation.fragment.NavHostFragment"
