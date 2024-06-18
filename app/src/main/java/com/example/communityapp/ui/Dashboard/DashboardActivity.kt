@@ -25,6 +25,7 @@ import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.ui.SignUp.SignUpActivity
+import com.example.communityapp.ui.auth.Login_activity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener

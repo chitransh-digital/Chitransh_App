@@ -23,6 +23,10 @@ import com.example.communityapp.databinding.ActivityUpdateMemberBinding
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
+import java.io.InputStream
 
 @AndroidEntryPoint
 class UpdateMemberActivity : BaseActivity() {
@@ -43,6 +47,11 @@ class UpdateMemberActivity : BaseActivity() {
     var change = false
     var course = "NA"
     var buisType = "NA"
+    private lateinit var stringArrayState: ArrayList<String>
+    private lateinit var stringArrayCity: ArrayList<String>
+    private var spinnerStateValue: String = ""
+    private var _city: String = ""
+    private var _state: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +68,7 @@ class UpdateMemberActivity : BaseActivity() {
         }
         setObservables()
         setWindowsUp()
+        inito()
 
         if (familyMember == "HEAD") {
             binding.previewDelete.visibility = View.GONE
@@ -461,19 +471,28 @@ class UpdateMemberActivity : BaseActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.eduLevelSpinner.adapter = educationadapter
 
+        val state = member.address.split(",").last()
+        val city = member.address.split(",")[1]
+        val landmark = member.address.split(",").first()
+        Log.e("State", state)
+        Log.e("City", city)
+        Log.e("Landmark", landmark)
+
+        init(city,state)
+
         //add states in state spinners
-        val statesList = arrayListOf("Madhya Pradesh")
-        val statesadapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statesList)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.stateSpinner.adapter = statesadapter
+//        val statesList = arrayListOf("Madhya Pradesh")
+//        val statesadapter =
+//            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statesList)
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.stateSpinner.adapter = statesadapter
 
         //add cities in city spinners
-        val citiesList = arrayListOf("Indore", "Bhopal", "Gwalior", "Jabalpur")
-        val citiesadapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, citiesList)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.citySpinner.adapter = citiesadapter
+//        val citiesList = arrayListOf("Indore", "Bhopal", "Gwalior", "Jabalpur")
+//        val citiesadapter =
+//            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, citiesList)
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.citySpinner.adapter = citiesadapter
 
         //add blood groups in blood group spinners
         val bloodGroupList = arrayListOf("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "other")
@@ -656,10 +675,12 @@ class UpdateMemberActivity : BaseActivity() {
             changeUI(screenPointer)
         }
 
-        if (binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            course = binding.eduCourseOtherInput.text.toString()
-        } else {
-            course = binding.eduCourseSpinner.selectedItem.toString()
+        course = if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            binding.eduCourseOtherInput.text.toString()
+        } else if(binding.eduCourseSpinner.isSelected) {
+            binding.eduCourseSpinner.selectedItem.toString()
+        }else{
+            "NA"
         }
     }
 
@@ -1015,6 +1036,197 @@ class UpdateMemberActivity : BaseActivity() {
                     .setDuration(shortAnimationDuration.toLong())
                     .setListener(null)
             }
+        }
+    }
+
+    private fun init(cityFromBackend: String, stateFromBackend: String) {
+        stringArrayState = ArrayList()
+        stringArrayCity = ArrayList()
+
+        // Set city adapter
+        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayCity)
+        adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.citySpinner.adapter = adapterCity
+
+        // Get state json value from assets folder
+        try {
+            val obj = JSONObject(loadJSONFromAssetState())
+            val m_jArry = obj.getJSONArray("statelist")
+
+            for (i in 0 until m_jArry.length()) {
+                val jo_inside = m_jArry.getJSONObject(i)
+                val state = jo_inside.getString("State")
+                stringArrayState.add(state)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayState)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.stateSpinner.adapter = adapter
+
+        // Set the selected state from the backend
+        val stateIndex = stringArrayState.indexOf(stateFromBackend)
+        if (stateIndex != -1) {
+            binding.stateSpinner.setSelection(stateIndex)
+        }
+
+        // State spinner item selected listener with the help of this we get selected value
+        binding.stateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = parent?.getItemAtPosition(position)
+                val text = binding.stateSpinner.selectedItem.toString()
+
+                spinnerStateValue = binding.stateSpinner.selectedItem.toString()
+                _state = spinnerStateValue
+                Log.e("SpinnerStateValue", spinnerStateValue)
+                stringArrayCity.clear()
+
+                try {
+                    val obj = JSONObject(loadJSONFromAssetCity())
+                    val m_jArry = obj.getJSONArray("citylist")
+
+                    for (i in 0 until m_jArry.length()) {
+                        val jo_inside = m_jArry.getJSONObject(i)
+                        val state = jo_inside.getString("State")
+
+                        if (spinnerStateValue.equals(state, ignoreCase = true)) {
+                            _city = jo_inside.getString("city")
+                            stringArrayCity.add(_city)
+                        }
+                    }
+
+                    // Notify adapter city for getting selected value according to state
+                    adapterCity.notifyDataSetChanged()
+
+                    // Set the selected city from the backend
+                    val cityIndex = stringArrayCity.indexOf(cityFromBackend)
+                    if (cityIndex != -1) {
+                        binding.citySpinner.setSelection(cityIndex)
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        binding.citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val spinnerCityValue = binding.citySpinner.selectedItem.toString()
+                Log.e("SpinnerCityValue", spinnerCityValue)
+
+                _city = spinnerCityValue
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun loadJSONFromAssetState(): String? {
+        var json: String? = null
+        try {
+            val iss: InputStream = applicationContext.assets.open("state.json")
+            val size = iss.available()
+            val buffer = ByteArray(size)
+            iss.read(buffer)
+            iss.close()
+            json = String(buffer, Charsets.UTF_8)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return null
+        }
+        return json
+    }
+
+    private fun loadJSONFromAssetCity(): String? {
+        var json: String? = null
+        try {
+            val iss: InputStream = applicationContext.assets.open("cityState.json")
+            val size = iss.available()
+            val buffer = ByteArray(size)
+            iss.read(buffer)
+            iss.close()
+            json = String(buffer, Charsets.UTF_8)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return null
+        }
+        return json
+    }
+
+    private fun inito() {
+        stringArrayState = ArrayList()
+        stringArrayCity = ArrayList()
+
+        // Set city adapter
+        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayCity)
+        adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.citySpinner.adapter = adapterCity
+
+        // Get state json value from assets folder
+        try {
+            val obj = JSONObject(loadJSONFromAssetState())
+            val m_jArry = obj.getJSONArray("statelist")
+
+            for (i in 0 until m_jArry.length()) {
+                val jo_inside = m_jArry.getJSONObject(i)
+                val state = jo_inside.getString("State")
+                stringArrayState.add(state)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayState)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.stateSpinner.adapter = adapter
+
+        // State spinner item selected listener with the help of this we get selected value
+        binding.stateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = parent?.getItemAtPosition(position)
+                val text = binding.stateSpinner.selectedItem.toString()
+
+                spinnerStateValue = binding.stateSpinner.selectedItem.toString()
+                _state = spinnerStateValue
+                Log.e("SpinnerStateValue", spinnerStateValue)
+                stringArrayCity.clear()
+
+                try {
+                    val obj = JSONObject(loadJSONFromAssetCity())
+                    val m_jArry = obj.getJSONArray("citylist")
+
+                    for (i in 0 until m_jArry.length()) {
+                        val jo_inside = m_jArry.getJSONObject(i)
+                        val state = jo_inside.getString("State")
+
+                        if (spinnerStateValue.equals(state, ignoreCase = true)) {
+                            _city = jo_inside.getString("city")
+                            stringArrayCity.add(_city)
+                        }
+                    }
+
+                    // Notify adapter city for getting selected value according to state
+                    adapterCity.notifyDataSetChanged()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        binding.citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val spinnerCityValue = binding.citySpinner.selectedItem.toString()
+                Log.e("SpinnerCityValue", spinnerCityValue)
+
+                _city = spinnerCityValue
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
