@@ -5,18 +5,11 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.communityapp.BaseActivity
-import com.example.communityapp.R
-import com.example.communityapp.data.models.Business
+import com.example.communityapp.data.newModels.Business
 import com.example.communityapp.databinding.ActivityViewBusinessBinding
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +21,9 @@ class ViewBusinessActivity : BaseActivity() {
     private val viewModel: BusinessViewModel by viewModels()
     private var mOriginalBusinessList: MutableList<Business> = mutableListOf()
     private var mFilteredBusinessList: MutableList<Business> = mutableListOf()
+    private lateinit var businessAdapter: BusinessAdapter
+    private var limit=10
+    private var page=1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +36,11 @@ class ViewBusinessActivity : BaseActivity() {
             onBackPressed()
         }
 
+        setupRV()
+
         setObservales()
         showProgressDialog("Fetching Business Details...")
-        viewModel.getBusiness()
+        viewModel.getBusiness(limit, page)
 
         binding.businessSearchIcon.setOnClickListener {
             val query = binding.etSearchBusiness.text.toString()
@@ -89,18 +87,16 @@ class ViewBusinessActivity : BaseActivity() {
             hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
-                    mOriginalBusinessList.clear()
-                    mOriginalBusinessList.addAll(resources.data!!)
-                    val businessAdapter = BusinessAdapter(this, mOriginalBusinessList)
-                    binding.rvBusiness.layoutManager = LinearLayoutManager(this)
-                    binding.rvBusiness.adapter = businessAdapter
+//                    mOriginalBusinessList.clear()
+                    resources.data?.businesses?.let { mOriginalBusinessList.addAll(it) }
+                    businessAdapter.notifyDataSetChanged()
                     Log.e("B Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" B Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
-                    showErrorSnackBar("Some error occurred please try again later")
+                    showErrorSnackBar(resources.apiError.toString())
                     Log.e("B Error",resources.apiError.toString())
                 }
                 else -> {}
@@ -108,11 +104,16 @@ class ViewBusinessActivity : BaseActivity() {
         })
     }
 
+        private fun setupRV(){
+            businessAdapter = BusinessAdapter(this, mOriginalBusinessList)
+            binding.rvBusiness.layoutManager = LinearLayoutManager(this)
+            binding.rvBusiness.adapter = businessAdapter
+        }
     private fun filterBusinessList(query: String) {
         mFilteredBusinessList.clear()
         if (query.isNotEmpty()) {
             for (business in mOriginalBusinessList) {
-                if (business.name.contains(query, ignoreCase = true) || business.address.contains(query, ignoreCase = true) ) {
+                if (business.name.contains(query, ignoreCase = true) || business.city.contains(query, ignoreCase = true) ) {
                     mFilteredBusinessList.add(business)
                 }
             }
@@ -138,7 +139,7 @@ class ViewBusinessActivity : BaseActivity() {
         }
         else if(type =="Type"){
             mFilteredBusinessList = mOriginalBusinessList.filter { item ->
-                item.address.contains(city)
+                item.city.contains(city)
             }.toMutableList()
         }
         else if(city =="City"){
@@ -150,7 +151,7 @@ class ViewBusinessActivity : BaseActivity() {
             mFilteredBusinessList = mOriginalBusinessList.filter { item ->
                 // Apply filtering logic based on the selected values of type and city
                 // For example, if Business is the data model, and type and city are properties of Business:
-                item.type == type && item.address.contains(city)
+                item.type == type && item.city.contains(city)
             }.toMutableList()
         }
 

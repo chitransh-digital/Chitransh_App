@@ -2,15 +2,17 @@ package com.example.communityapp.data.repository
 
 import android.net.Uri
 import com.example.communityapp.data.models.Business
+import com.example.communityapp.data.retrofit.CustomAPI
 import com.example.communityapp.utils.Constants
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,private val storage: FirebaseStorage) {
+class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,private val storage: FirebaseStorage ,private val api: CustomAPI) {
 
     suspend fun getBusiness() : List<Business>{
         return suspendCoroutine { continuation ->
@@ -144,5 +146,10 @@ class BusinessRepo @Inject constructor(private val db : FirebaseFirestore,privat
         }
     }
 
+    suspend fun getBusinesses(limit: Int, page: Int) = api.getBusinesses(limit, page)
+
+    suspend fun addBusiness(business: com.example.communityapp.data.newModels.Business) = api.addBusiness(business)
+
+    suspend fun uploadImage(imagePart: MultipartBody.Part) = api.uploadImage(imagePart)
 
 }

@@ -2,18 +2,15 @@ package com.example.communityapp.ui.Business
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.communityapp.R
-import com.example.communityapp.data.models.Business
+import com.example.communityapp.data.newModels.Business
 
 class BusinessAdapter (private val context : Context, private val Businesses: List<Business>) : RecyclerView.Adapter<BusinessAdapter.BuisnessViewHolder>() {
 
@@ -31,12 +28,13 @@ class BusinessAdapter (private val context : Context, private val Businesses: Li
         }
 
         override fun onBindViewHolder(holder: BuisnessViewHolder, position: Int) {
+            val address = Businesses[position].landmark + ", " + Businesses[position].city + ", " + Businesses[position].state
             val business = Businesses[position]
             holder.businessName.text = business.name
             holder.businessDescription.text = business.desc
-            holder.businessLocation.text = business.address
+            holder.businessLocation.text = address
             holder.businessType.text=business.type
-            Glide.with(holder.itemView).load(business.images[0]).into(holder.businessImage)
+           if( business.images.isNotEmpty() ) Glide.with(holder.itemView).load(business.images[0]).into(holder.businessImage)
 
 
             holder.itemView.setOnClickListener {

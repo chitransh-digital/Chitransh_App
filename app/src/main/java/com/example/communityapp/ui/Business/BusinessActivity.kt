@@ -1,43 +1,46 @@
 package com.example.communityapp.ui.Business
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
+import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.communityapp.BaseActivity
-import com.example.communityapp.R
-import com.example.communityapp.data.models.Business
-import com.example.communityapp.data.models.Member
 import com.example.communityapp.databinding.ActivityBusinessBinding
-import com.example.communityapp.ui.Dashboard.ProfileFragment
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
-import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
-import java.net.URI
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 @AndroidEntryPoint
 class BusinessActivity : BaseActivity() {
 
     private val viewModel: BusinessViewModel by viewModels()
     private lateinit var binding: ActivityBusinessBinding
-    private lateinit var id : String
+    private lateinit var id: String
     private var shortAnimationDuration = 500
     private val PICK_IMAGES_REQUEST = 1
     private val FILE_PICK_REQUEST_CODE = 2
     private lateinit var imageAdapter: ImageAdapter
     private val imagesList: MutableList<String> = ArrayList()
-    private var mFileURI: String= "NA"
+    private val multiPartList: MutableList<MultipartBody.Part> = ArrayList()
+    private var mFileURI: Uri? = null
+    private var multiPartFile: MultipartBody.Part? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +51,9 @@ class BusinessActivity : BaseActivity() {
         setObservables()
         getArguments()
 
-        imageAdapter = ImageAdapter(imagesList)
-        binding.imageRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        imageAdapter = ImageAdapter(imagesList,multiPartList)
+        binding.imageRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.imageRecyclerView.adapter = imageAdapter
 
         binding.Submit.setOnClickListener {
@@ -60,9 +64,9 @@ class BusinessActivity : BaseActivity() {
             onBackPressed()
         }
         binding.addImageButton.setOnClickListener {
-            if(imagesList.size<4){
+            if (imagesList.size < 4) {
                 selectImages()
-            }else{
+            } else {
                 Toast.makeText(this, "at most 4 images can be uploaded", Toast.LENGTH_SHORT).show()
             }
         }
@@ -74,6 +78,7 @@ class BusinessActivity : BaseActivity() {
         }
 
     }
+
     private fun selectImages() {
         val intent = Intent()
         intent.type = "image/*"
@@ -90,11 +95,25 @@ class BusinessActivity : BaseActivity() {
                 val count = data.clipData!!.itemCount
                 for (i in 0 until count) {
                     val imageUri: Uri = data.clipData!!.getItemAt(i).uri
+                    val selectedImagePath = getImagePath(imageUri).toString()
+                        val file = File(selectedImagePath)
+                        Log.e("ImageFile", file.path)
+
+                        val requestBody = file.asRequestBody(contentResolver.getType(imageUri)?.toMediaTypeOrNull())
+                        val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
+                        multiPartList.add(body)
+
                     // Add the image URI to the list
                     imagesList.add(imageUri.toString())
                 }
             } else if (data?.data != null) {
                 val imageUri: Uri = data.data!!
+                val selectedImagePath = getImagePath(imageUri).toString()
+                val file = File(selectedImagePath)
+                Log.e("ImageFile", file.path)
+                val requestBody = file.asRequestBody(contentResolver.getType(imageUri)?.toMediaTypeOrNull())
+                val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
+                multiPartList.add(body)
                 // Add the image URI to the list
                 imagesList.add(imageUri.toString())
             }
@@ -105,38 +124,89 @@ class BusinessActivity : BaseActivity() {
         if (requestCode == FILE_PICK_REQUEST_CODE && resultCode == RESULT_OK) {
             val fileUri = data?.data
             // Handle the selected file URI, for example:
-            mFileURI=fileUri.toString()
+            mFileURI=fileUri
             fileUri?.let { uri ->
                 val resolver = contentResolver
-                val cursor = resolver.query(uri, null, null, null, null)
-                cursor?.use {
-                    if (it.moveToFirst()) {
-                        val displayName = it.getString(it.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME))
-                        // Now you have the display name of the file
-                        binding.fileText.text = displayName
-                        binding.fileText.visibility = View.VISIBLE
-                    }
+                val displayName = getFileName(uri, resolver)
+                displayName?.let {
+                    binding.fileText.text = it
+                    binding.fileText.visibility = View.VISIBLE
+                }
+
+                val filePath = getFileFromUri(uri)
+                Log.e("File URI", uri.toString())
+                Log.e("File Path", filePath.toString())
+                if (filePath != null) {
+                    val requestBody = filePath.asRequestBody(resolver.getType(uri)?.toMediaTypeOrNull())
+                    val body = MultipartBody.Part.createFormData("file", filePath.name, requestBody)
+                    multiPartFile = body
                 }
             }
+        }
+    }
 
+    private fun getImagePath(uri: Uri): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+        return cursor?.use {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            it.moveToFirst()
+            it.getString(columnIndex)
+        }
+    }
+
+    fun getFileName(uri: Uri, resolver: ContentResolver): String? {
+        var name: String? = null
+        val cursor = resolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (nameIndex != -1) {
+                    name = it.getString(nameIndex)
+                }
+            }
+        }
+        return name
+    }
+
+    fun getFileFromUri(uri: Uri): File? {
+        val documentFile = DocumentFile.fromSingleUri(this, uri)
+        documentFile?.let {
+            val file = File(cacheDir, it.name ?: "temp_file")
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                FileOutputStream(file).use { outputStream ->
+                    copyStream(inputStream, outputStream)
+                }
+            }
+            return file
+        }
+        return null
+    }
+
+    fun copyStream(input: InputStream, output: FileOutputStream) {
+        val buffer = ByteArray(1024)
+        var length: Int
+        while (input.read(buffer).also { length = it } > 0) {
+            output.write(buffer, 0, length)
         }
     }
 
 
-
-    private fun getArguments(){
+    private fun getArguments() {
         id = intent.getStringExtra(Constants.CONTACT).toString()
 
-        val businessTypeList = arrayListOf("Restaurant", "Retail Store", "Tech", "Consulting Firm", "other")
-        val businessTypeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, businessTypeList)
+        val businessTypeList =
+            arrayListOf("Restaurant", "Retail Store", "Tech", "Consulting Firm", "other")
+        val businessTypeAdapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, businessTypeList)
         businessTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.businessSpinner.adapter=businessTypeAdapter
+        binding.businessSpinner.adapter = businessTypeAdapter
     }
 
     private fun setObservables() {
-        viewModel.business.observe(this, Observer {resources ->
+        viewModel.business.observe(this, Observer { resources ->
             hideProgressDialog()
-            when(resources.status){
+            when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     Toast.makeText(this, "Business Registered", Toast.LENGTH_SHORT).show()
                     binding.nameinput.text?.clear()
@@ -146,81 +216,63 @@ class BusinessActivity : BaseActivity() {
                     binding.linkInput.text?.clear()
                     imagesList.clear()
                     imageAdapter.notifyDataSetChanged()
-                    Log.e("B Success",resources.data.toString())
+                    Log.e("B Success", resources.data.toString())
                 }
+
                 Resource.Status.LOADING -> {
-                    Log.e(" B Loading",resources.data.toString())
+                    Log.e(" B Loading", resources.data.toString())
                 }
+
                 Resource.Status.ERROR -> {
                     showErrorSnackBar("Some error occurred please try again later")
-                    Log.e("B Error",resources.apiError.toString())
+                    Log.e("B Error", resources.apiError.toString())
                 }
+
                 else -> {}
             }
         })
         setWindowsUp()
     }
 
-    private fun checkFields(){
-        if (binding.nameinput.text.isNullOrEmpty()){
+    private fun checkFields() {
+        if (binding.nameinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
-        }else if(binding.contactinput.text.isNullOrEmpty()){
+        } else if (binding.contactinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
-        }else if(binding.Addinput.text.isNullOrEmpty()){
+        } else if (binding.Addinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your address no", Toast.LENGTH_SHORT).show()
-        }else if(binding.descinput.text.isNullOrEmpty()){
+        } else if (binding.descinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your description no", Toast.LENGTH_SHORT).show()
-        }else{
+        } else {
             submitRegistration()
         }
     }
 
-    private fun submitRegistration(){
-        var businessLink="NA"
-        if(binding.linkInput.text.isNotEmpty()){
-            businessLink=binding.linkInput.text.toString()
+    private fun submitRegistration() {
+
+        var businessLink = "NA"
+        if (binding.linkInput.text.isNotEmpty()) {
+            businessLink = binding.linkInput.text.toString()
         }
-        val data = Business(
+        val data = com.example.communityapp.data.newModels.Business(
             name = binding.nameinput.text.toString(),
             contact = binding.contactinput.text.toString(),
-            address = binding.Addinput.text.toString(),
+            city = binding.Addinput.text.toString(),
+            state = binding.Addinput.text.toString(),
+            landmark = binding.Addinput.text.toString(),
             desc = binding.descinput.text.toString(),
             ownerID = id,
             type = binding.businessSpinner.selectedItem.toString(),
             link = businessLink,
             images = emptyList(),
-            coupon = "NA",
-            file = "NA"
+            coupon = "none",
+            attachments = emptyList(),
+            id = id
         )
         showProgressDialog("Registering Business...")
-        viewModel.addBusiness(data,imagesList,mFileURI)
+        viewModel.addBusiness(data, multiPartList, multiPartFile)
     }
 
-    private fun crossFade(visible: List<View>, invisible: List<View>) {
 
-        for (view in visible) {
-            view.apply {
-                // Set the content view to 0% opacity but visible, so that it is
-                // visible but fully transparent during the animation.
-                alpha = 0f
-                visibility = View.VISIBLE
-                // Animate the content view to 100% opacity and clear any animation
-                // listener set on the view.
-                animate()
-                    .alpha(1f)
-                    .setDuration(shortAnimationDuration.toLong())
-                    .setListener(null)
-            }
-        }
 
-        for (view in invisible) {
-            view.animate()
-                .alpha(0f)
-                .setDuration(shortAnimationDuration.toLong())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                    }
-                })
-        }
-    }
 }

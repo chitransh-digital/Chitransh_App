@@ -37,7 +37,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class DashboardActivity : BaseActivity() {
 
     @Inject
     lateinit var preferencesHelper: PreferencesHelper
@@ -58,10 +58,8 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         setUpNavigation()
 //        setDialog()
 
-        binding.navDrawerView.setNavigationItemSelectedListener(this)
-
-        val sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-        phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null).toString()
+        phoneNum = preferencesHelper.getContact().toString()
+        Log.d("Dashboard token no",preferencesHelper.getToken().toString())
 //        phoneNum = intent.getStringExtra(Constants.USERNAME).toString()
         Log.d("Dashboard phone no",phoneNum)
 
@@ -194,24 +192,6 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
             Log.d("Onresume phone num","Data fetching $phoneNum")
             viewModel.getMember(phoneNum)
         }
-    }
-
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-
-        when(p0.itemId){
-            R.id.nav_myprofile->{
-                val intent = Intent(this, SignUpActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.nav_signout->{
-                val intent = Intent(this, Login_activity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
-        binding.drawerLayout.closeDrawer(GravityCompat.START)
-        return true
     }
 
 }
