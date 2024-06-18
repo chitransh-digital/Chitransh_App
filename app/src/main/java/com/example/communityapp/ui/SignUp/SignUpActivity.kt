@@ -3,7 +3,6 @@ package com.example.communityapp.ui.SignUp
 import android.app.Activity
 import android.app.ActivityOptions
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -30,6 +29,10 @@ import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import java.util.Locale
 import javax.inject.Inject
 
@@ -53,6 +56,7 @@ class SignUpActivity : BaseActivity() {
     var uri: Uri = Uri.EMPTY
     var course = "NA"
     var buisType = "NA"
+    private  lateinit var mImagePart: MultipartBody.Part
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -348,13 +352,12 @@ class SignUpActivity : BaseActivity() {
         binding.bloodGroupSpinner.adapter = bloodGroupadapter
 
 
-        var sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-        val no = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
 
+        val no = preferencesHelper.getContact()
         Log.d("Dashboard phone no", no.toString())
 
-        sharedPreferences = getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-        val phoneNum = sharedPreferences.getString(Constants.PHONE_NUMBER, null)
+
+        val phoneNum = no
         binding.contactinput.setText(phoneNum)
 
         binding.memberSubmit.setOnClickListener {
@@ -651,7 +654,7 @@ class SignUpActivity : BaseActivity() {
             age = binding.ageSpinner.selectedItem.toString(),
             gender = binding.genderSpinner.selectedItem.toString(),
             karyakarni = karyakanri,
-            relation = "HEAD",
+            relation = "head",
             occupation = binding.occuLevelSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
             profilePic = "NA",
@@ -683,7 +686,7 @@ class SignUpActivity : BaseActivity() {
             gender = binding.genderSpinner.selectedItem.toString(),
             address = completeAddress,
             karyakarni = karyakanri,
-            relation = "HEAD",
+            relation = "head",
             occupation = binding.occuLevelSpinner.selectedItem.toString(),
             bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
             profilePic = "NA",
@@ -702,7 +705,7 @@ class SignUpActivity : BaseActivity() {
 
         val signupRequest= SignupRequest(binding.familyIDinput.text.toString(),memberData)
 
-        viewModel.addMember(signupRequest,uri,this)
+        viewModel.addMember(signupRequest,mImagePart,this)
     }
 
     private fun showDatePickerDialog() {
@@ -757,18 +760,37 @@ class SignUpActivity : BaseActivity() {
     }
 
 
-    private val getImage=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        Log.d("Image Path", result.toString())
+    private val getImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            uri = data?.data!!
-            selectedImagePath = getImagePath(uri!!).toString()
-            binding.ivAddImageMember.setImageURI(uri)
-        }else{
-            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
-        }
+             uri = data?.data!!
 
+            // Validate file type here if needed before proceeding to upload
+            if (isFileTypeAllowed(uri)) {
+                // Proceed with uploading the file
+                val selectedImagePath = getImagePath(uri).toString()
+                binding.ivAddImageMember.setImageURI(uri)
+
+                val file = File(selectedImagePath)
+                Log.e("ImageFile", file.path)
+
+                val requestBody = file.asRequestBody(contentResolver.getType(uri)?.toMediaTypeOrNull())
+                val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
+
+                mImagePart = body
+            } else {
+                // Handle case where file type is not allowed
+                Toast.makeText(this, "Only JPEG, JPG, PNG, GIF files are allowed", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
+
+    private fun isFileTypeAllowed(uri: Uri): Boolean {
+        val contentResolver = applicationContext.contentResolver
+        val mimeType = contentResolver.getType(uri)
+        return mimeType != null && mimeType.startsWith("image/")
+    }
+
     private fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
@@ -803,13 +825,14 @@ class SignUpActivity : BaseActivity() {
                     binding.ageSpinner.setSelection(1)
                     binding.genderSpinner.setSelection(1)
 
-                    preferencesHelper.getContact()?.let { viewModel.signInWithPhone(it) }
+
+                    viewModel.signInWithPhone(preferencesHelper.getContact().toString())
 
 
 
-                    Toast.makeText(this, R.string.registration_success, Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this,DashboardActivity::class.java))
-                    finish()
+//                    Toast.makeText(this, R.string.registration_success, Toast.LENGTH_SHORT).show()
+//                    startActivity(Intent(this,DashboardActivity::class.java))
+//                    finish()
                 }
                 Resource.Status.LOADING -> {
                     showProgressDialog("Adding Your Details as Family Head ...")

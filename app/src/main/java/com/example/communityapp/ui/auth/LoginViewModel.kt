@@ -82,22 +82,23 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth, private 
             }
     }
 
-    private val _loginStatus = MutableLiveData<Resource<Boolean>>()
+    private val _loginStatus = MutableLiveData<Resource<LoginResponse>>()
 
-    val loginStatus : LiveData<Resource<Boolean>>
+    val loginStatus : LiveData<Resource<LoginResponse>>
         get() = _loginStatus
 
-    fun signInWithUsername(username: String, familyID: String) {
+    fun signInWithUsername( familyID: String,contact: String) {
         _loginStatus.value = Resource.loading()
         viewModelScope.launch {
             try{
-                val res = loginRepo.signInWithUsername(username)
-                Log.d("LoginViewModel", "signInWithUsername: $res")
-                if(res == familyID) {
-                    _loginStatus.value = Resource.success(true)
-                } else {
-                    _loginStatus.value = Resource.error(Exception("Invalid Password"))
+                val res = loginRepo.signInWithUsername(familyID,contact)
+                if(res.isSuccessful){
+                    Log.d("LoginViewModel", "signInWithUsername: ${res.body()}")
+                    _loginStatus.value = Resource.success(res.body())
+                }else if(res.code() == 404){
+                    _loginStatus.value = Resource.error(Exception(Constants.Error404))
                 }
+
             }catch (e : Exception){
                 _loginStatus.value = Resource.error(e)
             }

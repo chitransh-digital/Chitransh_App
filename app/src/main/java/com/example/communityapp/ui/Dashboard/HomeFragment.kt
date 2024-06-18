@@ -1,46 +1,46 @@
 package com.example.communityapp.ui.Dashboard
 
-import android.app.ActivityOptions
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
-import android.widget.RadioButton
-import android.widget.TextView
-import androidx.fragment.app.replace
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.R
+import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
+import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.databinding.FragmentHomeNewBinding
 import com.example.communityapp.databinding.RelationInfoDialogBinding
 import com.example.communityapp.ui.Business.BusinessActivity
 import com.example.communityapp.ui.Business.ViewBusinessActivity
-import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.ui.family.FamilyActivity
 import com.example.communityapp.ui.family.NewFamilyActivity
-import com.example.communityapp.ui.jobPosting.JobPostingActivity
 import com.example.communityapp.ui.jobs.JobsActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+@AndroidEntryPoint
 
 class HomeFragment : Fragment(){
-
+    @Inject
+    lateinit var preferencesHelper: PreferencesHelper
     private lateinit var binding: FragmentHomeNewBinding
     private lateinit var viewModel: DashboardViewModel
-    private lateinit var user_data : Member
+    private lateinit var user_data : MemberX
     private var uniqueRelations: List<String>? = null
     private var contact = ""
     private var headAddress = ""
+    private var familyId= ""
+    private val limit =10
+    private var page = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +51,8 @@ class HomeFragment : Fragment(){
         viewModel = ViewModelProvider(requireActivity())[DashboardViewModel::class.java]
         setObservables()
 
-        val sharedPreferences = requireActivity().getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
-        contact = sharedPreferences.getString(Constants.PHONE_NUMBER, null).toString()
+
+        contact = preferencesHelper.getContact().toString()
 
         binding.card2.setOnClickListener {
             val intent = Intent(requireContext(),BusinessActivity::class.java)
@@ -62,7 +62,7 @@ class HomeFragment : Fragment(){
 
         binding.card1.setOnClickListener {
             val intent = Intent(requireContext(),FamilyActivity::class.java)
-            intent.putExtra(Constants.FAMILYID,user_data.familyID)
+            intent.putExtra(Constants.FAMILYID,familyId)
             intent.putStringArrayListExtra(Constants.UNIQUE_RELATIONS, ArrayList(uniqueRelations))
             intent.putExtra(Constants.HEAD_ADDRESS,headAddress)
             Log.d("Head Address",headAddress)
@@ -102,9 +102,10 @@ class HomeFragment : Fragment(){
             when(resources.status){
                 Resource.Status.SUCCESS -> {
                     Log.e("home Success",resources.data.toString())
-                    uniqueRelations = resources.data?.distinctBy { it.relation }?.map { it.relation }
-                    updateUI(resources.data!!)
-
+                    uniqueRelations =
+                        resources.data!!.families[0].members .distinctBy { it.relation }.map { it.relation }
+                    updateUI(resources.data.families[0].members)
+                    familyId= resources.data.families[0].familyID
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" Profile Loading",resources.data.toString())
@@ -126,10 +127,8 @@ class HomeFragment : Fragment(){
                 Resource.Status.SUCCESS -> {
                     Log.e("news load Success",resources.data.toString())
                     try {
-                        setupRv(resources.data!!)
-//                        val newsBylocation = resources.data.filter { it.location in user_data.address }
-//                        setupRvbyLocation(newsBylocation)
-                        setupRvbyLocation(resources.data)
+                        setupRv(resources.data!!.Feeds)
+                        setupRvbyLocation(resources.data.Feeds)
                     }
                     catch (e : Exception){
                         Log.e("news load error",e.toString())
@@ -146,20 +145,19 @@ class HomeFragment : Fragment(){
         })
     }
 
-    private fun updateUI(data : List<Member>){
+    private fun updateUI(data : List<MemberX>){
         val id = contact
         for(ip in data){
-            if(ip.relation == "HEAD"){
-                headAddress = ip.address
+            if(ip.relation == "Head"){
+                headAddress = ip.landmark + ip.city + ip.state
             }
             if (ip.contact == id){
                 user_data = ip
-//                binding.topGreeting.text = "Namaskar ${ip.name} Ji"
                 break
             }
         }
 
-        viewModel.getFeedsByPaging()
+        viewModel.getFeedsByPaging(limit,page)
 //        setDialog(data)
     }
 

@@ -9,15 +9,14 @@
     <LinearLayout
         android:id="@+id/detailedJobLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
         android:layout_margin="8dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/tv_expandedJobTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
             android:text="Job Position"
             android:textStyle="bold"
             android:textSize="22sp"
@@ -30,7 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             >
             <ImageView
                 android:layout_width="0dp"
@@ -102,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Job Description"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:textColor="@color/black"
             android:textStyle="bold"
             />
@@ -114,7 +113,6 @@
                 android:id="@+id/tvMore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="200dp"
                 android:text="@string/lorem_ipsum"
                 android:scrollbars="vertical" />
 
@@ -163,13 +161,13 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="Comments"
+            android:visibility="gone"
             />
-
-
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/commentRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -183,6 +181,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

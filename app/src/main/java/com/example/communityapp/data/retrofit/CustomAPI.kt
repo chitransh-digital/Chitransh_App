@@ -3,16 +3,20 @@ package com.example.communityapp.data.retrofit
 import com.example.communityapp.data.models.LoginRequest
 import com.example.communityapp.data.models.LoginRequestByID
 import com.example.communityapp.data.models.LoginResponse
+import com.example.communityapp.data.newModels.FamilyResponse
+import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.newModels.ImageResponse
+import com.example.communityapp.data.newModels.JobsResponse
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Header
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface CustomAPI {
 
@@ -28,10 +32,21 @@ interface CustomAPI {
 
     @Multipart
     @POST("api/image/upload")
-    suspend fun uploadImage(
-        @Part file: MultipartBody.Part,
-        @Header("Cookie") jwt: String ="jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Njg3OGE4Mzc4NWQ5NWYyMGMwYWRlNyIsImlhdCI6MTcxODIwMzAwOCwiZXhwIjoxNzE4NDYyMjA4fQ.hOZKInPKY_GydHdkVZ2iNgFxVjBz84ucYsDHx8QO2k0"
-    ): Response<ImageResponse>
+    suspend fun uploadImage(@Part file: MultipartBody.Part): Response<ImageResponse>
 
+    @GET("api/member/viewFamilies")
+    suspend fun getFamilyByContact(@Query("contact") contact: String): Response<FamilyResponse>
+
+    @GET("api/feeds/getFeeds")
+    suspend fun getFeeds(
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Response<FeedsResponse>
+
+    @GET("api/job/getAll")
+    suspend fun getJobs(
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Response<JobsResponse>
 
 }

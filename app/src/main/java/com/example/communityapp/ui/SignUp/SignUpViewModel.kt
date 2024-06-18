@@ -1,7 +1,6 @@
 package com.example.communityapp.ui.SignUp
 
 import android.content.Context
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +14,7 @@ import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,12 +24,12 @@ class SignUpViewModel @Inject constructor(private var signUpRepo: SignUpRepo) : 
     val user: LiveData<Resource<SignupResponse>>
         get() = _user
 
-    fun addMember(signupRequest: SignupRequest,imagePath: Uri,context: Context) {
+    fun addMember(signupRequest: SignupRequest, imagePart: MultipartBody.Part, context: Context) {
 
         _user.value = Resource.loading()
         viewModelScope.launch {
             try{
-                val imageUrl = signUpRepo.uploadImage(imagePath,context)
+                val imageUrl = signUpRepo.uploadImage(imagePart,context)
 
                 if(imageUrl.isSuccessful){
                     Log.d("SignUpViewModel", "addMember: ${imageUrl.body()}")

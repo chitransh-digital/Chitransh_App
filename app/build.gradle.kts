@@ -110,5 +110,8 @@ dependencies {
 
     //circle image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
+
+
 
 }

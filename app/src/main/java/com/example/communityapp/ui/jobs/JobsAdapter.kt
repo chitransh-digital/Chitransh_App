@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.R
-import com.example.communityapp.data.models.Job
+import com.example.communityapp.data.newModels.Job
 
 
 class JobsAdapter(
-    private val jobList: List<Pair<Job, String>>,
+    private val jobList: List<Job>,
     private val activity: JobsActivity,
     private val username: String
 ) :
@@ -26,9 +26,6 @@ class JobsAdapter(
         val jobPosition: TextView = itemView.findViewById(R.id.job_position)
         val companyName:TextView=itemView.findViewById(R.id.company_name)
         val jobDescription: TextView = itemView.findViewById(R.id.job_description)
-//        val jobSalary: TextView = itemView.findViewById(R.id.salary)
-//        val jobLocation: TextView = itemView.findViewById(R.id.job_location)
-//        val requirements: TextView = itemView.findViewById(R.id.job_requirements)
         val contact: Button =itemView.findViewById(R.id.iv_contact)
     }
 
@@ -40,15 +37,15 @@ class JobsAdapter(
     override fun onBindViewHolder(holder: JobsViewHolder, position: Int) {
         val currentItem = jobList[position]
 
-        holder.jobPosition.text = currentItem.first.jobTitle
-        holder.jobDescription.text = currentItem.first.jobDescription
+        holder.jobPosition.text = currentItem.jobTitle
+        holder.jobDescription.text = currentItem.jobDescription
 //        holder.jobSalary.text = currentItem.first.salary.toString()
 //        holder.jobLocation.text = currentItem.first.location
 //        holder.requirements.text = currentItem.first.requirements.toString()
-        holder.companyName.text = currentItem.first.businessName
+        holder.companyName.text = currentItem.businessName
         holder.contact.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${currentItem.first.contact}")
+            intent.data = Uri.parse("tel:${currentItem.contact}")
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
             startActivity(activity.applicationContext,intent,null)
@@ -63,9 +60,6 @@ class JobsAdapter(
             catch (e:Exception) {
                 e("error", "$e")
             }
-
-            e("JobsAdapter", "id: ${currentItem.second}")
-
         }
     }
 

@@ -5,17 +5,16 @@ import android.util.Log.e
 import androidx.annotation.RequiresApi
 import com.example.communityapp.data.models.Comment
 import com.example.communityapp.data.models.Job
-import com.google.android.gms.tasks.Task
+import com.example.communityapp.data.retrofit.CustomAPI
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 
-class JobsRepo @Inject constructor(private val db: FirebaseFirestore) {
+class JobsRepo @Inject constructor(private val db: FirebaseFirestore,private val api: CustomAPI) {
 
 
     //add new jobs
@@ -155,6 +154,7 @@ class JobsRepo @Inject constructor(private val db: FirebaseFirestore) {
         }
     }
 
-
+    //get all the jobs from the server
+    suspend fun getJobs(limit: Int, page: Int) = api.getJobs(limit, page)
 
 }

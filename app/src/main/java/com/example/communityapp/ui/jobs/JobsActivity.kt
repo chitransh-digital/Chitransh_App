@@ -1,7 +1,6 @@
 package com.example.communityapp.ui.jobs
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -9,8 +8,8 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.BaseActivity
-import com.example.communityapp.data.models.Job
 import com.example.communityapp.databinding.ActivityJobsBinding
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
@@ -24,13 +23,18 @@ class JobsActivity : BaseActivity() {
     private val jobsViewModel: JobsViewModel by viewModels()
     private lateinit var binding : ActivityJobsBinding
     private var username:String = "NA"
+    private var jobsList = mutableListOf<com.example.communityapp.data.newModels.Job>()
+    private lateinit var jobsAdapter: JobsAdapter
+    private val limit =10
+    private var page = 1
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJobsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showProgressDialog("Fetching Jobs...")
-        jobsViewModel.getAllJobs()
+        setupRecyclerView(jobsList)
+        jobsViewModel.getAllJobs(limit, page)
 
 //        jobsViewModel.deleteJob("b")
 
@@ -75,15 +79,13 @@ class JobsActivity : BaseActivity() {
                     val jobs = resource.data
                     Log.e("All jobs", "$jobs")
                     if (jobs != null) {
-                        setupRecyclerView(jobs)
+                        jobsList.addAll(jobs.jobs)
+                        jobsAdapter.notifyDataSetChanged()
                     }
-                    // Update UI or perform any actions with the list of jobs
                 }
                 Resource.Status.ERROR -> {
-                    // Handle error state
                     val error = resource.apiError
-                    showErrorSnackBar("Error: ${resource.apiError?.message}")
-                    // Handle the error, show a message or retry
+                    showErrorSnackBar("${resource.apiError?.message}")
                 }
                 Resource.Status.LOADING -> {
                     // Handle loading state
@@ -164,10 +166,32 @@ class JobsActivity : BaseActivity() {
 
     }
 
-    private fun setupRecyclerView(jobs: List<Pair<Job,String>>){
+    private fun setupRecyclerView(jobs: List<com.example.communityapp.data.newModels.Job>){
         Log.d("Recycler view Job",jobs.toString())
-        val jobsAdapter = JobsAdapter(jobs, this@JobsActivity,username)
+        jobsAdapter = JobsAdapter(jobs, this@JobsActivity,username)
         binding.rvJobs.adapter = jobsAdapter
         binding.rvJobs.layoutManager = LinearLayoutManager(this)
+
+        // Pagination logic
+        binding.rvJobs.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+                val totalItemCount = layoutManager.itemCount
+
+                if (totalItemCount <= (lastVisibleItem + 2)) {
+                    // If the user has scrolled to the end of the list, load more data
+                    loadMoreData()
+                }
+            }
+        })
+
+    }
+
+    private fun loadMoreData() {
+        page++
+        jobsViewModel.getAllJobs(limit, page)
     }
 }

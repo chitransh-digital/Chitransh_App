@@ -2,6 +2,7 @@ package com.example.communityapp.di
 
 import com.example.communityapp.data.repository.FeedsRepo
 import com.example.communityapp.data.repository.JobsRepo
+import com.example.communityapp.data.retrofit.CustomAPI
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
@@ -16,14 +17,14 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideJobsRepository(): JobsRepo {
-        return JobsRepo(FirebaseFirestore.getInstance())
+    fun provideJobsRepository(customAPI: CustomAPI): JobsRepo {
+        return JobsRepo(FirebaseFirestore.getInstance(), customAPI)
     }
 
     @Provides
     @Singleton
-    fun provideFeedsRepository(): FeedsRepo {
-        return FeedsRepo(FirebaseFirestore.getInstance(), FirebaseStorage.getInstance())
+    fun provideFeedsRepository(customAPI: CustomAPI): FeedsRepo {
+        return FeedsRepo(FirebaseFirestore.getInstance(), FirebaseStorage.getInstance(), customAPI)
     }
 
 }

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.util.Log.e
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,23 +15,21 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Comment
-import com.example.communityapp.data.models.Job
+import com.example.communityapp.data.newModels.Job
 import com.example.communityapp.utils.Resource
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class BottomSheetFragment(private var jobId:Pair<Job,String>,private val username:String) : BottomSheetDialogFragment() {
+
+class BottomSheetFragment(private var jobId:Job,private val username:String) : BottomSheetDialogFragment() {
     private val jobsViewModel: JobsViewModel by activityViewModels()
     private var comments:MutableList<Comment> = mutableListOf()
     private lateinit var commentsAdapter: CommentsAdapter
@@ -44,7 +41,7 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>,private val usernam
         setObservables()
 
     try {
-        jobsViewModel.getAllComments(jobId.second)
+//        jobsViewModel.getAllComments(jobId.second)
     }
     catch (e:Exception) {
         e("error", "$e")
@@ -61,9 +58,9 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>,private val usernam
 
         rootView.findViewById<TextView>(R.id.tvMore).movementMethod = ScrollingMovementMethod()
 
-        rootView.findViewById<TextView>(R.id.tvMore).text = jobId.first.jobDescription
-        rootView.findViewById<TextView>(R.id.tv_expandedJobTitle).text = jobId.first.jobTitle
-        rootView.findViewById<TextView>(R.id.jobExpandedLocation).text = jobId.first.location
+        rootView.findViewById<TextView>(R.id.tvMore).text = jobId.jobDescription
+        rootView.findViewById<TextView>(R.id.tv_expandedJobTitle).text = jobId.jobTitle
+        rootView.findViewById<TextView>(R.id.jobExpandedLocation).text = jobId.location
 
         rootView.findViewById<ImageView>(R.id.submitComment)?.setOnClickListener {
             if (rootView.findViewById<EditText>(R.id.commentInput)?.text?.isNotEmpty() == true) {
@@ -75,10 +72,10 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>,private val usernam
                 val formattedDateTime = currentDateTime.format(formatter)
                 lastCommentAdded = Comment(username, formattedDateTime, rootView.findViewById<EditText>(R.id.commentInput)?.text.toString())
 
-                jobsViewModel.addComment(
-                    jobId.second,
-                    lastCommentAdded!!
-                )
+//                jobsViewModel.addComment(
+//                    jobId.second,
+//                    lastCommentAdded!!
+//                )
                 rootView.findViewById<EditText>(R.id.commentInput)?.text?.clear()
             } else {
                 Toast.makeText(context, "Please enter a comment", Toast.LENGTH_SHORT).show()
@@ -86,7 +83,11 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>,private val usernam
         }
 
         rootView.findViewById<Button>(R.id.btn_jobLink).setOnClickListener {
-            val url = jobId.first.externalLink
+            if(jobId.externalLink.isEmpty()){
+                Toast.makeText(context, "No link available", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val url = jobId.externalLink
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
 
@@ -94,8 +95,12 @@ class BottomSheetFragment(private var jobId:Pair<Job,String>,private val usernam
         }
 
         rootView.findViewById<Button>(R.id.btn_jobCall) .setOnClickListener {
+            if(jobId.contact.isEmpty()){
+                Toast.makeText(context, "No contact available", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${jobId.first.contact}")
+            intent.data = Uri.parse("tel:${jobId.contact}")
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
             context?.let { it1 -> ContextCompat.startActivity(it1, intent, null) }
