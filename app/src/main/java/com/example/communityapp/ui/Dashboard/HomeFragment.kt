@@ -89,10 +89,10 @@ class HomeFragment : Fragment(){
             startActivity(intent)
         }
 
-        binding.ivProfile.setOnClickListener {
-            parentFragmentManager.beginTransaction().replace(R.id.Frag,ProfileFragment())
-                .addToBackStack(Constants.HOME_FRAG).commit()
-        }
+//        binding.ivProfile.setOnClickListener {
+//            parentFragmentManager.beginTransaction().replace(R.id.Frag,ProfileFragment())
+//                .addToBackStack(Constants.HOME_FRAG).commit()
+//        }
 
         return binding.root
     }

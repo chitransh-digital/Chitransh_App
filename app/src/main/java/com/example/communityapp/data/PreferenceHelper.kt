@@ -29,11 +29,18 @@ class PreferencesHelper @Inject constructor(context: Context) {
         sharedPreferences.edit().clear().apply()
     }
 
+    fun putPointer(key : Int){
+        sharedPreferences.edit().putInt(POINTER, key).apply()
+    }
 
+    fun getPointer() : Int{
+        return sharedPreferences.getInt(POINTER, 1)
+    }
 
     companion object {
         private const val PREFS_NAME = "app_prefs"
         private const val KEY_AUTH_TOKEN = Constants.KEY_AUTH_TOKEN
         private const val CONTACT = "user_number"
+        private const val POINTER = "pointer"
     }
 }

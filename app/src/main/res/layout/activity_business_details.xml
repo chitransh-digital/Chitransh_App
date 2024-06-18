@@ -31,7 +31,7 @@
         android:id="@+id/textViewBusinessName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Business Name"
+        android:text="@string/business_name"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginStart="16dp"
@@ -72,7 +72,7 @@
             android:drawableLeft="@drawable/baseline_call_24"
             android:textColor="#FFFFFF"
             app:backgroundTint="@color/theme_brown"
-            android:text="Call now"
+            android:text="@string/call_now"
             android:textSize="10sp" />
 
         <Button
@@ -83,7 +83,7 @@
             android:layout_margin="2dp"
             android:background="@drawable/curved_edittext_bg"
             app:backgroundTint="@color/theme_brown"
-            android:text="link"
+            android:text="@string/link"
             android:textSize="10sp"
             />
 
@@ -94,7 +94,7 @@
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:background="@drawable/curved_edittext_bg"
-            android:text="Attached"
+            android:text="@string/attachment"
             android:drawableEnd="@drawable/baseline_download_24"
             app:backgroundTint="@color/theme_brown"
             android:textSize="10sp" />
@@ -126,7 +126,7 @@
         android:id="@+id/textViewBusinessDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Business Description"
+        android:text="@string/business_description"
         android:layout_margin="16dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/business_imageView"
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:drawableLeft="@drawable/baseline_location_on_24"
-            android:text="Business Address"
+            android:text="@string/business_address"
             app:layout_constraintEnd_toEndOf="@+id/textViewBusinessDescription"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textViewBusinessDescription"
@@ -150,7 +150,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/baseline_black_person_24"
-            android:text="Owner Name"
+            android:text="@string/owner_name"
             app:layout_constraintEnd_toEndOf="@+id/textViewBusinessAddress"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textViewBusinessAddress"
@@ -179,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="New Coupon"
+                    android:text="@string/new_coupon"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -189,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Get 20% off on all items"
+                    android:text="@string/get_20_off_on_all_items"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 

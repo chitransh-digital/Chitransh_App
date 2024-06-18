@@ -1,38 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">चित्रांश ऐप</string>
-    <string name="title_activity_login">लॉगिन</string>
+    <string name="title_activity_login">लॉग इन</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">पहला फ़्रैगमेंट</string>
-    <string name="second_fragment_label">दूसरा फ़्रैगमेंट</string>
+    <string name="first_fragment_label">पहला खंड</string>
+    <string name="second_fragment_label">दूसरा खंड</string>
     <string name="next">आगे</string>
     <string name="previous">पिछला</string>
 
     <string name="lorem_ipsum">
-        लोरेम इप्सम डॉलर सिट अमेट, कॉन्सेक्टेटर एडिपिसिंग एलिट। नम इन स्केलेरिस्के सेम। मौरिस
-        वोलुत्पत, डोलोर इड इंटरदम उल्लाम्कॉर्पर, रिसस डोलोर एगेस्तास लेक्टस, सिट अमेट मत्तिस पुरुस
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.
     </string>
     <string name="prompt_email">ईमेल</string>
     <string name="prompt_password">पासवर्ड</string>
-    <string name="action_sign_in">साइन इन या रजिस्टर करें</string>
-    <string name="action_sign_in_short">साइन इन</string>
+    <string name="action_sign_in">साइन इन करें या रजिस्टर करें</string>
+    <string name="action_sign_in_short">साइन इन करें</string>
     <string name="welcome">"स्वागत है!"</string>
-    <string name="invalid_username">अवैध उपयोगकर्ता नाम</string>
-    <string name="invalid_password">पासवर्ड 5 अक्षरों से अधिक होना चाहिए</string>
-    <string name="login_failed">"लॉगिन असफल हुआ"</string>
+    <string name="invalid_username">अमान्य उपयोगकर्ता नाम</string>
+    <string name="invalid_password">पासवर्ड 5 वर्णों से अधिक होना चाहिए</string>
+    <string name="login_failed">"लॉगिन विफल"</string>
     <string name="active_jobs">सक्रिय नौकरियां</string>
     <string name="get_otp">ओटीपी प्राप्त करें</string>
-    <string name="submit_otp">सबमिट</string>
-    <string name="SignUp">साइन अप</string>
+    <string name="submit_otp">सबमिट करें</string>
+    <string name="SignUp">साइन अप करें</string>
     <string name="please_SignUp">कृपया साइन अप करें</string>
     <string name="transition_name">साझा इमेज दृश्य</string>
-    <string name="enter_phno">अपना फ़ोन नंबर दर्ज करें</string>
+    <string name="enter_phno">अपना फोन नंबर दर्ज करें</string>
     <string name="enter_otp">अपना ओटीपी दर्ज करें</string>
-    <string name="login_phone">अपना फ़ोन नंबर दर्ज करें</string>
-    <string name="hello_blank_fragment">नमस्ते ब्लैंक फ़्रैगमेंट</string>
+    <string name="login_phone">अपना फोन नंबर दर्ज करें</string>
+    <string name="hello_blank_fragment">हैलो ब्लैंक खंड</string>
     <string name="job_nhiring">नौकरी\nभर्ती</string>
-    <string name="business_nregistration">व्यापार\nरजिस्ट्रेशन</string>
-    <string name="job_nposting">नौकरी \nपोस्टिंग</string>
+    <string name="business_nregistration">व्यवसाय\nपंजीकरण</string>
+    <string name="job_nposting">नौकरी\nप्रकाशन</string>
     <string name="family">परिवार</string>
     <string name="welcome_to">स्वागत है</string>
     <string name="chitransh_digital">चित्रांश डिजिटल!</string>
@@ -40,16 +49,78 @@
     <string name="in_your_city">आपके शहर में</string>
     <string name="write_a_comment">एक टिप्पणी लिखें...</string>
     <string name="choose_language">भाषा चुनें/Choose Language</string>
-    <string name="Screen_proceed">फ़ोन नंबर के साथ आगे बढ़ें</string>
-    <string name="welcome_text"><b>चित्रांश डिजिटल में आपका स्वागत है\n<font color='#620402'>चित्रांश डिजिटल</font></b></string>
-    <string name="welcome_text_dashboard"><b>चित्रांश डिजिटल में आपका स्वागत है <font color='#620402'>चित्रांश डिजिटल</font></b></string>
-    <string name="address"><b>पता:</b></string>
+    <string name="Screen_proceed">फोन नंबर के साथ आगे बढ़ें</string>
+    <string name="welcome_text"><b>स्वागत है \n<font color='#620402'>चित्रांश डिजिटल</font></b></string>
+    <string name="welcome_text_dashboard"><b>स्वागत है <font color='#620402'>चित्रांश डिजिटल</font></b></string>
+    <string name="address"><b>पता :</b></string>
+    <string name="comp_address" >लाजपत नगर, राम नगर, भोपाल</string>
     <string name="Submit">सबमिट</string>
-    <string name="registration_success">रजिस्ट्रेशन सफल! स्वागत है</string>
+    <string name="registration_success">पंजीकरण सफल! स्वागत है</string>
     <string name="date_format">dd-MM-yyyy</string>
     <string name="top_section_transition">शीर्ष_खंड</string>
     <string name="Screen_proceed_familyID">परिवार आईडी के साथ आगे बढ़ें</string>
     <string name="login_username">केवल मौजूदा परिवार के सदस्यों के लिए</string>
-    <string name="login_via_otp">OTP के माध्यम से लॉगिन करें</string>
+    <string name="login_via_otp">ओटीपी के माध्यम से लॉगिन करें</string>
     <string name="login_via_familyID">परिवार आईडी के माध्यम से लॉगिन करें</string>
+    <string name="spinner2_prompt">शहर</string>
+    <string name="spinner3_prompt">प्रकार</string>
+    <string name="Sign_up_warning">साइन अप करके आप एक नया परिवार बना रहे हैं, \n अगर आप सिर्फ सदस्य के रूप में साइन अप करना चाहते हैं तो कृपया परिवार के प्रमुख के संपर्क के माध्यम से लॉगिन करें</string>
+    <string name="select_your_relation">अपना संबंध चुनें</string>
+    <string name="any_details_want_to_mentioned">कोई विवरण जिसे आप उल्लेख करना चाहते हैं</string>
+    <string name="additional_details">अतिरिक्त विवरण</string>
+    <string name="insitute_name">संस्थान का नाम</string>
+    <string name="insitute">संस्थान :</string>
+    <string name="branch">शाखा :</string>
+    <string name="branch_name">शाखा का नाम</string>
+    <string name="major">मुख्य</string>
+    <string name="education_details">शिक्षा विवरण</string>
+    <string name="position">पद</string>
+    <string name="field">क्षेत्र</string>
+    <string name="job_field">नौकरी का क्षेत्र :</string>
+    <string name="job_details">नौकरी का विवरण</string>
+    <string name="address_of_occupation" >व्यवसाय का पता</string>
+    <string name="business_name">व्यवसाय का नाम</string>
+    <string name="business_contact">व्यवसाय संपर्क</string>
+    <string name="business_address">व्यवसाय का पता</string>
+    <string name="business_description">व्यवसाय का विवरण</string>
+    <string name="description">विवरण</string>
+    <string name="business_type">व्यवसाय का प्रकार</string>
+    <string name="business_social_link">व्यवसाय सोशल लिंक</string>
+    <string name="link_optional">लिंक (वैकल्पिक)</string>
+    <string name="add_image">चित्र जोड़ें</string>
+    <string name="file_file_file">फ़ाइल/फ़ाइल/फ़ाइल</string>
+    <string name="add_file">फ़ाइल जोड़ें</string>
+    <string name="call_now">अभी कॉल करें</string>
+    <string name="link">लिंक</string>
+    <string name="attachment">संलग्नक</string>
+    <string name="owner_name">मालिक का नाम</string>
+    <string name="new_coupon">नया कूपन</string>
+    <string name="get_20_off_on_all_items">सभी वस्तुओं पर 20% की छूट प्राप्त करें</string>
+    <string name="name">नाम</string>
+    <string name="your_name">आपका नाम</string>
+    <string name="family_id">परिवार आईडी</string>
+    <string name="create_family_id">परिवार आईडी बनाएँ</string>
+    <string name="contact">संपर्क</string>
+    <string name="blood_group">रक्त समूह</string>
+    <string name="age">आयु</string>
+    <string name="gender">लिंग</string>
+    <string name="landmark">सीमाचिह्न</string>
+    <string name="karyakarni_optional">कार्यकारिणी (वैकल्पिक)</string>
+    <string name="karyakarni">कार्यकारिणी</string>
+    <string name="highest_education">सर्वोच्च शिक्षा</string>
+    <string name="course">कोर्स</string>
+    <string name="mention_your_course">अपना कोर्स उल्लेख करें</string>
+    <string name="job_post">नौकरी पोस्ट</string>
+    <string name="post">पद</string>
+    <string name="job_department">नौकरी विभाग</string>
+    <string name="department">विभाग</string>
+    <string name="job_employer">नौकरी नियोक्ता</string>
+    <string name="employer">नियोक्ता</string>
+    <string name="job_location">नौकरी स्थान</string>
+    <string name="preview_information">जानकारी पूर्वावलोकन</string>
+    <string name="check_your_information">अपनी जानकारी जांचें</string>
+    <string name="family_nregistration">परिवार \nपंजीकरण</string>
+    <string name="jobs">नौकरियां</string>
+    <string name="view_nfamily">परिवार \nदेखें</string>
+    <string name="view_nbusiness">व्यवसाय \nदेखें</string>
 </resources>
