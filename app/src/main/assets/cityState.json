@@ -1,6 +1,11 @@
 {
   "citylist": [
     {
+      "id": 0,
+      "city": "Select City",
+      "State": "Select State"
+    },
+    {
       "id": 1,
       "city": "Mumbai",
       "State": "Maharashtra"

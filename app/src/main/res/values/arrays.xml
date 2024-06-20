@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinner2_values">
-        <item>Type</item> <!-- Prompt -->
+        <item>Select Type</item> <!-- Prompt -->
         <item>Tech</item>
         <item>Restaurant</item>
         <item>Retail Store</item>

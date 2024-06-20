@@ -1,6 +1,10 @@
 {
   "statelist": [
     {
+        "id": 0,
+        "State": "Select State"
+    },
+    {
       "id": 1,
       "State": "Andaman and Nicobar Islands"
     },
