@@ -10,6 +10,7 @@ import com.example.communityapp.data.newModels.FamilyResponse
 import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.newModels.ImageResponse
 import com.example.communityapp.data.newModels.JobsResponse
+import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
 import okhttp3.MultipartBody
@@ -60,4 +61,10 @@ interface CustomAPI {
 
     @POST("api/business/registerBusiness")
     suspend fun addBusiness(@Body request: Business): Response<AddBusinessResponse>
+
+    @GET("api/karyakarni/getKaryakarnis")
+    suspend fun getKaryakarni(
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Response<KaryakarniResponse>
 }

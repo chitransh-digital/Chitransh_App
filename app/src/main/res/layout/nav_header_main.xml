@@ -12,13 +12,12 @@
         android:id="@+id/nav_user_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="80dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
+        android:src="@drawable/chitranshlogo"
         app:civ_border_color="#F6D102"
-        app:civ_border_width="5dp"
-        android:contentDescription="userimage"
-        android:src="@drawable/account_circle"/>
+        app:civ_border_width="5dp" />
 
     <TextView
         android:id="@+id/nav_username"
@@ -28,9 +27,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="16dp"
-        android:textColor="@color/white"
+        android:textColor="@color/theme_brown"
+        android:textStyle="bold"
         android:textSize="20sp"
-        android:text="username"/>
+        android:text="Chitransh Digital"/>
 
     <View
         android:layout_width="match_parent"

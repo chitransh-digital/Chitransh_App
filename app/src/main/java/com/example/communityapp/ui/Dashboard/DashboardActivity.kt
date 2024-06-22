@@ -26,18 +26,20 @@ import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.ui.auth.Login_activity
+import com.example.communityapp.ui.karyakarni.KaryakarniActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class DashboardActivity : BaseActivity() {
+class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     lateinit var preferencesHelper: PreferencesHelper
@@ -63,13 +65,12 @@ class DashboardActivity : BaseActivity() {
 //        phoneNum = intent.getStringExtra(Constants.USERNAME).toString()
         Log.d("Dashboard phone no",phoneNum)
 
+        binding.navDrawerView.setNavigationItemSelectedListener(this)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
             }
-
-        } else {
-
         }
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -127,6 +128,15 @@ class DashboardActivity : BaseActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.Frag) as NavHostFragment
         val navController = navHostFragment.navController
         bottomNavigationView.setupWithNavController(navController)
+
+        binding.toolbarDashboardActivity.setNavigationIcon(R.drawable.hamburger_menu)
+        binding.toolbarDashboardActivity.setNavigationOnClickListener {
+            if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
+                binding.drawerLayout.closeDrawer((GravityCompat.START))
+            }else{
+                binding.drawerLayout.openDrawer(GravityCompat.START)
+            }
+        }
     }
 
     private fun setObservables() {
@@ -192,6 +202,27 @@ class DashboardActivity : BaseActivity() {
             Log.d("Onresume phone num","Data fetching $phoneNum")
             viewModel.getMember(phoneNum)
         }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.nav_myprofile->{
+                supportFragmentManager.beginTransaction().replace(R.id.Frag,ProfileFragment())
+                    .addToBackStack(Constants.HOME_FRAG).commit()
+            }
+
+            R.id.nav_signout->{
+                preferencesHelper.clear()
+                startActivity(Intent(this,Login_activity::class.java))
+                finish()
+            }
+
+            R.id.karyakrni -> {
+                startActivity(Intent(this, KaryakarniActivity::class.java))
+            }
+        }
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 
 }

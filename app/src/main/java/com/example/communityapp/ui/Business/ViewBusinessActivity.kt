@@ -39,7 +39,7 @@ class ViewBusinessActivity : BaseActivity() {
         setupRV()
 
         setObservales()
-        showProgressDialog("Fetching Business Details...")
+
         viewModel.getBusiness(limit, page)
 
         binding.businessSearchIcon.setOnClickListener {
@@ -84,18 +84,21 @@ class ViewBusinessActivity : BaseActivity() {
 
     private fun setObservales(){
         viewModel.business_list.observe(this, Observer {resources ->
-            hideProgressDialog()
+
             when(resources.status){
                 Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
 //                    mOriginalBusinessList.clear()
                     resources.data?.businesses?.let { mOriginalBusinessList.addAll(it) }
                     businessAdapter.notifyDataSetChanged()
                     Log.e("B Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {
+                    showProgressDialog("Fetching Business Details...")
                     Log.e(" B Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
+                    hideProgressDialog()
                     showErrorSnackBar(resources.apiError.toString())
                     Log.e("B Error",resources.apiError.toString())
                 }

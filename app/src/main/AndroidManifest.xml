@@ -7,17 +7,20 @@
 
     <application
         android:name=".chitranshApp"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="false"
         android:icon="@mipmap/chitransh_logo"
         android:label="@string/app_name"
+        android:localeConfig="@xml/local_config"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CommunityApp"
-        android:localeConfig="@xml/local_config"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.karyakarni.KaryakarniActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.Dashboard.UpdateMemberActivity"
             android:exported="false" />
@@ -42,7 +45,7 @@
         <activity
             android:name=".ui.SignUp.SignUpActivity"
             android:exported="false">
-        >
+            >
         </activity>
         <activity
             android:name=".ui.jobPosting.JobPostingActivity"
@@ -79,7 +82,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"

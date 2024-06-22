@@ -42,6 +42,7 @@ class Login_activity : BaseActivity() {
     private var shortAnimationDuration = 500
     private var contact = ""
 
+
     //    var context: Context? = null
 //    var resources: Resources? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,6 +108,8 @@ class Login_activity : BaseActivity() {
 
         contentPointer = preferencesHelper.getPointer()
         showContent(contentPointer)
+        preferencesHelper.putPointer(1)
+
 
         val phNo = preferencesHelper.getContact()
         Log.e("Login Activity", " Answer it $phNo")
@@ -549,15 +552,6 @@ class Login_activity : BaseActivity() {
                     .setDuration(shortAnimationDuration.toLong())
                     .setListener(null)
             }
-
-//            view.animate()
-//                .alpha(0f)
-//                .setDuration(shortAnimationDuration.toLong())
-//                .setListener(object : AnimatorListenerAdapter() {
-//                    override fun onAnimationEnd(animation: Animator) {
-//                        binding.progressBar.visibility = View.GONE
-//                    }
-//                })
         }
     }
 
@@ -569,6 +563,6 @@ class Login_activity : BaseActivity() {
 
         val selectedLocale = AppCompatDelegate.getApplicationLocales()[0]
         Log.e("LoginActivity", "Selected Locale: $selectedLocale")
-        preferencesHelper.putPointer(2)
+        preferencesHelper.putPointer(3)
     }
 }

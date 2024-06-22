@@ -6,60 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.Dashboard.HomeFragment">
 
-<!--    <View-->
-<!--        android:id="@+id/top_section"-->
-<!--        android:transitionName="@string/top_section_transition"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/theme_yellow"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHeight_percent="0.06"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_notification"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:src="@drawable/ic_brown_notifications_24"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHeight_percent="0.04/+*-*++"-->
-<!--        app:layout_constraintHorizontal_bias="0.881"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintWidth_percent="0.18" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_profile"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:src="@drawable/baseline_person_24"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHeight_percent="0.04"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="1.0"-->
-<!--        app:layout_constraintWidth_percent="0.18" />-->
-
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:id="@+id/top_section"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:theme="@style/AppTheme.AppBarOverlay">-->
-
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:id="@+id/toolbar_main_activity"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:background="@color/theme_yellow"-->
-<!--            app:popupTheme="@style/AppTheme.PopupOverlay">-->
-
-<!--        </androidx.appcompat.widget.Toolbar>-->
-
-<!--    </com.google.android.material.appbar.AppBarLayout-->
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/dashboard_menu"
         android:layout_width="0dp"
@@ -67,10 +13,10 @@
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintHeight_percent="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.050000012"
+        app:layout_constraintVertical_bias="0.25"
         app:layout_constraintWidth_percent="0.9">
 
 
@@ -319,18 +265,18 @@
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/news_small_item" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageChitransh"-->
-<!--        android:layout_width="111dp"-->
-<!--        android:layout_height="120dp"-->
-<!--        android:elevation="8dp"-->
-<!--        android:src="@drawable/chitranshtransparentlogo"-->
-<!--        android:transitionName="@string/transition_name"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.0" />-->
+    <ImageView
+        android:id="@+id/imageChitransh"
+        android:layout_width="111dp"
+        android:layout_height="120dp"
+        android:elevation="8dp"
+        android:src="@drawable/chitranshtransparentlogo"
+        android:transitionName="@string/transition_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
