@@ -52,7 +52,7 @@ class ViewBusinessActivity : BaseActivity() {
 
         setupRV()
 
-        setObservales()
+        setObservables()
 
         viewModel.getBusiness(limit, page)
 
