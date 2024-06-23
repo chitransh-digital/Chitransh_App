@@ -72,6 +72,9 @@ interface CustomAPI {
         @Query("page") page: Int
     ): Response<KaryakarniResponse>
 
+    @GET("api/karyakarni/getKaryakarnis")
+    suspend fun getAllKaryakarni(): Response<KaryakarniResponse>
+
     @PATCH("api/member/update/{familyHash}/{memberHash}")
     suspend fun updateMember(@Body addMember: addMember,
                              @Path("familyHash") familyHash : String,

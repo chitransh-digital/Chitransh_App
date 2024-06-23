@@ -9,6 +9,6 @@ data class Karyakarni(
     val level: String,
     val logo: String,
     val members: List<KaryaMember>,
-    val name: String,
+    var name: String,
     val state: String
 ): java.io.Serializable

@@ -143,5 +143,28 @@ class DashboardViewModel @Inject constructor(private var dashboardRepo: Dashboar
         }
     }
 
+    private var _getAllKarya = MutableLiveData<Resource<KaryakarniResponse>>()
+    val getAllKarya: LiveData<Resource<KaryakarniResponse>>
+        get() = _getAllKarya
+
+    fun getAllKaryakarni(){
+        _getAllKarya.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val response = dashboardRepo.getAllKaryakarni()
+                if(response.isSuccessful){
+                    _getAllKarya.value = Resource.success(response.body())
+                }else if(response.code() == 404){
+                    _getAllKarya.value = Resource.error(Exception(Constants.Error404))
+                }
+                else{
+                    _getAllKarya.value = Resource.error( Exception(response.message()))
+                }
+            }catch (e : Exception){
+                _getAllKarya.value = Resource.error(e)
+            }
+        }
+    }
+
 
 }

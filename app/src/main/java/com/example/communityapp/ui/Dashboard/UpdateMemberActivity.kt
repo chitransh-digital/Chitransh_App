@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.communityapp.BaseActivity
+import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.newModels.EducationDetails
 import com.example.communityapp.data.newModels.KaryakarniResponse
@@ -26,6 +27,7 @@ import com.example.communityapp.data.newModels.OccupationDetails
 import com.example.communityapp.data.newModels.addMember
 import com.example.communityapp.databinding.ActivityUpdateMemberBinding
 import com.example.communityapp.utils.Constants
+import com.example.communityapp.utils.KaryakarniSpinnerAdapter
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -83,6 +85,7 @@ class UpdateMemberActivity : BaseActivity() {
         setObservables()
         setWindowsUp()
         inito()
+        viewModel.getAllKaryakarni()
 
         if (familyMember == "HEAD") {
             binding.previewDelete.visibility = View.GONE
@@ -929,7 +932,6 @@ class UpdateMemberActivity : BaseActivity() {
         }
     }
 
-
     private fun setObservables() {
         viewModel.updatedUser.observe(this, Observer { resources ->
             when (resources.status) {
@@ -975,6 +977,21 @@ class UpdateMemberActivity : BaseActivity() {
                 else -> {}
             }
 
+        })
+
+        viewModel.getAllKarya.observe(this, Observer {resources ->
+            when(resources.status) {
+                Resource.Status.SUCCESS -> {
+                    setUpKaryaSpinner(resources.data!!)
+                }
+
+                Resource.Status.LOADING -> {
+                }
+
+                Resource.Status.ERROR -> {
+                    showErrorSnackBar(resources.apiError.toString())
+                }
+            }
         })
     }
 
@@ -1255,12 +1272,13 @@ class UpdateMemberActivity : BaseActivity() {
 
     private fun setUpKaryaSpinner(karyakarni: KaryakarniResponse) {
         val karyakarniList = karyakarni.karyakarni
-        val karyakarniAdapter = ArrayAdapter(
+
+        val karyakarniAdapter = KaryakarniSpinnerAdapter(
             this,
-            android.R.layout.simple_spinner_dropdown_item,
+            R.layout.karyakarni_spinner_item_layout,
             karyakarniList
         )
-        karyakarniAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        karyakarniAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.KaryainputSpinner.adapter = karyakarniAdapter
     }
 
