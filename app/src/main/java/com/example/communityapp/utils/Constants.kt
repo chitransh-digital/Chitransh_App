@@ -61,4 +61,49 @@ object Constants {
     const val USERNAME = "username"
     const val FAMILYDATA = "family_data"
     const val HEAD_ADDRESS = "headAddress"
+
+    // Course maps
+    val POSTGRADUATE_COURSE_MAP = mapOf(
+        "MTech" to 0,
+        "MSc" to 1,
+        "MCom" to 2,
+        "MA" to 3,
+        "MBA" to 4,
+        "MCA" to 5,
+        "MPharma" to 6,
+        "MDS" to 7,
+        "LLM" to 8,
+        "MA/LLM" to 9,
+        "MCom/LLM" to 10,
+        "MPharma" to 11,
+        "MDS" to 12
+    )
+
+    val UNDERGRADUATE_COURSE_MAP = mapOf(
+        "BTech" to 0,
+        "BSc" to 1,
+        "BCom" to 2,
+        "BA" to 3,
+        "BBA" to 4,
+        "BCA" to 5,
+        "BEd" to 6,
+        "BPharma" to 7,
+        "BDS" to 8,
+        "BAMS" to 9,
+        "BHMS" to 10,
+        "LLB" to 11,
+        "BHM" to 12,
+        "BHMCT" to 13,
+        "Ded" to 14,
+        "BA/LLB" to 16,
+        "BCom/LLB" to 17,
+        "CS" to 20
+    )
+
+    val BUSINESS_TYPE_MAP = mapOf(
+        "Restaurant" to 0,
+        "Retail Store" to 1,
+        "Tech" to 2,
+        "Consulting Firm" to 3
+    )
 }

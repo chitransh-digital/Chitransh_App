@@ -8,6 +8,8 @@ import com.example.communityapp.data.models.LoginResponse
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.newModels.FamilyResponse
 import com.example.communityapp.data.newModels.FeedsResponse
+import com.example.communityapp.data.newModels.KaryakarniResponse
+import com.example.communityapp.data.newModels.addMember
 import com.example.communityapp.data.repository.DashboardRepo
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
@@ -15,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -95,33 +98,45 @@ class DashboardViewModel @Inject constructor(private var dashboardRepo: Dashboar
     val updatedUser: LiveData<Resource<String>>
         get() = _updatedUser
 
-    fun updateMember(memberId: String, updatedMember: Member, selectedImagePath: String?, change : Boolean) {
-        dashboardRepo.updateMember(memberId, updatedMember, selectedImagePath, change).onEach {
-            when(it.status){
-                Resource.Status.SUCCESS -> {
-                    _updatedUser.value = Resource.success(it.data)
+    fun updateMember(updatedMember: addMember, selectedImagePath: MultipartBody.Part?,
+                     familyHash : String) {
+        _updatedUser.value = Resource.loading()
+        viewModelScope.launch {
+            try {
+                if(selectedImagePath != null){
+                    val res = dashboardRepo.uploadImage(selectedImagePath)
+                    if(res.isSuccessful){
+                        updatedMember.memberData.profilePic = res.body()?.file!!
+                    }else{
+                        _updatedUser.value = Resource.error(Exception(res.message()))
+                        return@launch
+                    }
                 }
-                Resource.Status.LOADING -> {
-                    _updatedUser.value = Resource.loading()
+
+                val response = dashboardRepo.updateMember(updatedMember,familyHash,
+                    updatedMember.memberData._id)
+
+                if (response.isSuccessful) {
+                    _updatedUser.value = Resource.success(response.body()?.message)
+                } else {
+                    _updatedUser.value = Resource.error(Exception(response.message()))
                 }
-                Resource.Status.ERROR -> {
-                    _updatedUser.value = Resource.error(it.apiError)
-                }
-                else -> {}
+            } catch (e: Exception) {
+                _updatedUser.value = Resource.error(e)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
-    private var _deleteUser = MutableLiveData<Resource<Unit>>()
-    val deleteUser: LiveData<Resource<Unit>>
+    private var _deleteUser = MutableLiveData<Resource<String>>()
+    val deleteUser: LiveData<Resource<String>>
         get() = _deleteUser
 
-    fun deleteMember(familyId : String, contact : String) {
+    fun deleteMember(familyHash : String, memberHash : String) {
         _deleteUser.value = Resource.loading()
         viewModelScope.launch {
             try {
-                val res = dashboardRepo.deleteMember(familyId,contact)
-                _deleteUser.value = Resource.success(res)
+                val res = dashboardRepo.deleteMember(familyHash,memberHash)
+                _deleteUser.value = Resource.success(res.body()?.status)
             }catch (e : Exception){
                 _deleteUser.value = Resource.error(e)
             }

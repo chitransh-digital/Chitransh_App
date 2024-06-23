@@ -45,7 +45,10 @@ class ProfileFragment : Fragment() {
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
                 .setPositiveButton("Yes") { _, _ ->
-                    val sharedPreferences = requireActivity().getSharedPreferences(Constants.LOGIN_FILE, Context.MODE_PRIVATE)
+                    val sharedPreferences = requireActivity().getSharedPreferences(
+                        Constants.LOGIN_FILE,
+                        Context.MODE_PRIVATE
+                    )
                     val editor = sharedPreferences.edit()
                     editor.clear().apply()
                     startActivity(Intent(requireContext(), Login_activity::class.java))
@@ -63,7 +66,10 @@ class ProfileFragment : Fragment() {
             when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     Log.e("Profile Success", resources.data.toString())
-                    setUpRecyclerView(resources.data!!.families[0].members, resources.data.families[0].members[0].relation)
+                    setUpRecyclerView(
+                        resources.data!!.families[0].members,
+                        resources.data.families[0].id, resources.data.families[0].familyID
+                    )
                     binding.familyIDShow.text = "Family ID : ${resources.data.families[0].familyID}"
                 }
 
@@ -97,26 +103,36 @@ class ProfileFragment : Fragment() {
                 else -> {}
             }
         })
+
+
     }
 
-    private fun setUpRecyclerView(data: List<MemberX>, relation: String) {
+    private fun setUpRecyclerView(data: List<MemberX>, familyHash: String, familyID: String) {
         val members = arrayListOf<MemberX>()
-        for(mem in data){
+        for (mem in data) {
             members.add(mem)
         }
-        for(i in 0 until members.size){
-            if(members[i].relation == "Head"){
+        for (i in 0 until members.size) {
+            if (members[i].relation == "Head") {
                 val temp = members[0]
                 members[0] = members[i]
                 members[i] = temp
             }
         }
         val adapter =
-            profileAdapter(requireContext(), members, object : profileAdapter.onClickListener {
-                override fun onClick(member: Member) {
-//                    viewModel.deleteMember(member.familyID, member.contact)
-                }
-            })
+            profileAdapter(
+                requireContext(),
+                members,
+                object : profileAdapter.onClickListener {
+                    override fun onClick(member: MemberX) {
+                        val intent = Intent(context, UpdateMemberActivity::class.java)
+                        member.familyID = familyID
+                        intent.putExtra("member", member)
+                        intent.putExtra("familyHash", familyHash)
+                        startActivity(intent)
+                    }
+
+                })
         binding.rvMembers.adapter = adapter
         binding.rvMembers.layoutManager = LinearLayoutManager(requireContext())
     }

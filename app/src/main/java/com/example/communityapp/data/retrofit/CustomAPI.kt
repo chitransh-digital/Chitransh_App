@@ -13,13 +13,17 @@ import com.example.communityapp.data.newModels.JobsResponse
 import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
+import com.example.communityapp.data.newModels.addMember
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CustomAPI {
@@ -67,4 +71,13 @@ interface CustomAPI {
         @Query("limit") limit: Int,
         @Query("page") page: Int
     ): Response<KaryakarniResponse>
+
+    @PATCH("api/member/update/{familyHash}/{memberHash}")
+    suspend fun updateMember(@Body addMember: addMember,
+                             @Path("familyHash") familyHash : String,
+                             @Path("memberHash") memberHash : String): Response<SignupResponse>
+
+    @DELETE("api/member/delete/{familyHash}/{memberHash}")
+    suspend fun deleteMember(@Path("familyHash") familyHash : String,
+                             @Path("memberHash") memberHash : String): Response<SignupResponse>
 }

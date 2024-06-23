@@ -68,10 +68,9 @@ class profileAdapter(
             ContextCompat.startActivity(context, intent, null)
         }
 
-        holder.itemView.setOnClickListener {
-            val intent = Intent(context, UpdateMemberActivity::class.java)
-            intent.putExtra("member", model)
-            context.startActivity(intent)
+        holder.itemView.setOnClickListener{
+            OnItemClickListener.onClick(model)
+
         }
 
         Glide.with(context)
@@ -82,7 +81,7 @@ class profileAdapter(
     }
 
     interface onClickListener {
-        fun onClick(member: Member)
+        fun onClick(member: MemberX)
     }
 
 }

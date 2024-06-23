@@ -11,4 +11,4 @@ data class Karyakarni(
     val members: List<KaryaMember>,
     val name: String,
     val state: String
-)
+): java.io.Serializable

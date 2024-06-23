@@ -46,7 +46,8 @@ class FamilyDetailsActivity : BaseActivity() {
     }
 
     private fun setUpRv(member_data : List<Member>){
-        val adapter = FamilyDetailsAdapter(this,member_data, object : profileAdapter.onClickListener{
+        val adapter = FamilyDetailsAdapter(this,member_data, object :
+            FamilyDetailsAdapter.onClickListener {
             override fun onClick(model: Member) {
                 screepointer++
                 changeUI(screepointer)

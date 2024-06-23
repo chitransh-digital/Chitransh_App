@@ -14,7 +14,7 @@ import com.example.communityapp.databinding.FamilyMemberItemLayoutBinding
 import com.example.communityapp.ui.Dashboard.profileAdapter
 
 class FamilyDetailsAdapter(private val context: Context, private val FamilyDetails : List<Member>,
-    private var OnItemClickListener : profileAdapter.onClickListener) : RecyclerView.Adapter<FamilyDetailsAdapter.ViewHolder>() {
+    private var OnItemClickListener : onClickListener) : RecyclerView.Adapter<FamilyDetailsAdapter.ViewHolder>() {
 
 
     class ViewHolder(binding: FamilyMemberItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
