@@ -178,6 +178,11 @@ class NewFamilyActivity : BaseActivity() {
         Log.e("FilterData", "Filtering Data... $city $state")
         mFilteredFamilyList.clear()
 
+        if(city=="Select City" || state=="Select State"){
+            setUpRecyclerView(mOriginalFamilyList)
+            return
+        }
+
         // Filter the list based on the state and city
         for (family in mOriginalFamilyList) {
            for(member in family.members){
@@ -247,9 +252,9 @@ class NewFamilyActivity : BaseActivity() {
                     }
                     _city=stringArrayCity[0]
 
-                    if(spinnerStateValue!="Select State") {
-                        filterData( _city, _state) // Call the filterData function when city is selected
-                    }
+
+                    filterData( _city, _state) // Call the filterData function when city is selected
+
 
                     // Notify adapter city for getting selected value according to state
                     adapterCity.notifyDataSetChanged()

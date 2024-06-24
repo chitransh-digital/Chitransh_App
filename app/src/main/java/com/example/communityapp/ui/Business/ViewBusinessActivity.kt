@@ -50,11 +50,11 @@ class ViewBusinessActivity : BaseActivity() {
             onBackPressed()
         }
         init()
+//        showProgressDialog("Fetching Business Details...")
 
         setupRV()
 
         setObservables()
-        showProgressDialog("Fetching Business Details...")
         viewModel.getBusiness(limit, page)
 
         binding.businessSearchIcon.setOnClickListener {
@@ -68,7 +68,6 @@ class ViewBusinessActivity : BaseActivity() {
             when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-//                    mOriginalBusinessList.clear()
                     resources.data?.businesses?.let { mOriginalBusinessList.addAll(it) }
                     businessAdapter.notifyDataSetChanged()
                     Log.e("B Success", resources.data.toString())
@@ -115,7 +114,10 @@ class ViewBusinessActivity : BaseActivity() {
     fun filterData(type: String, city: String, state: String) {
         Log.e("FilterData", "Filtering Data... $type $city $state")
         mFilteredBusinessList.clear()
-        if (city=="Select City" && state=="Select State" && type!="Select Type") {
+
+        if(type=="Select Type" && city=="Select City" && state=="Select State") {
+            mFilteredBusinessList.addAll(mOriginalBusinessList)
+        }else if (city=="Select City" && state=="Select State" && type!="Select Type") {
             for (business in mOriginalBusinessList) {
                 if (business.type.contains(type, ignoreCase = true)) {
                     mFilteredBusinessList.add(business)
@@ -203,9 +205,9 @@ class ViewBusinessActivity : BaseActivity() {
 
                     Log.e("CityArray2", _city)
 
-                    if(spinnerStateValue!="Select State") {
-                        filterData(_type, _city, _state) // Call the filterData function when city is selected
-                    }
+
+                    filterData(_type, _city, _state) // Call the filterData function when city is selected
+
 
                     // Notify adapter city for getting selected value according to state
                     adapterCity.notifyDataSetChanged()
@@ -234,11 +236,10 @@ class ViewBusinessActivity : BaseActivity() {
 
         binding.typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (binding.typeSpinner.selectedItem.toString()!="Select Type") {
+
                     _type = binding.typeSpinner.selectedItem.toString()
                     filterData(_type, _city, _state) // Call the filterData function when type is selected
-                    Log.e("SpinnerTypeValue", _type)
-                }
+
 
             }
 
@@ -255,6 +256,8 @@ class ViewBusinessActivity : BaseActivity() {
                     mFilteredBusinessList.add(business)
                 }
             }
+        }else{
+            mFilteredBusinessList.addAll(mOriginalBusinessList)
         }
 
         // Update your RecyclerView adapter with the filtered list
