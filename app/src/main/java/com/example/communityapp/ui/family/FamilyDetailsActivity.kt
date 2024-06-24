@@ -3,23 +3,13 @@ package com.example.communityapp.ui.family
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.androidworrkshop.ui.FamilyDetailsAdapter
 import com.example.communityapp.BaseActivity
-import com.example.communityapp.R
-import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.allMembers
+import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.databinding.ActivityFamilyDetailsBinding
-import com.example.communityapp.databinding.ActivityNewFamilyBinding
-import com.example.communityapp.ui.Dashboard.profileAdapter
 import com.example.communityapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +23,7 @@ class FamilyDetailsActivity : BaseActivity() {
         binding = ActivityFamilyDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         changeUI(screepointer)
-        var member_data = getIntent().getSerializableExtra(Constants.FAMILYDATA) as allMembers
+        val member_data = getIntent().getSerializableExtra(Constants.FAMILYDATA) as allMembers
         setWindowsUp()
         Log.e("FamilyDetailsActivity",member_data.toString())
 
@@ -45,41 +35,41 @@ class FamilyDetailsActivity : BaseActivity() {
         }
     }
 
-    private fun setUpRv(member_data : List<Member>){
+    private fun setUpRv(member_data : List<MemberX>){
         val adapter = FamilyDetailsAdapter(this,member_data, object :
             FamilyDetailsAdapter.onClickListener {
-            override fun onClick(model: Member) {
+            override fun onClick(model: MemberX) {
                 screepointer++
                 changeUI(screepointer)
                 populateUI(model)
-                Log.d("FamilyDetailsActivity",model.toString())
+                Log.d("FamilyDetailsActivity", model.toString())
             }
         })
         binding.memberRv.adapter = adapter
         binding.memberRv.layoutManager  = GridLayoutManager(this,2)
     }
 
-    private fun populateUI(member: Member) {
+    private fun populateUI(member: MemberX) {
         binding.previewNameinput.text = member.name
         binding.previewContactinput.text = member.contact
-        binding.previewDOBtext.text = member.DOB
+        binding.previewDOBtext.text = member.age.toString()
         binding.previewAgeSpinner.text = member.age.toString()
         binding.previewGenderSpinner.text = member.gender
         binding.previewRelationInput.text = member.relation
         binding.previewFamilyIDinput.text = member.familyID
-        binding.previewLandmarkInput.text = member.address
+        binding.previewLandmarkInput.text = member.city + ", " + member.state
         binding.previewBloodGroupSpinner.text = member.bloodGroup
         binding.previewKaryainput.text = member.karyakarni
         binding.previewOccuLevelSpinner.text = member.occupation
-        binding.previewEduLevelSpinner.text = member.highestEducation
-        binding.previewEduDepartInput.text = member.branch
-        binding.previewEduInstituteInput.text = member.institute
-        binding.previewEduAdditionalInput.text = member.additionalDetails
-        binding.previewOccuEmployerInput.text = member.employer
-        binding.previewOccuDepartmentInput.text = member.department
-        binding.previewOccuAddressInput.text = member.location
-        binding.previewOccuPositioninput.text = member.post
-        binding.previewEduCourseInput.text = member.course
+        binding.previewEduLevelSpinner.text = member.education
+//        binding.previewEduDepartInput.text = member.branch
+//        binding.previewEduInstituteInput.text = member.institute
+//        binding.previewEduAdditionalInput.text = member.additionalDetails
+//        binding.previewOccuEmployerInput.text = member.employer
+//        binding.previewOccuDepartmentInput.text = member.department
+//        binding.previewOccuAddressInput.text = member.location
+//        binding.previewOccuPositioninput.text = member.post
+//        binding.previewEduCourseInput.text = member.course
         Glide.with(this)
             .load(member.profilePic).into(binding.previewIvAddImageMember)
 
@@ -91,9 +81,9 @@ class FamilyDetailsActivity : BaseActivity() {
             binding.previewBuisType.visibility = View.VISIBLE
             binding.previewBuisName.visibility = View.VISIBLE
             binding.previewBuisAddress.visibility = View.VISIBLE
-            binding.previewBuisTypeInput.text = member.buisType
-            binding.previewBuisNameInput.text = member.buisName
-            binding.previewBuisAddressInput.text = member.location
+//            binding.previewBuisTypeInput.text = member.buisType
+//            binding.previewBuisNameInput.text = member.buisName
+//            binding.previewBuisAddressInput.text = member.location
         } else {
 
             binding.previewOccuDepartment.visibility = View.VISIBLE

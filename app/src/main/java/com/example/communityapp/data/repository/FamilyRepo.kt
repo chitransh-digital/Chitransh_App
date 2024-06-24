@@ -4,13 +4,12 @@ import android.net.Uri
 import android.util.Log
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.User
+import com.example.communityapp.data.retrofit.CustomAPI
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
@@ -27,7 +26,8 @@ import kotlin.coroutines.suspendCoroutine
 
 class FamilyRepo @Inject constructor(
     private val db: FirebaseFirestore,
-    private val storage: FirebaseStorage
+    private val storage: FirebaseStorage,
+    private val api: CustomAPI
 ) {
 
     val hash = emptySet<String>()
@@ -213,4 +213,6 @@ class FamilyRepo @Inject constructor(
                 }
         }
     }
+
+    suspend fun getAllFamilies(limit:Int,page:Int) = api.getAllFamilies(limit,page)
 }

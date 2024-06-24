@@ -1,19 +1,15 @@
 package com.example.communityapp.ui.family
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.example.communityapp.data.models.Job
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.FamilyResponse
 import com.example.communityapp.data.repository.FamilyRepo
+import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -61,5 +57,35 @@ class FamilyViewModel @Inject constructor(private var familyRepo: FamilyRepo) : 
             }
         }
     }
+
+
+    private val _family = MutableLiveData<Resource<FamilyResponse>>()
+
+    val family : LiveData<Resource<FamilyResponse>>
+        get() = _family
+
+    fun getAllFamily(limit:Int,page:Int){
+        _family.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val response = familyRepo.getAllFamilies(limit,page)
+                if(response.isSuccessful){
+                    _family.value = Resource.success(response.body())
+                }else if(response.code() == 404){
+                    _family.value = Resource.error(Exception(Constants.Error404))
+                }
+                else if(response.code() == 400){
+                    _family.value = Resource.error(Exception("no more families to show"))
+                }
+                else{
+                    _family.value = Resource.error( Exception(response.message()))
+                }
+            }catch (e : Exception){
+                _family.value = Resource.error(e)
+            }
+        }
+    }
+
+
 
 }

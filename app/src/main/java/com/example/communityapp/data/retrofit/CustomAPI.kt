@@ -49,6 +49,12 @@ interface CustomAPI {
     @GET("api/member/viewFamilies")
     suspend fun getFamilyByContact(@Query("contact") contact: String): Response<FamilyResponse>
 
+    @GET("api/member/viewFamilies")
+    suspend fun getAllFamilies(
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Response<FamilyResponse>
+
     @GET("api/feeds/getFeeds")
     suspend fun getFeeds(
         @Query("limit") limit: Int,

@@ -796,8 +796,8 @@ class UpdateMemberActivity : BaseActivity() {
         }
 
         if (member.occupation == "Business") {
-            if(member.occupationDetails.businessName.isNotEmpty())
-                binding.occuBuisNameInput.setText(member.occupationDetails.businessName)
+            if(member.occupationDetails?.businessName?.isNotEmpty() == true)
+                binding.occuBuisNameInput.setText(member.occupationDetails!!.businessName)
         } else {
             binding.occuBuisTypeSpinner.setSelection(4)
         }
@@ -840,9 +840,9 @@ class UpdateMemberActivity : BaseActivity() {
             binding.previewBuisType.visibility = View.VISIBLE
             binding.previewBuisName.visibility = View.VISIBLE
             binding.previewBuisAddress.visibility = View.VISIBLE
-            binding.previewBuisTypeInput.text = member.occupationDetails.businessType
-            binding.previewBuisNameInput.text = member.occupationDetails.businessName
-            binding.previewBuisAddressInput.text = member.occupationDetails.businessAddress
+            binding.previewBuisTypeInput.text = member.occupationDetails?.businessType ?: "NA"
+            binding.previewBuisNameInput.text = member.occupationDetails?.businessName ?: "NA"
+            binding.previewBuisAddressInput.text = member.occupationDetails?.businessAddress ?: "NA"
         } else {
             binding.previewOccuDepartment.visibility = View.VISIBLE
             binding.previewOccuEmployer.visibility = View.VISIBLE

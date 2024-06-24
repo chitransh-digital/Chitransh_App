@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.data.newModels.Business
 import com.example.communityapp.databinding.ActivityViewBusinessBinding
@@ -27,7 +28,7 @@ class ViewBusinessActivity : BaseActivity() {
     private var mOriginalBusinessList: MutableList<Business> = mutableListOf()
     private var mFilteredBusinessList: MutableList<Business> = mutableListOf()
     private lateinit var businessAdapter: BusinessAdapter
-    private var limit = 10
+    private var limit = 15
     private var page = 1
     private lateinit var stringArrayState: ArrayList<String>
     private lateinit var stringArrayCity: ArrayList<String>
@@ -87,11 +88,30 @@ class ViewBusinessActivity : BaseActivity() {
         })
     }
 
+
     private fun setupRV() {
-        businessAdapter = BusinessAdapter(this, mOriginalBusinessList)
-        binding.rvBusiness.layoutManager = LinearLayoutManager(this)
-        binding.rvBusiness.adapter = businessAdapter
-    }
+    businessAdapter = BusinessAdapter(this, mOriginalBusinessList)
+    val layoutManager = LinearLayoutManager(this)
+    binding.rvBusiness.layoutManager = layoutManager
+    binding.rvBusiness.adapter = businessAdapter
+
+    binding.rvBusiness.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                && firstVisibleItemPosition >= 0
+                && totalItemCount >= limit) {
+                page++
+                viewModel.getBusiness(limit, page)
+            }
+        }
+    })
+}
 
     fun filterData(type: String, city: String, state: String) {
         Log.e("FilterData", "Filtering Data... $type $city $state")
