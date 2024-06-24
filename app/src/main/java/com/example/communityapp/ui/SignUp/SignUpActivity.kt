@@ -22,12 +22,15 @@ import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.FamilyXX
 import com.example.communityapp.data.newModels.MemberDataX
+import com.example.communityapp.data.newModels.MemberXX
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.databinding.ActivitySignUpBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -67,11 +70,15 @@ class SignUpActivity : BaseActivity() {
     private var _city: String = ""
     private var _state: String = ""
     private var address_store = ""
+    private lateinit var mSingupFamily: FamilyXX
+    private lateinit var mSingupMember: MemberXX
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        preferencesHelper.setContact("8789891878")
 
         viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         setWindowsUp()
@@ -731,7 +738,10 @@ class SignUpActivity : BaseActivity() {
 
         val signupRequest= SignupRequest(binding.familyIDinput.text.toString(),memberData)
 
-        viewModel.addMember(signupRequest,mImagePart,this)
+        val memberDataJson = Gson().toJson(memberData)
+        viewModel.createFamily(contact,binding.familyIDinput.text.toString(),memberDataJson)
+
+//        viewModel.addMember(signupRequest,mImagePart,this)
     }
 
     private fun showDatePickerDialog() {
@@ -873,6 +883,38 @@ class SignUpActivity : BaseActivity() {
             }
         })
 
+        viewModel.createFamily.observe(this, Observer {resources ->
+
+            when(resources.status){
+                Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
+                    Log.e("Success",resources.data.toString())
+                    //clear all fields
+                    binding.nameinput.text.clear()
+                    binding.contactinput.text.clear()
+                    binding.landmarkInput.text.clear()
+                    binding.DOBinput.text.clear()
+                    binding.ageSpinner.setSelection(1)
+                    binding.genderSpinner.setSelection(1)
+
+                    mSingupFamily = resources.data?.family!!
+                    mSingupMember = resources.data.family.members[0]
+                    viewModel.signInWithPhone(preferencesHelper.getContact().toString())
+
+                }
+                Resource.Status.LOADING -> {
+                    showProgressDialog("Adding Your Details as Family Head ...")
+                    Log.e("Loading",resources.data.toString())
+                }
+                Resource.Status.ERROR -> {
+                    hideProgressDialog()
+                    Log.e("Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
+                }
+                else -> {}
+            }
+        })
+
         viewModel.loginStatusPhone.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
@@ -880,16 +922,8 @@ class SignUpActivity : BaseActivity() {
                     Log.e("JWTToken", resource.data?.token.toString())
                     //save to shared pref
                     preferencesHelper.setToken( resource.data?.token.toString())
+                    viewModel.addImage(mImagePart,this)
 
-                    val intent = Intent(this, DashboardActivity::class.java)
-                    intent.putExtra(Constants.USERNAME,preferencesHelper.getContact() )
-                    val options = ActivityOptions.makeSceneTransitionAnimation(
-                        this,
-                        binding.logoImage,
-                        getString(R.string.transition_name)
-                    ).toBundle()
-                    startActivity(intent, options)
-                    finish()
                 }
 
                 Resource.Status.ERROR -> {
@@ -907,6 +941,60 @@ class SignUpActivity : BaseActivity() {
                 }
             }
 
+        })
+
+        viewModel.addImage.observe(this, Observer {resources ->
+
+            when(resources.status){
+                Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
+                    val imageURL= resources.data?.file
+                    if (imageURL != null) {
+                        viewModel.updateMember(imageURL,mSingupFamily.id,mSingupMember._id)
+                    }
+                }
+                Resource.Status.LOADING -> {
+                    showProgressDialog("Adding Your Details as Family Head ...")
+                    Log.e("Loading",resources.data.toString())
+                }
+                Resource.Status.ERROR -> {
+                    hideProgressDialog()
+                    Log.e("Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
+                }
+                else -> {}
+            }
+        })
+
+        viewModel.updateMember.observe(this, Observer {resources ->
+
+            when(resources.status){
+                Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
+                    Log.e("Success",resources.data.toString())
+
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    intent.putExtra(Constants.USERNAME,preferencesHelper.getContact() )
+                    val options = ActivityOptions.makeSceneTransitionAnimation(
+                        this,
+                        binding.logoImage,
+                        getString(R.string.transition_name)
+                    ).toBundle()
+                    startActivity(intent, options)
+                    finish()
+
+                }
+                Resource.Status.LOADING -> {
+                    showProgressDialog("adding your image ...")
+                    Log.e("Loading",resources.data.toString())
+                }
+                Resource.Status.ERROR -> {
+                    hideProgressDialog()
+                    Log.e("Error",resources.apiError.toString())
+                    showErrorSnackBar("Error: ${resources.apiError?.message}")
+                }
+                else -> {}
+            }
         })
 
     }

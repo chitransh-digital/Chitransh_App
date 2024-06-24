@@ -7,6 +7,7 @@ import com.example.communityapp.data.models.LoginRequest
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.newModels.ImageResponse
 import com.example.communityapp.data.newModels.SignupRequest
+import com.example.communityapp.data.newModels.UpdateImage
 import com.example.communityapp.data.retrofit.CustomAPI
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
@@ -124,6 +125,10 @@ class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private 
     suspend fun signInWithPhone(phone: String) = api.loginPhone(LoginRequest(phone))
 
     suspend fun addMember(signupRequest: SignupRequest) = api.addMember(signupRequest)
+
+    suspend fun createFamily(phone: String, familyID: String,memberData:String) = api.createFamily(phone, familyID,memberData)
+
+    suspend fun updateMember(imageURl: UpdateImage, familyHash: String, memberHash: String) = api.updateMemberImage(imageURl, familyHash, memberHash)
 
 
 }

@@ -7,8 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.LoginResponse
+import com.example.communityapp.data.newModels.CreateFamilyResponse
+import com.example.communityapp.data.newModels.ImageResponse
+import com.example.communityapp.data.newModels.MemberData
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
+import com.example.communityapp.data.newModels.UpdateImage
 import com.example.communityapp.data.repository.SignUpRepo
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
@@ -69,6 +73,74 @@ class SignUpViewModel @Inject constructor(private var signUpRepo: SignUpRepo) : 
                 }
             }catch (e : Exception){
                 _loginStatusPhone.value = Resource.error(e)
+            }
+        }
+    }
+
+    //createFamily
+    private val _createFamily = MutableLiveData<Resource<CreateFamilyResponse>>()
+    val createFamily: LiveData<Resource<CreateFamilyResponse>>
+        get() = _createFamily
+
+    fun createFamily(phone: String, familyID: String, memberData: String) {
+        _createFamily.value = Resource.loading()
+        viewModelScope.launch {
+            try {
+                val res = signUpRepo.createFamily(phone, familyID, memberData)
+                if (res.isSuccessful) {
+                    Log.d("SignUpViewModel", "createFamily: ${res.body()}")
+                    _createFamily.value = Resource.success(res.body())
+                } else if (res.code() == 404) {
+                    _createFamily.value = Resource.error(Exception(Constants.Error404))
+                }
+            } catch (e: Exception) {
+                _createFamily.value = Resource.error(e)
+            }
+        }
+    }
+
+    //updateMember
+    private val _updateMember = MutableLiveData<Resource<SignupResponse>>()
+    val updateMember: LiveData<Resource<SignupResponse>>
+        get() = _updateMember
+
+    fun updateMember(imageURl:String, familyHash: String, memberHash: String) {
+        _updateMember.value = Resource.loading()
+        viewModelScope.launch {
+            try {
+                val res = signUpRepo.updateMember(UpdateImage(MemberData(profilePic =  imageURl)), familyHash, memberHash)
+                if (res.isSuccessful) {
+                    _updateMember.value = Resource.success(res.body())
+                } else if (res.code() == 404) {
+                    _updateMember.value = Resource.error(Exception(Constants.Error404))
+                }
+                else {
+                    _updateMember.value = Resource.error(Exception(res.message()))
+                }
+            } catch (e: Exception) {
+                _updateMember.value = Resource.error(e)
+            }
+        }
+    }
+
+    //addImage
+    private val _addImage = MutableLiveData<Resource<ImageResponse>>()
+    val addImage: LiveData<Resource<ImageResponse>>
+        get() = _addImage
+
+    fun addImage(imagePart: MultipartBody.Part, context: Context) {
+        _addImage.value = Resource.loading()
+        viewModelScope.launch {
+            try {
+                val res = signUpRepo.uploadImage(imagePart, context)
+                if (res.isSuccessful) {
+                    Log.d("SignUpViewModel", "addImage: ${res.body()}")
+                    _addImage.value = Resource.success(res.body())
+                } else if (res.code() == 404) {
+                    _addImage.value = Resource.error(Exception(Constants.Error404))
+                }
+            } catch (e: Exception) {
+                _addImage.value = Resource.error(e)
             }
         }
     }

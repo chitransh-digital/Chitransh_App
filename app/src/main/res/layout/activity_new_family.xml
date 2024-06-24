@@ -8,67 +8,101 @@
 
 
     <ImageView
-        android:id="@+id/profile_back"
+        android:id="@+id/view_family_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/back"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintHorizontal_bias="0.005"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
         app:layout_constraintWidth_percent="0.08" />
 
-    <EditText
-        android:id="@+id/et_searchBar"
-        android:layout_width="138dp"
-        android:layout_height="46dp"
-        android:hint="Enter search"
+
+    <TextView
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:text="View Families"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/rv_OtherFamillyMembers"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
-        app:layout_constraintStart_toEndOf="@id/profile_back"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/search_type_spinner"
-        android:layout_width="122dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:padding="10dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/baseline_search_icon"
-        app:layout_constraintHorizontal_bias="0.707"
-        app:layout_constraintStart_toEndOf="@id/et_searchBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintStart_toEndOf="@id/view_family_back"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.016" />
+        app:layout_constraintVertical_bias="0.024" />
 
+    <EditText
+        android:id="@+id/etSearchFamily"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/curved_edittext_bg"
+        android:hint=" search family by ID "
+        android:padding="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/family_search_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_family_back" />
+
+    <!-- Search Icon -->
     <ImageView
-        android:id="@+id/baseline_search_icon"
-        android:layout_width="40dp"
-        android:layout_height="46dp"
+        android:id="@+id/family_search_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/baseline_search_24"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/etSearchFamily"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.812"
-        app:layout_constraintStart_toEndOf="@+id/et_searchBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintTop_toTopOf="@id/etSearchFamily" />
+
+    <!-- Second Dropdown TextView -->
+    <LinearLayout
+        android:id="@+id/llSpinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/etSearchFamily"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Spinner
+            android:id="@+id/stateSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="@drawable/curved_edittext_bg"
+            android:prompt="@string/spinner2_prompt"/>
+
+        <Spinner
+            android:id="@+id/citySpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="@drawable/curved_edittext_bg"
+            android:prompt="@string/spinner3_prompt" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_OtherFamillyMembers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.85"
         android:layout_margin="4dp"
         android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_searchBar"
+        app:layout_constraintTop_toBottomOf="@+id/llSpinner2"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/profile_item_layout" />
 

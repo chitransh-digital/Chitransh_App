@@ -9,12 +9,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.communityapp.R
-import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.databinding.FamilyMemberItemLayoutBinding
-import com.example.communityapp.ui.Dashboard.profileAdapter
 
-class FamilyDetailsAdapter(private val context: Context, private val FamilyDetails : List<Member>,
-    private var OnItemClickListener : onClickListener) : RecyclerView.Adapter<FamilyDetailsAdapter.ViewHolder>() {
+class FamilyDetailsAdapter(private val context: Context, private val FamilyDetails : List<MemberX>,
+                           private var OnItemClickListener : onClickListener) : RecyclerView.Adapter<FamilyDetailsAdapter.ViewHolder>() {
 
 
     class ViewHolder(binding: FamilyMemberItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
@@ -52,8 +51,12 @@ class FamilyDetailsAdapter(private val context: Context, private val FamilyDetai
         }else{
             holder.gender.setText("F")
         }
-        holder.dob.text = model.DOB
-        holder.address.text = model.address
+        holder.dob.text = model.age.toString()
+        holder.address.text = buildString {
+            append(model.city)
+            append(", ")
+            append(model.state)
+        }
 
         holder.phone.setOnClickListener{
             if(model.contact == "NA"){
@@ -85,7 +88,7 @@ class FamilyDetailsAdapter(private val context: Context, private val FamilyDetai
     }
 
     interface onClickListener {
-        fun onClick(member: Member)
+        fun onClick(member: MemberX)
     }
 
 }
