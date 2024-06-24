@@ -26,7 +26,6 @@ import com.example.communityapp.utils.Resource
 import com.example.communityapp.utils.moveAndResizeView
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.cdimascio.dotenv.dotenv
 import java.util.Locale
 import javax.inject.Inject
 
@@ -50,22 +49,22 @@ class Login_activity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var apiKey: String= Constants.KEY_AUTH_TOKEN
-
-        try {
-
-            val dotenv = dotenv {
-                directory = "./assets"
-                filename = "env"
-            }
-
-            apiKey = dotenv["DEFAULT_API_KEY"] ?: throw IllegalStateException("API_KEY not found in env")
-        } catch (e: Exception) {
-            Log.e("DefaultAPI_KEY", "Error: ${e.message}")
-        }
+//        var apiKey: String= Constants.KEY_AUTH_TOKEN
+//
+//        try {
+//
+//            val dotenv = dotenv {
+//                directory = "./assets"
+//                filename = "env"
+//            }
+//
+//            apiKey = dotenv["DEFAULT_API_KEY"] ?: throw IllegalStateException("API_KEY not found in env")
+//        } catch (e: Exception) {
+//            Log.e("DefaultAPI_KEY", "Error: ${e.message}")
+//        }
 
         Log.e("LoginActivity", "Token: ${preferencesHelper.getToken()}")
-        if(preferencesHelper.getToken() != Constants.KEY_AUTH_TOKEN && preferencesHelper.getToken() != apiKey){
+        if(preferencesHelper.getToken() != Constants.KEY_AUTH_TOKEN){
             Log.e("LoginActivity", "Token inside: ${preferencesHelper.getToken()}")
             val intent = Intent(this, DashboardActivity::class.java)
             val options = ActivityOptions.makeSceneTransitionAnimation(
@@ -75,7 +74,7 @@ class Login_activity : BaseActivity() {
             ).toBundle()
             startActivity(intent, options)
             finish()
-        } else preferencesHelper.setToken(apiKey)
+        }
 
 
         val welcomeText = getString(R.string.welcome_text)

@@ -6,6 +6,7 @@ import com.example.communityapp.data.models.LoginResponse
 import com.example.communityapp.data.newModels.AddBusinessResponse
 import com.example.communityapp.data.newModels.Business
 import com.example.communityapp.data.newModels.BusinessResponse
+import com.example.communityapp.data.newModels.CreateFamilyResponse
 import com.example.communityapp.data.newModels.FamilyResponse
 import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.newModels.ImageResponse
@@ -13,11 +14,14 @@ import com.example.communityapp.data.newModels.JobsResponse
 import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
+import com.example.communityapp.data.newModels.UpdateImage
 import com.example.communityapp.data.newModels.addMember
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -83,4 +87,17 @@ interface CustomAPI {
     @DELETE("api/member/delete/{familyHash}/{memberHash}")
     suspend fun deleteMember(@Path("familyHash") familyHash : String,
                              @Path("memberHash") memberHash : String): Response<SignupResponse>
+
+    @FormUrlEncoded
+    @POST("api/member/createFamily")
+    suspend fun createFamily(
+        @Query("phone") phone: String,
+        @Field("familyID") familyID: String,
+        @Field("memberData") memberData: String
+    ): Response<CreateFamilyResponse>
+
+    @PATCH("api/member/update/{familyHash}/{memberHash}")
+    suspend fun updateMemberImage(@Body profilePic: UpdateImage,
+                                  @Path("familyHash") familyHash : String,
+                                  @Path("memberHash") memberHash : String): Response<SignupResponse>
 }

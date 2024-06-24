@@ -53,7 +53,7 @@ class ViewBusinessActivity : BaseActivity() {
         setupRV()
 
         setObservables()
-
+        showProgressDialog("Fetching Business Details...")
         viewModel.getBusiness(limit, page)
 
         binding.businessSearchIcon.setOnClickListener {
