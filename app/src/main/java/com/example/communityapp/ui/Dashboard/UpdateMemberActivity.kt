@@ -21,6 +21,7 @@ import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.newModels.EducationDetails
+import com.example.communityapp.data.newModels.Karyakarni
 import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.data.newModels.OccupationDetails
@@ -1271,7 +1272,23 @@ class UpdateMemberActivity : BaseActivity() {
     }
 
     private fun setUpKaryaSpinner(karyakarni: KaryakarniResponse) {
-        val karyakarniList = karyakarni.karyakarni
+        val karyakarniList = mutableListOf<Karyakarni>()
+        val defaultItem = Karyakarni(
+            address = "",
+            city = "",
+            designations = emptyList(),
+            id = "",
+            landmark = "",
+            level = "Default",
+            logo = "",
+            members = emptyList(),
+            name = "Select Karyakarni",
+            state = ""
+        )
+        karyakarniList.add(defaultItem)
+        for(item in karyakarni.karyakarni){
+            karyakarniList.add(item)
+        }
 
         val karyakarniAdapter = KaryakarniSpinnerAdapter(
             this,
@@ -1281,5 +1298,4 @@ class UpdateMemberActivity : BaseActivity() {
 //        karyakarniAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.KaryainputSpinner.adapter = karyakarniAdapter
     }
-
 }

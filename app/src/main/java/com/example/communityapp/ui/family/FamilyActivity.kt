@@ -22,13 +22,27 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.EducationDetails
+import com.example.communityapp.data.newModels.Karyakarni
+import com.example.communityapp.data.newModels.KaryakarniResponse
+import com.example.communityapp.data.newModels.MemberReq
+import com.example.communityapp.data.newModels.MemberX
+import com.example.communityapp.data.newModels.OccupationDetails
+import com.example.communityapp.data.newModels.addMember
+import com.example.communityapp.data.newModels.addMemberReq
+import com.example.communityapp.data.newModels.headAddress
 import com.example.communityapp.databinding.ActivityFamilyBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
+import com.example.communityapp.utils.KaryakarniSpinnerAdapter
 import com.example.communityapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.util.Locale
@@ -39,9 +53,10 @@ class FamilyActivity : BaseActivity() {
     private lateinit var viewModel: FamilyViewModel
     private lateinit var binding: ActivityFamilyBinding
     private lateinit var family_id: String
+    private lateinit var family_hash: String
     private var selectedDate: Calendar = Calendar.getInstance()
     private var familyMember = "other"
-    private var selectedImagePath: String = ""
+    private var selectedImageMultiPartBody: MultipartBody.Part? = null
     private var uniqueRelations: List<String>? = null
     private var screenPointer = 0
     private var shortAnimationDuration = 500
@@ -51,7 +66,7 @@ class FamilyActivity : BaseActivity() {
     var ageSpinner = 0
     var buisTypeSpinner = 0
     var courseSpinner = 0
-    var headAddress = ""
+    var headAddress: headAddress = headAddress("", "", "")
     private lateinit var stringArrayState: ArrayList<String>
     private lateinit var stringArrayCity: ArrayList<String>
     private var spinnerStateValue: String = ""
@@ -72,6 +87,7 @@ class FamilyActivity : BaseActivity() {
         changeUI(screenPointer)
         e("uniqueRelations", uniqueRelations.toString())
         init()
+        viewModel.getAllKaryakarni()
 
         if (uniqueRelations?.contains("Wife") == true) {
             binding.relationshipSelection1.btnWife.visibility = View.GONE
@@ -181,7 +197,11 @@ class FamilyActivity : BaseActivity() {
                                 "CS",
                                 "other"
                             )
-                            val courseAdapter = ArrayAdapter(this@FamilyActivity, android.R.layout.simple_spinner_dropdown_item, list)
+                            val courseAdapter = ArrayAdapter(
+                                this@FamilyActivity,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                list
+                            )
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
                             binding.eduDepartment.visibility = View.VISIBLE
@@ -203,12 +223,16 @@ class FamilyActivity : BaseActivity() {
                                 "MDS",
                                 "other"
                             )
-                            val courseAdapter = ArrayAdapter(this@FamilyActivity, android.R.layout.simple_spinner_dropdown_item, list)
+                            val courseAdapter = ArrayAdapter(
+                                this@FamilyActivity,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                list
+                            )
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
                             binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
-                        }else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
+                        } else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
                             binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduInstitute.visibility = View.VISIBLE
                             binding.eduAdditionalDetails.visibility = View.VISIBLE
@@ -232,17 +256,18 @@ class FamilyActivity : BaseActivity() {
                     id: Long
                 ) {
                     occuSpinner = position
-                    if(binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
+                    if (binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
-                        binding.occuLevelSpinner.selectedItem.toString() == "Student"){
+                        binding.occuLevelSpinner.selectedItem.toString() == "Student"
+                    ) {
                         binding.occuDepartment.visibility = View.GONE
                         binding.occuEmployer.visibility = View.GONE
                         binding.occuPosition.visibility = View.GONE
                         binding.occuAddress.visibility = View.GONE
                         binding.occuBuisName.visibility = View.GONE
                         binding.occuBuisType.visibility = View.GONE
-                    }else if(binding.occuLevelSpinner.selectedItem.toString() == "Business"){
+                    } else if (binding.occuLevelSpinner.selectedItem.toString() == "Business") {
                         binding.occuEmployer.visibility = View.GONE
                         binding.occuDepartment.visibility = View.GONE
                         binding.occuPosition.visibility = View.GONE
@@ -251,14 +276,22 @@ class FamilyActivity : BaseActivity() {
                         binding.occuBuisType.visibility = View.VISIBLE
                         binding.occuAddressInput.hint = "Business Address"
                         binding.occuAddressText.text = "Business Address"
-                        val businessTypeList = arrayListOf("Restaurant", "Retail Store", "Tech", "Consulting Firm", "other")
-                        val businessTypeAdapter = ArrayAdapter(this@FamilyActivity,
-                            android.R.layout.simple_spinner_dropdown_item, businessTypeList)
+                        val businessTypeList = arrayListOf(
+                            "Restaurant",
+                            "Retail Store",
+                            "Tech",
+                            "Consulting Firm",
+                            "other"
+                        )
+                        val businessTypeAdapter = ArrayAdapter(
+                            this@FamilyActivity,
+                            android.R.layout.simple_spinner_dropdown_item, businessTypeList
+                        )
                         businessTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        binding.occuBuisTypeSpinner.adapter=businessTypeAdapter
+                        binding.occuBuisTypeSpinner.adapter = businessTypeAdapter
 
                         binding.occuBuisTypeSpinner.setSelection(buisTypeSpinner)
-                    }else{
+                    } else {
                         binding.occuDepartment.visibility = View.VISIBLE
                         binding.occuEmployer.visibility = View.VISIBLE
                         binding.occuPosition.visibility = View.VISIBLE
@@ -415,17 +448,22 @@ class FamilyActivity : BaseActivity() {
         binding.eduLevelSpinner.setSelection(eduSpinner)
         binding.occuLevelSpinner.setSelection(occuSpinner)
 
-        val completeAddress = if(binding.sameAsHead.isChecked){
-            headAddress
-        }else{
+        val completeAddress = if (binding.sameAsHead.isChecked) {
+            headAddress.landmark + ", " + headAddress.city + ", " + headAddress.state
+        } else {
             binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
         }
 
         val course = "NA"
         if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
             binding.eduCourseOtherInput.text.toString()
-        } else if(binding.eduCourseSpinner.isSelected){
+        } else if (binding.eduCourseSpinner.isSelected) {
             binding.eduCourseSpinner.selectedItem.toString()
+        }
+
+        var karyakanri = "NA"
+        if (binding.KaryainputSpinner.isSelected) {
+            karyakanri = binding.KaryainputSpinner.selectedItem.toString()
         }
 
         binding.previewNameinput.text = binding.nameinput.text.toString()
@@ -437,7 +475,7 @@ class FamilyActivity : BaseActivity() {
         binding.previewFamilyIDinput.text = binding.IDinput.text.toString()
         binding.previewLandmarkInput.text = completeAddress
         binding.previewBloodGroupSpinner.text = binding.bloodGroupSpinner.selectedItem.toString()
-        binding.previewKaryainput.text = binding.Karyainput.text.toString()
+        binding.previewKaryainput.text = karyakanri
         binding.previewOccuLevelSpinner.text = binding.occuLevelSpinner.selectedItem.toString()
         binding.previewEduLevelSpinner.text = binding.eduLevelSpinner.selectedItem.toString()
         binding.previewEduDepartInput.text = binding.eduDepartInput.text.toString()
@@ -450,7 +488,7 @@ class FamilyActivity : BaseActivity() {
         binding.previewEduCourseInput.text = course
         binding.previewIvAddImageMember.setImageURI(uri)
 
-        if(binding.occuLevelSpinner.selectedItem.toString() == "Business"){
+        if (binding.occuLevelSpinner.selectedItem.toString() == "Business") {
             binding.previewOccuDepartment.visibility = View.GONE
             binding.previewOccuEmployer.visibility = View.GONE
             binding.previewOccuPosition.visibility = View.GONE
@@ -461,7 +499,7 @@ class FamilyActivity : BaseActivity() {
             binding.previewBuisTypeInput.text = binding.occuBuisTypeSpinner.selectedItem.toString()
             binding.previewBuisNameInput.text = binding.occuBuisNameInput.text.toString()
             binding.previewBuisAddressInput.text = binding.occuAddressInput.text.toString()
-        }else{
+        } else {
 
             binding.previewOccuDepartment.visibility = View.VISIBLE
             binding.previewOccuEmployer.visibility = View.VISIBLE
@@ -476,13 +514,12 @@ class FamilyActivity : BaseActivity() {
     }
 
     private fun pageUpdates() {
-        if (binding.eduLevelSpinner.selectedItem.toString() == "Phd"){
+        if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
             binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.GONE
-        }
-        else if (binding.eduLevelSpinner.selectedItem.toString() == "Bachelors") {
+        } else if (binding.eduLevelSpinner.selectedItem.toString() == "Bachelors") {
             binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
@@ -510,7 +547,8 @@ class FamilyActivity : BaseActivity() {
         } else if (binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
             binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
             binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
-            binding.occuLevelSpinner.selectedItem.toString() == "Student") {
+            binding.occuLevelSpinner.selectedItem.toString() == "Student"
+        ) {
             binding.previewOccuDepartment.visibility = View.GONE
             binding.previewOccuEmployer.visibility = View.GONE
             binding.previewOccuPosition.visibility = View.GONE
@@ -531,7 +569,7 @@ class FamilyActivity : BaseActivity() {
 
     private fun registerPageUI() {
 
-        binding.headAddress.text = "Address of Head : $headAddress"
+        binding.headAddress.text = "Address of head : " + headAddress.landmark + ", " + headAddress.city + ", " + headAddress.state
         Log.d("FamilyActivity", "Head Address: $headAddress")
 
         val ageList = (1..100).toList()
@@ -693,7 +731,7 @@ class FamilyActivity : BaseActivity() {
     }
 
     private fun populateAdress() {
-        if(address_store.isNotEmpty()){
+        if (address_store.isNotEmpty()) {
             val state = address_store.split(",").last()
             val city = address_store.split(",")[1]
             val landmark = address_store.split(",").first()
@@ -701,7 +739,7 @@ class FamilyActivity : BaseActivity() {
             Log.e("City", city)
             Log.e("Landmark", landmark)
 
-            initPopulate(city,state)
+            initPopulate(city, state)
         }
     }
 
@@ -726,9 +764,9 @@ class FamilyActivity : BaseActivity() {
             changeUI(screenPointer)
         }
 
-        address_store = if(binding.sameAsHead.isChecked){
-            headAddress
-        }else{
+        address_store = if (binding.sameAsHead.isChecked) {
+            headAddress.landmark + ", " + headAddress.city + ", " + headAddress.state
+        } else {
             binding.landmarkInput.text.toString() + "," + binding.citySpinner.selectedItem.toString() + "," + binding.stateSpinner.selectedItem.toString()
         }
     }
@@ -772,37 +810,40 @@ class FamilyActivity : BaseActivity() {
     }
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {
-        val pattern = """^\+91\d{10}$""".toRegex()
-
-        val matchResult = pattern.find(phoneNumber)
-
-        return matchResult != null
+//        val pattern = """^\+91\d{10}$""".toRegex()
+//
+//        val matchResult = pattern.find(phoneNumber)
+//
+//        return matchResult != null
+        return phoneNumber.length == 10
     }
 
     private fun submitRegistration() {
-        val completeAddress = if(binding.sameAsHead.isChecked){
+        val completeAddress = if (binding.sameAsHead.isChecked) {
             headAddress
-        }else{
+        } else {
             binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
         }
         var contact = "NA"
         if (binding.contactinput.text.toString() != "+91") {
             contact = binding.contactinput.text.toString()
         }
+
         var education = binding.eduLevelSpinner.selectedItem.toString()
         if (binding.eduInstituteInput.text.isNotEmpty()) {
             education += "," + binding.eduInstituteInput.text.toString()
         }
 
         var karyakanri = "NA"
-        if (binding.Karyainput.text.isNotEmpty()) {
-            karyakanri = binding.Karyainput.text.toString()
+        if (binding.KaryainputSpinner.isSelected) {
+            karyakanri = binding.KaryainputSpinner.selectedItem.toString()
         }
+
 
         val course = "NA"
         if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
             binding.eduCourseOtherInput.text.toString()
-        } else if(binding.eduCourseSpinner.isSelected) {
+        } else if (binding.eduCourseSpinner.isSelected) {
             binding.eduCourseSpinner.selectedItem.toString()
         }
 
@@ -811,40 +852,49 @@ class FamilyActivity : BaseActivity() {
             binding.occuBuisTypeSpinner.selectedItem.toString()
         }
 
-        val data = Member(
-            familyID = binding.IDinput.text.toString(),
-            name = binding.nameinput.text.toString(),
-            DOB = binding.DOBinput.text.toString(),
-            contact = contact,
-            age = binding.ageSpinner.selectedItem.toString().toInt(),
-            gender = binding.genderSpinner.selectedItem.toString(),
-            address = completeAddress,
-            karyakarni = karyakanri,
-            relation = binding.relationinput.text.toString(),
-            occupation = binding.occuLevelSpinner.selectedItem.toString(),
-            bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
-            profilePic = "NA",
-            highestEducation = binding.eduLevelSpinner.selectedItem.toString(),
-            branch = if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
-            institute = if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
-            additionalDetails = if (binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.text.toString() else "NA",
-            employer = if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
-            department = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
-            location = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
-            post = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
-            buisType = buisType,
-            buisName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
-            course = course
+        val memberData = addMemberReq(
+            memberData = MemberReq(
+                familyID = binding.IDinput.text.toString(),
+                name = binding.nameinput.text.toString(),
+                contact = contact,
+                age = binding.ageSpinner.selectedItem.toString().toInt(),
+                gender = binding.genderSpinner.selectedItem.toString(),
+                landmark = binding.landmarkInput.text.toString(),
+                city = binding.citySpinner.selectedItem.toString(),
+                state = binding.stateSpinner.selectedItem.toString(),
+                karyakarni = karyakanri,
+                relation = binding.relationinput.text.toString(),
+                bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
+                profilePic = "NA",
+                education = education,
+                educationDetails = EducationDetails(
+                    course = course,
+                    fieldOfStudy = binding.eduDepartInput.text.toString(),
+                    institute = binding.eduInstituteInput.text.toString(),
+                    additionalDetails = binding.eduAdditionalInput.text.toString()
+                ),
+                occupation = binding.occuLevelSpinner.selectedItem.toString(),
+                occupationDetails = OccupationDetails(
+                    businessType = buisType,
+                    businessName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
+                    jobEmployer = if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
+                    jobDepartment = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
+                    jobLocation = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
+                    jobPost = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
+                    businessAddress = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA"
+                ),
+                contactVisibility = true
+            )
         )
-        showProgressDialog("Adding Member...")
-        viewModel.addMember(member = data, selectedImagePath)
+        viewModel.addMember(memberData, selectedImageMultiPartBody,family_hash)
     }
 
     private fun getArguements() {
         family_id = intent.getStringExtra(Constants.FAMILYID).toString()
         binding.IDinput.setText(family_id)
         uniqueRelations = intent.getStringArrayListExtra(Constants.UNIQUE_RELATIONS)
-        headAddress = intent.getStringExtra(Constants.HEAD_ADDRESS).toString()
+        headAddress = intent.getSerializableExtra(Constants.HEAD_ADDRESS) as headAddress
+        family_hash = intent.getStringExtra(Constants.FAMILYHASH).toString()
     }
 
     fun isDateInCorrectFormat(dateString: String, dateFormat: String): Boolean {
@@ -866,14 +916,14 @@ class FamilyActivity : BaseActivity() {
                     Log.e("Success", resources.data.toString())
                     //clear all fields
                     binding.nameinput.text.clear()
-                    binding.contactinput.setText("+91")
+                    binding.contactinput.text.clear()
                     binding.landmarkInput.text.clear()
-                    binding.Karyainput.text.clear()
+                    binding.KaryainputSpinner.setSelection(0)
                     binding.DOBinput.text.clear()
                     binding.ageSpinner.setSelection(1)
                     binding.genderSpinner.setSelection(1)
                     binding.ivAddImageMember.setImageResource(R.drawable.account_circle)
-                    selectedImagePath = ""
+                    selectedImageMultiPartBody = null
                     Toast.makeText(this, "Member Added Successfully", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, DashboardActivity::class.java))
                     finish()
@@ -890,6 +940,21 @@ class FamilyActivity : BaseActivity() {
                 }
 
                 else -> {}
+            }
+        })
+
+        viewModel.getAllKarya.observe(this, Observer {resources ->
+            when(resources.status) {
+                Resource.Status.SUCCESS -> {
+                    setUpKaryaSpinner(resources.data!!)
+                }
+
+                Resource.Status.LOADING -> {
+                }
+
+                Resource.Status.ERROR -> {
+                    showErrorSnackBar(resources.apiError.toString())
+                }
             }
         })
     }
@@ -926,7 +991,8 @@ class FamilyActivity : BaseActivity() {
         // Optionally, you can use the selected month and day to refine the age calculation
         if (currentDate.get(Calendar.MONTH) < selectedDate.get(Calendar.MONTH) ||
             (currentDate.get(Calendar.MONTH) == selectedDate.get(Calendar.MONTH) &&
-                    currentDate.get(Calendar.DAY_OF_MONTH) < selectedDate.get(Calendar.DAY_OF_MONTH))) {
+                    currentDate.get(Calendar.DAY_OF_MONTH) < selectedDate.get(Calendar.DAY_OF_MONTH))
+        ) {
             // Subtract 1 year if the birth date hasn't occurred yet this year
             age--
         }
@@ -941,7 +1007,12 @@ class FamilyActivity : BaseActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 uri = data?.data
-                selectedImagePath = getImagePath(uri!!).toString()
+                val selectedImagePath = getImagePath(uri!!).toString()
+                val file = File(selectedImagePath)
+                val requestBody =
+                    file.asRequestBody(contentResolver.getType(uri!!)?.toMediaTypeOrNull())
+                selectedImageMultiPartBody =
+                    MultipartBody.Part.createFormData("file", file.name, requestBody)
                 Log.d("Image Path", "The image is $selectedImagePath and the uri is $uri")
                 binding.ivAddImageMember.setImageURI(uri)
             } else {
@@ -1003,7 +1074,11 @@ class FamilyActivity : BaseActivity() {
         stringArrayCity = ArrayList()
 
         // Set city adapter
-        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayCity)
+        val adapterCity = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayCity
+        )
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.citySpinner.adapter = adapterCity
 
@@ -1020,13 +1095,22 @@ class FamilyActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayState)
+        val adapter = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayState
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = adapter
 
         // State spinner item selected listener with the help of this we get selected value
         binding.stateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val item = parent?.getItemAtPosition(position)
                 val text = binding.stateSpinner.selectedItem.toString()
 
@@ -1060,7 +1144,12 @@ class FamilyActivity : BaseActivity() {
         }
 
         binding.citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val spinnerCityValue = binding.citySpinner.selectedItem.toString()
                 Log.e("SpinnerCityValue", spinnerCityValue)
 
@@ -1108,7 +1197,11 @@ class FamilyActivity : BaseActivity() {
         stringArrayCity = ArrayList()
 
         // Set city adapter
-        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayCity)
+        val adapterCity = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayCity
+        )
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.citySpinner.adapter = adapterCity
 
@@ -1125,7 +1218,11 @@ class FamilyActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayState)
+        val adapter = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayState
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = adapter
 
@@ -1137,7 +1234,12 @@ class FamilyActivity : BaseActivity() {
 
         // State spinner item selected listener with the help of this we get selected value
         binding.stateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val item = parent?.getItemAtPosition(position)
                 val text = binding.stateSpinner.selectedItem.toString()
 
@@ -1178,7 +1280,12 @@ class FamilyActivity : BaseActivity() {
         }
 
         binding.citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val spinnerCityValue = binding.citySpinner.selectedItem.toString()
                 Log.e("SpinnerCityValue", spinnerCityValue)
 
@@ -1187,5 +1294,33 @@ class FamilyActivity : BaseActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+    }
+
+    private fun setUpKaryaSpinner(karyakarni: KaryakarniResponse) {
+        val karyakarniList = mutableListOf<Karyakarni>()
+        val defaultItem = Karyakarni(
+            address = "",
+            city = "",
+            designations = emptyList(),
+            id = "",
+            landmark = "",
+            level = "Default",
+            logo = "",
+            members = emptyList(),
+            name = "Select Karyakarni",
+            state = ""
+        )
+        karyakarniList.add(defaultItem)
+        for(item in karyakarni.karyakarni){
+            karyakarniList.add(item)
+        }
+
+        val karyakarniAdapter = KaryakarniSpinnerAdapter(
+            this,
+            R.layout.karyakarni_spinner_item_layout,
+            karyakarniList
+        )
+//        karyakarniAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.KaryainputSpinner.adapter = karyakarniAdapter
     }
 }

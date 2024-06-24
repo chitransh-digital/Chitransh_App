@@ -8,5 +8,6 @@ data class KaryaMember(
     val familyID: String,
     val karyakarni: String,
     val name: String,
-    val profilePic: String
+    val profilePic: String,
+    val contact : String
 ) : Serializable

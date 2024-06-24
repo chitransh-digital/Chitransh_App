@@ -64,7 +64,6 @@ class ViewBusinessActivity : BaseActivity() {
 
     }private fun setObservables() {
         viewModel.business_list.observe(this, Observer { resources ->
-            hideProgressDialog()
             when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()

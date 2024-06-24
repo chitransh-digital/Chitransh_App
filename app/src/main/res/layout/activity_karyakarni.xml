@@ -39,32 +39,15 @@
             app:layout_constraintVertical_bias="0.01999998" />
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ExpandableListView
+        android:id="@+id/expandableListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_karyakarni"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginTop="28dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/karyakarni_item" />
+        android:layout_height="match_parent"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:childDivider="#F4F0F0"
+        android:padding="8dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_karyakarni_member"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginTop="28dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/karyakarni_member_item" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

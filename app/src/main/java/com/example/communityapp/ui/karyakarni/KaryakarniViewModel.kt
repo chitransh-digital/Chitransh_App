@@ -22,7 +22,7 @@ class KaryakarniViewModel @Inject constructor(private  val karyakarniRepo: Karya
         get() = _karyakarni_list
 
     // Function to fetch all jobs
-    fun getAllJobs(limit: Int = 10, page: Int) {
+    fun getAllKaryakarni(limit: Int = 10, page: Int) {
         _karyakarni_list.value = Resource.loading()
         viewModelScope.launch {
             try {

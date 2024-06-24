@@ -18,26 +18,37 @@ class KaryakarniSpinnerAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(resource, parent, false)
         val item = getItem(position)
-        if(position == 0){
-            view.findViewById<View>(R.id.karyaSpinnerLayoutSeperator).visibility = View.GONE
-        }
+
         val primaryText = view.findViewById<TextView>(R.id.primary_text)
         val secondaryText = view.findViewById<TextView>(R.id.secondary_text)
 
+        if (position == 0) {
+            view.findViewById<View>(R.id.karyaSpinnerLayoutSeperator).visibility = View.GONE
+        }
+
         when (item?.level) {
             "India" -> {
-                primaryText.text = "${item.name} - All India"
+                primaryText.text = "${item.name} - India"
                 secondaryText.visibility = View.GONE
             }
+
             "State" -> {
                 primaryText.text = item.name
                 secondaryText.text = "State: ${item.state}"
                 secondaryText.visibility = View.VISIBLE
             }
+
             "City" -> {
                 primaryText.text = item.name
                 secondaryText.text = "City: ${item.city}, ${item.state}"
                 secondaryText.visibility = View.VISIBLE
+            }
+
+            else -> {
+                if (item != null) {
+                    primaryText.text = item.name
+                }
+                secondaryText.visibility = View.GONE
             }
         }
 

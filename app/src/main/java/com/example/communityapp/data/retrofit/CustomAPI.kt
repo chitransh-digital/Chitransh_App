@@ -14,6 +14,7 @@ import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
 import com.example.communityapp.data.newModels.addMember
+import com.example.communityapp.data.newModels.addMemberReq
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -83,4 +84,8 @@ interface CustomAPI {
     @DELETE("api/member/delete/{familyHash}/{memberHash}")
     suspend fun deleteMember(@Path("familyHash") familyHash : String,
                              @Path("memberHash") memberHash : String): Response<SignupResponse>
+
+    @POST("api/member/addMember/{familyHash}")
+    suspend fun addMember(@Body request: addMemberReq,
+                          @Path("familyHash") familyHash : String): Response<SignupResponse>
 }

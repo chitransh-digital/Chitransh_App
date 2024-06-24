@@ -6,9 +6,17 @@ data class Karyakarni(
     val designations: List<String>,
     val id: String,
     val landmark: String,
-    val level: String,
+    var level: String,
     val logo: String,
-    val members: List<KaryaMember>,
+    val members: List<KaryaMember> = emptyList(),
     var name: String,
     val state: String
-): java.io.Serializable
+): java.io.Serializable{
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        if(members.isEmpty()){
+            result = 31 * result + members.hashCode()
+        }
+        return result
+    }
+}

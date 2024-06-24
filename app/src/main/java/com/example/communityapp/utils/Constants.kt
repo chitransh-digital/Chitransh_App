@@ -61,6 +61,7 @@ object Constants {
     const val USERNAME = "username"
     const val FAMILYDATA = "family_data"
     const val HEAD_ADDRESS = "headAddress"
+    const val FAMILYHASH = "familyHash"
 
     // Course maps
     val POSTGRADUATE_COURSE_MAP = mapOf(

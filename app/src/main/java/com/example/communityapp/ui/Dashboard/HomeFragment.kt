@@ -16,6 +16,7 @@ import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.models.NewsFeed
 import com.example.communityapp.data.newModels.MemberX
+import com.example.communityapp.data.newModels.headAddress
 import com.example.communityapp.databinding.FragmentHomeNewBinding
 import com.example.communityapp.databinding.RelationInfoDialogBinding
 import com.example.communityapp.ui.Business.BusinessActivity
@@ -37,8 +38,9 @@ class HomeFragment : Fragment(){
     private lateinit var user_data : MemberX
     private var uniqueRelations: List<String>? = null
     private var contact = ""
-    private var headAddress = ""
+    private var headAddress = headAddress("", "", "")
     private var familyId= ""
+    private var family_hash = ""
     private val limit =10
     private var page = 1
 
@@ -65,7 +67,8 @@ class HomeFragment : Fragment(){
             intent.putExtra(Constants.FAMILYID,familyId)
             intent.putStringArrayListExtra(Constants.UNIQUE_RELATIONS, ArrayList(uniqueRelations))
             intent.putExtra(Constants.HEAD_ADDRESS,headAddress)
-            Log.d("Head Address",headAddress)
+            intent.putExtra(Constants.FAMILYHASH,family_hash)
+            Log.d("Head Address",headAddress.toString())
             startActivity(intent)
         }
 
@@ -101,6 +104,7 @@ class HomeFragment : Fragment(){
                         resources.data!!.families[0].members .distinctBy { it.relation }.map { it.relation }
                     updateUI(resources.data.families[0].members)
                     familyId= resources.data.families[0].familyID
+                    family_hash = resources.data.families[0].id
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" Profile Loading",resources.data.toString())
@@ -144,7 +148,11 @@ class HomeFragment : Fragment(){
         val id = contact
         for(ip in data){
             if(ip.relation == "Head"){
-                headAddress = ip.landmark + ip.city + ip.state
+                headAddress = headAddress(
+                    landmark = ip.landmark,
+                    city = ip.city,
+                    state = ip.state
+                )
             }
             if (ip.contact == id){
                 user_data = ip
