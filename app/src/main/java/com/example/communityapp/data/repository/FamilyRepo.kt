@@ -7,7 +7,6 @@ import com.example.communityapp.data.models.User
 import com.example.communityapp.data.newModels.addMember
 import com.example.communityapp.data.newModels.addMemberReq
 import com.example.communityapp.data.retrofit.CustomAPI
-import com.example.communityapp.data.retrofit.CustomAPI
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.firebase.firestore.FirebaseFirestore
@@ -114,4 +113,6 @@ class FamilyRepo @Inject constructor(
     }
 
     suspend fun getAllFamilies(limit:Int,page:Int) = api.getAllFamilies(limit,page)
+
+
 }

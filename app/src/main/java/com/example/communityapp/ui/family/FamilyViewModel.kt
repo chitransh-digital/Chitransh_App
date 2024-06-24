@@ -1,5 +1,6 @@
 package com.example.communityapp.ui.family
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -101,6 +102,27 @@ class FamilyViewModel @Inject constructor(private var familyRepo: FamilyRepo) : 
         }
     }
 
+    private var _getAllKarya = MutableLiveData<Resource<KaryakarniResponse>>()
+    val getAllKarya: LiveData<Resource<KaryakarniResponse>>
+        get() = _getAllKarya
 
+    fun getAllKaryakarni(){
+        _getAllKarya.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val response = familyRepo.getAllKaryakarni()
+                if(response.isSuccessful){
+                    _getAllKarya.value = Resource.success(response.body())
+                }else if(response.code() == 404){
+                    _getAllKarya.value = Resource.error(Exception(Constants.Error404))
+                }
+                else{
+                    _getAllKarya.value = Resource.error( Exception(response.message()))
+                }
+            }catch (e : Exception){
+                _getAllKarya.value = Resource.error(e)
+            }
+        }
+    }
 
 }

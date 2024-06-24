@@ -107,4 +107,10 @@ interface CustomAPI {
     suspend fun updateMemberImage(@Body profilePic: UpdateImage,
                                   @Path("familyHash") familyHash : String,
                                   @Path("memberHash") memberHash : String): Response<SignupResponse>
+
+    @POST("api/member/addMember/{familyHash}")
+    suspend fun addMember(@Body request: addMemberReq,
+                          @Path("familyHash") familyHash : String): Response<SignupResponse>
+
+
 }
