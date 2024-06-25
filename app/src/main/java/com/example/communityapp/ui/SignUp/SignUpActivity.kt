@@ -78,8 +78,6 @@ class SignUpActivity : BaseActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        preferencesHelper.setContact("8789891878")
-
         viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         setWindowsUp()
 
