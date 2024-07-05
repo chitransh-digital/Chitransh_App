@@ -461,9 +461,12 @@ class FamilyActivity : BaseActivity() {
             binding.eduCourseSpinner.selectedItem.toString()
         }
 
-        var karyakanri = "NA"
-        if (binding.KaryainputSpinner.isSelected) {
-            karyakanri = binding.KaryainputSpinner.selectedItem.toString()
+        val karyakan = binding.KaryainputSpinner.selectedItem as Karyakarni
+
+        var karyakanri = karyakan.name
+
+        if(karyakanri == "Select Karyakarni"){
+            karyakanri = "NA"
         }
 
         binding.previewNameinput.text = binding.nameinput.text.toString()

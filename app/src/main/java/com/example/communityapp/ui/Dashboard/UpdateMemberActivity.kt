@@ -541,9 +541,12 @@ class UpdateMemberActivity : BaseActivity() {
             education += "," + binding.eduInstituteInput.text.toString()
         }
 
+        val karyakan = binding.KaryainputSpinner.selectedItem
+
         var karyakanri = "NA"
-        if (binding.KaryainputSpinner.isSelected) {
-            karyakanri = binding.KaryainputSpinner.selectedItem.toString()
+
+        if (karyakan is Karyakarni) {
+            karyakanri = karyakan.name
         }
 
         val updatedMember = addMember(
@@ -831,7 +834,9 @@ class UpdateMemberActivity : BaseActivity() {
         binding.previewOccuPositioninput.text = binding.occuPositioninput.text.toString()
         binding.previewEduCourseInput.text = binding.coursetext.text.toString()
         Glide.with(this)
-            .load(member.profilePic).into(binding.previewIvAddImageMember)
+            .load(member.profilePic)
+            .placeholder(R.drawable.account_circle)
+            .into(binding.previewIvAddImageMember)
 
         if (member.occupation == "Business") {
             binding.previewOccuDepartment.visibility = View.GONE
@@ -876,7 +881,9 @@ class UpdateMemberActivity : BaseActivity() {
 
 
 
-        Glide.with(this).load(member.profilePic).into(binding.ivAddImageMember)
+        Glide.with(this).load(member.profilePic)
+            .placeholder(R.drawable.account_circle)
+            .into(binding.ivAddImageMember)
         binding.ivAddImageMember.setOnClickListener {
             openFilePicker()
         }
@@ -908,7 +915,10 @@ class UpdateMemberActivity : BaseActivity() {
                 val file = File(selectedImagePath)
                 val requestBody = file.asRequestBody(contentResolver.getType(uri)?.toMediaTypeOrNull())
                 selectedImageMultiPartBody = MultipartBody.Part.createFormData("file", file.name, requestBody)
-                binding.ivAddImageMember.setImageURI(uri)
+//                binding.ivAddImageMember.setImageURI(uri)
+                Glide.with(this).load(uri)
+                    .placeholder(R.drawable.account_circle)
+                    .into(binding.ivAddImageMember)
             } else {
                 Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
             }

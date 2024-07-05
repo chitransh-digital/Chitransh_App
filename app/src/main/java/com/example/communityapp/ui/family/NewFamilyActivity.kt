@@ -43,7 +43,7 @@ class NewFamilyActivity : BaseActivity() {
         init()
         setWindowsUp()
         setObservables()
-        showProgressDialog("Fetching Family Details...")
+
 //        viewModel.getFamilyByCity()
         viewModel.getAllFamily(limit,page)
 
@@ -88,9 +88,10 @@ class NewFamilyActivity : BaseActivity() {
 
     private fun setObservables() {
         viewModel.user_data.observe(this, Observer {resources ->
-            hideProgressDialog()
+
             when(resources.status){
                 Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
                     try {
                         if(resources.data.isNullOrEmpty()){
                             Toast.makeText(this,"No family found",Toast.LENGTH_SHORT).show()
@@ -105,8 +106,10 @@ class NewFamilyActivity : BaseActivity() {
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" D Loading",resources.data.toString())
+                    showProgressDialog("Fetching Details...")
                 }
                 Resource.Status.ERROR -> {
+                    hideProgressDialog()
                     Log.e("D Error",resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
@@ -115,9 +118,9 @@ class NewFamilyActivity : BaseActivity() {
         })
 
         viewModel.family.observe(this, Observer {resources ->
-            hideProgressDialog()
             when(resources.status){
                 Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
                     try {
                         if(resources.data?.families.isNullOrEmpty()){
                             Toast.makeText(this,"No family found",Toast.LENGTH_SHORT).show()
@@ -133,8 +136,10 @@ class NewFamilyActivity : BaseActivity() {
                 }
                 Resource.Status.LOADING -> {
                     Log.e("Loading",resources.data.toString())
+                    showProgressDialog("Fetching Family Details...")
                 }
                 Resource.Status.ERROR -> {
+                    hideProgressDialog()
                     Log.e("Error",resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }

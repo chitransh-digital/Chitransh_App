@@ -63,7 +63,7 @@ class SignUpActivity : BaseActivity() {
     var uri: Uri = Uri.EMPTY
     var course = "NA"
     var buisType = "NA"
-    private  lateinit var mImagePart: MultipartBody.Part
+    private var mImagePart: MultipartBody.Part? = null
     private lateinit var stringArrayState: ArrayList<String>
     private lateinit var stringArrayCity: ArrayList<String>
     private var spinnerStateValue: String = ""
@@ -467,21 +467,15 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun checkDetails2() {
-        if(binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
+        if(binding.occuLevelSpinner.selectedItem == null || binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
             Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
         }
-        else if(binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
+        else if(binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
             Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
         }
         else{
             screenPointer++
             changeUI(screenPointer)
-        }
-
-        if (binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            course = binding.eduCourseOtherInput.text.toString()
-        } else {
-            course = binding.eduCourseSpinner.selectedItem.toString()
         }
     }
 
@@ -553,6 +547,13 @@ class SignUpActivity : BaseActivity() {
 
         binding.eduLevelSpinner.setSelection(eduSpinner)
         binding.occuLevelSpinner.setSelection(occuSpinner)
+
+        val course = "NA"
+        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            binding.eduCourseOtherInput.text.toString()
+        } else if (binding.eduCourseSpinner.isSelected) {
+            binding.eduCourseSpinner.selectedItem.toString()
+        }
 
         val completeAddress =
             binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
@@ -677,6 +678,13 @@ class SignUpActivity : BaseActivity() {
         var karyakanri = "NA"
         if(binding.Karyainput.text.isNotEmpty()){
             karyakanri = binding.Karyainput.text.toString()
+        }
+
+        val course = "NA"
+        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            binding.eduCourseOtherInput.text.toString()
+        } else if (binding.eduCourseSpinner.isSelected) {
+            binding.eduCourseSpinner.selectedItem.toString()
         }
 
         val memberData = MemberDataX(
@@ -920,7 +928,19 @@ class SignUpActivity : BaseActivity() {
                     Log.e("JWTToken", resource.data?.token.toString())
                     //save to shared pref
                     preferencesHelper.setToken( resource.data?.token.toString())
-                    viewModel.addImage(mImagePart,this)
+                    if(mImagePart != null){
+                        viewModel.addImage(mImagePart!!,this)
+                    }else{
+                        val intent = Intent(this, DashboardActivity::class.java)
+                        intent.putExtra(Constants.USERNAME,preferencesHelper.getContact() )
+                        val options = ActivityOptions.makeSceneTransitionAnimation(
+                            this,
+                            binding.logoImage,
+                            getString(R.string.transition_name)
+                        ).toBundle()
+                        startActivity(intent, options)
+                        finish()
+                    }
 
                 }
 

@@ -138,6 +138,8 @@ class SignUpViewModel @Inject constructor(private var signUpRepo: SignUpRepo) : 
                     _addImage.value = Resource.success(res.body())
                 } else if (res.code() == 404) {
                     _addImage.value = Resource.error(Exception(Constants.Error404))
+                }else{
+                    _addImage.value = Resource.error(Exception(res.message()))
                 }
             } catch (e: Exception) {
                 _addImage.value = Resource.error(e)
