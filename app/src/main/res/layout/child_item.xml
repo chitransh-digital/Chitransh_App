@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="24dp"
+    app:cardCornerRadius="8dp"
     app:cardElevation="16dp"
-    android:layout_margin="16dp"
     android:backgroundTint="#F8F1CA"
     android:outlineAmbientShadowColor="@color/theme_brown"
     android:outlineSpotShadowColor="@color/theme_brown">
@@ -18,8 +17,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/nav_user_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/chitranshlogo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.096"

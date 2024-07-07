@@ -1,9 +1,7 @@
 package com.example.communityapp.ui.karyakarni
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
@@ -26,18 +24,17 @@ class KaryakarniActivity : BaseActivity() {
 
     private lateinit var binding: ActivityKaryakarniBinding
     private val viewModel: KaryakarniViewModel by viewModels()
-    private var limit = 100
+    private var limit = 10
     private var page = 1
+    private var isLoading = false
+    private var hasMoreItems = true
     private var mOriginalKaryakarniList: MutableList<Karyakarni> = mutableListOf()
-    private var mFilteredKaryakarniList: MutableList<Karyakarni> = mutableListOf()
     private lateinit var stringArrayState: ArrayList<String>
     private lateinit var stringArrayCity: ArrayList<String>
     private var spinnerStateValue: String = ""
     private var _city: String = ""
     private var _state: String = ""
-    private lateinit var adapter: ExpandableListAdapter
-    private var isLoading = false
-
+    private lateinit var adapter: KaryaKarniAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +65,8 @@ class KaryakarniActivity : BaseActivity() {
             binding.citySpinner.visibility = View.VISIBLE
             filterKaryakarni("City")
         }
+
+        setUpRecyclerViewPaging()
     }
 
     private fun setObservables() {
@@ -78,9 +77,13 @@ class KaryakarniActivity : BaseActivity() {
                     resources.data?.let {
                         if (it.karyakarni.isNotEmpty()) {
                             mOriginalKaryakarniList.addAll(it.karyakarni)
-                            setUpExpandableView(mOriginalKaryakarniList)
-                            isLoading = false // Reset loading flag
+                            sortAndNotifyAdapter()
+                            isLoading = false
+                            if (it.karyakarni.size < limit) {
+                                hasMoreItems = false
+                            }
                         } else {
+                            hasMoreItems = false
                             showToast("No Karyakarni Found")
                         }
                     }
@@ -88,7 +91,7 @@ class KaryakarniActivity : BaseActivity() {
                 Resource.Status.ERROR -> {
                     hideProgressDialog()
                     showErrorSnackBar(resources.apiError?.message.toString())
-                    isLoading = false // Reset loading flag
+                    isLoading = false
                 }
                 Resource.Status.LOADING -> {
                     showProgressDialog("Fetching Karyakarni Details...")
@@ -97,25 +100,58 @@ class KaryakarniActivity : BaseActivity() {
         })
     }
 
-
     override fun onResume() {
         super.onResume()
         viewModel.getAllKaryakarni(limit, page)
     }
 
-    private fun setUpExpandableView(karyakarniList: List<Karyakarni>) {
-        val sortedList = sortKaryakarniList(karyakarniList)
+    private fun setUpRecyclerViewPaging() {
+        val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.karyakarniRecycler.layoutManager = layoutManager
+        adapter = KaryaKarniAdapter(mOriginalKaryakarniList)
+        binding.karyakarniRecycler.adapter = adapter
 
-        val listDataHeader = sortedList
-        val listDataChild: MutableMap<Karyakarni, List<KaryaMember>> = mutableMapOf()
+        binding.karyakarniRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1) && !isLoading && hasMoreItems) {
+                    isLoading = true
+                    page++
+                    viewModel.getAllKaryakarni(limit, page)
+                }
+            }
+        })
+    }
 
-        for (karya in sortedList) {
-            listDataChild[karya] = karya.members
+    private fun sortAndNotifyAdapter() {
+        val sortedList = sortKaryakarniList(mOriginalKaryakarniList)
+        mOriginalKaryakarniList.clear()
+        mOriginalKaryakarniList.addAll(sortedList)
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun filterKaryakarni(level: String) {
+        val filteredList = mOriginalKaryakarniList.filter { it.level.equals(level, ignoreCase = true) }
+
+        if (filteredList.isEmpty()) {
+            showToast("No Karyakarni Found")
         }
 
-        adapter = ExpandableListAdapter(this, listDataHeader, listDataChild)
-        binding.expandableListView.setAdapter(adapter)
-        if(sortedList.isNotEmpty())binding.expandableListView.expandGroup(0)
+        mOriginalKaryakarniList.clear()
+        mOriginalKaryakarniList.addAll(filteredList)
+        sortAndNotifyAdapter()
+    }
+
+    private fun filterData(city: String, state: String) {
+        val filteredList = mOriginalKaryakarniList.filter { it.address.contains(city, ignoreCase = true) && it.address.contains(state, ignoreCase = true) }
+
+        if (filteredList.isEmpty()) {
+            showToast("No result found")
+        }
+
+        mOriginalKaryakarniList.clear()
+        mOriginalKaryakarniList.addAll(filteredList)
+        sortAndNotifyAdapter()
     }
 
     private fun getLevelPriority(level: String): Int {
@@ -129,31 +165,6 @@ class KaryakarniActivity : BaseActivity() {
 
     private fun sortKaryakarniList(karyakarniList: List<Karyakarni>): List<Karyakarni> {
         return karyakarniList.sortedBy { getLevelPriority(it.level) }
-    }
-
-    private fun filterKaryakarni(level: String) {
-        val filteredList = mOriginalKaryakarniList.filter { it.level.equals(level, ignoreCase = true) }
-
-        if (filteredList.isEmpty()) {
-            showToast("No Karyakarni Found")
-        }
-
-        setUpExpandableView(filteredList)
-    }
-
-    private fun filterData(city: String, state: String) {
-        Log.e("FilterData", "Filtering Data... $city $state")
-        mFilteredKaryakarniList.clear()
-
-        if (city == "Select City" || state == "Select State") {
-            setUpExpandableView(mOriginalKaryakarniList)
-            return
-        }
-
-        if (mFilteredKaryakarniList.isEmpty()) {
-            showToast("No result found")
-        }
-        setUpExpandableView(mFilteredKaryakarniList)
     }
 
     private fun init() {
@@ -222,25 +233,7 @@ class KaryakarniActivity : BaseActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-
-//        setUpRecyclerViewPaging()
     }
-
-//    private fun setUpRecyclerViewPaging() {
-//        binding.expandableListView.setOnScrollListener(object : AbsListView.OnScrollListener {
-//            override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {}
-//
-//            override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
-//                if (totalItemCount > 0 && firstVisibleItem + visibleItemCount >= totalItemCount && isLoading.not()) {
-//                    // User has scrolled to the bottom
-//                    isLoading = true
-//                    page++
-//                    viewModel.getAllKaryakarni(limit, page)
-//                }
-//            }
-//        })
-//    }
-
 
     private fun loadJSONFromAssetState(): String? {
         var json: String? = null
