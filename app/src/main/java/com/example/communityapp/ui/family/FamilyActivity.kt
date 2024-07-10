@@ -360,6 +360,14 @@ class FamilyActivity : BaseActivity() {
                     // Optional: Handle case when nothing is selected
                 }
             }
+
+        binding.contactSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                binding.switchtext.text = "Visible"
+            }else{
+                binding.switchtext.text = "Not Visible"
+            }
+        }
     }
 
     private fun changeUI(screenPointer: Int) {
@@ -781,9 +789,10 @@ class FamilyActivity : BaseActivity() {
     }
 
     private fun checkDetails2() {
-        if (binding.occuLevelSpinner.selectedItem.toString().isEmpty()) {
+        if(binding.occuLevelSpinner.selectedItem == null || binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
             Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
-        } else if (binding.eduLevelSpinner.selectedItem.toString().isEmpty()) {
+        }
+        else if(binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
             Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
         } else {
             if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.setText(
@@ -824,15 +833,15 @@ class FamilyActivity : BaseActivity() {
     private fun submitRegistration() {
         val completeAddress = if (binding.sameAsHead.isChecked) {
             headAddress
-        } else {
-            binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
+        } else{
+            headAddress(binding.landmarkInput.text.toString(), binding.citySpinner.selectedItem.toString(), binding.stateSpinner.selectedItem.toString())
         }
         var contact = "NA"
         if (binding.contactinput.text.toString() != "+91") {
             contact = binding.contactinput.text.toString()
         }
 
-        var education = binding.eduLevelSpinner.selectedItem.toString()
+        var education : String = binding.eduLevelSpinner.selectedItem.toString()
         if (binding.eduInstituteInput.text.isNotEmpty()) {
             education += "," + binding.eduInstituteInput.text.toString()
         }
@@ -862,9 +871,9 @@ class FamilyActivity : BaseActivity() {
                 contact = contact,
                 age = binding.ageSpinner.selectedItem.toString().toInt(),
                 gender = binding.genderSpinner.selectedItem.toString(),
-                landmark = binding.landmarkInput.text.toString(),
-                city = binding.citySpinner.selectedItem.toString(),
-                state = binding.stateSpinner.selectedItem.toString(),
+                landmark = completeAddress.landmark,
+                city = completeAddress.city,
+                state = completeAddress.state,
                 karyakarni = karyakanri,
                 relation = binding.relationinput.text.toString(),
                 bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
@@ -886,7 +895,7 @@ class FamilyActivity : BaseActivity() {
                     jobPost = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
                     businessAddress = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA"
                 ),
-                contactVisibility = true
+                contactVisibility = binding.contactSwitch.isChecked
             )
         )
         viewModel.addMember(memberData, selectedImageMultiPartBody,family_hash)
@@ -933,6 +942,7 @@ class FamilyActivity : BaseActivity() {
                 }
 
                 Resource.Status.LOADING -> {
+                    showProgressDialog("Adding member")
                     Log.e("Loading", resources.data.toString())
                 }
 

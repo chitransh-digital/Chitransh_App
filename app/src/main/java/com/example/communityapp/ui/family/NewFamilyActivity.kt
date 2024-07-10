@@ -129,7 +129,8 @@ class NewFamilyActivity : BaseActivity() {
                         val user_data = resources.data?.families
                         mOriginalFamilyList.addAll(user_data!!)
                         Log.e("Success",resources.data.toString())
-                        adapter.notifyDataSetChanged()
+//                        adapter.notifyDataSetChanged()
+                        setUpRecyclerView(user_data)
                     } catch (e: Exception){
                         Log.e("Error",e.toString())
                     }

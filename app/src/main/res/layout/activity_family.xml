@@ -229,26 +229,59 @@
                 app:layout_constraintVertical_bias="0.022"
                 app:layout_constraintWidth_percent="0.9">
 
-                <TextView
-                    android:id="@+id/contacttext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contact"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/contactinput"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittest_background"
-                    android:inputType="phone"
-                    android:padding="10dp"
-                    android:hint="Contact"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/hint_color" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/contacttext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/switchtext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Visible"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_gravity="end"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/contactinput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="9"
+                        android:background="@drawable/edittest_background"
+                        android:hint="Contact"
+                        android:inputType="phone"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hint_color" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/contactSwitch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:checked="true"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -365,8 +398,8 @@
                     android:id="@+id/Addtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address"
                     android:layout_marginBottom="5dp"
+                    android:text="Address"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -375,8 +408,8 @@
                     android:id="@+id/head_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Addres of Head"
                     android:layout_marginBottom="5dp"
+                    android:text="Addres of Head"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -384,7 +417,7 @@
                     android:id="@+id/sameAsHead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Same as Head's Address"/>
+                    android:text="Same as Head's Address" />
 
                 <!-- Landmark -->
                 <EditText
@@ -396,17 +429,17 @@
                     android:hint="Landmark"
                     android:padding="10dp" />
 
-                <!-- City Dropdown -->
+                <!-- State Dropdown -->
                 <Spinner
-                    android:id="@+id/citySpinner"
+                    android:id="@+id/stateSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/edittest_background" />
 
-                <!-- State Dropdown -->
+                <!-- City Dropdown -->
                 <Spinner
-                    android:id="@+id/stateSpinner"
+                    android:id="@+id/citySpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -567,8 +600,8 @@
                         android:id="@+id/edu_course_other_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/edittest_background"
                         android:hint="Mention your course"
                         android:padding="10dp"
@@ -1523,6 +1556,7 @@
                     android:textColorHint="@color/hint_color"
                     android:textSize="20sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/preview_edu_course"
                 android:layout_width="0dp"
@@ -1650,11 +1684,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:padding="10dp"
                     android:hint="job level"
-                    android:textSize="20sp"
+                    android:padding="10dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/hint_color" />
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout

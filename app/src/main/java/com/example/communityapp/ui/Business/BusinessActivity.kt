@@ -217,6 +217,7 @@ class BusinessActivity : BaseActivity() {
             hideProgressDialog()
             when (resources.status) {
                 Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
                     Toast.makeText(this, "Business Registered", Toast.LENGTH_SHORT).show()
                     binding.nameinput.text?.clear()
                     binding.contactinput.text?.clear()
@@ -226,13 +227,16 @@ class BusinessActivity : BaseActivity() {
                     imagesList.clear()
                     imageAdapter.notifyDataSetChanged()
                     Log.e("B Success", resources.data.toString())
+                    finish()
                 }
 
                 Resource.Status.LOADING -> {
+                    showProgressDialog("Registering Business...")
                     Log.e(" B Loading", resources.data.toString())
                 }
 
                 Resource.Status.ERROR -> {
+                    hideProgressDialog()
                     showErrorSnackBar("Some error occurred please try again later")
                     Log.e("B Error", resources.apiError.toString())
                 }

@@ -363,6 +363,14 @@ class UpdateMemberActivity : BaseActivity() {
             showDeleteMemberDialog(this, member)
         }
 
+        binding.contactSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                binding.switchtext.text = "Visible"
+            }else{
+                binding.switchtext.text = "Not Visible"
+            }
+        }
+
     }
 
     private fun registerPageUI() {
@@ -561,7 +569,7 @@ class UpdateMemberActivity : BaseActivity() {
                 landmark = binding.landmarkInput.text.toString(),
                 state = binding.stateSpinner.selectedItem.toString(),
                 contact = contact,
-                contactVisibility = true,
+                contactVisibility = binding.contactSwitch.isChecked,
                 karyakarni = karyakanri,
                 relation = binding.relationinput.text.toString(),
                 education = education,
@@ -631,9 +639,10 @@ class UpdateMemberActivity : BaseActivity() {
     }
 
     private fun checkDetails2() {
-        if (binding.occuLevelSpinner.selectedItem.toString().isEmpty()) {
+        if(binding.occuLevelSpinner.selectedItem == null || binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
             Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
-        } else if (binding.eduLevelSpinner.selectedItem.toString().isEmpty()) {
+        }
+        else if(binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
             Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
         } else {
             screenPointer++
@@ -878,6 +887,14 @@ class UpdateMemberActivity : BaseActivity() {
             binding.eduAdditionalInput.setText(educationDetails.additionalDetails)
         }
         binding.landmarkInput.setText(member.landmark)
+
+        if (member.contactVisibility) {
+            binding.contactSwitch.isChecked = true
+            binding.switchtext.text = "Visible"
+        } else {
+            binding.contactSwitch.isChecked = false
+            binding.switchtext.text = "Not Visible"
+        }
 
 
 

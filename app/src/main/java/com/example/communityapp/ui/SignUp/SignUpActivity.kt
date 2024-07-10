@@ -297,6 +297,13 @@ class SignUpActivity : BaseActivity() {
                 }
             }
 
+        binding.contactSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                binding.switchtext.text = "Visible"
+            }else{
+                binding.switchtext.text = "Not Visible"
+            }
+        }
 
     }
 
@@ -712,7 +719,7 @@ class SignUpActivity : BaseActivity() {
             city = binding.citySpinner.selectedItem.toString(),
             state = binding.stateSpinner.selectedItem.toString(),
             landmark = binding.landmarkInput.text.toString(),
-            contactVisibility = true
+            contactVisibility = binding.contactSwitch.isChecked
         )
 
 

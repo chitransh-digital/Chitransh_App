@@ -198,9 +198,12 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         Log.d("Onresume","Data fetching")
         Log.d("Onresume phone num","Data fetching $phoneNum")
         if (phoneNum.isNotEmpty()) {
-
             Log.d("Onresume phone num","Data fetching $phoneNum")
             viewModel.getMember(phoneNum)
+        }else{
+            preferencesHelper.clear()
+            startActivity(Intent(this,Login_activity::class.java))
+            finish()
         }
     }
 

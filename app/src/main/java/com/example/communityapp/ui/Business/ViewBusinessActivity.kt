@@ -52,7 +52,7 @@ class ViewBusinessActivity : BaseActivity() {
         init()
 //        showProgressDialog("Fetching Business Details...")
 
-        setupRV()
+
 
         setObservables()
         viewModel.getBusiness(limit, page)
@@ -69,7 +69,7 @@ class ViewBusinessActivity : BaseActivity() {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
                     resources.data?.businesses?.let { mOriginalBusinessList.addAll(it) }
-                    businessAdapter.notifyDataSetChanged()
+                    setupRV(mOriginalBusinessList)
                     Log.e("B Success", resources.data.toString())
                 }
                 Resource.Status.LOADING -> {
@@ -87,8 +87,8 @@ class ViewBusinessActivity : BaseActivity() {
     }
 
 
-    private fun setupRV() {
-    businessAdapter = BusinessAdapter(this, mOriginalBusinessList)
+    private fun setupRV(mOriginalBusinessListt: MutableList<Business>) {
+    businessAdapter = BusinessAdapter(this, mOriginalBusinessListt)
     val layoutManager = LinearLayoutManager(this)
     binding.rvBusiness.layoutManager = layoutManager
     binding.rvBusiness.adapter = businessAdapter

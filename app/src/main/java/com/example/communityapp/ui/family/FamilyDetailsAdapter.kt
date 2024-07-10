@@ -58,6 +58,12 @@ class FamilyDetailsAdapter(private val context: Context, private val FamilyDetai
             append(model.state)
         }
 
+        if (model.contactVisibility){
+            holder.phone.visibility = ViewGroup.VISIBLE
+        }else{
+            holder.phone.visibility = ViewGroup.INVISIBLE
+        }
+
         holder.phone.setOnClickListener{
             if(model.contact == "NA"){
                 Toast.makeText(context,"Contact not available",Toast.LENGTH_SHORT).show()
