@@ -10,7 +10,7 @@ class PreferencesHelper @Inject constructor(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     fun getToken(): String? {
-        return sharedPreferences.getString(KEY_AUTH_TOKEN, Constants.KEY_AUTH_TOKEN)
+        return sharedPreferences.getString(KEY_AUTH_TOKEN, Constants.KEY_OTP_TOKEN)
     }
 
     fun setToken(token: String) {
@@ -39,7 +39,7 @@ class PreferencesHelper @Inject constructor(context: Context) {
 
     companion object {
         private const val PREFS_NAME = "app_prefs"
-        private const val KEY_AUTH_TOKEN = Constants.KEY_AUTH_TOKEN
+        private const val KEY_AUTH_TOKEN = Constants.KEY_OTP_TOKEN
         private const val CONTACT = "user_number"
         private const val POINTER = "pointer"
     }

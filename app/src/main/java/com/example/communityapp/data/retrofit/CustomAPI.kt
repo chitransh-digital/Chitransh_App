@@ -12,6 +12,8 @@ import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.newModels.ImageResponse
 import com.example.communityapp.data.newModels.JobsResponse
 import com.example.communityapp.data.newModels.KaryakarniResponse
+import com.example.communityapp.data.newModels.SMSRequest
+import com.example.communityapp.data.newModels.SMSResponse
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
 import com.example.communityapp.data.newModels.UpdateImage
@@ -30,6 +32,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface CustomAPI {
 
@@ -111,6 +114,14 @@ interface CustomAPI {
     @POST("api/member/addMember/{familyHash}")
     suspend fun addMember(@Body request: addMemberReq,
                           @Path("familyHash") familyHash : String): Response<SignupResponse>
+
+
+    @POST
+    suspend fun sendOtp(
+        @Url url: String,
+        @Query("AUTH_KEY") authKey: String,
+        @Body smsRequest: SMSRequest
+    ): Response<SMSResponse>
 
 
 }

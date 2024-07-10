@@ -18,16 +18,19 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
+import com.example.communityapp.data.newModels.SMSRequest
 import com.example.communityapp.databinding.ActivityLoginBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.example.communityapp.utils.moveAndResizeView
-import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.cdimascio.dotenv.dotenv
+import java.security.SecureRandom
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.math.pow
 
 @AndroidEntryPoint
 class Login_activity : BaseActivity() {
@@ -40,6 +43,8 @@ class Login_activity : BaseActivity() {
     private var contentPointer = 1
     private var shortAnimationDuration = 500
     private var contact = ""
+    private var otpKey = Constants.KEY_OTP_TOKEN
+    private var otp = ""
 
 
     //    var context: Context? = null
@@ -49,22 +54,19 @@ class Login_activity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        var apiKey: String= Constants.KEY_AUTH_TOKEN
-//
-//        try {
-//
-//            val dotenv = dotenv {
-//                directory = "./assets"
-//                filename = "env"
-//            }
-//
-//            apiKey = dotenv["DEFAULT_API_KEY"] ?: throw IllegalStateException("API_KEY not found in env")
-//        } catch (e: Exception) {
-//            Log.e("DefaultAPI_KEY", "Error: ${e.message}")
-//        }
+        try {
+            val dotenv = dotenv {
+                directory = "./assets"
+                filename = "env"
+            }
+
+            otpKey = dotenv["DEFAULT_OTP_KEY"] ?: throw IllegalStateException("OTP not found in env")
+        } catch (e: Exception) {
+            Log.e("DefaultAPI_KEY", "Error: ${e.message}")
+        }
 
         Log.e("LoginActivity", "Token: ${preferencesHelper.getToken()}")
-        if(preferencesHelper.getToken() != Constants.KEY_AUTH_TOKEN){
+        if(preferencesHelper.getToken() != Constants.KEY_OTP_TOKEN){
             Log.e("LoginActivity", "Token inside: ${preferencesHelper.getToken()}")
             val intent = Intent(this, DashboardActivity::class.java)
             val options = ActivityOptions.makeSceneTransitionAnimation(
@@ -160,7 +162,17 @@ class Login_activity : BaseActivity() {
                 if (ph.isEmpty()) {
                     Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
                 } else {
-                    viewModel.OnVerificationCodeSent(ph, this)
+                    otp = generateOTP()
+                    val smsContent = "Your One Time Password (OTP) for verification of login is ${otp}. Do not share it with anyone. Shubh Parichay Bhopal. OMPRSA"
+                    val smsRequest = SMSRequest(
+                        smsContent = smsContent,
+                        mobileNumbers = contact,
+                        senderId = "OMPRSA",
+                        signature = "signature",
+                        tmid = "140200000022"
+                    )
+                    viewModel.sendOTP(Constants.OTP_URL,otpKey, smsRequest)
+//                    viewModel.OnVerificationCodeSent(ph, this)
                 }
             }
         }
@@ -171,8 +183,15 @@ class Login_activity : BaseActivity() {
                 Toast.makeText(this, "Please enter otp", Toast.LENGTH_SHORT).show()
             } else {
                 showProgressDialog("Verifying OTP..")
-                val credential = PhoneAuthProvider.getCredential(verificationID, otp)
-                viewModel.signInWithPhoneAuthCredential(credential, this)
+
+                if (otp == this.otp) {
+                    val contactWithoutPrefix = contact.replaceFirst("+91", "")
+                    preferencesHelper.setContact(contactWithoutPrefix)
+                    viewModel.signInWithPhone(contactWithoutPrefix)
+                } else {
+                    hideProgressDialog()
+                    Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -207,6 +226,12 @@ class Login_activity : BaseActivity() {
         setWindowsUp()
     }
 
+    private fun generateOTP(): String {
+        val secureRandom = SecureRandom()
+        val randomNumber = secureRandom.nextInt(10.0.pow(6).toInt())
+        return String.format("%06d", randomNumber)
+    }
+
 
     private fun setLocal(activity: Activity, language: String) {
         val locale = Locale(language)
@@ -218,43 +243,6 @@ class Login_activity : BaseActivity() {
     }
 
     private fun setObservables() {
-        viewModel.verificationStatus.observe(this, Observer { resource ->
-
-            when (resource.status) {
-                Resource.Status.SUCCESS -> {
-                    hideProgressDialog()
-                    Log.e("url", resource.status.toString())
-                    if (resource.data?.first == 1) {
-                        codeSent(resource.data.second)
-                    } else {
-                        // shared pref update
-                        val contactWithoutPrefix = contact.replaceFirst("+91", "")
-                        preferencesHelper.setContact(contactWithoutPrefix)
-                        viewModel.signInWithPhone(contactWithoutPrefix)
-                        Log.e(this.javaClass.simpleName, "Phone number verified")
-
-
-                    }
-                }
-
-                Resource.Status.ERROR -> {
-                    hideProgressDialog()
-                    Log.e("url", resource.status.toString())
-                    showErrorSnackBar("Error: ${resource.apiError?.message}")
-                }
-
-                Resource.Status.LOADING -> {
-                    showProgressDialog("Sending Otp..")
-                    Log.e("url", "loading")
-
-                }
-
-                else -> {
-                    Log.e("url", "else")
-                }
-            }
-
-        })
 
         viewModel.loginStatusPhone.observe(this, Observer { resource ->
             when (resource.status) {
@@ -340,10 +328,35 @@ class Login_activity : BaseActivity() {
 
         })
 
+        viewModel.otpStatus.observe(this, Observer { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    hideProgressDialog()
+                    Toast.makeText(this, "OTP sent", Toast.LENGTH_SHORT).show()
+                    codeSent()
+                }
+
+                Resource.Status.ERROR -> {
+                    Log.e("url", resource.apiError?.message.toString())
+                    hideProgressDialog()
+                    showErrorSnackBar("Error: ${resource.apiError?.message}")
+                }
+
+                Resource.Status.LOADING -> {
+                    Log.e("url", "loading")
+                    showProgressDialog("Sending OTP..")
+                }
+
+                else -> {
+                    Log.e("url", "else")
+                }
+            }
+
+        })
+
     }
 
-    private fun codeSent(data: String) {
-        verificationID = data
+    private fun codeSent() {
         contentPointer++
         binding.editTextPhone.setText("")
         showContent(contentPointer)
