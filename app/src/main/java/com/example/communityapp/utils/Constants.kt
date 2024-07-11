@@ -3,9 +3,10 @@ package com.example.communityapp.utils
 object Constants {
 
     const val CUSTOM_BASE_URL = "http://159.89.165.67/"
+    const val OTP_URL="http://msg.msgclub.net/rest/services/sendSMS/sendGroupSms"
 
     const val Error404= "user not found"
-    const val KEY_AUTH_TOKEN = "auth_token"
+    const val KEY_OTP_TOKEN = "DEFAULT_OTP_KEY"
     const val FILEURL= "file"
     const val COUPON = "coupon"
     const val EDUCATION= "highestEducation"

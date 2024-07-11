@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.LoginResponse
+import com.example.communityapp.data.newModels.SMSRequest
+import com.example.communityapp.data.newModels.SMSResponse
 import com.example.communityapp.data.repository.LoginRepo
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
@@ -121,6 +123,25 @@ class LoginViewModel@Inject constructor(private val auth: FirebaseAuth, private 
                 }
             }catch (e : Exception){
                 _loginStatusPhone.value = Resource.error(e)
+            }
+        }
+    }
+
+    private val _otpStatus = MutableLiveData<Resource<SMSResponse>>()
+    val otpStatus: LiveData<Resource<SMSResponse>>
+        get() = _otpStatus
+    fun sendOTP(url:String,authKey: String,smsRequest: SMSRequest) {
+        _otpStatus.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val res = loginRepo.sendOTP(url,authKey,smsRequest)
+                if(res.isSuccessful){
+                    _otpStatus.value = Resource.success(res.body())
+                }else if(res.code() == 404){
+                    _otpStatus.value = Resource.error(Exception(Constants.Error404))
+                }
+            }catch (e : Exception){
+                _otpStatus.value = Resource.error(e)
             }
         }
     }

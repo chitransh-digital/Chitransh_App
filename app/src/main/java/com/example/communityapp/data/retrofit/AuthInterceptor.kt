@@ -15,6 +15,7 @@ class AuthInterceptor(val context: Context, val preferences: PreferencesHelper) 
 
         // List of paths to exclude from adding the Cookie header
         val excludePaths = listOf("/api/user/loginPhone", "/api/user/loginPhoneFamilyID")
+        val optPath = listOf("http://msg.msgclub.net/rest/services/sendSMS/sendGroupSms")
 
         // Add the Cookie header if the path is not in the exclude list
         val newRequestBuilder = originalRequest.newBuilder()
