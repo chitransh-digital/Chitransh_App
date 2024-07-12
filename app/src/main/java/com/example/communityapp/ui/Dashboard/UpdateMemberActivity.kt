@@ -23,6 +23,7 @@ import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.newModels.EducationDetails
 import com.example.communityapp.data.newModels.Karyakarni
 import com.example.communityapp.data.newModels.KaryakarniResponse
+import com.example.communityapp.data.newModels.KaryakarniX
 import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.data.newModels.OccupationDetails
 import com.example.communityapp.data.newModels.addMember
@@ -124,7 +125,7 @@ class UpdateMemberActivity : BaseActivity() {
                         binding.eduAdditionalDetails.visibility = View.GONE
                         binding.eduCourse.visibility = View.GONE
                     } else {
-                        binding.eduDepartment.visibility = View.GONE
+                        binding.eduDepartment.visibility = View.VISIBLE
                         binding.eduInstitute.visibility = View.VISIBLE
                         binding.eduAdditionalDetails.visibility = View.VISIBLE
                         binding.eduCourse.visibility = View.VISIBLE
@@ -201,19 +202,22 @@ class UpdateMemberActivity : BaseActivity() {
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
 
-                            member.educationDetails?.let { educationDetails ->
-                                if (educationDetails.toString().isNotEmpty()) {
-                                    val jsonObject = JSONObject(educationDetails.course)
-                                    val course = jsonObject.getString("course")
+                            if (member.educationDetails?.course != null) {
+                                member.educationDetails?.let { educationDetails ->
+                                    val course = educationDetails.course
+                                    if (!course.isNullOrEmpty()) {
+                                        val courseName = member.educationDetails!!.course
 
-                                    val position = Constants.POSTGRADUATE_COURSE_MAP[course] ?: 13
-                                    binding.eduCourseSpinner.setSelection(position)
+                                        val position = Constants.POSTGRADUATE_COURSE_MAP[courseName] ?: 13
+                                        binding.eduCourseSpinner.setSelection(position)
 
-                                    if (position == 13) {
-                                        binding.eduCourseOtherInput.setText(course)
+                                        if (position == 13) {
+                                            binding.eduCourseOtherInput.setText(courseName)
+                                        }
                                     }
                                 }
                             }
+
 
                         } else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
                             binding.eduDepartment.visibility = View.VISIBLE
@@ -360,7 +364,11 @@ class UpdateMemberActivity : BaseActivity() {
             }
 
         binding.previewDelete.setOnClickListener {
-            showDeleteMemberDialog(this, member)
+            if (member.relation == "Head"){
+                Toast.makeText(this, "Head cannot be deleted", Toast.LENGTH_SHORT).show()
+            }else{
+                showDeleteMemberDialog(this, member)
+            }
         }
 
         binding.contactSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -544,16 +552,15 @@ class UpdateMemberActivity : BaseActivity() {
         if (binding.contactinput.text.toString() != "+91") {
             contact = binding.contactinput.text.toString()
         }
+
         var education = binding.eduLevelSpinner.selectedItem.toString()
-        if (binding.eduInstituteInput.text.isNotEmpty()) {
-            education += "," + binding.eduInstituteInput.text.toString()
-        }
+
 
         val karyakan = binding.KaryainputSpinner.selectedItem
 
         var karyakanri = "NA"
 
-        if (karyakan is Karyakarni) {
+        if (karyakan is KaryakarniX) {
             karyakanri = karyakan.name
         }
 
@@ -625,7 +632,9 @@ class UpdateMemberActivity : BaseActivity() {
             Toast.makeText(this, "Please enter your FamilyID", Toast.LENGTH_SHORT).show()
         } else if (binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your Blood Group", Toast.LENGTH_SHORT).show()
-        } else {
+        } else if (binding.stateSpinner.selectedItem.toString() == "Select State") {
+            Toast.makeText(this, "Please select state", Toast.LENGTH_SHORT).show()
+        }else {
             binding.nameinput.setText(capitalizeNames(binding.nameinput.text.toString()))
             screenPointer++
             changeUI(screenPointer)
@@ -649,14 +658,13 @@ class UpdateMemberActivity : BaseActivity() {
             changeUI(screenPointer)
         }
 
-        course =
-            if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-                binding.eduCourseOtherInput.text.toString()
-            } else if (binding.eduCourseSpinner.isSelected) {
-                binding.eduCourseSpinner.selectedItem.toString()
-            } else {
-                "NA"
+        if (binding.eduCourseSpinner.selectedItem != null && binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            if (binding.eduCourseOtherInput.text.isNotEmpty()) {
+                course = binding.eduCourseOtherInput.text.toString()
             }
+        }else if(binding.eduCourseSpinner.selectedItem != null){
+            course = binding.eduCourseSpinner.selectedItem.toString()
+        }
     }
 
     private fun changeUI(screenPointer: Int) {
@@ -788,7 +796,7 @@ class UpdateMemberActivity : BaseActivity() {
 
         if (member.occupation == "Student") {
             binding.occuLevelSpinner.setSelection(0)
-        } else if (member.occupation == "Government Job") {
+        } else if (member.occupation == "Government Job" || member.occupation == "Govt Job") {
             binding.occuLevelSpinner.setSelection(1)
         } else if (member.occupation == "Private Job") {
             binding.occuLevelSpinner.setSelection(2)
@@ -841,7 +849,7 @@ class UpdateMemberActivity : BaseActivity() {
         binding.previewOccuDepartmentInput.text = binding.occuDepartmentInput.text.toString()
         binding.previewOccuAddressInput.text = binding.occuAddressInput.text.toString()
         binding.previewOccuPositioninput.text = binding.occuPositioninput.text.toString()
-        binding.previewEduCourseInput.text = binding.coursetext.text.toString()
+        binding.previewEduCourseInput.text = member.educationDetails?.course
         Glide.with(this)
             .load(member.profilePic)
             .placeholder(R.drawable.account_circle)
@@ -1010,7 +1018,7 @@ class UpdateMemberActivity : BaseActivity() {
         viewModel.getAllKarya.observe(this, Observer {resources ->
             when(resources.status) {
                 Resource.Status.SUCCESS -> {
-                    setUpKaryaSpinner(resources.data!!)
+                    setUpKaryaSpinner(resources.data!!.karyakarni)
                 }
 
                 Resource.Status.LOADING -> {
@@ -1298,22 +1306,17 @@ class UpdateMemberActivity : BaseActivity() {
         }
     }
 
-    private fun setUpKaryaSpinner(karyakarni: KaryakarniResponse) {
-        val karyakarniList = mutableListOf<Karyakarni>()
-        val defaultItem = Karyakarni(
-            address = "",
+    private fun setUpKaryaSpinner(karyakarni: List<KaryakarniX>) {
+        val karyakarniList = mutableListOf<KaryakarniX>()
+        val defaultItem = KaryakarniX(
             city = "",
-            designations = emptyList(),
             id = "",
-            landmark = "",
             level = "Default",
-            logo = "",
-            members = emptyList(),
             name = "Select Karyakarni",
             state = ""
         )
         karyakarniList.add(defaultItem)
-        for(item in karyakarni.karyakarni){
+        for(item in karyakarni){
             karyakarniList.add(item)
         }
 

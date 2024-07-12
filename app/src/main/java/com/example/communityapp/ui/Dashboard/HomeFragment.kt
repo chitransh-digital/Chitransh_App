@@ -39,6 +39,7 @@ class HomeFragment : Fragment(){
     private var uniqueRelations: List<String>? = null
     private var contact = ""
     private var headAddress = headAddress("", "", "")
+    private var headGender = ""
     private var familyId= ""
     private var family_hash = ""
     private val limit =10
@@ -68,6 +69,7 @@ class HomeFragment : Fragment(){
             intent.putStringArrayListExtra(Constants.UNIQUE_RELATIONS, ArrayList(uniqueRelations))
             intent.putExtra(Constants.HEAD_ADDRESS,headAddress)
             intent.putExtra(Constants.FAMILYHASH,family_hash)
+            intent.putExtra(Constants.HEAGGENDER,headGender)
             Log.d("Head Address",headAddress.toString())
             startActivity(intent)
         }
@@ -153,6 +155,7 @@ class HomeFragment : Fragment(){
                     city = ip.city,
                     state = ip.state
                 )
+                headGender = ip.gender
             }
             if (ip.contact == id){
                 user_data = ip
@@ -211,67 +214,6 @@ class HomeFragment : Fragment(){
 
         binding.rvLocalNews.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext(),
             androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,false)
-    }
-
-    private fun setDialog(
-        user_data: List<Member>
-    ) {
-        if (user_data.isEmpty()){
-            return
-        }
-
-
-
-        val dialog = Dialog(requireContext())
-
-        dialog.setContentView(R.layout.relation_info_dialog)
-
-        val window = dialog.window
-        window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-//        window?.setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg))
-
-        dialog.setCancelable(false) // Make dialog non-cancelable
-
-        dialog.show()  // Add this line to show the dialog
-
-        var bind = RelationInfoDialogBinding.inflate(layoutInflater)
-
-        for (user in user_data){
-            Log.d("Relation",user.relation.uppercase())
-            if (user.relation.uppercase() == "WIFE"){
-                activity?.findViewById<Button>(R.id.qWife)?.visibility = View.VISIBLE
-                Log.d("Wife","Wife")
-            }
-            if (user.relation.uppercase() == "HEAD"){
-                bind.qHead.visibility = View.VISIBLE
-                Log.d("Head","Head")
-            }
-            if (user.relation.uppercase() == "HUSBAND") {
-                activity?.findViewById<Button>(R.id.qHusband)?.visibility = View.VISIBLE
-                Log.d("Husband","Husband")
-            }
-            if (user.relation.uppercase() == "SON") {
-                activity?.findViewById<Button>(R.id.qSon)?.visibility = View.VISIBLE
-                Log.d("Son","Son")
-            }
-            if (user.relation.uppercase() == "DAUGHTER") {
-                activity?.findViewById<Button>(R.id.qDaughter)?.visibility = View.VISIBLE
-                Log.d("Daughter","Daughter")
-            }
-            if (user.relation.uppercase() == "FATHER") {
-                activity?.findViewById<Button>(R.id.qFather)?.visibility = View.VISIBLE
-                Log.d("Father","Father")
-            }
-            if (user.relation.uppercase() == "MOTHER") {
-                activity?.findViewById<Button>(R.id.qMother)?.visibility = View.VISIBLE
-                Log.d("Mother","Mother")
-            }
-            if (user.relation.uppercase() == "OTHER") {
-                activity?.findViewById<Button>(R.id.qOther)?.visibility = View.VISIBLE
-                Log.d("Other","Other")
-            }
-        }
-
     }
 
 }

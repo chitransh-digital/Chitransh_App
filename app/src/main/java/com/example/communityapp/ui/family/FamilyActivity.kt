@@ -17,14 +17,17 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.EducationDetails
 import com.example.communityapp.data.newModels.Karyakarni
 import com.example.communityapp.data.newModels.KaryakarniResponse
+import com.example.communityapp.data.newModels.KaryakarniX
 import com.example.communityapp.data.newModels.MemberReq
 import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.data.newModels.OccupationDetails
@@ -67,12 +70,15 @@ class FamilyActivity : BaseActivity() {
     var buisTypeSpinner = 0
     var courseSpinner = 0
     var headAddress: headAddress = headAddress("", "", "")
+    private var headGender = ""
     private lateinit var stringArrayState: ArrayList<String>
     private lateinit var stringArrayCity: ArrayList<String>
     private var spinnerStateValue: String = ""
     private var _city: String = ""
     private var _state: String = ""
     private var address_store = ""
+    private var course = "NA"
+    private var buisType = "NA"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,10 +95,10 @@ class FamilyActivity : BaseActivity() {
         init()
         viewModel.getAllKaryakarni()
 
-        if (uniqueRelations?.contains("Wife") == true) {
+        if (uniqueRelations?.contains("Wife") == true || headGender == "Female") {
             binding.relationshipSelection1.btnWife.visibility = View.GONE
         }
-        if (uniqueRelations?.contains("Husband") == true) {
+        if (uniqueRelations?.contains("Husband") == true || headGender == "Male") {
             binding.relationshipSelection1.btnHusband.visibility = View.GONE
         }
         if (uniqueRelations?.contains("Father") == true) {
@@ -333,6 +339,7 @@ class FamilyActivity : BaseActivity() {
                     id: Long
                 ) {
                     buisTypeSpinner = position
+                    buisType = binding.occuBuisTypeSpinner.selectedItem.toString()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -366,6 +373,17 @@ class FamilyActivity : BaseActivity() {
                 binding.switchtext.text = "Visible"
             }else{
                 binding.switchtext.text = "Not Visible"
+            }
+        }
+
+        binding.relationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                familyMember = binding.relationSpinner.selectedItem.toString()
+                Log.e("FamilyMember", binding.relationSpinner.selectedItem.toString())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Optional: Handle case when nothing is selected
             }
         }
     }
@@ -462,19 +480,12 @@ class FamilyActivity : BaseActivity() {
             binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
         }
 
-        val course = "NA"
-        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            binding.eduCourseOtherInput.text.toString()
-        } else if (binding.eduCourseSpinner.isSelected) {
-            binding.eduCourseSpinner.selectedItem.toString()
-        }
+        val karyakan = binding.KaryainputSpinner.selectedItem
 
-        val karyakan = binding.KaryainputSpinner.selectedItem as Karyakarni
+        var karyakanri = "NA"
 
-        var karyakanri = karyakan.name
-
-        if(karyakanri == "Select Karyakarni"){
-            karyakanri = "NA"
+        if (karyakan is KaryakarniX) {
+            karyakanri = karyakan.name
         }
 
         binding.previewNameinput.text = binding.nameinput.text.toString()
@@ -681,8 +692,16 @@ class FamilyActivity : BaseActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.bloodGroupSpinner.adapter = bloodGroupadapter
 
-        val relationList = arrayListOf("Brother", "Sister", "GrandMother", "GrandFather")
+        val relationList = arrayListOf("Brother", "Sister")
+        if(uniqueRelations?.contains("GrandMother") == false){
+            relationList.add("GrandMother")
+        }
+
+        if (uniqueRelations?.contains("GrandFather") == false) {
+            relationList.add("GrandFather")
+        }
         val relationadapter =
+
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, relationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.relationSpinner.adapter = relationadapter
@@ -768,18 +787,33 @@ class FamilyActivity : BaseActivity() {
         } else if (binding.IDinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your FamilyID", Toast.LENGTH_SHORT).show()
         } else if (binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your relation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please enter your blood grp", Toast.LENGTH_SHORT).show()
         } else {
-            binding.nameinput.setText(capitalizeNames(binding.nameinput.text.toString()))
-            screenPointer++
-            changeUI(screenPointer)
+
+            if (binding.sameAsHead.isChecked) {
+                address_store = headAddress.landmark + ", " + headAddress.city + ", " + headAddress.state
+
+                screenPointer++
+                changeUI(screenPointer)
+
+            } else {
+                if (binding.stateSpinner.selectedItem.toString() == "Select State") {
+                    Toast.makeText(this, "Please select state", Toast.LENGTH_SHORT).show()
+                } else {
+                    address_store =
+                        binding.landmarkInput.text.toString() + ", " + binding.citySpinner.selectedItem.toString() + ", " + binding.stateSpinner.selectedItem.toString()
+
+                    screenPointer++
+                    changeUI(screenPointer)
+                }
+            }
+
+
+
         }
 
-        address_store = if (binding.sameAsHead.isChecked) {
-            headAddress.landmark + ", " + headAddress.city + ", " + headAddress.state
-        } else {
-            binding.landmarkInput.text.toString() + "," + binding.citySpinner.selectedItem.toString() + "," + binding.stateSpinner.selectedItem.toString()
-        }
+
+
     }
 
     private fun capitalizeNames(input: String): String {
@@ -795,29 +829,16 @@ class FamilyActivity : BaseActivity() {
         else if(binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
             Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
         } else {
-            if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.setText(
-                capitalizeNames(binding.eduDepartInput.text.toString())
-            )
-            if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.setText(
-                capitalizeNames(binding.eduInstituteInput.text.toString())
-            )
-            if (binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.setText(
-                capitalizeNames(binding.eduAdditionalInput.text.toString())
-            )
-            if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.setText(
-                capitalizeNames(binding.occuEmployerInput.text.toString())
-            )
-            if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.setText(
-                capitalizeNames(binding.occuDepartmentInput.text.toString())
-            )
-            if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.setText(
-                capitalizeNames(binding.occuAddressInput.text.toString())
-            )
-            if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.setText(
-                capitalizeNames(binding.occuPositioninput.text.toString())
-            )
             screenPointer++
             changeUI(screenPointer)
+        }
+
+        if (binding.eduCourseSpinner.selectedItem != null && binding.eduCourseSpinner.selectedItem.toString() == "other") {
+            if (binding.eduCourseOtherInput.text.isNotEmpty()) {
+                course = binding.eduCourseOtherInput.text.toString()
+            }
+        }else if(binding.eduCourseSpinner.selectedItem != null){
+            course = binding.eduCourseSpinner.selectedItem.toString()
         }
     }
 
@@ -842,22 +863,17 @@ class FamilyActivity : BaseActivity() {
         }
 
         var education : String = binding.eduLevelSpinner.selectedItem.toString()
-        if (binding.eduInstituteInput.text.isNotEmpty()) {
-            education += "," + binding.eduInstituteInput.text.toString()
-        }
+
+        val karyakan = binding.KaryainputSpinner.selectedItem
 
         var karyakanri = "NA"
-        if (binding.KaryainputSpinner.isSelected) {
-            karyakanri = binding.KaryainputSpinner.selectedItem.toString()
+
+        if (karyakan is KaryakarniX) {
+            karyakanri = karyakan.name
         }
 
 
-        val course = "NA"
-        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            binding.eduCourseOtherInput.text.toString()
-        } else if (binding.eduCourseSpinner.isSelected) {
-            binding.eduCourseSpinner.selectedItem.toString()
-        }
+
 
         val buisType = "NA"
         if (binding.occuBuisTypeSpinner.isSelected) {
@@ -907,6 +923,7 @@ class FamilyActivity : BaseActivity() {
         uniqueRelations = intent.getStringArrayListExtra(Constants.UNIQUE_RELATIONS)
         headAddress = intent.getSerializableExtra(Constants.HEAD_ADDRESS) as headAddress
         family_hash = intent.getStringExtra(Constants.FAMILYHASH).toString()
+        headGender = intent.getStringExtra(Constants.HEAGGENDER).toString()
     }
 
     fun isDateInCorrectFormat(dateString: String, dateFormat: String): Boolean {
@@ -1309,17 +1326,12 @@ class FamilyActivity : BaseActivity() {
         }
     }
 
-    private fun setUpKaryaSpinner(karyakarni: KaryakarniResponse) {
-        val karyakarniList = mutableListOf<Karyakarni>()
-        val defaultItem = Karyakarni(
-            address = "",
+    private fun setUpKaryaSpinner(karyakarni: AllKaryakarni) {
+        val karyakarniList = mutableListOf<KaryakarniX>()
+        val defaultItem = KaryakarniX(
             city = "",
-            designations = emptyList(),
             id = "",
-            landmark = "",
             level = "Default",
-            logo = "",
-            members = emptyList(),
             name = "Select Karyakarni",
             state = ""
         )
@@ -1333,7 +1345,8 @@ class FamilyActivity : BaseActivity() {
             R.layout.karyakarni_spinner_item_layout,
             karyakarniList
         )
-//        karyakarniAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.KaryainputSpinner.adapter = karyakarniAdapter
     }
+
+
 }

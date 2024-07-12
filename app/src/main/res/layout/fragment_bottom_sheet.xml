@@ -96,6 +96,29 @@
                 android:textColor="@color/black"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@drawable/call_24"
+                />
+            <TextView
+                android:id="@+id/jobExpandedAllContact"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:text="Job Contacts"
+                android:maxLines="1"
+                android:maxLength="20"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_jobExpandedDescriptionTitle"
             android:layout_width="match_parent"

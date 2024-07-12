@@ -8,12 +8,13 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.communityapp.R
 import com.example.communityapp.data.newModels.Karyakarni
+import com.example.communityapp.data.newModels.KaryakarniX
 
 class KaryakarniSpinnerAdapter(
     context: Context,
     private val resource: Int,
-    private val items: List<Karyakarni>
-) : ArrayAdapter<Karyakarni>(context, resource, items) {
+    private val items: List<KaryakarniX>
+) : ArrayAdapter<KaryakarniX>(context, resource, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(resource, parent, false)

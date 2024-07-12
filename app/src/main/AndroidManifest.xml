@@ -62,7 +62,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.Dashboard.DashboardActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.family.FamilyActivity"
             android:exported="false" />

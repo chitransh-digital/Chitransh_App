@@ -429,14 +429,17 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/Karyainput"
+                <Spinner
+                    android:id="@+id/KaryainputSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittest_background"
-                    android:hint="@string/karyakarni"
-                    android:padding="10dp" />
+                    android:hint="Karyakarni"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:visibility="visible" />
             </LinearLayout>
 
             <Button

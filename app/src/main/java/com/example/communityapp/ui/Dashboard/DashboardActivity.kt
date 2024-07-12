@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
@@ -53,6 +54,8 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Log.d("Dashboard","Dashboard Activity : ONCREATE")
 
         viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -195,7 +198,7 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onResume() {
         super.onResume()
-        Log.d("Onresume","Data fetching")
+        Log.d("Dashboard","Dashboard Activity : ONRESUME")
         Log.d("Onresume phone num","Data fetching $phoneNum")
         if (phoneNum.isNotEmpty()) {
             Log.d("Onresume phone num","Data fetching $phoneNum")
@@ -215,9 +218,7 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_signout->{
-                preferencesHelper.clear()
-                startActivity(Intent(this,Login_activity::class.java))
-                finish()
+                showSignoutDialog()
             }
 
             R.id.karyakrni -> {
@@ -226,6 +227,30 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun showSignoutDialog() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.apply {
+            setTitle("Confirm Signout")
+            setMessage("Are you sure you want to Signout?")
+            setPositiveButton("Signout") { dialog, which ->
+                preferencesHelper.clear()
+                startActivity(Intent(this@DashboardActivity,Login_activity::class.java))
+                finish()
+                dialog.dismiss()
+            }
+            setNegativeButton("Cancel") { dialog, which ->
+                dialog.dismiss()
+            }
+        }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Dashboard","Dashboard Activity : ONDESTROY")
     }
 
 }

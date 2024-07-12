@@ -61,6 +61,7 @@ class BottomSheetFragment(private var jobId:Job,private val username:String) : B
         rootView.findViewById<TextView>(R.id.tvMore).text = jobId.jobDescription
         rootView.findViewById<TextView>(R.id.tv_expandedJobTitle).text = jobId.jobTitle
         rootView.findViewById<TextView>(R.id.jobExpandedLocation).text = jobId.location
+        rootView.findViewById<TextView>(R.id.jobExpandedAllContact).text = jobId.contact
 
         rootView.findViewById<ImageView>(R.id.submitComment)?.setOnClickListener {
             if (rootView.findViewById<EditText>(R.id.commentInput)?.text?.isNotEmpty() == true) {

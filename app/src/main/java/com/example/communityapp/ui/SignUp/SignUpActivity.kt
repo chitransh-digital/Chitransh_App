@@ -22,13 +22,17 @@ import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.FamilyXX
+import com.example.communityapp.data.newModels.Karyakarni
+import com.example.communityapp.data.newModels.KaryakarniX
 import com.example.communityapp.data.newModels.MemberDataX
 import com.example.communityapp.data.newModels.MemberXX
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.databinding.ActivitySignUpBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
+import com.example.communityapp.utils.KaryakarniSpinnerAdapter
 import com.example.communityapp.utils.Resource
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,6 +92,7 @@ class SignUpActivity : BaseActivity() {
         setObservables()
         registerPageUI()
         inito()
+        viewModel.getAllKaryakarni()
 
         binding.familyIDinput.setOnClickListener {
             val name = binding.nameinput.text.toString()
@@ -454,18 +459,16 @@ class SignUpActivity : BaseActivity() {
             Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
         }
         else if(binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please enter your blood grp", Toast.LENGTH_SHORT).show()
         }
-        else if (binding.landmarkInput.text.isNullOrEmpty()){
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+        else if(binding.stateSpinner.selectedItem == null || binding.stateSpinner.selectedItem.toString() == "Select State") {
+            Toast.makeText(this, "Please enter your state", Toast.LENGTH_SHORT).show()
         }
-        else if(binding.citySpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.stateSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+        else if(binding.citySpinner.selectedItem == null || binding.citySpinner.selectedItem.toString() == "Select City"){
+            Toast.makeText(this, "Please enter your city", Toast.LENGTH_SHORT).show()
         }
         else{
+            Log.e("state", binding.stateSpinner.selectedItem.toString())
             screenPointer++
             changeUI(screenPointer)
         }
@@ -555,15 +558,16 @@ class SignUpActivity : BaseActivity() {
         binding.eduLevelSpinner.setSelection(eduSpinner)
         binding.occuLevelSpinner.setSelection(occuSpinner)
 
-        val course = "NA"
-        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            binding.eduCourseOtherInput.text.toString()
-        } else if (binding.eduCourseSpinner.isSelected) {
-            binding.eduCourseSpinner.selectedItem.toString()
-        }
-
         val completeAddress =
             binding.landmarkInput.text.toString() + " " + binding.citySpinner.selectedItem.toString() + " " + binding.stateSpinner.selectedItem.toString()
+
+        val karyakan = binding.KaryainputSpinner.selectedItem
+
+        var karyakanri = "NA"
+
+        if (karyakan is KaryakarniX) {
+            karyakanri = karyakan.name
+        }
 
 
         binding.previewNameinput.text = binding.nameinput.text.toString()
@@ -575,7 +579,7 @@ class SignUpActivity : BaseActivity() {
         binding.previewFamilyIDinput.text = binding.familyIDinput.text.toString()
         binding.previewLandmarkInput.text = completeAddress
         binding.previewBloodGroupSpinner.text = binding.bloodGroupSpinner.selectedItem.toString()
-        binding.previewKaryainput.text = binding.Karyainput.text.toString()
+        binding.previewKaryainput.text = karyakanri
         binding.previewOccuLevelSpinner.text = binding.occuLevelSpinner.selectedItem.toString()
         binding.previewEduLevelSpinner.text = binding.eduLevelSpinner.selectedItem.toString()
         binding.previewEduDepartInput.text = binding.eduDepartInput.text.toString()
@@ -682,16 +686,12 @@ class SignUpActivity : BaseActivity() {
             contact = binding.contactinput.text.toString()
         }
 
-        var karyakanri = "NA"
-        if(binding.Karyainput.text.isNotEmpty()){
-            karyakanri = binding.Karyainput.text.toString()
-        }
+        val karyakan = binding.KaryainputSpinner.selectedItem
 
-        val course = "NA"
-        if (binding.eduCourseSpinner.isSelected && binding.eduCourseSpinner.selectedItem.toString() == "other") {
-            binding.eduCourseOtherInput.text.toString()
-        } else if (binding.eduCourseSpinner.isSelected) {
-            binding.eduCourseSpinner.selectedItem.toString()
+        var karyakanri = "NA"
+
+        if (karyakan is KaryakarniX) {
+            karyakanri = karyakan.name
         }
 
         val memberData = MemberDataX(
@@ -752,6 +752,9 @@ class SignUpActivity : BaseActivity() {
         val signupRequest= SignupRequest(binding.familyIDinput.text.toString(),memberData)
 
         val memberDataJson = Gson().toJson(memberData)
+
+        Log.e("MemberData",memberDataJson)
+
         viewModel.createFamily(contact,binding.familyIDinput.text.toString(),memberDataJson)
 
 //        viewModel.addMember(signupRequest,mImagePart,this)
@@ -1022,6 +1025,43 @@ class SignUpActivity : BaseActivity() {
             }
         })
 
+        viewModel.getAllKarya.observe(this, Observer {resources ->
+            when(resources.status) {
+                Resource.Status.SUCCESS -> {
+                    setUpKaryaSpinner(resources.data!!)
+                }
+
+                Resource.Status.LOADING -> {
+                }
+
+                Resource.Status.ERROR -> {
+                    showErrorSnackBar(resources.apiError.toString())
+                }
+            }
+        })
+
+    }
+
+    private fun setUpKaryaSpinner(karyakarni: AllKaryakarni) {
+        val karyakarniList = mutableListOf<KaryakarniX>()
+        val defaultItem = KaryakarniX(
+            city = "",
+            id = "",
+            level = "Default",
+            name = "Select Karyakarni",
+            state = ""
+        )
+        karyakarniList.add(defaultItem)
+        for(item in karyakarni.karyakarni){
+            karyakarniList.add(item)
+        }
+
+        val karyakarniAdapter = KaryakarniSpinnerAdapter(
+            this,
+            R.layout.karyakarni_spinner_item_layout,
+            karyakarniList
+        )
+        binding.KaryainputSpinner.adapter = karyakarniAdapter
     }
 
     private fun crossFade(visible: List<View>, invisible: List<View>) {

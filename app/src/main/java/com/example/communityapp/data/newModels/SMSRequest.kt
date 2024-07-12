@@ -2,7 +2,7 @@ package com.example.communityapp.data.newModels
 
 data class SMSRequest(
     val smsContent: String,
-    val groupId: String = "0",
+//    val groupId: String = "0",
     val routeId: String = "1",
     val mobileNumbers: String,
     val senderId: String,

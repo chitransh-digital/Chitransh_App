@@ -63,7 +63,7 @@ object Constants {
     const val FAMILYDATA = "family_data"
     const val HEAD_ADDRESS = "headAddress"
     const val FAMILYHASH = "familyHash"
-
+    const val HEAGGENDER = "headGender"
     // Course maps
     val POSTGRADUATE_COURSE_MAP = mapOf(
         "MTech" to 0,

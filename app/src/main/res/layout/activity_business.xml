@@ -83,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="0.010"
+            app:layout_constraintVertical_bias="0.017"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -116,7 +116,7 @@
             app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact"
-            app:layout_constraintVertical_bias="0.010"
+            app:layout_constraintVertical_bias="0.017"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -165,7 +165,7 @@
             app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Add"
-            app:layout_constraintVertical_bias="0.010   "
+            app:layout_constraintVertical_bias="0.017"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -198,7 +198,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/desc"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.010"
+            app:layout_constraintVertical_bias="0.017"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -229,7 +229,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/businessType"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.010"
+            app:layout_constraintVertical_bias="0.017"
             app:layout_constraintWidth_percent="0.9">
 
             <TextView
@@ -253,16 +253,49 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/businessCouponlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/businessLink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.017"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:id="@+id/businessCoupon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coupon Code"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/CouponInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittest_background"
+                android:hint="Coupon Code"
+                android:inputType="text|textMultiLine"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/imageSection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/businessLink"
+            app:layout_constraintTop_toBottomOf="@id/businessCouponlayout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.010"
+            app:layout_constraintVertical_bias="0.017"
             app:layout_constraintWidth_percent="0.9">
 
             <androidx.recyclerview.widget.RecyclerView

@@ -37,7 +37,7 @@ class DashboardRepo @Inject constructor(private val db: FirebaseFirestore, priva
 
     suspend fun refreshToken(contact: String) = api.loginPhone(LoginRequest(contact))
 
-    suspend fun getAllKaryakarni() = api.getAllKaryakarni()
+    suspend fun getAllKaryakarni() = api.getAllKarya()
 
 
 

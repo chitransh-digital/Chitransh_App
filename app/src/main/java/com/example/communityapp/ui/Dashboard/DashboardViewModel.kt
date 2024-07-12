@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.LoginResponse
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.FamilyResponse
 import com.example.communityapp.data.newModels.FeedsResponse
 import com.example.communityapp.data.newModels.KaryakarniResponse
@@ -143,8 +144,8 @@ class DashboardViewModel @Inject constructor(private var dashboardRepo: Dashboar
         }
     }
 
-    private var _getAllKarya = MutableLiveData<Resource<KaryakarniResponse>>()
-    val getAllKarya: LiveData<Resource<KaryakarniResponse>>
+    private var _getAllKarya = MutableLiveData<Resource<AllKaryakarni>>()
+    val getAllKarya: LiveData<Resource<AllKaryakarni>>
         get() = _getAllKarya
 
     fun getAllKaryakarni(){

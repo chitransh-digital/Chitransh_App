@@ -25,47 +25,6 @@ import kotlin.coroutines.suspendCoroutine
 
 class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private val storage: FirebaseStorage,private val api: CustomAPI){
 
-//    fun addMember(member: Member, selectedImagePath: String): Flow<Resource<String>> {
-//
-//        return flow {
-//            emit(Resource.loading())
-//            var ch = "OK"
-//            try {
-//                // Upload image to Firebase Storage
-//                if(selectedImagePath.isNotEmpty()){
-//                    val imageUrl = uploadImage(selectedImagePath, generateMemberId(member))
-//
-//                    // Associate image URL with the member
-//                    member.profilePic = imageUrl
-//                }
-//
-//                subscribeToTopic()
-//
-//
-//                // Save member to Firestore
-//                val familyCollection = db.collection(Constants.FAMILY)
-//                    .document(member.familyID)
-//                    .collection(Constants.MEMBER)
-//                    .document(member.contact)
-//                val userCollection = db.collection(Constants.USERS)
-//                    .document(member.contact)
-//
-//                db.runBatch { batch ->
-//                    batch.set(userCollection, User(member.familyID, member.contact))
-//                    batch.set(familyCollection, member)
-//                }.addOnCompleteListener {
-//                    ch = "OK"
-//                }.addOnFailureListener {
-//                    ch = it.message.toString()
-//                }
-//                if (ch == "OK") emit(Resource.success("OK"))
-//                else emit(Resource.error(java.lang.Exception(ch)))
-//            } catch (e: Exception) {
-//                emit(Resource.error(e))
-//            }
-//        }
-//    }
-
     // Make subscribeToTopic() a suspendCoroutine function to run with uploadImage() in parallel
 
     private suspend fun subscribeToTopic() {
@@ -130,5 +89,5 @@ class SignUpRepo @Inject constructor(private val db : FirebaseFirestore,private 
 
     suspend fun updateMember(imageURl: UpdateImage, familyHash: String, memberHash: String) = api.updateMemberImage(imageURl, familyHash, memberHash)
 
-
+    suspend fun getAllKarya() = api.getAllKarya()
 }

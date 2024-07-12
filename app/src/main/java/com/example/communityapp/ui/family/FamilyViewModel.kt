@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.Member
+import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.addMember
 import com.example.communityapp.data.newModels.addMemberReq
@@ -102,8 +103,8 @@ class FamilyViewModel @Inject constructor(private var familyRepo: FamilyRepo) : 
         }
     }
 
-    private var _getAllKarya = MutableLiveData<Resource<KaryakarniResponse>>()
-    val getAllKarya: LiveData<Resource<KaryakarniResponse>>
+    private var _getAllKarya = MutableLiveData<Resource<AllKaryakarni>>()
+    val getAllKarya: LiveData<Resource<AllKaryakarni>>
         get() = _getAllKarya
 
     fun getAllKaryakarni(){

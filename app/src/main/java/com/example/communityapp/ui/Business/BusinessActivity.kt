@@ -267,6 +267,12 @@ class BusinessActivity : BaseActivity() {
         if (binding.linkInput.text.isNotEmpty()) {
             businessLink = binding.linkInput.text.toString()
         }
+
+        var coupon = "None"
+        if(binding.CouponInput.text.isNotEmpty()){
+            coupon = binding.CouponInput.text.toString()
+        }
+
         val data = com.example.communityapp.data.newModels.Business(
             name = binding.nameinput.text.toString(),
             contact = binding.contactinput.text.toString(),
@@ -278,7 +284,7 @@ class BusinessActivity : BaseActivity() {
             type = binding.businessSpinner.selectedItem.toString(),
             link = businessLink,
             images = emptyList(),
-            coupon = "none",
+            coupon = coupon,
             attachments = emptyList(),
             id = id
         )
@@ -323,7 +329,7 @@ class BusinessActivity : BaseActivity() {
         stringArrayCity = ArrayList()
 
         // Set city adapter
-        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayCity)
+        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, stringArrayCity)
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.citySpinner.adapter = adapterCity
 
@@ -340,7 +346,7 @@ class BusinessActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayState)
+        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, stringArrayState)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = adapter
 

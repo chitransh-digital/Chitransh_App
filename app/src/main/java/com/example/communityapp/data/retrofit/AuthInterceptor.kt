@@ -22,6 +22,10 @@ class AuthInterceptor(val context: Context, val preferences: PreferencesHelper) 
         if (!excludePaths.contains(originalUrl.encodedPath)) {
             newRequestBuilder.addHeader("Cookie", "jwt=$token")
         }
+        if (optPath.contains(originalUrl.toString())) {
+            newRequestBuilder.addHeader("Content-Type", "application/json")
+                .addHeader("Cache-Control", "no-cache")
+        }
 
         val newRequest = newRequestBuilder.build()
         return chain.proceed(newRequest)

@@ -35,7 +35,7 @@ class FamilyRepo @Inject constructor(
 
     suspend fun uploadImage(imagePath : MultipartBody.Part) = api.uploadImage(imagePath)
 
-    suspend fun getAllKaryakarni() = api.getAllKaryakarni()
+    suspend fun getAllKaryakarni() = api.getAllKarya()
 
     suspend fun addMember(addMember : addMemberReq, familyHash : String) = api.addMember(addMember, familyHash)
 

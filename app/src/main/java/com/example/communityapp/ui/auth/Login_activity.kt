@@ -45,6 +45,8 @@ class Login_activity : BaseActivity() {
     private var contact = ""
     private var otpKey = Constants.KEY_OTP_TOKEN
     private var otp = ""
+    private val TIMEOUT_DURATION = 60000L
+    private val timeoutHandler = Handler()
 
 
     //    var context: Context? = null
@@ -125,31 +127,31 @@ class Login_activity : BaseActivity() {
                 ).toBundle()
                 startActivity(intent, options)
                 finish()
-            } else {
+            } else if(contentPointer != 3) {
                 moveAndResizeView(
                     binding.logoImage,
                     -200f,
                     (binding.logoImage.height / 1.2).toInt()
                 )
-                contentPointer++
+                contentPointer=2
                 showContent(contentPointer)
             }
         }, 2000)
 
         binding.buttonEnglish.setOnClickListener {
-            contentPointer++
+            contentPointer=3
             showContent(contentPointer)
             changeLanguage("en")
         }
 
         binding.buttonHindi.setOnClickListener {
-            contentPointer++
+            contentPointer=3
             showContent(contentPointer)
             changeLanguage("hi")
         }
 
         binding.buttonProceedPhno.setOnClickListener {
-            contentPointer++
+            contentPointer=4
             showContent(contentPointer)
         }
 
@@ -157,13 +159,13 @@ class Login_activity : BaseActivity() {
             if (binding.editTextPhone.text.toString().length != 10) {
                 Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
             } else {
-                val ph = "+91" + binding.editTextPhone.text.toString()
+                val ph = binding.editTextPhone.text.toString()
                 contact = ph
                 if (ph.isEmpty()) {
                     Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
                 } else {
                     otp = generateOTP()
-                    val smsContent = "Your One Time Password (OTP) for verification of login is ${otp}. Do not share it with anyone. Shubh Parichay Bhopal. OMPRSA"
+                    val smsContent = "Your One Time Password (OTP) for verification of $contact is $otp. Do not share it with anyone. Shubh Parichay Bhopal. OMPRSA"
                     val smsRequest = SMSRequest(
                         smsContent = smsContent,
                         mobileNumbers = contact,
@@ -172,7 +174,6 @@ class Login_activity : BaseActivity() {
                         tmid = "140200000022"
                     )
                     viewModel.sendOTP(Constants.OTP_URL,otpKey, smsRequest)
-//                    viewModel.OnVerificationCodeSent(ph, this)
                 }
             }
         }
@@ -340,15 +341,14 @@ class Login_activity : BaseActivity() {
                     Log.e("url", resource.apiError?.message.toString())
                     hideProgressDialog()
                     showErrorSnackBar("Error: ${resource.apiError?.message}")
+                    Toast.makeText(this, "Please try again", Toast.LENGTH_SHORT).show()
+                    timeoutHandler.removeCallbacks(timeoutRunnable)
                 }
 
                 Resource.Status.LOADING -> {
                     Log.e("url", "loading")
                     showProgressDialog("Sending OTP..")
-                }
-
-                else -> {
-                    Log.e("url", "else")
+                    timeoutHandler.postDelayed(timeoutRunnable, TIMEOUT_DURATION)
                 }
             }
 
@@ -576,5 +576,11 @@ class Login_activity : BaseActivity() {
         val selectedLocale = AppCompatDelegate.getApplicationLocales()[0]
         Log.e("LoginActivity", "Selected Locale: $selectedLocale")
         preferencesHelper.putPointer(3)
+    }
+
+    private val timeoutRunnable = Runnable {
+        hideProgressDialog()
+        showErrorSnackBar("Error: OTP request timed out. Please try again.")
+        Toast.makeText(this, "OTP request timed out. Please try again.", Toast.LENGTH_SHORT).show()
     }
 }

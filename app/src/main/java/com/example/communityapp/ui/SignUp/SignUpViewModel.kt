@@ -7,8 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.communityapp.data.models.LoginResponse
+import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.CreateFamilyResponse
 import com.example.communityapp.data.newModels.ImageResponse
+import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.MemberData
 import com.example.communityapp.data.newModels.SignupRequest
 import com.example.communityapp.data.newModels.SignupResponse
@@ -143,6 +145,29 @@ class SignUpViewModel @Inject constructor(private var signUpRepo: SignUpRepo) : 
                 }
             } catch (e: Exception) {
                 _addImage.value = Resource.error(e)
+            }
+        }
+    }
+
+    private var _getAllKarya = MutableLiveData<Resource<AllKaryakarni>>()
+    val getAllKarya: LiveData<Resource<AllKaryakarni>>
+        get() = _getAllKarya
+
+    fun getAllKaryakarni(){
+        _getAllKarya.value = Resource.loading()
+        viewModelScope.launch {
+            try{
+                val response = signUpRepo.getAllKarya()
+                if(response.isSuccessful){
+                    _getAllKarya.value = Resource.success(response.body())
+                }else if(response.code() == 404){
+                    _getAllKarya.value = Resource.error(Exception(Constants.Error404))
+                }
+                else{
+                    _getAllKarya.value = Resource.error( Exception(response.message()))
+                }
+            }catch (e : Exception){
+                _getAllKarya.value = Resource.error(e)
             }
         }
     }

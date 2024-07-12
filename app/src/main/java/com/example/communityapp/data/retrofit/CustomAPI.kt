@@ -4,6 +4,7 @@ import com.example.communityapp.data.models.LoginRequest
 import com.example.communityapp.data.models.LoginRequestByID
 import com.example.communityapp.data.models.LoginResponse
 import com.example.communityapp.data.newModels.AddBusinessResponse
+import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.Business
 import com.example.communityapp.data.newModels.BusinessResponse
 import com.example.communityapp.data.newModels.CreateFamilyResponse
@@ -26,6 +27,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -86,8 +88,6 @@ interface CustomAPI {
         @Query("page") page: Int
     ): Response<KaryakarniResponse>
 
-    @GET("api/karyakarni/getKaryakarnis")
-    suspend fun getAllKaryakarni(): Response<KaryakarniResponse>
 
     @PATCH("api/member/update/{familyHash}/{memberHash}")
     suspend fun updateMember(@Body addMember: addMember,
@@ -123,5 +123,6 @@ interface CustomAPI {
         @Body smsRequest: SMSRequest
     ): Response<SMSResponse>
 
-
+    @GET("/api/karyakarni/getAllKaryakarnis")
+    suspend fun getAllKarya() : Response<AllKaryakarni>
 }
