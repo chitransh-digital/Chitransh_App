@@ -158,6 +158,16 @@
     <string name="confirm_signout">Confirm SignOut</string>
     <string name="are_you_sure_you_want_to_signout">Are you sure you want to Signout?</string>
     <string name="sign_out">Sign out</string>
+    <string name="head_cannot_be_deleted">Head cannot be deleted</string>
+    <string name="please_enter_your_relation">Please enter your relation</string>
+    <string name="please_select_state">Please select state</string>
+    <string name="member_updated_successfully">Member Updated Successfully</string>
+    <string name="updating">Updating</string>
+    <string name="member_deleted_successfully">Member Deleted Successfully</string>
+    <string name="deleting">Deleting</string>
+    <string name="confirm_deletion">Confirm Deletion</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete %1$s?</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

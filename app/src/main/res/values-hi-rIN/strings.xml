@@ -158,6 +158,17 @@
     <string name="confirm_signout">साइनआउट की पुष्टि करें</string>
     <string name="are_you_sure_you_want_to_signout">क्या आप वाकई साइनआउट करना चाहते हैं?</string>
     <string name="sign_out">साइन आउट करें</string>
+    <string name="head_cannot_be_deleted">मुख्य को हटाया नहीं जा सकता</string>
+    <string name="please_enter_your_relation">कृपया अपना संबंध दर्ज करें</string>
+    <string name="please_select_state">कृपया राज्य चुनें</string>
+    <string name="member_updated_successfully">सदस्य सफलतापूर्वक अपडेट किया गया</string>
+    <string name="updating">अपडेट कर रहा है</string>
+    <string name="member_deleted_successfully">सदस्य सफलतापूर्वक हटा दिया गया</string>
+    <string name="deleting">हटा रहा है</string>
+    <string name="confirm_deletion">हटाना की पुष्टि करें</string>
+    <string name="are_you_sure_you_want_to_delete">क्या आप वाकई %1$s को हटाना चाहते हैं?</string>
+    <string name="delete">हटाएं</string>
+
 
 
 

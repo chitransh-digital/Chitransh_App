@@ -21,8 +21,6 @@ import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.newModels.EducationDetails
-import com.example.communityapp.data.newModels.Karyakarni
-import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.KaryakarniX
 import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.data.newModels.OccupationDetails
@@ -365,7 +363,7 @@ class UpdateMemberActivity : BaseActivity() {
 
         binding.previewDelete.setOnClickListener {
             if (member.relation == "Head"){
-                Toast.makeText(this, "Head cannot be deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.head_cannot_be_deleted), Toast.LENGTH_SHORT).show()
             }else{
                 showDeleteMemberDialog(this, member)
             }
@@ -619,21 +617,21 @@ class UpdateMemberActivity : BaseActivity() {
 
     private fun checkDetails1() {
         if (binding.nameinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_name), Toast.LENGTH_SHORT).show()
         } else if (!isValidPhoneNumber(binding.contactinput.text.toString())) {
-            Toast.makeText(this, "Please enter valid contact no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_contact_no), Toast.LENGTH_SHORT).show()
         } else if (binding.ageSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_age), Toast.LENGTH_SHORT).show()
         } else if (binding.genderSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_gender), Toast.LENGTH_SHORT).show()
         } else if (binding.relationinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your relation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_relation), Toast.LENGTH_SHORT).show()
         } else if (binding.IDinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your FamilyID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_username_and_family_id), Toast.LENGTH_SHORT).show()
         } else if (binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your Blood Group", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_blood_group), Toast.LENGTH_SHORT).show()
         } else if (binding.stateSpinner.selectedItem.toString() == "Select State") {
-            Toast.makeText(this, "Please select state", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_select_state), Toast.LENGTH_SHORT).show()
         }else {
             binding.nameinput.setText(capitalizeNames(binding.nameinput.text.toString()))
             screenPointer++
@@ -649,10 +647,10 @@ class UpdateMemberActivity : BaseActivity() {
 
     private fun checkDetails2() {
         if(binding.occuLevelSpinner.selectedItem == null || binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
-            Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_occupation), Toast.LENGTH_SHORT).show()
         }
         else if(binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
-            Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_education), Toast.LENGTH_SHORT).show()
         } else {
             screenPointer++
             changeUI(screenPointer)
@@ -974,12 +972,13 @@ class UpdateMemberActivity : BaseActivity() {
                 Resource.Status.SUCCESS -> {
                     Log.e("Success", resources.data.toString())
                     hideProgressDialog()
-                    Toast.makeText(this, "Member Updated Successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.member_updated_successfully), Toast.LENGTH_SHORT).show()
                     onBackPressed()
                 }
 
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Updating")
+                    showProgressDialog(getString(R.string.updating))
                     Log.e("Loading", resources.data.toString())
                 }
 
@@ -997,12 +996,13 @@ class UpdateMemberActivity : BaseActivity() {
             when(resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    Toast.makeText(this, "Member Deleted Successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.member_deleted_successfully), Toast.LENGTH_SHORT).show()
                     onBackPressed()
                 }
 
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Deleting")
+                    showProgressDialog(getString(R.string.deleting))
                 }
 
                 Resource.Status.ERROR -> {
@@ -1034,14 +1034,14 @@ class UpdateMemberActivity : BaseActivity() {
     fun showDeleteMemberDialog(context: Context, member: MemberX) {
         val alertDialogBuilder = AlertDialog.Builder(context)
         alertDialogBuilder.apply {
-            setTitle("Confirm Deletion")
-            setMessage("Are you sure you want to delete ${member.name}?")
-            setPositiveButton("Delete") { dialog, which ->
+            setTitle(getString(R.string.confirm_deletion))
+            setMessage(getString(R.string.are_you_sure_you_want_to_delete, member.name))
+            setPositiveButton(getString(R.string.delete)) { dialog, which ->
                 // Call the onDeleteConfirmed function when the user confirms deletion
                 viewModel.deleteMember(familyHash,member._id)
                 dialog.dismiss()
             }
-            setNegativeButton("Cancel") { dialog, which ->
+            setNegativeButton(getString(R.string.cancel)) { dialog, which ->
                 dialog.dismiss()
             }
         }
