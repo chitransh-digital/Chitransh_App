@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.BaseActivity
+import com.example.communityapp.R
 import com.example.communityapp.databinding.ActivityJobsBinding
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
@@ -32,7 +33,7 @@ class JobsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityJobsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        showProgressDialog("Fetching Jobs...")
+        showProgressDialog(getString(R.string.fetching_jobs))
         setupRecyclerView(jobsList)
         jobsViewModel.getAllJobs(limit, page)
 
@@ -97,13 +98,13 @@ class JobsActivity : BaseActivity() {
         jobsViewModel.jobAddedResult.observe(this, Observer { result ->
             when (result.status) {
                 Resource.Status.LOADING -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.SUCCESS -> {
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
                 }
 
                 else -> {}
@@ -114,13 +115,13 @@ class JobsActivity : BaseActivity() {
         jobsViewModel.jobDeletedResult.observe(this, Observer { result ->
             when (result.status) {
                 Resource.Status.LOADING -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.SUCCESS -> {
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
                 }
 
                 else -> {}

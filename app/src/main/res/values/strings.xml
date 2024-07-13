@@ -182,7 +182,12 @@
     <string name="no_family_found">No family found</string>
     <string name="fetching_details">Fetching Details...</string>
     <string name="fetching_family_details">Fetching Family Details...</string>
-
+    <string name="loading">loading</string>
+    <string name="fetching_jobs">Fetching Jobs...</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="no_karyakarni_found">No Karyakarni Found</string>
+    <string name="fetching_karyakarni_details">Fetching Karyakarni Details...</string>
 
 
 </resources>

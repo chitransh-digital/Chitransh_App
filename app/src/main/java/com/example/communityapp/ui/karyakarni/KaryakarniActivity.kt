@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.BaseActivity
-import com.example.communityapp.data.newModels.KaryaMember
+import com.example.communityapp.R
 import com.example.communityapp.data.newModels.Karyakarni
 import com.example.communityapp.databinding.ActivityKaryakarniBinding
 import com.example.communityapp.utils.Resource
@@ -84,7 +84,7 @@ class KaryakarniActivity : BaseActivity() {
                             }
                         } else {
                             hasMoreItems = false
-                            showToast("No Karyakarni Found")
+                            showToast(getString(R.string.no_karyakarni_found))
                         }
                     }
                 }
@@ -94,7 +94,7 @@ class KaryakarniActivity : BaseActivity() {
                     isLoading = false
                 }
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Fetching Karyakarni Details...")
+                    showProgressDialog(getString(R.string.fetching_karyakarni_details))
                 }
             }
         })
@@ -134,7 +134,7 @@ class KaryakarniActivity : BaseActivity() {
         val filteredList = mOriginalKaryakarniList.filter { it.level.equals(level, ignoreCase = true) }
 
         if (filteredList.isEmpty()) {
-            showToast("No Karyakarni Found")
+            showToast(getString(R.string.no_karyakarni_found))
         }
 
         mOriginalKaryakarniList.clear()
@@ -146,7 +146,7 @@ class KaryakarniActivity : BaseActivity() {
         val filteredList = mOriginalKaryakarniList.filter { it.address.contains(city, ignoreCase = true) && it.address.contains(state, ignoreCase = true) }
 
         if (filteredList.isEmpty()) {
-            showToast("No result found")
+            showToast(getString(R.string.no_result_found))
         }
 
         mOriginalKaryakarniList.clear()

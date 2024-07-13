@@ -182,9 +182,12 @@
     <string name="no_family_found">कोई परिवार नहीं मिला</string>
     <string name="fetching_details">विवरण प्राप्त कर रहा है...</string>
     <string name="fetching_family_details">पारिवारिक विवरण प्राप्त कर रहा है...</string>
-
-
-
+    <string name="loading">लोड हो रहा है</string>
+    <string name="fetching_jobs">नौकरियां प्राप्त कर रहा है...</string>
+    <string name="success">सफलता</string>
+    <string name="error">त्रुटि</string>
+    <string name="no_karyakarni_found">कोई कार्यकर्ता नहीं मिला</string>
+    <string name="fetching_karyakarni_details">कार्यकर्ता विवरण प्राप्त कर रहा है...</string>
 
 
 
