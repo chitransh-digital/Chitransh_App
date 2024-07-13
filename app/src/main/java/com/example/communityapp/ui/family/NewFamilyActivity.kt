@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.BaseActivity
+import com.example.communityapp.R
 import com.example.communityapp.data.newModels.FamilyX
 import com.example.communityapp.databinding.ActivityNewFamilyBinding
 import com.example.communityapp.utils.Resource
@@ -80,7 +81,7 @@ class NewFamilyActivity : BaseActivity() {
         }
 
         if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_result_found), Toast.LENGTH_SHORT).show()
         }
 
         setUpRecyclerView(filteredList)
@@ -94,7 +95,8 @@ class NewFamilyActivity : BaseActivity() {
                     hideProgressDialog()
                     try {
                         if(resources.data.isNullOrEmpty()){
-                            Toast.makeText(this,"No family found",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,
+                                getString(R.string.no_family_found),Toast.LENGTH_SHORT).show()
                             return@Observer
                         }
                         val user_data = resources.data
@@ -106,7 +108,7 @@ class NewFamilyActivity : BaseActivity() {
                 }
                 Resource.Status.LOADING -> {
                     Log.e(" D Loading",resources.data.toString())
-                    showProgressDialog("Fetching Details...")
+                    showProgressDialog(getString(R.string.fetching_details))
                 }
                 Resource.Status.ERROR -> {
                     hideProgressDialog()
@@ -123,7 +125,7 @@ class NewFamilyActivity : BaseActivity() {
                     hideProgressDialog()
                     try {
                         if(resources.data?.families.isNullOrEmpty()){
-                            Toast.makeText(this,"No family found",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,getString(R.string.no_family_found),Toast.LENGTH_SHORT).show()
                             return@Observer
                         }
                         val user_data = resources.data?.families
@@ -137,7 +139,7 @@ class NewFamilyActivity : BaseActivity() {
                 }
                 Resource.Status.LOADING -> {
                     Log.e("Loading",resources.data.toString())
-                    showProgressDialog("Fetching Family Details...")
+                    showProgressDialog(getString(R.string.fetching_family_details))
                 }
                 Resource.Status.ERROR -> {
                     hideProgressDialog()

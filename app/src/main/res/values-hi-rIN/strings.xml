@@ -178,6 +178,11 @@
     <string name="no_attachment_found">कोई अटैचमेंट नहीं मिला</string>
     <string name="error_business_data_not_found">त्रुटि: व्यवसाय डेटा नहीं मिला</string>
     <string name="no_result_found">कोई परिणाम नहीं मिला</string>
+    <string name="contact_not_available">संपर्क उपलब्ध नहीं है</string>
+    <string name="no_family_found">कोई परिवार नहीं मिला</string>
+    <string name="fetching_details">विवरण प्राप्त कर रहा है...</string>
+    <string name="fetching_family_details">पारिवारिक विवरण प्राप्त कर रहा है...</string>
+
 
 
 

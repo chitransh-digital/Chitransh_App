@@ -178,6 +178,11 @@
     <string name="no_attachment_found">No attachment found</string>
     <string name="error_business_data_not_found">Error: Business data not found</string>
     <string name="no_result_found">no result found</string>
+    <string name="contact_not_available">Contact not available</string>
+    <string name="no_family_found">No family found</string>
+    <string name="fetching_details">Fetching Details...</string>
+    <string name="fetching_family_details">Fetching Family Details...</string>
+
 
 
 </resources>
