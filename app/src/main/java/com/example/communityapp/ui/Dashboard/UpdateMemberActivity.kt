@@ -364,11 +364,11 @@ class UpdateMemberActivity : BaseActivity() {
             }
 
         binding.previewDelete.setOnClickListener {
-//            if (member.relation == "Head"){
-//                Toast.makeText(this, "Head cannot be deleted", Toast.LENGTH_SHORT).show()
-//            }else{
+            if (member.relation == "Head"){
+                Toast.makeText(this, "Head cannot be deleted", Toast.LENGTH_SHORT).show()
+            }else{
                 showDeleteMemberDialog(this, member)
-//            }
+            }
         }
 
         binding.contactSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
