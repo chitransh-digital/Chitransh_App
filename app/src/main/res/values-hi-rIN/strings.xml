@@ -148,6 +148,17 @@
     <string name="sending_otp">ओटीपी भेज रहा है..</string>
     <string name="error_otp_request_timed_out_please_try_again">त्रुटि: ओटीपी अनुरोध समय समाप्त हो गया। कृपया पुन: प्रयास करें।</string>
     <string name="otp_request_timed_out_please_try_again">ओटीपी अनुरोध समय समाप्त हो गया। कृपया पुन: प्रयास करें।</string>
+    <string name="permission_is_required_to_send_notifications">सूचनाएं भेजने के लिए अनुमति आवश्यक है</string>
+    <string name="permission_required">अनुमति आवश्यक</string>
+    <string name="permission_granted">अनुमति प्रदान की गई</string>
+    <string name="grant">अनुदान दें</string>
+    <string name="package2">पैकेज</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="please_wait">कृपया प्रतीक्षा करें...</string>
+    <string name="confirm_signout">साइनआउट की पुष्टि करें</string>
+    <string name="are_you_sure_you_want_to_signout">क्या आप वाकई साइनआउट करना चाहते हैं?</string>
+    <string name="sign_out">साइन आउट करें</string>
+
 
 
 </resources>

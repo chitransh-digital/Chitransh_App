@@ -2,7 +2,6 @@ package com.example.communityapp.ui.Dashboard
 
 import android.Manifest
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -33,7 +32,6 @@ import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -100,21 +98,21 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         when (requestCode) {
             1 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                             MaterialAlertDialogBuilder(this)
-                                .setTitle("Permission Required")
-                                .setMessage("Permission is required to send notifications")
-                                .setPositiveButton("Grant") { dialog, which ->
+                                .setTitle(getString(R.string.permission_required))
+                                .setMessage(getString(R.string.permission_is_required_to_send_notifications))
+                                .setPositiveButton(getString(R.string.grant)) { dialog, which ->
                                     val intent = Intent(ACTION_APPLICATION_DETAILS_SETTINGS)
-                                    val uri = Uri.fromParts("package", packageName, null)
+                                    val uri = Uri.fromParts(getString(R.string.package2), packageName, null)
                                     intent.data = uri
                                     startActivity(intent)
                                 }
-                                .setNegativeButton("Cancel") { dialog, which ->
+                                .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
                                     dialog.dismiss()
                                 }
                                 .show()
@@ -151,7 +149,7 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
                     Log.e("D Success",resources.data.toString())
                 }
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Please wait...")
+                    showProgressDialog(getString(R.string.please_wait))
                     Log.e(" D Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
@@ -176,7 +174,7 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
                     viewModel.getMember(phoneNum)
                 }
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Please wait...")
+                    showProgressDialog(getString(R.string.please_wait))
                     Log.e(" D Loading",resources.data.toString())
                 }
                 Resource.Status.ERROR -> {
@@ -237,15 +235,15 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
     private fun showSignoutDialog() {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.apply {
-            setTitle("Confirm Signout")
-            setMessage("Are you sure you want to Signout?")
-            setPositiveButton("Signout") { dialog, which ->
+            setTitle(getString(R.string.confirm_signout))
+            setMessage(getString(R.string.are_you_sure_you_want_to_signout))
+            setPositiveButton(getString(R.string.sign_out)) { dialog, which ->
                 preferencesHelper.clear()
                 startActivity(Intent(this@DashboardActivity,Login_activity::class.java))
                 finish()
                 dialog.dismiss()
             }
-            setNegativeButton("Cancel") { dialog, which ->
+            setNegativeButton(getString(R.string.cancel)) { dialog, which ->
                 dialog.dismiss()
             }
         }

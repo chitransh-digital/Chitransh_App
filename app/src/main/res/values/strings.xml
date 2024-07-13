@@ -148,6 +148,16 @@
     <string name="sending_otp">Sending OTP..</string>
     <string name="error_otp_request_timed_out_please_try_again">Error: OTP request timed out. Please try again.</string>
     <string name="otp_request_timed_out_please_try_again">OTP request timed out. Please try again.</string>
+    <string name="permission_is_required_to_send_notifications">Permission is required to send notifications</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="permission_granted">Permission Granted</string>
+    <string name="grant">Grant</string>
+    <string name="package2">package</string>
+    <string name="cancel">Cancel</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="confirm_signout">Confirm SignOut</string>
+    <string name="are_you_sure_you_want_to_signout">Are you sure you want to Signout?</string>
+    <string name="sign_out">Sign out</string>
 
 
 </resources>
