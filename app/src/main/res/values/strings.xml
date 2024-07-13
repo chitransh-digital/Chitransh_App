@@ -136,6 +136,18 @@
     <string name="only_jpeg_jpg_png_gif_files_are_allowed">Only JPEG, JPG, PNG, GIF files are allowed</string>
     <string name="adding_your_details_as_family_head">Adding Your Details as Family Head ...</string>
     <string name="adding_your_image">adding your image ...</string>
+    <string name="please_enter_a_valid_phone_number">Please enter a valid phone number</string>
+    <string name="input_your_phone_number">Input your phone number</string>
+    <string name="please_enter_otp">Please enter otp</string>
+    <string name="verifying_otp">Verifying OTP..</string>
+    <string name="invalid_otp">Invalid OTP</string>
+    <string name="please_enter_username_and_family_id">Please enter username and family ID</string>
+    <string name="verifying_family_id">Verifying Family ID..</string>
+    <string name="otp_sent">OTP sent</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="sending_otp">Sending OTP..</string>
+    <string name="error_otp_request_timed_out_please_try_again">Error: OTP request timed out. Please try again.</string>
+    <string name="otp_request_timed_out_please_try_again">OTP request timed out. Please try again.</string>
 
 
 </resources>
