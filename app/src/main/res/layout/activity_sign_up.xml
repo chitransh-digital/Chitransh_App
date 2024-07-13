@@ -200,6 +200,7 @@
                         android:background="@drawable/edittest_background"
                         android:hint="Contact"
                         android:inputType="phone"
+                        android:focusable="false"
                         android:padding="10dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/hint_color" />

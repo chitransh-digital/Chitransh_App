@@ -6,6 +6,7 @@ object Constants {
     const val OTP_URL="http://msg.msgclub.net/rest/services/sendSMS/sendGroupSms"
 
     const val Error404= "user not found"
+    const val Error400= "Bad Request"
     const val KEY_OTP_TOKEN = "DEFAULT_OTP_KEY"
     const val FILEURL= "file"
     const val COUPON = "coupon"

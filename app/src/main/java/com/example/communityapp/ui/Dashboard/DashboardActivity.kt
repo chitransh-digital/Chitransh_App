@@ -158,7 +158,9 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
                     hideProgressDialog()
                     Log.e("D Error",resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
-                    if(resources.apiError?.message == Constants.Error404)startSignUpActivity()
+                    if(resources.apiError?.message == Constants.Error404 || resources.apiError?.message == Constants.Error400){
+                        startSignUpActivity()
+                    }
                 }
                 else -> {}
             }
@@ -181,7 +183,10 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
                     hideProgressDialog()
                     Log.e("D Error",resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
-                    if(resources.apiError?.message == Constants.Error404)startSignUpActivity()
+                    if(resources.apiError?.message == Constants.Error404 || resources.apiError?.message == Constants.Error400){
+                        startSignUpActivity()
+                    }
+
                 }
                 else -> {}
             }

@@ -23,12 +23,17 @@ import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
 import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.newModels.AllKaryakarni
+import com.example.communityapp.data.newModels.EducationDetails
 import com.example.communityapp.data.newModels.FamilyXX
 import com.example.communityapp.data.newModels.Karyakarni
 import com.example.communityapp.data.newModels.KaryakarniX
 import com.example.communityapp.data.newModels.MemberDataX
+import com.example.communityapp.data.newModels.MemberReq
 import com.example.communityapp.data.newModels.MemberXX
+import com.example.communityapp.data.newModels.OccupationDetails
 import com.example.communityapp.data.newModels.SignupRequest
+import com.example.communityapp.data.newModels.addMember
+import com.example.communityapp.data.newModels.addMemberReq
 import com.example.communityapp.databinding.ActivitySignUpBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
@@ -52,10 +57,10 @@ class SignUpActivity : BaseActivity() {
 
     @Inject
     lateinit var preferencesHelper: PreferencesHelper
-    private lateinit var binding : ActivitySignUpBinding
+    private lateinit var binding: ActivitySignUpBinding
     private lateinit var viewModel: SignUpViewModel
     private var selectedDate: Calendar = Calendar.getInstance()
-    private var selectedImagePath:String = ""
+    private var selectedImagePath: String = ""
     private var shortAnimationDuration = 500
     private var screenPointer = 1
     var eduSpinner = 0
@@ -97,11 +102,12 @@ class SignUpActivity : BaseActivity() {
         binding.familyIDinput.setOnClickListener {
             val name = binding.nameinput.text.toString()
             val contact = binding.contactinput.text.toString()
-            if (name.isNotEmpty() && contact.isNotEmpty()){
-                val familyID = "CH" + name.substring(0,3) + contact.substring(6,9)
+            if (name.isNotEmpty() && contact.isNotEmpty()) {
+                val familyID = "CH" + name.substring(0, 3) + contact.substring(6, 9)
                 binding.familyIDinput.setText(familyID)
-            }else{
-                Toast.makeText(this, "Please enter your name and contact no", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Please enter your name and contact no", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -154,7 +160,11 @@ class SignUpActivity : BaseActivity() {
                                 "CS",
                                 "other"
                             )
-                            val courseAdapter = ArrayAdapter(this@SignUpActivity, android.R.layout.simple_spinner_dropdown_item, list)
+                            val courseAdapter = ArrayAdapter(
+                                this@SignUpActivity,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                list
+                            )
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
                             binding.eduDepartment.visibility = View.VISIBLE
@@ -176,12 +186,16 @@ class SignUpActivity : BaseActivity() {
                                 "MDS",
                                 "other"
                             )
-                            val courseAdapter = ArrayAdapter(this@SignUpActivity, android.R.layout.simple_spinner_dropdown_item, list)
+                            val courseAdapter = ArrayAdapter(
+                                this@SignUpActivity,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                list
+                            )
                             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.eduCourseSpinner.adapter = courseAdapter
                             binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduCourseSpinner.setSelection(courseSpinner)
-                        }else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
+                        } else if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
                             binding.eduDepartment.visibility = View.VISIBLE
                             binding.eduInstitute.visibility = View.VISIBLE
                             binding.eduAdditionalDetails.visibility = View.VISIBLE
@@ -205,17 +219,18 @@ class SignUpActivity : BaseActivity() {
                     id: Long
                 ) {
                     occuSpinner = position
-                    if(binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
+                    if (binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
                         binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
-                        binding.occuLevelSpinner.selectedItem.toString() == "Student"){
+                        binding.occuLevelSpinner.selectedItem.toString() == "Student"
+                    ) {
                         binding.occuDepartment.visibility = View.GONE
                         binding.occuEmployer.visibility = View.GONE
                         binding.occuPosition.visibility = View.GONE
                         binding.occuAddress.visibility = View.GONE
                         binding.occuBuisName.visibility = View.GONE
                         binding.occuBuisType.visibility = View.GONE
-                    }else if(binding.occuLevelSpinner.selectedItem.toString() == "Business"){
+                    } else if (binding.occuLevelSpinner.selectedItem.toString() == "Business") {
                         binding.occuEmployer.visibility = View.GONE
                         binding.occuDepartment.visibility = View.GONE
                         binding.occuPosition.visibility = View.GONE
@@ -224,14 +239,22 @@ class SignUpActivity : BaseActivity() {
                         binding.occuBuisType.visibility = View.VISIBLE
                         binding.occuAddressInput.hint = "Business Address"
                         binding.occuAddressText.text = "Business Address"
-                        val businessTypeList = arrayListOf("Restaurant", "Retail Store", "Tech", "Consulting Firm", "other")
-                        val businessTypeAdapter = ArrayAdapter(this@SignUpActivity,
-                            android.R.layout.simple_spinner_dropdown_item, businessTypeList)
+                        val businessTypeList = arrayListOf(
+                            "Restaurant",
+                            "Retail Store",
+                            "Tech",
+                            "Consulting Firm",
+                            "other"
+                        )
+                        val businessTypeAdapter = ArrayAdapter(
+                            this@SignUpActivity,
+                            android.R.layout.simple_spinner_dropdown_item, businessTypeList
+                        )
                         businessTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        binding.occuBuisTypeSpinner.adapter=businessTypeAdapter
+                        binding.occuBuisTypeSpinner.adapter = businessTypeAdapter
 
                         binding.occuBuisTypeSpinner.setSelection(buisTypeSpinner)
-                    }else{
+                    } else {
                         binding.occuDepartment.visibility = View.VISIBLE
                         binding.occuEmployer.visibility = View.VISIBLE
                         binding.occuPosition.visibility = View.VISIBLE
@@ -303,9 +326,9 @@ class SignUpActivity : BaseActivity() {
             }
 
         binding.contactSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 binding.switchtext.text = "Visible"
-            }else{
+            } else {
                 binding.switchtext.text = "Not Visible"
             }
         }
@@ -380,7 +403,6 @@ class SignUpActivity : BaseActivity() {
         binding.bloodGroupSpinner.adapter = bloodGroupadapter
 
 
-
         val no = preferencesHelper.getContact()
         Log.d("Dashboard phone no", no.toString())
 
@@ -434,7 +456,7 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun populateAdress() {
-        if(address_store.isNotEmpty()){
+        if (address_store.isNotEmpty()) {
             val state = address_store.split(",").last()
             val city = address_store.split(",")[1]
             val landmark = address_store.split(",").first()
@@ -442,100 +464,101 @@ class SignUpActivity : BaseActivity() {
             Log.e("City", city)
             Log.e("Landmark", landmark)
 
-            init(city,state)
+            init(city, state)
         }
     }
 
     private fun checkDetails1() {
-        if (binding.nameinput.text.isNullOrEmpty()){
+        if (binding.nameinput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
-        }else if(binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())){
+        } else if (binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())) {
             Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.ageSpinner.selectedItem.toString().isEmpty()) {
+        } else if (binding.ageSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.genderSpinner.selectedItem.toString().isEmpty()) {
+        } else if (binding.genderSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
+        } else if (binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
             Toast.makeText(this, "Please enter your blood grp", Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.stateSpinner.selectedItem == null || binding.stateSpinner.selectedItem.toString() == "Select State") {
+        } else if (binding.stateSpinner.selectedItem == null || binding.stateSpinner.selectedItem.toString() == "Select State") {
             Toast.makeText(this, "Please enter your state", Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.citySpinner.selectedItem == null || binding.citySpinner.selectedItem.toString() == "Select City"){
+        } else if (binding.citySpinner.selectedItem == null || binding.citySpinner.selectedItem.toString() == "Select City") {
             Toast.makeText(this, "Please enter your city", Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else {
             Log.e("state", binding.stateSpinner.selectedItem.toString())
             screenPointer++
             changeUI(screenPointer)
         }
 
-        address_store = binding.landmarkInput.text.toString() + "," + binding.citySpinner.selectedItem.toString() + "," + binding.stateSpinner.selectedItem.toString()
+        address_store =
+            binding.landmarkInput.text.toString() + "," + binding.citySpinner.selectedItem.toString() + "," + binding.stateSpinner.selectedItem.toString()
     }
 
     private fun checkDetails2() {
-        if(binding.occuLevelSpinner.selectedItem == null || binding.occuLevelSpinner.selectedItem.toString().isEmpty()){
+        if (binding.occuLevelSpinner.selectedItem == null || binding.occuLevelSpinner.selectedItem.toString()
+                .isEmpty()
+        ) {
             Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
-        }
-        else if(binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString().isEmpty()){
+        } else if (binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString()
+                .isEmpty()
+        ) {
             Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else {
             screenPointer++
             changeUI(screenPointer)
         }
     }
 
-    private fun changeUI(screenPointer : Int){
-        when(screenPointer){
+    private fun changeUI(screenPointer: Int) {
+        when (screenPointer) {
 
-            0-> {
+            0 -> {
                 onBackPressed()
             }
 
-            1-> {
+            1 -> {
                 registerPageUI()
                 crossFade(
                     listOf(binding.registrationLayout),
                     listOf(
                         binding.occupatioBusinessPage,
                         binding.addImage,
-                        binding.informationPreviewPage)
+                        binding.informationPreviewPage
+                    )
                 )
             }
 
-            2-> {
+            2 -> {
                 populateSpinner()
                 crossFade(
                     listOf(binding.occupatioBusinessPage),
                     listOf(
                         binding.registrationLayout,
                         binding.addImage,
-                        binding.informationPreviewPage)
+                        binding.informationPreviewPage
+                    )
                 )
             }
 
-            3-> {
+            3 -> {
                 crossFade(
                     listOf(binding.addImage),
                     listOf(
                         binding.registrationLayout,
                         binding.occupatioBusinessPage,
-                        binding.informationPreviewPage)
+                        binding.informationPreviewPage
+                    )
                 )
             }
 
-            4-> {
+            4 -> {
                 populateInformationPreview()
                 crossFade(
                     listOf(binding.informationPreviewPage),
                     listOf(
                         binding.registrationLayout,
                         binding.occupatioBusinessPage,
-                        binding.addImage)
+                        binding.addImage
+                    )
                 )
             }
 
@@ -592,7 +615,7 @@ class SignUpActivity : BaseActivity() {
         binding.previewEduCourseInput.text = course
         binding.previewIvAddImageMember.setImageURI(uri)
 
-        if(binding.occuLevelSpinner.selectedItem.toString() == "Business"){
+        if (binding.occuLevelSpinner.selectedItem.toString() == "Business") {
             binding.previewOccuDepartment.visibility = View.GONE
             binding.previewOccuEmployer.visibility = View.GONE
             binding.previewOccuPosition.visibility = View.GONE
@@ -603,7 +626,7 @@ class SignUpActivity : BaseActivity() {
             binding.previewBuisTypeInput.text = binding.occuBuisTypeSpinner.selectedItem.toString()
             binding.previewBuisNameInput.text = binding.occuBuisNameInput.text.toString()
             binding.previewBuisAddressInput.text = binding.occuAddressInput.text.toString()
-        }else{
+        } else {
 
             binding.previewOccuDepartment.visibility = View.VISIBLE
             binding.previewOccuEmployer.visibility = View.VISIBLE
@@ -618,13 +641,12 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun pageUpdates() {
-        if (binding.eduLevelSpinner.selectedItem.toString() == "Phd"){
+        if (binding.eduLevelSpinner.selectedItem.toString() == "Phd") {
             binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
             binding.previewEduCourse.visibility = View.GONE
-        }
-        else if (binding.eduLevelSpinner.selectedItem.toString() == "Bachelors") {
+        } else if (binding.eduLevelSpinner.selectedItem.toString() == "Bachelors") {
             binding.previewEduDepartment.visibility = View.VISIBLE
             binding.previewEduInstitute.visibility = View.VISIBLE
             binding.previewEduAdditionalDetails.visibility = View.VISIBLE
@@ -652,7 +674,8 @@ class SignUpActivity : BaseActivity() {
         } else if (binding.occuLevelSpinner.selectedItem.toString() == "Not Working" ||
             binding.occuLevelSpinner.selectedItem.toString() == "Retired" ||
             binding.occuLevelSpinner.selectedItem.toString() == "HouseWife" ||
-            binding.occuLevelSpinner.selectedItem.toString() == "Student") {
+            binding.occuLevelSpinner.selectedItem.toString() == "Student"
+        ) {
             binding.previewOccuDepartment.visibility = View.GONE
             binding.previewOccuEmployer.visibility = View.GONE
             binding.previewOccuPosition.visibility = View.GONE
@@ -680,9 +703,10 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun submitRegistration() {
-        val completeAddress= binding.landmarkInput.text.toString() + ", " + binding.citySpinner.selectedItem.toString() + ", " + binding.stateSpinner.selectedItem.toString()
-        var contact="NA"
-        if(binding.contactinput.text.toString() != "+91"){
+        val completeAddress =
+            binding.landmarkInput.text.toString() + ", " + binding.citySpinner.selectedItem.toString() + ", " + binding.stateSpinner.selectedItem.toString()
+        var contact = "NA"
+        if (binding.contactinput.text.toString() != "+91") {
             contact = binding.contactinput.text.toString()
         }
 
@@ -694,68 +718,44 @@ class SignUpActivity : BaseActivity() {
             karyakanri = karyakan.name
         }
 
-        val memberData = MemberDataX(
-            name = binding.nameinput.text.toString(),
-            contact = binding.contactinput.text.toString(),
-            age = binding.ageSpinner.selectedItem.toString(),
-            gender = binding.genderSpinner.selectedItem.toString(),
-            karyakarni = karyakanri,
-            relation = "head",
-            occupation = binding.occuLevelSpinner.selectedItem.toString(),
-            bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
-            profilePic = "NA",
-            education = binding.eduLevelSpinner.selectedItem.toString(),
-            course = if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
-            institute = if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
-            additionalDetails = if (binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.text.toString() else "NA",
-            jobEmployer = if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
-            jobDepartment = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
-            jobLocation = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
-            jobPost = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
-            businessType = buisType,
-            businessName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
-            businessAddress = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
-            fieldOfStudy = course,
-            city = binding.citySpinner.selectedItem.toString(),
-            state = binding.stateSpinner.selectedItem.toString(),
-            landmark = binding.landmarkInput.text.toString(),
-            contactVisibility = binding.contactSwitch.isChecked
-        )
-
-
-        val data = Member(
-            familyID = binding.familyIDinput.text.toString(),
-            name = binding.nameinput.text.toString(),
-            DOB = binding.DOBinput.text.toString(),
-            contact = binding.contactinput.text.toString(),
-            age = binding.ageSpinner.selectedItem.toString().toInt(),
-            gender = binding.genderSpinner.selectedItem.toString(),
-            address = completeAddress,
-            karyakarni = karyakanri,
-            relation = "head",
-            occupation = binding.occuLevelSpinner.selectedItem.toString(),
-            bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
-            profilePic = "NA",
-            highestEducation = binding.eduLevelSpinner.selectedItem.toString(),
-            branch = if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
-            institute = if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
-            additionalDetails = if (binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.text.toString() else "NA",
-            employer = if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
-            department = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
-            location = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
-            post = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
-            buisType = buisType,
-            buisName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
-            course = course
-        )
-
-        val signupRequest= SignupRequest(binding.familyIDinput.text.toString(),memberData)
+        val memberData = MemberReq(
+                name = binding.nameinput.text.toString(),
+                contact = binding.contactinput.text.toString(),
+                age = binding.ageSpinner.selectedItem.toString().toInt(),
+                gender = binding.genderSpinner.selectedItem.toString(),
+                karyakarni = karyakanri,
+                relation = "head",
+                occupation = binding.occuLevelSpinner.selectedItem.toString(),
+                bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
+                profilePic = "NA",
+                education = binding.eduLevelSpinner.selectedItem.toString(),
+                educationDetails = EducationDetails(
+                    course = course,
+                    fieldOfStudy = if (binding.eduDepartInput.text.isNotEmpty()) binding.eduDepartInput.text.toString() else "NA",
+                    institute = if (binding.eduInstituteInput.text.isNotEmpty()) binding.eduInstituteInput.text.toString() else "NA",
+                    additionalDetails = if (binding.eduAdditionalInput.text.isNotEmpty()) binding.eduAdditionalInput.text.toString() else "NA",
+                ),
+                occupationDetails = OccupationDetails(
+                    jobEmployer = if (binding.occuEmployerInput.text.isNotEmpty()) binding.occuEmployerInput.text.toString() else "NA",
+                    jobDepartment = if (binding.occuDepartmentInput.text.isNotEmpty()) binding.occuDepartmentInput.text.toString() else "NA",
+                    jobLocation = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
+                    jobPost = if (binding.occuPositioninput.text.isNotEmpty()) binding.occuPositioninput.text.toString() else "NA",
+                    businessType = buisType,
+                    businessName = if (binding.occuBuisNameInput.text.isNotEmpty()) binding.occuBuisNameInput.text.toString() else "NA",
+                    businessAddress = if (binding.occuAddressInput.text.isNotEmpty()) binding.occuAddressInput.text.toString() else "NA",
+                ),
+                city = binding.citySpinner.selectedItem.toString(),
+                state = binding.stateSpinner.selectedItem.toString(),
+                landmark = binding.landmarkInput.text.toString(),
+                contactVisibility = binding.contactSwitch.isChecked,
+                familyID = binding.familyIDinput.text.toString(),
+            )
 
         val memberDataJson = Gson().toJson(memberData)
 
-        Log.e("MemberData",memberDataJson)
+        Log.e("MemberData", memberDataJson)
 
-        viewModel.createFamily(contact,binding.familyIDinput.text.toString(),memberDataJson)
+        viewModel.createFamily(contact, binding.familyIDinput.text.toString(), memberDataJson)
 
 //        viewModel.addMember(signupRequest,mImagePart,this)
     }
@@ -773,7 +773,8 @@ class SignUpActivity : BaseActivity() {
             selectedDate.get(Calendar.DAY_OF_MONTH)
         )
 
-        datePickerDialog.datePicker.maxDate = System.currentTimeMillis() // Optional: Set a maximum date
+        datePickerDialog.datePicker.maxDate =
+            System.currentTimeMillis() // Optional: Set a maximum date
 
         datePickerDialog.show()
     }
@@ -802,7 +803,8 @@ class SignUpActivity : BaseActivity() {
         // Optionally, you can use the selected month and day to refine the age calculation
         if (currentDate.get(Calendar.MONTH) < selectedDate.get(Calendar.MONTH) ||
             (currentDate.get(Calendar.MONTH) == selectedDate.get(Calendar.MONTH) &&
-                    currentDate.get(Calendar.DAY_OF_MONTH) < selectedDate.get(Calendar.DAY_OF_MONTH))) {
+                    currentDate.get(Calendar.DAY_OF_MONTH) < selectedDate.get(Calendar.DAY_OF_MONTH))
+        ) {
             // Subtract 1 year if the birth date hasn't occurred yet this year
             age--
         }
@@ -812,30 +814,36 @@ class SignUpActivity : BaseActivity() {
     }
 
 
-    private val getImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-             uri = data?.data!!
+    private val getImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                uri = data?.data!!
 
-            // Validate file type here if needed before proceeding to upload
-            if (isFileTypeAllowed(uri)) {
-                // Proceed with uploading the file
-                val selectedImagePath = getImagePath(uri).toString()
-                binding.ivAddImageMember.setImageURI(uri)
+                // Validate file type here if needed before proceeding to upload
+                if (isFileTypeAllowed(uri)) {
+                    // Proceed with uploading the file
+                    val selectedImagePath = getImagePath(uri).toString()
+                    binding.ivAddImageMember.setImageURI(uri)
 
-                val file = File(selectedImagePath)
-                Log.e("ImageFile", file.path)
+                    val file = File(selectedImagePath)
+                    Log.e("ImageFile", file.path)
 
-                val requestBody = file.asRequestBody(contentResolver.getType(uri)?.toMediaTypeOrNull())
-                val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
+                    val requestBody =
+                        file.asRequestBody(contentResolver.getType(uri)?.toMediaTypeOrNull())
+                    val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
 
-                mImagePart = body
-            } else {
-                // Handle case where file type is not allowed
-                Toast.makeText(this, "Only JPEG, JPG, PNG, GIF files are allowed", Toast.LENGTH_SHORT).show()
+                    mImagePart = body
+                } else {
+                    // Handle case where file type is not allowed
+                    Toast.makeText(
+                        this,
+                        "Only JPEG, JPG, PNG, GIF files are allowed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
-    }
 
     private fun isFileTypeAllowed(uri: Uri): Boolean {
         val contentResolver = applicationContext.contentResolver
@@ -862,13 +870,13 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
-    private fun setObservables(){
-        viewModel.user.observe(this, Observer {resources ->
+    private fun setObservables() {
+        viewModel.user.observe(this, Observer { resources ->
 
-            when(resources.status){
+            when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    Log.e("Success",resources.data.toString())
+                    Log.e("Success", resources.data.toString())
                     //clear all fields
                     binding.nameinput.text.clear()
                     binding.contactinput.text.clear()
@@ -881,30 +889,32 @@ class SignUpActivity : BaseActivity() {
                     viewModel.signInWithPhone(preferencesHelper.getContact().toString())
 
 
-
 //                    Toast.makeText(this, R.string.registration_success, Toast.LENGTH_SHORT).show()
 //                    startActivity(Intent(this,DashboardActivity::class.java))
 //                    finish()
                 }
+
                 Resource.Status.LOADING -> {
                     showProgressDialog("Adding Your Details as Family Head ...")
-                    Log.e("Loading",resources.data.toString())
+                    Log.e("Loading", resources.data.toString())
                 }
+
                 Resource.Status.ERROR -> {
                     hideProgressDialog()
-                    Log.e("Error",resources.apiError.toString())
+                    Log.e("Error", resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
+
                 else -> {}
             }
         })
 
-        viewModel.createFamily.observe(this, Observer {resources ->
+        viewModel.createFamily.observe(this, Observer { resources ->
 
-            when(resources.status){
+            when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    Log.e("Success",resources.data.toString())
+                    Log.e("Success", resources.data.toString())
                     //clear all fields
                     binding.nameinput.text.clear()
                     binding.contactinput.text.clear()
@@ -918,15 +928,18 @@ class SignUpActivity : BaseActivity() {
                     viewModel.signInWithPhone(preferencesHelper.getContact().toString())
 
                 }
+
                 Resource.Status.LOADING -> {
                     showProgressDialog("Adding Your Details as Family Head ...")
-                    Log.e("Loading",resources.data.toString())
+                    Log.e("Loading", resources.data.toString())
                 }
+
                 Resource.Status.ERROR -> {
                     hideProgressDialog()
-                    Log.e("Error",resources.apiError.toString())
+                    Log.e("Error", resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
+
                 else -> {}
             }
         })
@@ -937,12 +950,12 @@ class SignUpActivity : BaseActivity() {
                     // start DashboardActivity after otp verification
                     Log.e("JWTToken", resource.data?.token.toString())
                     //save to shared pref
-                    preferencesHelper.setToken( resource.data?.token.toString())
-                    if(mImagePart != null){
-                        viewModel.addImage(mImagePart!!,this)
-                    }else{
+                    preferencesHelper.setToken(resource.data?.token.toString())
+                    if (mImagePart != null) {
+                        viewModel.addImage(mImagePart!!, this)
+                    } else {
                         val intent = Intent(this, DashboardActivity::class.java)
-                        intent.putExtra(Constants.USERNAME,preferencesHelper.getContact() )
+                        intent.putExtra(Constants.USERNAME, preferencesHelper.getContact())
                         val options = ActivityOptions.makeSceneTransitionAnimation(
                             this,
                             binding.logoImage,
@@ -971,38 +984,41 @@ class SignUpActivity : BaseActivity() {
 
         })
 
-        viewModel.addImage.observe(this, Observer {resources ->
+        viewModel.addImage.observe(this, Observer { resources ->
 
-            when(resources.status){
+            when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    val imageURL= resources.data?.file
+                    val imageURL = resources.data?.file
                     if (imageURL != null) {
-                        viewModel.updateMember(imageURL,mSingupFamily.id,mSingupMember._id)
+                        viewModel.updateMember(imageURL, mSingupFamily.id, mSingupMember._id)
                     }
                 }
+
                 Resource.Status.LOADING -> {
                     showProgressDialog("Adding Your Details as Family Head ...")
-                    Log.e("Loading",resources.data.toString())
+                    Log.e("Loading", resources.data.toString())
                 }
+
                 Resource.Status.ERROR -> {
                     hideProgressDialog()
-                    Log.e("Error",resources.apiError.toString())
+                    Log.e("Error", resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
+
                 else -> {}
             }
         })
 
-        viewModel.updateMember.observe(this, Observer {resources ->
+        viewModel.updateMember.observe(this, Observer { resources ->
 
-            when(resources.status){
+            when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    Log.e("Success",resources.data.toString())
+                    Log.e("Success", resources.data.toString())
 
                     val intent = Intent(this, DashboardActivity::class.java)
-                    intent.putExtra(Constants.USERNAME,preferencesHelper.getContact() )
+                    intent.putExtra(Constants.USERNAME, preferencesHelper.getContact())
                     val options = ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         binding.logoImage,
@@ -1012,21 +1028,24 @@ class SignUpActivity : BaseActivity() {
                     finish()
 
                 }
+
                 Resource.Status.LOADING -> {
                     showProgressDialog("adding your image ...")
-                    Log.e("Loading",resources.data.toString())
+                    Log.e("Loading", resources.data.toString())
                 }
+
                 Resource.Status.ERROR -> {
                     hideProgressDialog()
-                    Log.e("Error",resources.apiError.toString())
+                    Log.e("Error", resources.apiError.toString())
                     showErrorSnackBar("Error: ${resources.apiError?.message}")
                 }
+
                 else -> {}
             }
         })
 
-        viewModel.getAllKarya.observe(this, Observer {resources ->
-            when(resources.status) {
+        viewModel.getAllKarya.observe(this, Observer { resources ->
+            when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     setUpKaryaSpinner(resources.data!!)
                 }
@@ -1052,7 +1071,7 @@ class SignUpActivity : BaseActivity() {
             state = ""
         )
         karyakarniList.add(defaultItem)
-        for(item in karyakarni.karyakarni){
+        for (item in karyakarni.karyakarni) {
             karyakarniList.add(item)
         }
 
@@ -1099,7 +1118,11 @@ class SignUpActivity : BaseActivity() {
         stringArrayCity = ArrayList()
 
         // Set city adapter
-        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayCity)
+        val adapterCity = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayCity
+        )
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.citySpinner.adapter = adapterCity
 
@@ -1116,7 +1139,11 @@ class SignUpActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayState)
+        val adapter = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayState
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = adapter
 
@@ -1128,7 +1155,12 @@ class SignUpActivity : BaseActivity() {
 
         // State spinner item selected listener with the help of this we get selected value
         binding.stateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val item = parent?.getItemAtPosition(position)
                 val text = binding.stateSpinner.selectedItem.toString()
 
@@ -1169,7 +1201,12 @@ class SignUpActivity : BaseActivity() {
         }
 
         binding.citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val spinnerCityValue = binding.citySpinner.selectedItem.toString()
                 Log.e("SpinnerCityValue", spinnerCityValue)
 
@@ -1217,7 +1254,11 @@ class SignUpActivity : BaseActivity() {
         stringArrayCity = ArrayList()
 
         // Set city adapter
-        val adapterCity = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayCity)
+        val adapterCity = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayCity
+        )
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.citySpinner.adapter = adapterCity
 
@@ -1234,13 +1275,22 @@ class SignUpActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, stringArrayState)
+        val adapter = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_dropdown_item,
+            stringArrayState
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = adapter
 
         // State spinner item selected listener with the help of this we get selected value
         binding.stateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val item = parent?.getItemAtPosition(position)
                 val text = binding.stateSpinner.selectedItem.toString()
 
@@ -1274,7 +1324,12 @@ class SignUpActivity : BaseActivity() {
         }
 
         binding.citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val spinnerCityValue = binding.citySpinner.selectedItem.toString()
                 Log.e("SpinnerCityValue", spinnerCityValue)
 
