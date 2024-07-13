@@ -168,6 +168,16 @@
     <string name="confirm_deletion">Confirm Deletion</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete %1$s?</string>
     <string name="delete">Delete</string>
+    <string name="at_most_4_images_can_be_uploaded">at most 4 images can be uploaded</string>
+    <string name="business_registered">Business Registered</string>
+    <string name="registering_business">Registering Business...</string>
+    <string name="some_error_occurred_please_try_again_later">Some error occurred please try again later</string>
+    <string name="please_enter_your_address_no">Please enter your address no</string>
+    <string name="please_enter_your_description">Please enter your description</string>
+    <string name="no_link_found">No link found</string>
+    <string name="no_attachment_found">No attachment found</string>
+    <string name="error_business_data_not_found">Error: Business data not found</string>
+    <string name="no_result_found">no result found</string>
 
 
 </resources>
