@@ -123,5 +123,19 @@
     <string name="jobs">Jobs</string>
     <string name="view_nfamily">View \nFamily</string>
     <string name="view_nbusiness">View \nBusiness</string>
+    <string name="please_enter_your_name_and_contact_no">Please enter your name and contact no</string>
+    <string name="please_enter_your_name">Please enter your name</string>
+    <string name="please_enter_your_contact_no">Please enter your contact no</string>
+    <string name="please_enter_your_age">Please enter your age</string>
+    <string name="please_enter_your_gender">Please enter your gender</string>
+    <string name="please_enter_your_blood_group">Please enter your blood group</string>
+    <string name="please_enter_your_state">Please enter your state</string>
+    <string name="please_enter_your_city">Please enter your city</string>
+    <string name="please_enter_your_occupation">Please enter your occupation</string>
+    <string name="please_enter_your_education">Please enter your education</string>
+    <string name="only_jpeg_jpg_png_gif_files_are_allowed">Only JPEG, JPG, PNG, GIF files are allowed</string>
+    <string name="adding_your_details_as_family_head">Adding Your Details as Family Head ...</string>
+    <string name="adding_your_image">adding your image ...</string>
+
 
 </resources>

@@ -123,4 +123,18 @@
     <string name="jobs">नौकरियां</string>
     <string name="view_nfamily">परिवार \nदेखें</string>
     <string name="view_nbusiness">व्यवसाय \nदेखें</string>
+    <string name="please_enter_your_name_and_contact_no">कृपया अपना नाम और संपर्क नंबर दर्ज करें</string>
+    <string name="please_enter_your_name">कृपया अपना नाम दर्ज करें</string>
+    <string name="please_enter_your_contact_no">कृपया अपना संपर्क नंबर दर्ज करें</string>
+    <string name="please_enter_your_age">कृपया अपनी आयु दर्ज करें</string>
+    <string name="please_enter_your_gender">कृपया अपना लिंग दर्ज करें</string>
+    <string name="please_enter_your_blood_group">कृपया अपना रक्त समूह दर्ज करें</string>
+    <string name="please_enter_your_state">कृपया अपना राज्य दर्ज करें</string>
+    <string name="please_enter_your_city">कृपया अपना शहर दर्ज करें</string>
+    <string name="please_enter_your_occupation">कृपया अपना व्यवसाय दर्ज करें</string>
+    <string name="please_enter_your_education">कृपया अपनी शिक्षा दर्ज करें</string>
+    <string name="only_jpeg_jpg_png_gif_files_are_allowed">केवल JPEG, JPG, PNG, GIF फ़ाइलें ही अनुमत हैं</string>
+    <string name="adding_your_details_as_family_head">परिवार के मुखिया के रूप में आपका विवरण जोड़ना...</string>
+    <string name="adding_your_image">छवि जोड़ना...</string>
+
 </resources>

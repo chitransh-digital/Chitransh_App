@@ -21,19 +21,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
 import com.example.communityapp.data.PreferencesHelper
-import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.EducationDetails
 import com.example.communityapp.data.newModels.FamilyXX
-import com.example.communityapp.data.newModels.Karyakarni
 import com.example.communityapp.data.newModels.KaryakarniX
-import com.example.communityapp.data.newModels.MemberDataX
 import com.example.communityapp.data.newModels.MemberReq
 import com.example.communityapp.data.newModels.MemberXX
 import com.example.communityapp.data.newModels.OccupationDetails
-import com.example.communityapp.data.newModels.SignupRequest
-import com.example.communityapp.data.newModels.addMember
-import com.example.communityapp.data.newModels.addMemberReq
 import com.example.communityapp.databinding.ActivitySignUpBinding
 import com.example.communityapp.ui.Dashboard.DashboardActivity
 import com.example.communityapp.utils.Constants
@@ -106,7 +100,8 @@ class SignUpActivity : BaseActivity() {
                 val familyID = "CH" + name.substring(0, 3) + contact.substring(6, 9)
                 binding.familyIDinput.setText(familyID)
             } else {
-                Toast.makeText(this, "Please enter your name and contact no", Toast.LENGTH_SHORT)
+                Toast.makeText(this,
+                    getString(R.string.please_enter_your_name_and_contact_no), Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -470,19 +465,21 @@ class SignUpActivity : BaseActivity() {
 
     private fun checkDetails1() {
         if (binding.nameinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_name), Toast.LENGTH_SHORT).show()
         } else if (binding.contactinput.text.isNullOrEmpty() && isValidPhoneNumber(binding.contactinput.text.toString())) {
-            Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.please_enter_your_contact_no), Toast.LENGTH_SHORT).show()
         } else if (binding.ageSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_age), Toast.LENGTH_SHORT).show()
         } else if (binding.genderSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_gender), Toast.LENGTH_SHORT).show()
         } else if (binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your blood grp", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.please_enter_your_blood_group), Toast.LENGTH_SHORT).show()
         } else if (binding.stateSpinner.selectedItem == null || binding.stateSpinner.selectedItem.toString() == "Select State") {
-            Toast.makeText(this, "Please enter your state", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_state), Toast.LENGTH_SHORT).show()
         } else if (binding.citySpinner.selectedItem == null || binding.citySpinner.selectedItem.toString() == "Select City") {
-            Toast.makeText(this, "Please enter your city", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_city), Toast.LENGTH_SHORT).show()
         } else {
             Log.e("state", binding.stateSpinner.selectedItem.toString())
             screenPointer++
@@ -497,11 +494,12 @@ class SignUpActivity : BaseActivity() {
         if (binding.occuLevelSpinner.selectedItem == null || binding.occuLevelSpinner.selectedItem.toString()
                 .isEmpty()
         ) {
-            Toast.makeText(this, "Please enter your occupation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.please_enter_your_occupation), Toast.LENGTH_SHORT).show()
         } else if (binding.eduLevelSpinner.selectedItem == null || binding.eduLevelSpinner.selectedItem.toString()
                 .isEmpty()
         ) {
-            Toast.makeText(this, "Please enter your education", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_education), Toast.LENGTH_SHORT).show()
         } else {
             screenPointer++
             changeUI(screenPointer)
@@ -838,7 +836,7 @@ class SignUpActivity : BaseActivity() {
                     // Handle case where file type is not allowed
                     Toast.makeText(
                         this,
-                        "Only JPEG, JPG, PNG, GIF files are allowed",
+                        getString(R.string.only_jpeg_jpg_png_gif_files_are_allowed),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -895,7 +893,7 @@ class SignUpActivity : BaseActivity() {
                 }
 
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Adding Your Details as Family Head ...")
+                    showProgressDialog(getString(R.string.adding_your_details_as_family_head))
                     Log.e("Loading", resources.data.toString())
                 }
 
@@ -930,7 +928,7 @@ class SignUpActivity : BaseActivity() {
                 }
 
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Adding Your Details as Family Head ...")
+                    showProgressDialog(getString(R.string.adding_your_details_as_family_head))
                     Log.e("Loading", resources.data.toString())
                 }
 
@@ -996,7 +994,7 @@ class SignUpActivity : BaseActivity() {
                 }
 
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Adding Your Details as Family Head ...")
+                    showProgressDialog(getString(R.string.adding_your_details_as_family_head))
                     Log.e("Loading", resources.data.toString())
                 }
 
@@ -1030,7 +1028,7 @@ class SignUpActivity : BaseActivity() {
                 }
 
                 Resource.Status.LOADING -> {
-                    showProgressDialog("adding your image ...")
+                    showProgressDialog(getString(R.string.adding_your_image))
                     Log.e("Loading", resources.data.toString())
                 }
 
