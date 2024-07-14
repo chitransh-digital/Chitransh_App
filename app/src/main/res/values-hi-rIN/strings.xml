@@ -44,7 +44,7 @@
     <string name="job_nposting">नौकरी\nप्रकाशन</string>
     <string name="family">परिवार</string>
     <string name="welcome_to">स्वागत है</string>
-    <string name="chitransh_digital">चित्रांश डिजिटल!</string>
+    <string name="chitransh_digital">चित्रांश डिजिटल</string>
     <string name="recent_news">हाल की खबरें</string>
     <string name="in_your_city">आपके शहर में</string>
     <string name="write_a_comment">एक टिप्पणी लिखें...</string>
@@ -245,6 +245,16 @@
     <string name="father">पिता</string>
     <string name="mother">माता</string>
     <string name="other">अन्य</string>
+    <string name="business_registration">व्यवसाय पंजीकरण</string>
+    <string name="job_requirements">नौकरी की आवश्यकताएँ</string>
+    <string name="job_contacts">नौकरी संपर्क</string>
+    <string name="job_description">नौकरी विवरण</string>
+    <string name="edit">संपादित करें</string>
+    <string name="update_details">विवरण अपडेट करें</string>
+    <string name="my_profile">मेरी प्रोफ़ाइल</string>
+    <string name="home">मुख पृष्ठ</string>
+    <string name="news">समाचार</string>
+
 
 
 

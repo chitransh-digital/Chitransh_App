@@ -30,7 +30,7 @@
         android:textColor="@color/theme_brown"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="Chitransh Digital"/>
+        android:text="@string/chitransh_digital"/>
 
     <View
         android:layout_width="match_parent"

@@ -1,9 +1,11 @@
 package com.example.communityapp.ui.karyakarni
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -124,7 +126,7 @@ class KaryakarniActivity : BaseActivity() {
         })
     }
 
-    private fun sortAndNotifyAdapter(list : List<Karyakarni>) {
+    private fun sortAndNotifyAdapter(list: List<Karyakarni>) {
         val sortedList = sortKaryakarniList(list)
         updateAbleKaryakarnilist.clear()
         updateAbleKaryakarnilist.addAll(sortedList)
@@ -140,15 +142,26 @@ class KaryakarniActivity : BaseActivity() {
         sortAndNotifyAdapter(filteredList)
     }
 
-    private fun filterData(city: String, state: String) {
-        val filteredList = mOriginalKaryakarniList.filter { it.address.contains(city, ignoreCase = true) && it.address.contains(state, ignoreCase = true) }
+    private fun filterData(state: String, city: String = "") {
+        Log.e("FilterData", "Filtering Data... State: $state, City: $city")
+
+        val filteredList = if (city.isEmpty()) {
+            // Filter only by state if city is empty
+            mOriginalKaryakarniList.filter { it.state.equals(state, ignoreCase = true) && it.level.equals("State", ignoreCase = true)}
+        } else {
+            // Filter by both city and state
+            mOriginalKaryakarniList.filter {
+                it.city.equals(city, ignoreCase = true) && it.state.equals(state, ignoreCase = true) &&
+                        it.level.equals("City", ignoreCase = true)
+            }
+        }
 
         if (filteredList.isEmpty()) {
             showToast(getString(R.string.no_result_found))
         }
-
         sortAndNotifyAdapter(filteredList)
     }
+
 
     private fun getLevelPriority(level: String): Int {
         return when (level) {
@@ -206,9 +219,9 @@ class KaryakarniActivity : BaseActivity() {
                             stringArrayCity.add(city)
                         }
                     }
-                    _city = stringArrayCity[0]
+                    _city = if (stringArrayCity.isNotEmpty()) stringArrayCity[0] else ""
 
-                    filterData(_city, _state)
+                    if(_state != "Select State")filterData(_state)
                     adapterCity.notifyDataSetChanged()
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -223,7 +236,7 @@ class KaryakarniActivity : BaseActivity() {
                 val spinnerCityValue = binding.citySpinner.selectedItem.toString()
                 _city = spinnerCityValue
                 if (spinnerCityValue != "Select City") {
-                    filterData(_city, _state)
+                    filterData(_state, _city)
                 }
             }
 

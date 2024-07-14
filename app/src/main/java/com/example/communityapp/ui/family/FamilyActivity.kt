@@ -274,8 +274,8 @@ class FamilyActivity : BaseActivity() {
                         binding.occuAddress.visibility = View.VISIBLE
                         binding.occuBuisName.visibility = View.VISIBLE
                         binding.occuBuisType.visibility = View.VISIBLE
-                        binding.occuAddressInput.hint = "Business Address"
-                        binding.occuAddressText.text = "Business Address"
+                        binding.occuAddressInput.hint = getString(R.string.business_address)
+                        binding.occuAddressText.text = getString(R.string.business_address)
                         val businessTypeList = arrayListOf(
                             "Restaurant",
                             "Retail Store",
@@ -298,8 +298,8 @@ class FamilyActivity : BaseActivity() {
                         binding.occuAddress.visibility = View.VISIBLE
                         binding.occuBuisName.visibility = View.GONE
                         binding.occuBuisType.visibility = View.GONE
-                        binding.occuAddressInput.hint = "Job Location"
-                        binding.occuAddressText.text = "Job Location"
+                        binding.occuAddressInput.hint = getString(R.string.job_location)
+                        binding.occuAddressText.text = getString(R.string.job_location)
                     }
 
                 }

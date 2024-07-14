@@ -245,6 +245,15 @@
     <string name="father">Father</string>
     <string name="mother">Mother</string>
     <string name="other">Other</string>
+    <string name="business_registration">Business Registration</string>
+    <string name="job_requirements">Job Requirements</string>
+    <string name="job_contacts">Job Contacts</string>
+    <string name="job_description">Job Description</string>
+    <string name="edit">Edit</string>
+    <string name="update_details">Update Details</string>
+    <string name="my_profile">My Profile</string>
+    <string name="home">Home</string>
+    <string name="news">News</string>
 
 
 </resources>
