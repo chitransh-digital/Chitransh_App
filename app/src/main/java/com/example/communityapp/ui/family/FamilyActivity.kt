@@ -1326,7 +1326,21 @@ class FamilyActivity : BaseActivity() {
         }
     }
 
+    private fun getLevelPriority(level: String): Int {
+        return when (level) {
+            "India" -> 0
+            "State" -> 1
+            "City" -> 2
+            else -> 3
+        }
+    }
+
+    private fun sortKaryakarniList(karyakarniList: List<KaryakarniX>): List<KaryakarniX> {
+        return karyakarniList.sortedBy { getLevelPriority(it.level) }
+    }
+
     private fun setUpKaryaSpinner(karyakarni: AllKaryakarni) {
+        val list = sortKaryakarniList(karyakarni.karyakarni)
         val karyakarniList = mutableListOf<KaryakarniX>()
         val defaultItem = KaryakarniX(
             city = "",
@@ -1336,7 +1350,7 @@ class FamilyActivity : BaseActivity() {
             state = ""
         )
         karyakarniList.add(defaultItem)
-        for(item in karyakarni.karyakarni){
+        for(item in list){
             karyakarniList.add(item)
         }
 

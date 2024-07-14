@@ -35,6 +35,7 @@ class KaryakarniActivity : BaseActivity() {
     private var _city: String = ""
     private var _state: String = ""
     private lateinit var adapter: KaryaKarniAdapter
+    private val updateAbleKaryakarnilist: MutableList<Karyakarni> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +78,7 @@ class KaryakarniActivity : BaseActivity() {
                     resources.data?.let {
                         if (it.karyakarni.isNotEmpty()) {
                             mOriginalKaryakarniList.addAll(it.karyakarni)
-                            sortAndNotifyAdapter()
+                            sortAndNotifyAdapter(mOriginalKaryakarniList)
                             isLoading = false
                             if (it.karyakarni.size < limit) {
                                 hasMoreItems = false
@@ -108,7 +109,7 @@ class KaryakarniActivity : BaseActivity() {
     private fun setUpRecyclerViewPaging() {
         val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.karyakarniRecycler.layoutManager = layoutManager
-        adapter = KaryaKarniAdapter(mOriginalKaryakarniList)
+        adapter = KaryaKarniAdapter(updateAbleKaryakarnilist)
         binding.karyakarniRecycler.adapter = adapter
 
         binding.karyakarniRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -123,23 +124,20 @@ class KaryakarniActivity : BaseActivity() {
         })
     }
 
-    private fun sortAndNotifyAdapter() {
-        val sortedList = sortKaryakarniList(mOriginalKaryakarniList)
-        mOriginalKaryakarniList.clear()
-        mOriginalKaryakarniList.addAll(sortedList)
+    private fun sortAndNotifyAdapter(list : List<Karyakarni>) {
+        val sortedList = sortKaryakarniList(list)
+        updateAbleKaryakarnilist.clear()
+        updateAbleKaryakarnilist.addAll(sortedList)
         adapter.notifyDataSetChanged()
     }
 
     private fun filterKaryakarni(level: String) {
-        val filteredList = mOriginalKaryakarniList.filter { it.level.equals(level, ignoreCase = true) }
+        val filteredList = mOriginalKaryakarniList.filter { it.level == level }
 
         if (filteredList.isEmpty()) {
             showToast("No Karyakarni Found")
         }
-
-        mOriginalKaryakarniList.clear()
-        mOriginalKaryakarniList.addAll(filteredList)
-        sortAndNotifyAdapter()
+        sortAndNotifyAdapter(filteredList)
     }
 
     private fun filterData(city: String, state: String) {
@@ -149,9 +147,7 @@ class KaryakarniActivity : BaseActivity() {
             showToast("No result found")
         }
 
-        mOriginalKaryakarniList.clear()
-        mOriginalKaryakarniList.addAll(filteredList)
-        sortAndNotifyAdapter()
+        sortAndNotifyAdapter(filteredList)
     }
 
     private fun getLevelPriority(level: String): Int {
