@@ -56,6 +56,19 @@ class Login_activity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (savedInstanceState != null) {
+            contentPointer = savedInstanceState.getInt("CONTENT_POINTER", 1)
+        } else {
+            // Check if contentPointer was set for language change
+            contentPointer = preferencesHelper.getPointer()
+            if (contentPointer == 3) {
+                // This case will be handled below in setObservables or showContent if needed
+            } else {
+                // Set default content pointer
+                contentPointer = 1
+            }
+        }
+
         try {
             val dotenv = dotenv {
                 directory = "./assets"
@@ -109,7 +122,7 @@ class Login_activity : BaseActivity() {
 
         setObservables()
 
-        contentPointer = preferencesHelper.getPointer()
+//        contentPointer = preferencesHelper.getPointer()
         showContent(contentPointer)
         preferencesHelper.putPointer(1)
 
@@ -127,7 +140,7 @@ class Login_activity : BaseActivity() {
                 ).toBundle()
                 startActivity(intent, options)
                 finish()
-            } else if(contentPointer != 3) {
+            } else if(contentPointer  < 3) {
                 moveAndResizeView(
                     binding.logoImage,
                     -200f,
@@ -139,15 +152,17 @@ class Login_activity : BaseActivity() {
         }, 2000)
 
         binding.buttonEnglish.setOnClickListener {
+            changeLanguage("en")
             contentPointer=3
             showContent(contentPointer)
-            changeLanguage("en")
+
         }
 
         binding.buttonHindi.setOnClickListener {
+            changeLanguage("hi")
             contentPointer=3
             showContent(contentPointer)
-            changeLanguage("hi")
+
         }
 
         binding.buttonProceedPhno.setOnClickListener {
@@ -576,8 +591,8 @@ class Login_activity : BaseActivity() {
 // Call this on the main thread as it may require Activity.restart()
         AppCompatDelegate.setApplicationLocales(appLocale)
 
-        val selectedLocale = AppCompatDelegate.getApplicationLocales()[0]
-        Log.e("LoginActivity", "Selected Locale: $selectedLocale")
+//        val selectedLocale = AppCompatDelegate.getApplicationLocales()[0]
+//        Log.e("LoginActivity", "Selected Locale: $selectedLocale")
         preferencesHelper.putPointer(3)
     }
 
@@ -587,4 +602,10 @@ class Login_activity : BaseActivity() {
         Toast.makeText(this,
             getString(R.string.otp_request_timed_out_please_try_again), Toast.LENGTH_SHORT).show()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("CONTENT_POINTER", contentPointer)
+    }
+
 }
