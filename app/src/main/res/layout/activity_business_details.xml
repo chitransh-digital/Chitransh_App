@@ -44,7 +44,7 @@
         android:id="@+id/textViewBusinessType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Type"
+        android:text="@string/type"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/textViewBusinessName"
         app:layout_constraintStart_toStartOf="@+id/business_imageView"

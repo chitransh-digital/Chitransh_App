@@ -28,7 +28,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:autoSizeTextType="uniform"
-        android:text="Your Family"
+        android:text="@string/your_family"
         android:textColor="@color/black"
         android:textSize="28sp"
         android:textStyle="bold"

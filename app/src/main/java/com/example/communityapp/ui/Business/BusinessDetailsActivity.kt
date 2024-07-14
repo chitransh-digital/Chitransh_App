@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.communityapp.BaseActivity
+import com.example.communityapp.R
 import com.example.communityapp.data.newModels.Business
 import com.example.communityapp.databinding.ActivityBusinessDetailsBinding
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
@@ -55,7 +56,7 @@ class BusinessDetailsActivity : BaseActivity() {
 
             binding.button2.setOnClickListener {
                 if(business.link.isEmpty() || business.link == "NA"){
-                    Toast.makeText(this, "No link found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.no_link_found), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.link))
@@ -64,7 +65,7 @@ class BusinessDetailsActivity : BaseActivity() {
 
             binding.button3.setOnClickListener {
                 if(business.attachments.isEmpty()){
-                    Toast.makeText(this, "No attachment found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.no_attachment_found), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(business.attachments[0]))
@@ -81,7 +82,8 @@ class BusinessDetailsActivity : BaseActivity() {
             // You can continue to populate other UI elements with business details
         } else {
             // Handle the case when business object is null
-            Toast.makeText(this, "Error: Business data not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.error_business_data_not_found), Toast.LENGTH_SHORT).show()
             // You might want to finish() the activity or handle this case appropriately
         }
 

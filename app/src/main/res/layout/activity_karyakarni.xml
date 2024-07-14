@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
-            android:text="Karyakarni"
+            android:text="@string/karyakarni"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -55,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="India"
+            android:text="@string/india"
             android:layout_margin="4dp"
             android:background="@drawable/curved_button_bg"/>
 
@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="State"
+            android:text="@string/state"
             android:layout_margin="4dp"
             android:background="@drawable/curved_button_bg"/>
 
@@ -73,7 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="City"
+            android:text="@string/city"
             android:layout_margin="4dp"
             android:background="@drawable/curved_button_bg"/>
     </LinearLayout>

@@ -17,21 +17,15 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
-import com.example.communityapp.data.models.Member
 import com.example.communityapp.data.newModels.AllKaryakarni
 import com.example.communityapp.data.newModels.EducationDetails
-import com.example.communityapp.data.newModels.Karyakarni
-import com.example.communityapp.data.newModels.KaryakarniResponse
 import com.example.communityapp.data.newModels.KaryakarniX
 import com.example.communityapp.data.newModels.MemberReq
-import com.example.communityapp.data.newModels.MemberX
 import com.example.communityapp.data.newModels.OccupationDetails
-import com.example.communityapp.data.newModels.addMember
 import com.example.communityapp.data.newModels.addMemberReq
 import com.example.communityapp.data.newModels.headAddress
 import com.example.communityapp.databinding.ActivityFamilyBinding
@@ -775,19 +769,19 @@ class FamilyActivity : BaseActivity() {
 
     private fun checkDetails1() {
         if (binding.nameinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_name), Toast.LENGTH_SHORT).show()
         } else if (!isValidPhoneNumber(binding.contactinput.text.toString())) {
-            Toast.makeText(this, "Please enter valid contact no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,  getString(R.string.please_enter_your_contact_no), Toast.LENGTH_SHORT).show()
         } else if (binding.ageSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,  getString(R.string.please_enter_your_age), Toast.LENGTH_SHORT).show()
         } else if (binding.genderSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,  getString(R.string.please_enter_your_gender), Toast.LENGTH_SHORT).show()
         } else if (binding.relationinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your relation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_relation), Toast.LENGTH_SHORT).show()
         } else if (binding.IDinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your FamilyID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_username_and_family_id), Toast.LENGTH_SHORT).show()
         } else if (binding.bloodGroupSpinner.selectedItem.toString().isEmpty()) {
-            Toast.makeText(this, "Please enter your blood grp", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_blood_group), Toast.LENGTH_SHORT).show()
         } else {
 
             if (binding.sameAsHead.isChecked) {
@@ -798,7 +792,7 @@ class FamilyActivity : BaseActivity() {
 
             } else {
                 if (binding.stateSpinner.selectedItem.toString() == "Select State") {
-                    Toast.makeText(this, "Please select state", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.please_select_state), Toast.LENGTH_SHORT).show()
                 } else {
                     address_store =
                         binding.landmarkInput.text.toString() + ", " + binding.citySpinner.selectedItem.toString() + ", " + binding.stateSpinner.selectedItem.toString()

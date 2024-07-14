@@ -25,7 +25,7 @@
                 android:id="@+id/job_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Job Position"
+                android:text="@string/job_position"
                 android:textColor="@color/theme_brown"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -76,7 +76,7 @@
                 android:drawableStart="@drawable/baseline_call_24"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="6dp"
-                android:text="Call Now" />
+                android:text="@string/call_now" />
 
             <TextView
                 android:id="@+id/salary"

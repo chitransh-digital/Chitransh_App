@@ -16,6 +16,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.communityapp.BaseActivity
+import com.example.communityapp.R
 import com.example.communityapp.databinding.ActivityBusinessBinding
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
@@ -76,7 +77,8 @@ class BusinessActivity : BaseActivity() {
             if (imagesList.size < 4) {
                 selectImages()
             } else {
-                Toast.makeText(this, "at most 4 images can be uploaded", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.at_most_4_images_can_be_uploaded), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -218,7 +220,7 @@ class BusinessActivity : BaseActivity() {
             when (resources.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    Toast.makeText(this, "Business Registered", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.business_registered), Toast.LENGTH_SHORT).show()
                     binding.nameinput.text?.clear()
                     binding.contactinput.text?.clear()
                     binding.Addinput.text?.clear()
@@ -231,13 +233,13 @@ class BusinessActivity : BaseActivity() {
                 }
 
                 Resource.Status.LOADING -> {
-                    showProgressDialog("Registering Business...")
+                    showProgressDialog(getString(R.string.registering_business))
                     Log.e(" B Loading", resources.data.toString())
                 }
 
                 Resource.Status.ERROR -> {
                     hideProgressDialog()
-                    showErrorSnackBar("Some error occurred please try again later")
+                    showErrorSnackBar(getString(R.string.some_error_occurred_please_try_again_later))
                     Log.e("B Error", resources.apiError.toString())
                 }
 
@@ -249,13 +251,15 @@ class BusinessActivity : BaseActivity() {
 
     private fun checkFields() {
         if (binding.nameinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_name), Toast.LENGTH_SHORT).show()
         } else if (binding.contactinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your contact no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_contact_no), Toast.LENGTH_SHORT).show()
         } else if (binding.Addinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your address no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.please_enter_your_address_no), Toast.LENGTH_SHORT).show()
         } else if (binding.descinput.text.isNullOrEmpty()) {
-            Toast.makeText(this, "Please enter your description no", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.please_enter_your_description), Toast.LENGTH_SHORT).show()
         } else {
             submitRegistration()
         }
@@ -288,7 +292,7 @@ class BusinessActivity : BaseActivity() {
             attachments = emptyList(),
             id = id
         )
-        showProgressDialog("Registering Business...")
+        showProgressDialog(getString(R.string.registering_business))
         viewModel.addBusiness(data, multiPartList, multiPartFile)
     }
 

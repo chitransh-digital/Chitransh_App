@@ -66,7 +66,8 @@ class FamilyDetailsAdapter(private val context: Context, private val FamilyDetai
 
         holder.phone.setOnClickListener{
             if(model.contact == "NA"){
-                Toast.makeText(context,"Contact not available",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context.getString(R.string.contact_not_available),Toast.LENGTH_SHORT).show()
             }else{
                 val intent = Intent(Intent.ACTION_DIAL)
                 intent.data = Uri.parse("tel:${model.contact}")

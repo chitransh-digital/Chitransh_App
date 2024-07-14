@@ -49,7 +49,7 @@ class FeedsActivity : BaseActivity() {
         feedsViewModel.feeds.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
-                    Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
                     resource.data?.let { data ->
                         feedsList.addAll(data.Feeds)
                         newsAdapter.notifyDataSetChanged()
@@ -61,7 +61,7 @@ class FeedsActivity : BaseActivity() {
                     Toast.makeText(this, error?.message, Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING -> {
-                    Toast.makeText(this, "loading", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show()
                 }
             }
         })

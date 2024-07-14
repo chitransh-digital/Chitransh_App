@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.BaseActivity
+import com.example.communityapp.R
 import com.example.communityapp.data.newModels.Business
 import com.example.communityapp.databinding.ActivityViewBusinessBinding
 import com.example.communityapp.utils.Resource
@@ -144,7 +145,7 @@ class ViewBusinessActivity : BaseActivity() {
 
         // Update your RecyclerView adapter with the filtered list
         if (mFilteredBusinessList.isEmpty()) {
-            Toast.makeText(this, "no result found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_result_found), Toast.LENGTH_SHORT).show()
         }
         businessAdapter = BusinessAdapter(this, mFilteredBusinessList)
         binding.rvBusiness.layoutManager = LinearLayoutManager(this)
@@ -262,7 +263,7 @@ class ViewBusinessActivity : BaseActivity() {
 
         // Update your RecyclerView adapter with the filtered list
         if (mFilteredBusinessList.isEmpty()) {
-            Toast.makeText(this, "no result found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_result_found), Toast.LENGTH_SHORT).show()
         }
         businessAdapter = BusinessAdapter(this, mFilteredBusinessList)
         binding.rvBusiness.layoutManager = LinearLayoutManager(this)

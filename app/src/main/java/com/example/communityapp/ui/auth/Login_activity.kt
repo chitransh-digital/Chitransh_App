@@ -157,12 +157,14 @@ class Login_activity : BaseActivity() {
 
         binding.buttonPhoneNo.setOnClickListener {
             if (binding.editTextPhone.text.toString().length != 10) {
-                Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.please_enter_a_valid_phone_number), Toast.LENGTH_SHORT).show()
             } else {
                 val ph = binding.editTextPhone.text.toString()
                 contact = ph
                 if (ph.isEmpty()) {
-                    Toast.makeText(this, "Input your phone number", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.input_your_phone_number), Toast.LENGTH_SHORT).show()
                 } else {
                     otp = generateOTP()
                     val smsContent = "Your One Time Password (OTP) for verification of $contact is $otp. Do not share it with anyone. Shubh Parichay Bhopal. OMPRSA"
@@ -181,9 +183,9 @@ class Login_activity : BaseActivity() {
         binding.buttonOTP.setOnClickListener {
             val otp = binding.editTextPhone.text.toString()
             if (otp.isEmpty()) {
-                Toast.makeText(this, "Please enter otp", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_enter_otp), Toast.LENGTH_SHORT).show()
             } else {
-                showProgressDialog("Verifying OTP..")
+                showProgressDialog(getString(R.string.verifying_otp))
 
                 if (otp == this.otp) {
                     val contactWithoutPrefix = contact.replaceFirst("+91", "")
@@ -191,7 +193,7 @@ class Login_activity : BaseActivity() {
                     viewModel.signInWithPhone(contactWithoutPrefix)
                 } else {
                     hideProgressDialog()
-                    Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.invalid_otp), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -216,10 +218,11 @@ class Login_activity : BaseActivity() {
             contact = username
             val familyID = binding.editTextFamilyID.text.toString()
             if (username.isEmpty() || familyID.isEmpty()) {
-                Toast.makeText(this, "Please enter username and family ID", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.please_enter_username_and_family_id), Toast.LENGTH_SHORT).show()
             } else {
                 Log.d("LoginActivity", "Username: $username, FamilyID: $familyID")
-                showProgressDialog("Verifying Family ID..")
+                showProgressDialog(getString(R.string.verifying_family_id))
                 viewModel.signInWithUsername(username, familyID)
             }
         }
@@ -333,7 +336,7 @@ class Login_activity : BaseActivity() {
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     hideProgressDialog()
-                    Toast.makeText(this, "OTP sent", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.otp_sent), Toast.LENGTH_SHORT).show()
                     codeSent()
                 }
 
@@ -341,13 +344,13 @@ class Login_activity : BaseActivity() {
                     Log.e("url", resource.apiError?.message.toString())
                     hideProgressDialog()
                     showErrorSnackBar("Error: ${resource.apiError?.message}")
-                    Toast.makeText(this, "Please try again", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show()
                     timeoutHandler.removeCallbacks(timeoutRunnable)
                 }
 
                 Resource.Status.LOADING -> {
                     Log.e("url", "loading")
-                    showProgressDialog("Sending OTP..")
+                    showProgressDialog(getString(R.string.sending_otp))
                     timeoutHandler.postDelayed(timeoutRunnable, TIMEOUT_DURATION)
                 }
             }
@@ -361,7 +364,7 @@ class Login_activity : BaseActivity() {
         binding.editTextPhone.setText("")
         showContent(contentPointer)
         hideProgressDialog()
-        Toast.makeText(this, "OTP sent", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,  getString(R.string.otp_sent), Toast.LENGTH_SHORT).show()
     }
 
     private fun showContent(pointer: Int) {
@@ -580,7 +583,8 @@ class Login_activity : BaseActivity() {
 
     private val timeoutRunnable = Runnable {
         hideProgressDialog()
-        showErrorSnackBar("Error: OTP request timed out. Please try again.")
-        Toast.makeText(this, "OTP request timed out. Please try again.", Toast.LENGTH_SHORT).show()
+        showErrorSnackBar(getString(R.string.error_otp_request_timed_out_please_try_again))
+        Toast.makeText(this,
+            getString(R.string.otp_request_timed_out_please_try_again), Toast.LENGTH_SHORT).show()
     }
 }
