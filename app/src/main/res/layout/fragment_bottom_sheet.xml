@@ -68,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
-                android:text="30000-500000"
+                android:text="@string/not_available"
                 android:textColor="@color/black"
                 />
         </LinearLayout>
@@ -113,7 +113,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
-                android:text="@string/job_contacts"
+                android:text="@string/not_available"
                 android:maxLines="1"
                 android:maxLength="20"
                 android:textColor="@color/black"
@@ -130,7 +130,8 @@
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             >
             <TextView
                 android:id="@+id/tvMore"
@@ -146,6 +147,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
             >
             <Button
                 android:id="@+id/btn_jobCall"

@@ -62,6 +62,12 @@ class BottomSheetFragment(private var jobId:Job,private val username:String) : B
         rootView.findViewById<TextView>(R.id.tv_expandedJobTitle).text = jobId.jobTitle
         rootView.findViewById<TextView>(R.id.jobExpandedLocation).text = jobId.location
         rootView.findViewById<TextView>(R.id.jobExpandedAllContact).text = jobId.contact
+        if (jobId.salary == 0){
+            rootView.findViewById<TextView>(R.id.jobExpandedSalary).text =
+                getString(R.string.not_specified)
+        }else{
+            rootView.findViewById<TextView>(R.id.jobExpandedSalary).text = jobId.salary.toString()
+        }
 
         rootView.findViewById<ImageView>(R.id.submitComment)?.setOnClickListener {
             if (rootView.findViewById<EditText>(R.id.commentInput)?.text?.isNotEmpty() == true) {
@@ -84,15 +90,32 @@ class BottomSheetFragment(private var jobId:Job,private val username:String) : B
         }
 
         rootView.findViewById<Button>(R.id.btn_jobLink).setOnClickListener {
-            if(jobId.externalLink.isEmpty()){
+            if (jobId.externalLink.isEmpty()) {
                 Toast.makeText(context, "No link available", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val url = jobId.externalLink
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(url)
 
-            startActivity(intent)
+            var url = jobId.externalLink.trim()
+
+            if (url.startsWith("H")){
+                url = url.replaceFirst("H", "h")
+            }
+
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                Toast.makeText(context, "Invalid URL" + url, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+            val chooser = Intent.createChooser(intent, "Open link with")
+            startActivity(chooser)
+//            if (context?.let { it1 -> intent.resolveActivity(it1.packageManager) } != null) {
+//                startActivity(chooser)
+//            } else {
+//                Toast.makeText(context, "No app found to open this link", Toast.LENGTH_SHORT).show()
+//            }
+
         }
 
         rootView.findViewById<Button>(R.id.btn_jobCall) .setOnClickListener {

@@ -27,6 +27,7 @@ class JobsAdapter(
         val companyName:TextView=itemView.findViewById(R.id.company_name)
         val jobDescription: TextView = itemView.findViewById(R.id.job_description)
         val contact: Button =itemView.findViewById(R.id.iv_contact)
+        val salary : TextView = itemView.findViewById(R.id.salary)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobsViewHolder {
@@ -42,6 +43,7 @@ class JobsAdapter(
 //        holder.jobSalary.text = currentItem.first.salary.toString()
 //        holder.jobLocation.text = currentItem.first.location
 //        holder.requirements.text = currentItem.first.requirements.toString()
+        if(currentItem.salary >= 0)holder.salary.text = currentItem.salary.toString()
         holder.companyName.text = currentItem.businessName
         holder.contact.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)

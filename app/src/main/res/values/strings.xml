@@ -254,6 +254,9 @@
     <string name="my_profile">My Profile</string>
     <string name="home">Home</string>
     <string name="news">News</string>
+    <string name="headline">Headline</string>
+    <string name="not_specified">Not Specified</string>
+    <string name="not_available">Not Available</string>
 
 
 </resources>
