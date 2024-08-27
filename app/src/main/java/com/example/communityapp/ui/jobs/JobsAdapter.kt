@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.createAttributionContext
+import androidx.core.content.ContextCompat.getString
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.communityapp.R
@@ -43,14 +46,22 @@ class JobsAdapter(
 //        holder.jobSalary.text = currentItem.first.salary.toString()
 //        holder.jobLocation.text = currentItem.first.location
 //        holder.requirements.text = currentItem.first.requirements.toString()
-        if(currentItem.salary >= 0)holder.salary.text = currentItem.salary.toString()
-        holder.companyName.text = currentItem.businessName
-        holder.contact.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${currentItem.contact}")
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if(currentItem.salary > 0)holder.salary.text = currentItem.salary.toString()
+//        else holder.salary.text = activity.getString(R.string.not_specified)
 
-            startActivity(activity.applicationContext,intent,null)
+        holder.companyName.text = currentItem.businessName
+        if (currentItem.contact != "0000000000"){
+            holder.contact.setOnClickListener {
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse("tel:${currentItem.contact}")
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                startActivity(activity.applicationContext,intent,null)
+            }
+        }else{
+            holder.contact.setOnClickListener {
+                Toast.makeText(activity.applicationContext, "Not Available", Toast.LENGTH_SHORT).show()
+            }
         }
 
 

@@ -61,7 +61,9 @@ class BottomSheetFragment(private var jobId:Job,private val username:String) : B
         rootView.findViewById<TextView>(R.id.tvMore).text = jobId.jobDescription
         rootView.findViewById<TextView>(R.id.tv_expandedJobTitle).text = jobId.jobTitle
         rootView.findViewById<TextView>(R.id.jobExpandedLocation).text = jobId.location
-        rootView.findViewById<TextView>(R.id.jobExpandedAllContact).text = jobId.contact
+        if (jobId.contact != "0000000000"){
+            rootView.findViewById<TextView>(R.id.jobExpandedAllContact).text = jobId.contact
+        }
         if (jobId.salary == 0){
             rootView.findViewById<TextView>(R.id.jobExpandedSalary).text =
                 getString(R.string.not_specified)
@@ -119,7 +121,7 @@ class BottomSheetFragment(private var jobId:Job,private val username:String) : B
         }
 
         rootView.findViewById<Button>(R.id.btn_jobCall) .setOnClickListener {
-            if(jobId.contact.isEmpty()){
+            if(jobId.contact.isEmpty() || jobId.contact == "0000000000"){
                 Toast.makeText(context, "No contact available", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

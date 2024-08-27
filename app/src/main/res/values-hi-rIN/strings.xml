@@ -254,6 +254,10 @@
     <string name="my_profile">मेरी प्रोफ़ाइल</string>
     <string name="home">मुख पृष्ठ</string>
     <string name="news">समाचार</string>
+    <string name="headline">मुख्य समाचार</string>
+    <string name="not_specified">निर्दिष्ट नहीं</string>
+    <string name="not_available">उपलब्ध नहीं</string>
+    <string name="marriage">विवाह</string>
 
 
 

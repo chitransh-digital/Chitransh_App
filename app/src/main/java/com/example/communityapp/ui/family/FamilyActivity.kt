@@ -139,6 +139,12 @@ class FamilyActivity : BaseActivity() {
         }
 
         binding.relationshipSelection1.btnOther.setOnClickListener {
+            familyMember = "Brother"
+            screenPointer++
+            changeUI(screenPointer)
+        }
+
+        binding.relationshipSelection1.btnOther.setOnClickListener {
             screenPointer++
             changeUI(screenPointer)
         }
@@ -413,6 +419,7 @@ class FamilyActivity : BaseActivity() {
 
             2 -> {
                 populateSpinner()
+                occupationSpinnerSetUp()
                 crossFade(
                     listOf(binding.occupatioBusinessPage),
                     listOf(
@@ -453,6 +460,29 @@ class FamilyActivity : BaseActivity() {
         }
     }
 
+    private fun occupationSpinnerSetUp() {
+        val occupationList = arrayListOf(
+            "Student",
+            "Government Job",
+            "Private Job",
+            "Retired",
+            "Business",
+            "Doctor",
+            "Lawyer",
+            "Chartered Accountant",
+            "Not Working"
+        )
+        if (familyMember == "Mother" || familyMember == "Wife" || familyMember == "Daughter"
+            || familyMember == "GrandMother" || familyMember == "Sister") {
+            occupationList.add("HouseWife")
+        }
+
+        val occupationadapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, occupationList)
+
+        binding.occuLevelSpinner.adapter = occupationadapter
+    }
+
     private fun populateSpinner() {
         //give logging for all spinners
         Log.d(
@@ -487,7 +517,7 @@ class FamilyActivity : BaseActivity() {
         binding.previewDOBtext.text = binding.DOBinput.text.toString()
         binding.previewAgeSpinner.text = binding.ageSpinner.selectedItem.toString()
         binding.previewGenderSpinner.text = binding.genderSpinner.selectedItem.toString()
-        binding.previewRelationInput.text = binding.relationinput.text.toString()
+        binding.previewRelationInput.text = familyMember
         binding.previewFamilyIDinput.text = binding.IDinput.text.toString()
         binding.previewLandmarkInput.text = completeAddress
         binding.previewBloodGroupSpinner.text = binding.bloodGroupSpinner.selectedItem.toString()
@@ -631,25 +661,7 @@ class FamilyActivity : BaseActivity() {
             binding.relationinput.visibility = View.VISIBLE
         }
 
-        val occupationList = arrayListOf(
-            "Student",
-            "Government Job",
-            "Private Job",
-            "Retired",
-            "Business",
-            "Doctor",
-            "Lawyer",
-            "Chartered Accountant",
-            "Not Working"
-        )
-        if (familyMember == "Mother" || familyMember == "Wife" || familyMember == "Daughter") {
-            occupationList.add("HouseWife")
-        }
 
-        val occupationadapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, occupationList)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.occuLevelSpinner.adapter = occupationadapter
 
         val educationList = arrayListOf(
             "Junior School",
@@ -694,9 +706,7 @@ class FamilyActivity : BaseActivity() {
         if (uniqueRelations?.contains("GrandFather") == false) {
             relationList.add("GrandFather")
         }
-        val relationadapter =
-
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, relationList)
+        val relationadapter =  ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, relationList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.relationSpinner.adapter = relationadapter
 
@@ -885,7 +895,7 @@ class FamilyActivity : BaseActivity() {
                 city = completeAddress.city,
                 state = completeAddress.state,
                 karyakarni = karyakanri,
-                relation = binding.relationinput.text.toString(),
+                relation = familyMember,
                 bloodGroup = binding.bloodGroupSpinner.selectedItem.toString(),
                 profilePic = "NA",
                 education = education,

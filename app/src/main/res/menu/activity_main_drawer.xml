@@ -7,6 +7,9 @@
         <item android:id="@+id/karyakrni"
             android:icon="@color/theme_yellow"
             android:title="@string/karyakarni"/>
+        <item android:id="@+id/shubhPrichay"
+            android:icon="@color/theme_yellow"
+            android:title="@string/marriage"/>
         <item android:id="@+id/nav_signout"
             android:icon="@drawable/ic_nav_signout"
             android:title="@string/sign_out"/>

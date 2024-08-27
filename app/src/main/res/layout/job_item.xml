@@ -87,7 +87,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_marginStart="16dp"
-                android:text="" />
+                android:text="@string/not_specified" />
             />
 
         </LinearLayout>

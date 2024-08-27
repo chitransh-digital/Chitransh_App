@@ -27,6 +27,7 @@ import com.example.communityapp.databinding.ActivityDashboardBinding
 import com.example.communityapp.ui.SignUp.SignUpActivity
 import com.example.communityapp.ui.auth.Login_activity
 import com.example.communityapp.ui.karyakarni.KaryakarniActivity
+import com.example.communityapp.ui.shubhPrichayWebView.shubhParichayActivity
 import com.example.communityapp.utils.Constants
 import com.example.communityapp.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
@@ -226,6 +227,10 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.karyakrni -> {
                 startActivity(Intent(this, KaryakarniActivity::class.java))
+            }
+
+            R.id.shubhPrichay -> {
+                startActivity(Intent(this,shubhParichayActivity::class.java))
             }
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)

@@ -1,6 +1,8 @@
 package com.example.communityapp.ui.feed
 
 import android.content.Context
+import android.icu.text.SimpleDateFormat
+import android.icu.util.TimeZone
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.communityapp.R
 import com.example.communityapp.data.models.NewsFeed
+import java.util.Date
+import java.util.Locale
 
 class FeedsAdapter(private val newsItems: List<NewsFeed>,private val context: Context) :
     RecyclerView.Adapter<FeedsAdapter.NewsViewHolder>() {
@@ -31,13 +35,23 @@ class FeedsAdapter(private val newsItems: List<NewsFeed>,private val context: Co
         val currentItem = newsItems[position]
         holder.headlineTextView.text = currentItem.title
         holder.descriptionTextView.text = currentItem.body
-        holder.dateTextView.text = currentItem.timestamp
+        holder.dateTextView.text = convertTimestamp(currentItem.timestamp)
         holder.authorTextView.text = currentItem.author
 
-        Glide.with(context).load(currentItem.images[0]).into(holder.imageView)
+        if (currentItem.images.isNotEmpty()) {
+            Glide.with(context).load(currentItem.images[0]).into(holder.imageView)
+        }
     }
 
     override fun getItemCount(): Int {
         return newsItems.size
+    }
+
+    private fun convertTimestamp(timestamp: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val outputFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+        val date: Date? = inputFormat.parse(timestamp)
+        return outputFormat.format(date ?: Date())
     }
 }

@@ -30,7 +30,9 @@ class SmallNewsAdapter(private val context: Context, private val newsList: List<
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val currentItem = newsList[position]
 
-        Glide.with(context).load(currentItem.images[0]).into(holder.imageView)
+        if(currentItem.images.isNotEmpty()){
+            Glide.with(context).load(currentItem.images[0]).into(holder.imageView)
+        }
         holder.titleTextView.text = currentItem.title
         holder.bodyTextView.text = currentItem.body
 
