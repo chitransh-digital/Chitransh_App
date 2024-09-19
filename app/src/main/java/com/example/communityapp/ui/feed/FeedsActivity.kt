@@ -3,7 +3,9 @@ package com.example.communityapp.ui.feed
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.get
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.communityapp.BaseActivity
 import com.example.communityapp.R
@@ -76,11 +78,19 @@ class FeedsActivity : BaseActivity() {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+
+                // Notify the adapter to reset the scroll position for the new page
+                val viewHolder = (viewPager[0] as RecyclerView).findViewHolderForAdapterPosition(position)
+                if (viewHolder is FeedsAdapter.NewsViewHolder) {
+                    viewHolder.scrollView.scrollTo(0, 0)
+                }
+
                 if (position == feedsList.size - 1) {
                     feedsViewModel.getFeedsByPaging(limit, page)
                 }
             }
         })
+
     }
 
 }
